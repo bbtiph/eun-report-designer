@@ -1,0 +1,182 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="project">
+      <h2 data-cy="projectDetailsHeading"><span>Project</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ project.id }}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+          <span>{{ project.status }}</span>
+        </dd>
+        <dt><span>Supported Country Ids</span></dt>
+        <dd>
+          <span>{{ project.supportedCountryIds }}</span>
+        </dd>
+        <dt><span>Supported Language Ids</span></dt>
+        <dd>
+          <span>{{ project.supportedLanguageIds }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ project.name }}</span>
+        </dd>
+        <dt><span>Acronym</span></dt>
+        <dd>
+          <span>{{ project.acronym }}</span>
+        </dd>
+        <dt><span>Period</span></dt>
+        <dd>
+          <span>{{ project.period }}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+          <span>{{ project.description }}</span>
+        </dd>
+        <dt><span>Contact Email</span></dt>
+        <dd>
+          <span>{{ project.contactEmail }}</span>
+        </dd>
+        <dt><span>Contact Name</span></dt>
+        <dd>
+          <span>{{ project.contactName }}</span>
+        </dd>
+        <dt><span>Total Budget</span></dt>
+        <dd>
+          <span>{{ project.totalBudget }}</span>
+        </dd>
+        <dt><span>Total Funding</span></dt>
+        <dd>
+          <span>{{ project.totalFunding }}</span>
+        </dd>
+        <dt><span>Total Budget For Eun</span></dt>
+        <dd>
+          <span>{{ project.totalBudgetForEun }}</span>
+        </dd>
+        <dt><span>Total Funding For Eun</span></dt>
+        <dd>
+          <span>{{ project.totalFundingForEun }}</span>
+        </dd>
+        <dt><span>Funding Value</span></dt>
+        <dd>
+          <span>{{ project.fundingValue }}</span>
+        </dd>
+        <dt><span>Percentage Of Funding</span></dt>
+        <dd>
+          <span>{{ project.percentageOfFunding }}</span>
+        </dd>
+        <dt><span>Percentage Of Indirect Costs</span></dt>
+        <dd>
+          <span>{{ project.percentageOfIndirectCosts }}</span>
+        </dd>
+        <dt><span>Percentage Of Funding For Eun</span></dt>
+        <dd>
+          <span>{{ project.percentageOfFundingForEun }}</span>
+        </dd>
+        <dt><span>Percentage Of Indirect Costs For Eun</span></dt>
+        <dd>
+          <span>{{ project.percentageOfIndirectCostsForEun }}</span>
+        </dd>
+        <dt><span>Funding Extra Comment</span></dt>
+        <dd>
+          <span>{{ project.fundingExtraComment }}</span>
+        </dd>
+        <dt><span>Programme</span></dt>
+        <dd>
+          <span>{{ project.programme }}</span>
+        </dd>
+        <dt><span>Eu Dg</span></dt>
+        <dd>
+          <span>{{ project.euDg }}</span>
+        </dd>
+        <dt><span>Role Of Eun</span></dt>
+        <dd>
+          <span>{{ project.roleOfEun }}</span>
+        </dd>
+        <dt><span>Summary</span></dt>
+        <dd>
+          <span>{{ project.summary }}</span>
+        </dd>
+        <dt><span>Main Tasks</span></dt>
+        <dd>
+          <span>{{ project.mainTasks }}</span>
+        </dd>
+        <dt><span>Expected Outcomes</span></dt>
+        <dd>
+          <span>{{ project.expectedOutcomes }}</span>
+        </dd>
+        <dt><span>Eu Call Reference</span></dt>
+        <dd>
+          <span>{{ project.euCallReference }}</span>
+        </dd>
+        <dt><span>Eu Project Reference</span></dt>
+        <dd>
+          <span>{{ project.euProjectReference }}</span>
+        </dd>
+        <dt><span>Eu Call Deadline</span></dt>
+        <dd>
+          <span>{{ project.euCallDeadline }}</span>
+        </dd>
+        <dt><span>Project Manager</span></dt>
+        <dd>
+          <span>{{ project.projectManager }}</span>
+        </dd>
+        <dt><span>Reference Number Of Project</span></dt>
+        <dd>
+          <span>{{ project.referenceNumberOfProject }}</span>
+        </dd>
+        <dt><span>Eun Team</span></dt>
+        <dd>
+          <span>{{ project.eunTeam }}</span>
+        </dd>
+        <dt><span>Sys Creat Timestamp</span></dt>
+        <dd>
+          <span>{{ project.sysCreatTimestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Sys Creat Ip Address</span></dt>
+        <dd>
+          <span>{{ project.sysCreatIpAddress }}</span>
+        </dd>
+        <dt><span>Sys Modif Timestamp</span></dt>
+        <dd>
+          <span>{{ project.sysModifTimestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Sys Modif Ip Address</span></dt>
+        <dd>
+          <span>{{ project.sysModifIpAddress }}</span>
+        </dd>
+        <dt><span>Organization In Project</span></dt>
+        <dd>
+          <div *ngIf="project.organizationInProject">
+            <a [routerLink]="['/organization-in-project', project.organizationInProject.id, 'view']">{{
+              project.organizationInProject.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Person In Project</span></dt>
+        <dd>
+          <div *ngIf="project.personInProject">
+            <a [routerLink]="['/person-in-project', project.personInProject.id, 'view']">{{ project.personInProject.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/project', project.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

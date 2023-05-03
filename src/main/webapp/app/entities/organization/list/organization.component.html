@@ -1,0 +1,301 @@
+<div>
+  <h2 id="page-heading" data-cy="OrganizationHeading">
+    <span>Organizations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-organization"
+        [routerLink]="['/organization/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Organization </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="organizations?.length === 0">
+    <span>No Organizations found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="organizations && organizations.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="eunDbId">
+            <div class="d-flex">
+              <span>Eun Db Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span>Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="officialName">
+            <div class="d-flex">
+              <span>Official Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span>Description</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="type">
+            <div class="d-flex">
+              <span>Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="address">
+            <div class="d-flex">
+              <span>Address</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="latitude">
+            <div class="d-flex">
+              <span>Latitude</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="longitude">
+            <div class="d-flex">
+              <span>Longitude</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="maxAge">
+            <div class="d-flex">
+              <span>Max Age</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="minAge">
+            <div class="d-flex">
+              <span>Min Age</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="area">
+            <div class="d-flex">
+              <span>Area</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="specialization">
+            <div class="d-flex">
+              <span>Specialization</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="numberOfStudents">
+            <div class="d-flex">
+              <span>Number Of Students</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="hardwareUsed">
+            <div class="d-flex">
+              <span>Hardware Used</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="ictUsed">
+            <div class="d-flex">
+              <span>Ict Used</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="website">
+            <div class="d-flex">
+              <span>Website</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="image">
+            <div class="d-flex">
+              <span>Image</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="telephone">
+            <div class="d-flex">
+              <span>Telephone</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fax">
+            <div class="d-flex">
+              <span>Fax</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="email">
+            <div class="d-flex">
+              <span>Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organisationNumber">
+            <div class="d-flex">
+              <span>Organisation Number</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="eventInOrganization.id">
+            <div class="d-flex">
+              <span>Event In Organization</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organizationInMinistry.id">
+            <div class="d-flex">
+              <span>Organization In Ministry</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organizationInProject.id">
+            <div class="d-flex">
+              <span>Organization In Project</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="personInOrganization.id">
+            <div class="d-flex">
+              <span>Person In Organization</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let organization of organizations; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/organization', organization.id, 'view']">{{ organization.id }}</a>
+          </td>
+          <td>{{ organization.eunDbId }}</td>
+          <td>{{ organization.status }}</td>
+          <td>{{ organization.officialName }}</td>
+          <td>{{ organization.description }}</td>
+          <td>{{ organization.type }}</td>
+          <td>{{ organization.address }}</td>
+          <td>{{ organization.latitude }}</td>
+          <td>{{ organization.longitude }}</td>
+          <td>{{ organization.maxAge }}</td>
+          <td>{{ organization.minAge }}</td>
+          <td>{{ organization.area }}</td>
+          <td>{{ organization.specialization }}</td>
+          <td>{{ organization.numberOfStudents }}</td>
+          <td>{{ organization.hardwareUsed }}</td>
+          <td>{{ organization.ictUsed }}</td>
+          <td>{{ organization.website }}</td>
+          <td>
+            <a *ngIf="organization.image" (click)="openFile(organization.image, organization.imageContentType)">Open</a>
+            <span *ngIf="organization.image">{{ organization.imageContentType }}, {{ byteSize(organization.image) }}</span>
+          </td>
+          <td>{{ organization.telephone }}</td>
+          <td>{{ organization.fax }}</td>
+          <td>{{ organization.email }}</td>
+          <td>{{ organization.organisationNumber }}</td>
+          <td>
+            <div *ngIf="organization.eventInOrganization">
+              <a [routerLink]="['/event-in-organization', organization.eventInOrganization.id, 'view']">{{
+                organization.eventInOrganization.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="organization.organizationInMinistry">
+              <a [routerLink]="['/organization-in-ministry', organization.organizationInMinistry.id, 'view']">{{
+                organization.organizationInMinistry.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="organization.organizationInProject">
+              <a [routerLink]="['/organization-in-project', organization.organizationInProject.id, 'view']">{{
+                organization.organizationInProject.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="organization.personInOrganization">
+              <a [routerLink]="['/person-in-organization', organization.personInOrganization.id, 'view']">{{
+                organization.personInOrganization.id
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/organization', organization.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/organization', organization.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(organization)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="organizations && organizations.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

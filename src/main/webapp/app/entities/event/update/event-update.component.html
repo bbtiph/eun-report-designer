@@ -1,0 +1,219 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-event-heading" data-cy="EventCreateUpdateHeading">Create or edit a Event</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_type">Type</label>
+          <input type="text" class="form-control" name="type" id="field_type" data-cy="type" formControlName="type" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_location">Location</label>
+          <input type="text" class="form-control" name="location" id="field_location" data-cy="location" formControlName="location" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_startDate">Start Date</label>
+          <div class="input-group">
+            <input
+              id="field_startDate"
+              data-cy="startDate"
+              type="text"
+              class="form-control"
+              name="startDate"
+              ngbDatepicker
+              #startDateDp="ngbDatepicker"
+              formControlName="startDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="startDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_endDate">End Date</label>
+          <div class="input-group">
+            <input
+              id="field_endDate"
+              data-cy="endDate"
+              type="text"
+              class="form-control"
+              name="endDate"
+              ngbDatepicker
+              #endDateDp="ngbDatepicker"
+              formControlName="endDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_url">Url</label>
+          <input type="text" class="form-control" name="url" id="field_url" data-cy="url" formControlName="url" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eunContact">Eun Contact</label>
+          <input
+            type="text"
+            class="form-control"
+            name="eunContact"
+            id="field_eunContact"
+            data-cy="eunContact"
+            formControlName="eunContact"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_courseModules">Course Modules</label>
+          <input
+            type="text"
+            class="form-control"
+            name="courseModules"
+            id="field_courseModules"
+            data-cy="courseModules"
+            formControlName="courseModules"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_courseDuration">Course Duration</label>
+          <input
+            type="number"
+            class="form-control"
+            name="courseDuration"
+            id="field_courseDuration"
+            data-cy="courseDuration"
+            formControlName="courseDuration"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_courseType">Course Type</label>
+          <input
+            type="text"
+            class="form-control"
+            name="courseType"
+            id="field_courseType"
+            data-cy="courseType"
+            formControlName="courseType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_modules">Modules</label>
+          <input type="number" class="form-control" name="modules" id="field_modules" data-cy="modules" formControlName="modules" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_status">Status</label>
+          <input type="text" class="form-control" name="status" id="field_status" data-cy="status" formControlName="status" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_engagementRate">Engagement Rate</label>
+          <input
+            type="number"
+            class="form-control"
+            name="engagementRate"
+            id="field_engagementRate"
+            data-cy="engagementRate"
+            formControlName="engagementRate"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_completionRate">Completion Rate</label>
+          <input
+            type="number"
+            class="form-control"
+            name="completionRate"
+            id="field_completionRate"
+            data-cy="completionRate"
+            formControlName="completionRate"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eventInOrganization">Event In Organization</label>
+          <select
+            class="form-control"
+            id="field_eventInOrganization"
+            data-cy="eventInOrganization"
+            name="eventInOrganization"
+            formControlName="eventInOrganization"
+            [compareWith]="compareEventInOrganization"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="eventInOrganizationOption" *ngFor="let eventInOrganizationOption of eventInOrganizationsSharedCollection">
+              {{ eventInOrganizationOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eventParticipant">Event Participant</label>
+          <select
+            class="form-control"
+            id="field_eventParticipant"
+            data-cy="eventParticipant"
+            name="eventParticipant"
+            formControlName="eventParticipant"
+            [compareWith]="compareEventParticipant"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="eventParticipantOption" *ngFor="let eventParticipantOption of eventParticipantsSharedCollection">
+              {{ eventParticipantOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

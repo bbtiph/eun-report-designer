@@ -1,0 +1,108 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="ministry">
+      <h2 data-cy="ministryDetailsHeading"><span>Ministry</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ ministry.id }}</span>
+        </dd>
+        <dt><span>Languages</span></dt>
+        <dd>
+          <span>{{ ministry.languages }}</span>
+        </dd>
+        <dt><span>Formal Name</span></dt>
+        <dd>
+          <span>{{ ministry.formalName }}</span>
+        </dd>
+        <dt><span>English Name</span></dt>
+        <dd>
+          <span>{{ ministry.englishName }}</span>
+        </dd>
+        <dt><span>Acronym</span></dt>
+        <dd>
+          <span>{{ ministry.acronym }}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+          <span>{{ ministry.description }}</span>
+        </dd>
+        <dt><span>Website</span></dt>
+        <dd>
+          <span>{{ ministry.website }}</span>
+        </dd>
+        <dt><span>Steercom Member Name</span></dt>
+        <dd>
+          <span>{{ ministry.steercomMemberName }}</span>
+        </dd>
+        <dt><span>Steercom Member Email</span></dt>
+        <dd>
+          <span>{{ ministry.steercomMemberEmail }}</span>
+        </dd>
+        <dt><span>Postal Address Region</span></dt>
+        <dd>
+          <span>{{ ministry.postalAddressRegion }}</span>
+        </dd>
+        <dt><span>Postal Address Postal Code</span></dt>
+        <dd>
+          <span>{{ ministry.postalAddressPostalCode }}</span>
+        </dd>
+        <dt><span>Postal Address City</span></dt>
+        <dd>
+          <span>{{ ministry.postalAddressCity }}</span>
+        </dd>
+        <dt><span>Postal Address Street</span></dt>
+        <dd>
+          <span>{{ ministry.postalAddressStreet }}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+          <span>{{ ministry.status }}</span>
+        </dd>
+        <dt><span>Eun Contact Firstname</span></dt>
+        <dd>
+          <span>{{ ministry.eunContactFirstname }}</span>
+        </dd>
+        <dt><span>Eun Contact Lastname</span></dt>
+        <dd>
+          <span>{{ ministry.eunContactLastname }}</span>
+        </dd>
+        <dt><span>Eun Contact Email</span></dt>
+        <dd>
+          <span>{{ ministry.eunContactEmail }}</span>
+        </dd>
+        <dt><span>Invoicing Address</span></dt>
+        <dd>
+          <span>{{ ministry.invoicingAddress }}</span>
+        </dd>
+        <dt><span>Financial Corresponding Email</span></dt>
+        <dd>
+          <span>{{ ministry.financialCorrespondingEmail }}</span>
+        </dd>
+        <dt><span>Organization In Ministry</span></dt>
+        <dd>
+          <div *ngIf="ministry.organizationInMinistry">
+            <a [routerLink]="['/organization-in-ministry', ministry.organizationInMinistry.id, 'view']">{{
+              ministry.organizationInMinistry.id
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/ministry', ministry.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

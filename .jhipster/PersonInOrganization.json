@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20230428120843",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "person_in_organization",
+  "fields": [
+    {
+      "fieldName": "roleInOrganization",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PersonInOrganization",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "person",
+      "otherEntityRelationshipName": "personInOrganization",
+      "relationshipName": "person",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "organization",
+      "otherEntityRelationshipName": "personInOrganization",
+      "relationshipName": "organization",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,60 @@
+{
+  "applications": "*",
+  "changelogDate": "20230428120835",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "operational_body_member",
+  "fields": [
+    {
+      "fieldName": "personId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "position",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "department",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "eunContactFirstname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "eunContactLastname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cooperationField",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "OperationalBodyMember",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "country",
+      "otherEntityRelationshipName": "operationalBodyMember",
+      "relationshipName": "country",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

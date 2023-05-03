@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20230428120840",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "event_participant",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EventParticipant",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "eventParticipant",
+      "relationshipName": "event",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "person",
+      "otherEntityRelationshipName": "eventParticipant",
+      "relationshipName": "person",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

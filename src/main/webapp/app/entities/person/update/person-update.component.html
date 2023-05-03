@@ -1,0 +1,246 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-person-heading" data-cy="PersonCreateUpdateHeading">Create or edit a Person</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eunDbId">Eun Db Id</label>
+          <input type="number" class="form-control" name="eunDbId" id="field_eunDbId" data-cy="eunDbId" formControlName="eunDbId" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_firstname">Firstname</label>
+          <input type="text" class="form-control" name="firstname" id="field_firstname" data-cy="firstname" formControlName="firstname" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_lastname">Lastname</label>
+          <input type="text" class="form-control" name="lastname" id="field_lastname" data-cy="lastname" formControlName="lastname" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_salutation">Salutation</label>
+          <input
+            type="number"
+            class="form-control"
+            name="salutation"
+            id="field_salutation"
+            data-cy="salutation"
+            formControlName="salutation"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_mainContractEmail">Main Contract Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="mainContractEmail"
+            id="field_mainContractEmail"
+            data-cy="mainContractEmail"
+            formControlName="mainContractEmail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_extraContractEmail">Extra Contract Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="extraContractEmail"
+            id="field_extraContractEmail"
+            data-cy="extraContractEmail"
+            formControlName="extraContractEmail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_languageMotherTongue">Language Mother Tongue</label>
+          <input
+            type="text"
+            class="form-control"
+            name="languageMotherTongue"
+            id="field_languageMotherTongue"
+            data-cy="languageMotherTongue"
+            formControlName="languageMotherTongue"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_languageOther">Language Other</label>
+          <input
+            type="text"
+            class="form-control"
+            name="languageOther"
+            id="field_languageOther"
+            data-cy="languageOther"
+            formControlName="languageOther"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_website">Website</label>
+          <input type="text" class="form-control" name="website" id="field_website" data-cy="website" formControlName="website" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_mobile">Mobile</label>
+          <input type="text" class="form-control" name="mobile" id="field_mobile" data-cy="mobile" formControlName="mobile" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_phone">Phone</label>
+          <input type="text" class="form-control" name="phone" id="field_phone" data-cy="phone" formControlName="phone" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_socialNetworkContacts">Social Network Contacts</label>
+          <input
+            type="text"
+            class="form-control"
+            name="socialNetworkContacts"
+            id="field_socialNetworkContacts"
+            data-cy="socialNetworkContacts"
+            formControlName="socialNetworkContacts"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_status">Status</label>
+          <input type="text" class="form-control" name="status" id="field_status" data-cy="status" formControlName="status" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_gdprStatus">Gdpr Status</label>
+          <select class="form-control" name="gdprStatus" formControlName="gdprStatus" id="field_gdprStatus" data-cy="gdprStatus">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let gdprStatus of gdprStatusValues" [value]="gdprStatus">gdprStatus</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_lastLoginDate">Last Login Date</label>
+          <div class="input-group">
+            <input
+              id="field_lastLoginDate"
+              data-cy="lastLoginDate"
+              type="text"
+              class="form-control"
+              name="lastLoginDate"
+              ngbDatepicker
+              #lastLoginDateDp="ngbDatepicker"
+              formControlName="lastLoginDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="lastLoginDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eunTeamMember">Eun Team Member</label>
+          <select
+            class="form-control"
+            id="field_eunTeamMember"
+            data-cy="eunTeamMember"
+            name="eunTeamMember"
+            formControlName="eunTeamMember"
+            [compareWith]="compareEunTeamMember"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="eunTeamMemberOption" *ngFor="let eunTeamMemberOption of eunTeamMembersSharedCollection">
+              {{ eunTeamMemberOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eventParticipant">Event Participant</label>
+          <select
+            class="form-control"
+            id="field_eventParticipant"
+            data-cy="eventParticipant"
+            name="eventParticipant"
+            formControlName="eventParticipant"
+            [compareWith]="compareEventParticipant"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="eventParticipantOption" *ngFor="let eventParticipantOption of eventParticipantsSharedCollection">
+              {{ eventParticipantOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_personInOrganization">Person In Organization</label>
+          <select
+            class="form-control"
+            id="field_personInOrganization"
+            data-cy="personInOrganization"
+            name="personInOrganization"
+            formControlName="personInOrganization"
+            [compareWith]="comparePersonInOrganization"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="personInOrganizationOption" *ngFor="let personInOrganizationOption of personInOrganizationsSharedCollection">
+              {{ personInOrganizationOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_personInProject">Person In Project</label>
+          <select
+            class="form-control"
+            id="field_personInProject"
+            data-cy="personInProject"
+            name="personInProject"
+            formControlName="personInProject"
+            [compareWith]="comparePersonInProject"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="personInProjectOption" *ngFor="let personInProjectOption of personInProjectsSharedCollection">
+              {{ personInProjectOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

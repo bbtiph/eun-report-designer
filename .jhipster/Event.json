@@ -1,0 +1,93 @@
+{
+  "applications": "*",
+  "changelogDate": "20230428120830",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "event",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "location",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "url",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "eunContact",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "courseModules",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "courseDuration",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "courseType",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modules",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "engagementRate",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "completionRate",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Event",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "eventInOrganization",
+      "otherEntityRelationshipName": "event",
+      "relationshipName": "eventInOrganization",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "eventParticipant",
+      "otherEntityRelationshipName": "event",
+      "relationshipName": "eventParticipant",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,136 @@
+{
+  "applications": "*",
+  "changelogDate": "20230428120836",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "organization",
+  "fields": [
+    {
+      "fieldName": "eunDbId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "OrgStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ACTIVE,MERGED,BLOCKED,INACTIVE"
+    },
+    {
+      "fieldName": "officialName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "latitude",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "longitude",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "maxAge",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "minAge",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "area",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "specialization",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numberOfStudents",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "hardwareUsed",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "ictUsed",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "website",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "image",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fax",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "organisationNumber",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Organization",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "country",
+      "otherEntityRelationshipName": "organization",
+      "relationshipName": "country",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "eventInOrganization",
+      "otherEntityRelationshipName": "organization",
+      "relationshipName": "eventInOrganization",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "organizationInMinistry",
+      "otherEntityRelationshipName": "organization",
+      "relationshipName": "organizationInMinistry",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "organizationInProject",
+      "otherEntityRelationshipName": "organization",
+      "relationshipName": "organizationInProject",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "personInOrganization",
+      "otherEntityRelationshipName": "organization",
+      "relationshipName": "personInOrganization",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

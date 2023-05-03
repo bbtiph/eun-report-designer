@@ -38,6 +38,7 @@
         <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx1G</argLine>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <run.addResources>false</run.addResources>
+        <eclipse.birt.runtime.version>4.8.0</eclipse.birt.runtime.version>
         <!-- These remain empty unless the corresponding profile is active -->
         <profile.no-liquibase />
         <profile.api-docs />
@@ -279,6 +280,18 @@
             <artifactId>metrics-core</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.innoventsolutions.birt.runtime</groupId>
+            <artifactId>org.eclipse.birt.runtime_4.8.0-20180626</artifactId>
+            <version>${eclipse.birt.runtime.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

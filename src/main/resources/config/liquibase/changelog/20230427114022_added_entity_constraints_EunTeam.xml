@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity EunTeam.
+    -->
+    <changeSet id="20230427114022-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="eun_team_member_id"
+                                 baseTableName="eun_team"
+                                 constraintName="fk_eun_team__eun_team_member_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="eun_team_member"/>
+    </changeSet>
+</databaseChangeLog>

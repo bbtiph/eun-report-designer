@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="operationalBodyMember">
+      <h2 data-cy="operationalBodyMemberDetailsHeading"><span>Operational Body Member</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ operationalBodyMember.id }}</span>
+        </dd>
+        <dt><span>Person Id</span></dt>
+        <dd>
+          <span>{{ operationalBodyMember.personId }}</span>
+        </dd>
+        <dt><span>Position</span></dt>
+        <dd>
+          <span>{{ operationalBodyMember.position }}</span>
+        </dd>
+        <dt><span>Start Date</span></dt>
+        <dd>
+          <span>{{ operationalBodyMember.startDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>End Date</span></dt>
+        <dd>
+          <span>{{ operationalBodyMember.endDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Department</span></dt>
+        <dd>
+          <span>{{ operationalBodyMember.department }}</span>
+        </dd>
+        <dt><span>Eun Contact Firstname</span></dt>
+        <dd>
+          <span>{{ operationalBodyMember.eunContactFirstname }}</span>
+        </dd>
+        <dt><span>Eun Contact Lastname</span></dt>
+        <dd>
+          <span>{{ operationalBodyMember.eunContactLastname }}</span>
+        </dd>
+        <dt><span>Cooperation Field</span></dt>
+        <dd>
+          <span>{{ operationalBodyMember.cooperationField }}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+          <span>{{ operationalBodyMember.status }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/operational-body-member', operationalBodyMember.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

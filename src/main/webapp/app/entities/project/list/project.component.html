@@ -1,0 +1,368 @@
+<div>
+  <h2 id="page-heading" data-cy="ProjectHeading">
+    <span>Projects</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-project"
+        [routerLink]="['/project/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Project </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="projects?.length === 0">
+    <span>No Projects found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="projects && projects.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span>Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="supportedCountryIds">
+            <div class="d-flex">
+              <span>Supported Country Ids</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="supportedLanguageIds">
+            <div class="d-flex">
+              <span>Supported Language Ids</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span>Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="acronym">
+            <div class="d-flex">
+              <span>Acronym</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="period">
+            <div class="d-flex">
+              <span>Period</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span>Description</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="contactEmail">
+            <div class="d-flex">
+              <span>Contact Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="contactName">
+            <div class="d-flex">
+              <span>Contact Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="totalBudget">
+            <div class="d-flex">
+              <span>Total Budget</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="totalFunding">
+            <div class="d-flex">
+              <span>Total Funding</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="totalBudgetForEun">
+            <div class="d-flex">
+              <span>Total Budget For Eun</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="totalFundingForEun">
+            <div class="d-flex">
+              <span>Total Funding For Eun</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fundingValue">
+            <div class="d-flex">
+              <span>Funding Value</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="percentageOfFunding">
+            <div class="d-flex">
+              <span>Percentage Of Funding</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="percentageOfIndirectCosts">
+            <div class="d-flex">
+              <span>Percentage Of Indirect Costs</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="percentageOfFundingForEun">
+            <div class="d-flex">
+              <span>Percentage Of Funding For Eun</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="percentageOfIndirectCostsForEun">
+            <div class="d-flex">
+              <span>Percentage Of Indirect Costs For Eun</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fundingExtraComment">
+            <div class="d-flex">
+              <span>Funding Extra Comment</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="programme">
+            <div class="d-flex">
+              <span>Programme</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="euDg">
+            <div class="d-flex">
+              <span>Eu Dg</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="roleOfEun">
+            <div class="d-flex">
+              <span>Role Of Eun</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="summary">
+            <div class="d-flex">
+              <span>Summary</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="mainTasks">
+            <div class="d-flex">
+              <span>Main Tasks</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="expectedOutcomes">
+            <div class="d-flex">
+              <span>Expected Outcomes</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="euCallReference">
+            <div class="d-flex">
+              <span>Eu Call Reference</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="euProjectReference">
+            <div class="d-flex">
+              <span>Eu Project Reference</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="euCallDeadline">
+            <div class="d-flex">
+              <span>Eu Call Deadline</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="projectManager">
+            <div class="d-flex">
+              <span>Project Manager</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="referenceNumberOfProject">
+            <div class="d-flex">
+              <span>Reference Number Of Project</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="eunTeam">
+            <div class="d-flex">
+              <span>Eun Team</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sysCreatTimestamp">
+            <div class="d-flex">
+              <span>Sys Creat Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sysCreatIpAddress">
+            <div class="d-flex">
+              <span>Sys Creat Ip Address</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sysModifTimestamp">
+            <div class="d-flex">
+              <span>Sys Modif Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sysModifIpAddress">
+            <div class="d-flex">
+              <span>Sys Modif Ip Address</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organizationInProject.id">
+            <div class="d-flex">
+              <span>Organization In Project</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="personInProject.id">
+            <div class="d-flex">
+              <span>Person In Project</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of projects; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/project', project.id, 'view']">{{ project.id }}</a>
+          </td>
+          <td>{{ project.status }}</td>
+          <td>{{ project.supportedCountryIds }}</td>
+          <td>{{ project.supportedLanguageIds }}</td>
+          <td>{{ project.name }}</td>
+          <td>{{ project.acronym }}</td>
+          <td>{{ project.period }}</td>
+          <td>{{ project.description }}</td>
+          <td>{{ project.contactEmail }}</td>
+          <td>{{ project.contactName }}</td>
+          <td>{{ project.totalBudget }}</td>
+          <td>{{ project.totalFunding }}</td>
+          <td>{{ project.totalBudgetForEun }}</td>
+          <td>{{ project.totalFundingForEun }}</td>
+          <td>{{ project.fundingValue }}</td>
+          <td>{{ project.percentageOfFunding }}</td>
+          <td>{{ project.percentageOfIndirectCosts }}</td>
+          <td>{{ project.percentageOfFundingForEun }}</td>
+          <td>{{ project.percentageOfIndirectCostsForEun }}</td>
+          <td>{{ project.fundingExtraComment }}</td>
+          <td>{{ project.programme }}</td>
+          <td>{{ project.euDg }}</td>
+          <td>{{ project.roleOfEun }}</td>
+          <td>{{ project.summary }}</td>
+          <td>{{ project.mainTasks }}</td>
+          <td>{{ project.expectedOutcomes }}</td>
+          <td>{{ project.euCallReference }}</td>
+          <td>{{ project.euProjectReference }}</td>
+          <td>{{ project.euCallDeadline }}</td>
+          <td>{{ project.projectManager }}</td>
+          <td>{{ project.referenceNumberOfProject }}</td>
+          <td>{{ project.eunTeam }}</td>
+          <td>{{ project.sysCreatTimestamp | formatMediumDatetime }}</td>
+          <td>{{ project.sysCreatIpAddress }}</td>
+          <td>{{ project.sysModifTimestamp | formatMediumDatetime }}</td>
+          <td>{{ project.sysModifIpAddress }}</td>
+          <td>
+            <div *ngIf="project.organizationInProject">
+              <a [routerLink]="['/organization-in-project', project.organizationInProject.id, 'view']">{{
+                project.organizationInProject.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="project.personInProject">
+              <a [routerLink]="['/person-in-project', project.personInProject.id, 'view']">{{ project.personInProject.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/project', project.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/project', project.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(project)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="projects && projects.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

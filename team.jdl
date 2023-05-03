@@ -1,0 +1,239 @@
+enum ProjectStatus {
+    DRAFT,
+    REQUESTED,
+    REVIEWED,
+    ACTIVE,
+    CLOSED
+}
+
+enum OrgStatus {
+    ACTIVE,
+    MERGED,
+    BLOCKED,
+    INACTIVE
+}
+
+enum GdprStatus {
+    IDENTIFIABLE,
+    USER_REQUESTED_ANON,
+    SYS_FLAGGED_INACTIVE,
+    ANONYMIZED
+}
+
+entity EunTeam {
+    name String,
+    description String
+}
+
+entity Event {
+    type String,
+    location String,
+    title String,
+    description String,
+    startDate LocalDate,
+    endDate LocalDate,
+    url String,
+    eunContact String,
+    courseModules String,
+    courseDuration Integer,
+    courseType String,
+    modules Integer,
+    status String,
+    engagementRate Integer,
+    completionRate Integer,
+    name String
+}
+
+entity OperationalBody {
+    name String required,
+    acronym String,
+    description String,
+    type String,
+    status String
+}
+
+entity Funding {
+    name String,
+    type String,
+    parentId Long,
+    description String
+}
+
+entity Project {
+    status ProjectStatus required,
+    supportedCountryIds String,
+    supportedLanguageIds String,
+    name String required,
+    acronym String,
+    period String,
+    description String required,
+    contactEmail String ,
+    contactName String ,
+    totalBudget Long,
+    totalFunding Long,
+    totalBudgetForEun Long,
+    totalFundingForEun Long,
+    fundingValue Long,
+    percentageOfFunding Long,
+    percentageOfIndirectCosts Long,
+    percentageOfFundingForEun Long,
+    percentageOfIndirectCostsForEun Long,
+    fundingExtraComment String ,
+    programme String ,
+    euDg String ,
+    roleOfEun String ,
+    summary String ,
+    mainTasks String ,
+    expectedOutcomes String ,
+    euCallReference String ,
+    euProjectReference String ,
+    euCallDeadline String ,
+    projectManager String ,
+    referenceNumberOfProject Integer,
+    eunTeam String ,
+    sysCreatTimestamp Instant,
+    sysCreatIpAddress String,
+    sysModifTimestamp Instant,
+    sysModifIpAddress String
+}
+
+entity Country {
+    countryName String
+}
+
+entity Ministry {
+    languages String,
+    formalName String,
+    englishName String,
+    acronym String,
+    description String,
+    website String,
+    steercomMemberName String,
+    steercomMemberEmail String,
+    postalAddressRegion String,
+    postalAddressPostalCode String,
+    postalAddressCity String,
+    postalAddressStreet String,
+    status String,
+    eunContactFirstname String,
+    eunContactLastname String,
+    eunContactEmail String,
+    invoicingAddress String,
+    financialCorrespondingEmail String
+}
+
+entity OperationalBodyMember {
+    personId Long,
+    position String,
+    startDate LocalDate,
+    endDate LocalDate,
+    department String,
+    eunContactFirstname String,
+    eunContactLastname String,
+    cooperationField String,
+    status String
+}
+
+entity Organization {
+    eunDbId Long,
+    status OrgStatus required,
+    officialName String required,
+    description String ,
+    type String,
+    address String,
+    latitude Integer,
+    longitude Integer,
+    maxAge Integer,
+    minAge Integer,
+    area Integer,
+    specialization String,
+    numberOfStudents String,
+    hardwareUsed Boolean,
+    ictUsed Boolean,
+    website String,
+    image Blob,
+    telephone String,
+    fax String,
+    email String,
+    organisationNumber String
+}
+
+entity Person {
+    eunDbId Long,
+    firstname String,
+    lastname String,
+    salutation Integer,
+    mainContractEmail String,
+    extraContractEmail String,
+    languageMotherTongue String,
+    languageOther String,
+    description String,
+    website String,
+    mobile String,
+    phone String,
+    socialNetworkContacts String,
+    status String,
+    gdprStatus GdprStatus,
+    lastLoginDate LocalDate
+}
+
+entity EunTeamMember {
+    role String,
+    status String
+}
+
+entity EventInOrganization {
+}
+
+entity EventParticipant {
+    type String
+}
+
+entity OrganizationInMinistry {
+    status String
+}
+
+entity OrganizationInProject {
+    status String,
+    joinDate LocalDate,
+    fundingForOrganization Integer,
+    participationToMatchingFunding Integer,
+    schoolRegistrationPossible Boolean,
+    teacherParticipationPossible Boolean,
+    ambassadorsPilotTeachersLeadingTeachersIdentified Boolean,
+    usersCanRegisterToPortal Boolean
+}
+
+entity PersonInOrganization {
+    roleInOrganization String
+}
+
+entity PersonInProject {
+    roleInProject String
+}
+
+relationship OneToMany {
+    Project{funding(id)} to Funding,
+    Ministry{country(id)} to Country,
+    OperationalBodyMember{country(id)} to Country,
+    Organization{country(id)} to Country,
+    Person{country(id)} to Country,
+    EunTeamMember{team(id)} to EunTeam,
+    EunTeamMember{person(id)} to Person,
+    EventInOrganization{event(id)} to Event,
+    EventInOrganization{organization(id)} to Organization,
+    EventParticipant{event(id)} to Event,
+    EventParticipant{person(id)} to Person,
+    OrganizationInMinistry{ministry(id)} to Ministry,
+    OrganizationInMinistry{organization(id)} to Organization,
+    OrganizationInProject{project(id)} to Project,
+    OrganizationInProject{organization(id)} to Organization,
+    PersonInOrganization{person(id)} to Person,
+    PersonInOrganization{organization(id)} to Organization,
+    PersonInProject{person(id)} to Person,
+    PersonInProject{project(id)} to Project
+}
+
+paginate Event, Organization, Person, EunTeam, OperationalBody, Funding, Project, Country, Ministry, OperationalBodyMember, EunTeamMember, EventInOrganization, EventParticipant, OrganizationInMinistry, OrganizationInProject, PersonInOrganization, PersonInProject with pagination
+dto Event, Organization, Person, EunTeam, OperationalBody, Funding, Project, Country, Ministry, OperationalBodyMember, EunTeamMember, EventInOrganization, EventParticipant, OrganizationInMinistry, OrganizationInProject, PersonInOrganization, PersonInProject with mapstruct
+service Event, Organization, Person, EunTeam, OperationalBody, Funding, Project, Country, Ministry, OperationalBodyMember, EunTeamMember, EventInOrganization, EventParticipant, OrganizationInMinistry, OrganizationInProject, PersonInOrganization, PersonInProject with serviceImpl

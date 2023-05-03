@@ -1,0 +1,437 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-project-heading" data-cy="ProjectCreateUpdateHeading">Create or edit a Project</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let projectStatus of projectStatusValues" [value]="projectStatus">projectStatus</option>
+          </select>
+          <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('status')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_supportedCountryIds">Supported Country Ids</label>
+          <input
+            type="text"
+            class="form-control"
+            name="supportedCountryIds"
+            id="field_supportedCountryIds"
+            data-cy="supportedCountryIds"
+            formControlName="supportedCountryIds"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_supportedLanguageIds">Supported Language Ids</label>
+          <input
+            type="text"
+            class="form-control"
+            name="supportedLanguageIds"
+            id="field_supportedLanguageIds"
+            data-cy="supportedLanguageIds"
+            formControlName="supportedLanguageIds"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_acronym">Acronym</label>
+          <input type="text" class="form-control" name="acronym" id="field_acronym" data-cy="acronym" formControlName="acronym" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_period">Period</label>
+          <input type="text" class="form-control" name="period" id="field_period" data-cy="period" formControlName="period" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('description')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_contactEmail">Contact Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="contactEmail"
+            id="field_contactEmail"
+            data-cy="contactEmail"
+            formControlName="contactEmail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_contactName">Contact Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="contactName"
+            id="field_contactName"
+            data-cy="contactName"
+            formControlName="contactName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_totalBudget">Total Budget</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalBudget"
+            id="field_totalBudget"
+            data-cy="totalBudget"
+            formControlName="totalBudget"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_totalFunding">Total Funding</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalFunding"
+            id="field_totalFunding"
+            data-cy="totalFunding"
+            formControlName="totalFunding"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_totalBudgetForEun">Total Budget For Eun</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalBudgetForEun"
+            id="field_totalBudgetForEun"
+            data-cy="totalBudgetForEun"
+            formControlName="totalBudgetForEun"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_totalFundingForEun">Total Funding For Eun</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalFundingForEun"
+            id="field_totalFundingForEun"
+            data-cy="totalFundingForEun"
+            formControlName="totalFundingForEun"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_fundingValue">Funding Value</label>
+          <input
+            type="number"
+            class="form-control"
+            name="fundingValue"
+            id="field_fundingValue"
+            data-cy="fundingValue"
+            formControlName="fundingValue"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_percentageOfFunding">Percentage Of Funding</label>
+          <input
+            type="number"
+            class="form-control"
+            name="percentageOfFunding"
+            id="field_percentageOfFunding"
+            data-cy="percentageOfFunding"
+            formControlName="percentageOfFunding"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_percentageOfIndirectCosts">Percentage Of Indirect Costs</label>
+          <input
+            type="number"
+            class="form-control"
+            name="percentageOfIndirectCosts"
+            id="field_percentageOfIndirectCosts"
+            data-cy="percentageOfIndirectCosts"
+            formControlName="percentageOfIndirectCosts"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_percentageOfFundingForEun">Percentage Of Funding For Eun</label>
+          <input
+            type="number"
+            class="form-control"
+            name="percentageOfFundingForEun"
+            id="field_percentageOfFundingForEun"
+            data-cy="percentageOfFundingForEun"
+            formControlName="percentageOfFundingForEun"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_percentageOfIndirectCostsForEun">Percentage Of Indirect Costs For Eun</label>
+          <input
+            type="number"
+            class="form-control"
+            name="percentageOfIndirectCostsForEun"
+            id="field_percentageOfIndirectCostsForEun"
+            data-cy="percentageOfIndirectCostsForEun"
+            formControlName="percentageOfIndirectCostsForEun"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_fundingExtraComment">Funding Extra Comment</label>
+          <input
+            type="text"
+            class="form-control"
+            name="fundingExtraComment"
+            id="field_fundingExtraComment"
+            data-cy="fundingExtraComment"
+            formControlName="fundingExtraComment"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_programme">Programme</label>
+          <input type="text" class="form-control" name="programme" id="field_programme" data-cy="programme" formControlName="programme" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_euDg">Eu Dg</label>
+          <input type="text" class="form-control" name="euDg" id="field_euDg" data-cy="euDg" formControlName="euDg" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_roleOfEun">Role Of Eun</label>
+          <input type="text" class="form-control" name="roleOfEun" id="field_roleOfEun" data-cy="roleOfEun" formControlName="roleOfEun" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_summary">Summary</label>
+          <input type="text" class="form-control" name="summary" id="field_summary" data-cy="summary" formControlName="summary" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_mainTasks">Main Tasks</label>
+          <input type="text" class="form-control" name="mainTasks" id="field_mainTasks" data-cy="mainTasks" formControlName="mainTasks" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_expectedOutcomes">Expected Outcomes</label>
+          <input
+            type="text"
+            class="form-control"
+            name="expectedOutcomes"
+            id="field_expectedOutcomes"
+            data-cy="expectedOutcomes"
+            formControlName="expectedOutcomes"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_euCallReference">Eu Call Reference</label>
+          <input
+            type="text"
+            class="form-control"
+            name="euCallReference"
+            id="field_euCallReference"
+            data-cy="euCallReference"
+            formControlName="euCallReference"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_euProjectReference">Eu Project Reference</label>
+          <input
+            type="text"
+            class="form-control"
+            name="euProjectReference"
+            id="field_euProjectReference"
+            data-cy="euProjectReference"
+            formControlName="euProjectReference"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_euCallDeadline">Eu Call Deadline</label>
+          <input
+            type="text"
+            class="form-control"
+            name="euCallDeadline"
+            id="field_euCallDeadline"
+            data-cy="euCallDeadline"
+            formControlName="euCallDeadline"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_projectManager">Project Manager</label>
+          <input
+            type="text"
+            class="form-control"
+            name="projectManager"
+            id="field_projectManager"
+            data-cy="projectManager"
+            formControlName="projectManager"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_referenceNumberOfProject">Reference Number Of Project</label>
+          <input
+            type="number"
+            class="form-control"
+            name="referenceNumberOfProject"
+            id="field_referenceNumberOfProject"
+            data-cy="referenceNumberOfProject"
+            formControlName="referenceNumberOfProject"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eunTeam">Eun Team</label>
+          <input type="text" class="form-control" name="eunTeam" id="field_eunTeam" data-cy="eunTeam" formControlName="eunTeam" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_sysCreatTimestamp">Sys Creat Timestamp</label>
+          <div class="d-flex">
+            <input
+              id="field_sysCreatTimestamp"
+              data-cy="sysCreatTimestamp"
+              type="datetime-local"
+              class="form-control"
+              name="sysCreatTimestamp"
+              formControlName="sysCreatTimestamp"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_sysCreatIpAddress">Sys Creat Ip Address</label>
+          <input
+            type="text"
+            class="form-control"
+            name="sysCreatIpAddress"
+            id="field_sysCreatIpAddress"
+            data-cy="sysCreatIpAddress"
+            formControlName="sysCreatIpAddress"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_sysModifTimestamp">Sys Modif Timestamp</label>
+          <div class="d-flex">
+            <input
+              id="field_sysModifTimestamp"
+              data-cy="sysModifTimestamp"
+              type="datetime-local"
+              class="form-control"
+              name="sysModifTimestamp"
+              formControlName="sysModifTimestamp"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_sysModifIpAddress">Sys Modif Ip Address</label>
+          <input
+            type="text"
+            class="form-control"
+            name="sysModifIpAddress"
+            id="field_sysModifIpAddress"
+            data-cy="sysModifIpAddress"
+            formControlName="sysModifIpAddress"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_organizationInProject">Organization In Project</label>
+          <select
+            class="form-control"
+            id="field_organizationInProject"
+            data-cy="organizationInProject"
+            name="organizationInProject"
+            formControlName="organizationInProject"
+            [compareWith]="compareOrganizationInProject"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="organizationInProjectOption"
+              *ngFor="let organizationInProjectOption of organizationInProjectsSharedCollection"
+            >
+              {{ organizationInProjectOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_personInProject">Person In Project</label>
+          <select
+            class="form-control"
+            id="field_personInProject"
+            data-cy="personInProject"
+            name="personInProject"
+            formControlName="personInProject"
+            [compareWith]="comparePersonInProject"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="personInProjectOption" *ngFor="let personInProjectOption of personInProjectsSharedCollection">
+              {{ personInProjectOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

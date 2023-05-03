@@ -1,0 +1,113 @@
+{
+  "applications": "*",
+  "changelogDate": "20230428120837",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "person",
+  "fields": [
+    {
+      "fieldName": "eunDbId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "firstname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "salutation",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "mainContractEmail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "extraContractEmail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "languageMotherTongue",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "languageOther",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "website",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mobile",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "phone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "socialNetworkContacts",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "gdprStatus",
+      "fieldType": "GdprStatus",
+      "fieldValues": "IDENTIFIABLE,USER_REQUESTED_ANON,SYS_FLAGGED_INACTIVE,ANONYMIZED"
+    },
+    {
+      "fieldName": "lastLoginDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Person",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "country",
+      "otherEntityRelationshipName": "person",
+      "relationshipName": "country",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "eunTeamMember",
+      "otherEntityRelationshipName": "person",
+      "relationshipName": "eunTeamMember",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "eventParticipant",
+      "otherEntityRelationshipName": "person",
+      "relationshipName": "eventParticipant",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "personInOrganization",
+      "otherEntityRelationshipName": "person",
+      "relationshipName": "personInOrganization",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "personInProject",
+      "otherEntityRelationshipName": "person",
+      "relationshipName": "personInProject",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

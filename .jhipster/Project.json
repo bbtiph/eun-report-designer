@@ -1,0 +1,180 @@
+{
+  "applications": "*",
+  "changelogDate": "20230427100940",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "project",
+  "fields": [
+    {
+      "fieldName": "status",
+      "fieldType": "ProjectStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "DRAFT,REQUESTED,REVIEWED,ACTIVE,CLOSED"
+    },
+    {
+      "fieldName": "supportedCountryIds",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "supportedLanguageIds",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "acronym",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "period",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "contactEmail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "contactName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "totalBudget",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "totalFunding",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "totalBudgetForEun",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "totalFundingForEun",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "fundingValue",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "percentageOfFunding",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "percentageOfIndirectCosts",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "percentageOfFundingForEun",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "percentageOfIndirectCostsForEun",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "fundingExtraComment",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "programme",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "euDg",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "roleOfEun",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "summary",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mainTasks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "expectedOutcomes",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "euCallReference",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "euProjectReference",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "euCallDeadline",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "projectManager",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "referenceNumberOfProject",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "eunTeam",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sysCreatTimestamp",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "sysCreatIpAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sysModifTimestamp",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "sysModifIpAddress",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Project",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "funding",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "funding",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "organizationInProject",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "organizationInProject",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "personInProject",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "personInProject",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

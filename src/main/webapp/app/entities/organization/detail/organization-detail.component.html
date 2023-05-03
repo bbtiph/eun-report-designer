@@ -1,0 +1,147 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="organization">
+      <h2 data-cy="organizationDetailsHeading"><span>Organization</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ organization.id }}</span>
+        </dd>
+        <dt><span>Eun Db Id</span></dt>
+        <dd>
+          <span>{{ organization.eunDbId }}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+          <span>{{ organization.status }}</span>
+        </dd>
+        <dt><span>Official Name</span></dt>
+        <dd>
+          <span>{{ organization.officialName }}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+          <span>{{ organization.description }}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+          <span>{{ organization.type }}</span>
+        </dd>
+        <dt><span>Address</span></dt>
+        <dd>
+          <span>{{ organization.address }}</span>
+        </dd>
+        <dt><span>Latitude</span></dt>
+        <dd>
+          <span>{{ organization.latitude }}</span>
+        </dd>
+        <dt><span>Longitude</span></dt>
+        <dd>
+          <span>{{ organization.longitude }}</span>
+        </dd>
+        <dt><span>Max Age</span></dt>
+        <dd>
+          <span>{{ organization.maxAge }}</span>
+        </dd>
+        <dt><span>Min Age</span></dt>
+        <dd>
+          <span>{{ organization.minAge }}</span>
+        </dd>
+        <dt><span>Area</span></dt>
+        <dd>
+          <span>{{ organization.area }}</span>
+        </dd>
+        <dt><span>Specialization</span></dt>
+        <dd>
+          <span>{{ organization.specialization }}</span>
+        </dd>
+        <dt><span>Number Of Students</span></dt>
+        <dd>
+          <span>{{ organization.numberOfStudents }}</span>
+        </dd>
+        <dt><span>Hardware Used</span></dt>
+        <dd>
+          <span>{{ organization.hardwareUsed }}</span>
+        </dd>
+        <dt><span>Ict Used</span></dt>
+        <dd>
+          <span>{{ organization.ictUsed }}</span>
+        </dd>
+        <dt><span>Website</span></dt>
+        <dd>
+          <span>{{ organization.website }}</span>
+        </dd>
+        <dt><span>Image</span></dt>
+        <dd>
+          <div *ngIf="organization.image">
+            <a (click)="openFile(organization.image, organization.imageContentType)">Open</a>
+            {{ organization.imageContentType }}, {{ byteSize(organization.image) }}
+          </div>
+        </dd>
+        <dt><span>Telephone</span></dt>
+        <dd>
+          <span>{{ organization.telephone }}</span>
+        </dd>
+        <dt><span>Fax</span></dt>
+        <dd>
+          <span>{{ organization.fax }}</span>
+        </dd>
+        <dt><span>Email</span></dt>
+        <dd>
+          <span>{{ organization.email }}</span>
+        </dd>
+        <dt><span>Organisation Number</span></dt>
+        <dd>
+          <span>{{ organization.organisationNumber }}</span>
+        </dd>
+        <dt><span>Event In Organization</span></dt>
+        <dd>
+          <div *ngIf="organization.eventInOrganization">
+            <a [routerLink]="['/event-in-organization', organization.eventInOrganization.id, 'view']">{{
+              organization.eventInOrganization.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Organization In Ministry</span></dt>
+        <dd>
+          <div *ngIf="organization.organizationInMinistry">
+            <a [routerLink]="['/organization-in-ministry', organization.organizationInMinistry.id, 'view']">{{
+              organization.organizationInMinistry.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Organization In Project</span></dt>
+        <dd>
+          <div *ngIf="organization.organizationInProject">
+            <a [routerLink]="['/organization-in-project', organization.organizationInProject.id, 'view']">{{
+              organization.organizationInProject.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Person In Organization</span></dt>
+        <dd>
+          <div *ngIf="organization.personInOrganization">
+            <a [routerLink]="['/person-in-organization', organization.personInOrganization.id, 'view']">{{
+              organization.personInOrganization.id
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/organization', organization.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

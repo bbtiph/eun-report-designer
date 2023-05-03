@@ -9,21 +9,31 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.eun.back.config.ApplicationProperties;
 import org.eun.back.config.CRLFLogConverter;
+import org.eun.back.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
-public class EunReportDesignerApp {
+public class EunReportDesignerApp implements WebMvcConfigurer {
 
     private static final Logger log = LoggerFactory.getLogger(EunReportDesignerApp.class);
+
+    @Value("${reports.relative.path}")
+    private String reportsPath;
+
+    @Value("${images.relative.path}")
+    private String imagesPath;
 
     private final Environment env;
 
@@ -101,5 +111,12 @@ public class EunReportDesignerApp {
             contextPath,
             env.getActiveProfiles().length == 0 ? env.getDefaultProfiles() : env.getActiveProfiles()
         );
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String pathFile = "file:///" + Utils.getOsPath(true) + reportsPath + imagesPath;
+        registry.addResourceHandler(reportsPath + imagesPath + "/**").addResourceLocations(pathFile);
+        log.info(pathFile);
     }
 }

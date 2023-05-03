@@ -1,0 +1,63 @@
+{
+  "applications": "*",
+  "changelogDate": "20230428120842",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "organization_in_project",
+  "fields": [
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "joinDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "fundingForOrganization",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "participationToMatchingFunding",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "schoolRegistrationPossible",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "teacherParticipationPossible",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "ambassadorsPilotTeachersLeadingTeachersIdentified",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "usersCanRegisterToPortal",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "OrganizationInProject",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "project",
+      "otherEntityRelationshipName": "organizationInProject",
+      "relationshipName": "project",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "organization",
+      "otherEntityRelationshipName": "organizationInProject",
+      "relationshipName": "organization",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

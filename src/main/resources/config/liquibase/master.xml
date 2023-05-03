@@ -11,7 +11,33 @@
     <property name="datetimeType" value="datetime" dbms="postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230427100940_added_entity_Project.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230427111606_added_entity_Countries.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230427114022_added_entity_EunTeam.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120830_added_entity_Event.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120831_added_entity_OperationalBody.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120832_added_entity_Funding.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120833_added_entity_Country.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120834_added_entity_Ministry.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120835_added_entity_OperationalBodyMember.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120836_added_entity_Organization.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120837_added_entity_Person.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120838_added_entity_EunTeamMember.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120839_added_entity_EventInOrganization.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120840_added_entity_EventParticipant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120841_added_entity_OrganizationInMinistry.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120842_added_entity_OrganizationInProject.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120843_added_entity_PersonInOrganization.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120844_added_entity_PersonInProject.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20230427100940_added_entity_constraints_Project.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230427114022_added_entity_constraints_EunTeam.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120830_added_entity_constraints_Event.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120832_added_entity_constraints_Funding.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120833_added_entity_constraints_Country.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120834_added_entity_constraints_Ministry.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120836_added_entity_constraints_Organization.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230428120837_added_entity_constraints_Person.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

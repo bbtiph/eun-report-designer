@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="country">
+      <h2 data-cy="countryDetailsHeading"><span>Country</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ country.id }}</span>
+        </dd>
+        <dt><span>Country Name</span></dt>
+        <dd>
+          <span>{{ country.countryName }}</span>
+        </dd>
+        <dt><span>Ministry</span></dt>
+        <dd>
+          <div *ngIf="country.ministry">
+            <a [routerLink]="['/ministry', country.ministry.id, 'view']">{{ country.ministry.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Operational Body Member</span></dt>
+        <dd>
+          <div *ngIf="country.operationalBodyMember">
+            <a [routerLink]="['/operational-body-member', country.operationalBodyMember.id, 'view']">{{
+              country.operationalBodyMember.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Organization</span></dt>
+        <dd>
+          <div *ngIf="country.organization">
+            <a [routerLink]="['/organization', country.organization.id, 'view']">{{ country.organization.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Person</span></dt>
+        <dd>
+          <div *ngIf="country.person">
+            <a [routerLink]="['/person', country.person.id, 'view']">{{ country.person.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/country', country.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

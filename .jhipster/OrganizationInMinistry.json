@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20230428120841",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "organization_in_ministry",
+  "fields": [
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "OrganizationInMinistry",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "ministry",
+      "otherEntityRelationshipName": "organizationInMinistry",
+      "relationshipName": "ministry",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "organization",
+      "otherEntityRelationshipName": "organizationInMinistry",
+      "relationshipName": "organization",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

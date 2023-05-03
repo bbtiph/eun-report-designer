@@ -1,0 +1,155 @@
+<div>
+  <h2 id="page-heading" data-cy="OrganizationInProjectHeading">
+    <span>Organization In Projects</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-organization-in-project"
+        [routerLink]="['/organization-in-project/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Organization In Project </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="organizationInProjects?.length === 0">
+    <span>No Organization In Projects found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="organizationInProjects && organizationInProjects.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span>Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="joinDate">
+            <div class="d-flex">
+              <span>Join Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fundingForOrganization">
+            <div class="d-flex">
+              <span>Funding For Organization</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="participationToMatchingFunding">
+            <div class="d-flex">
+              <span>Participation To Matching Funding</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="schoolRegistrationPossible">
+            <div class="d-flex">
+              <span>School Registration Possible</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="teacherParticipationPossible">
+            <div class="d-flex">
+              <span>Teacher Participation Possible</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="ambassadorsPilotTeachersLeadingTeachersIdentified">
+            <div class="d-flex">
+              <span>Ambassadors Pilot Teachers Leading Teachers Identified</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="usersCanRegisterToPortal">
+            <div class="d-flex">
+              <span>Users Can Register To Portal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let organizationInProject of organizationInProjects; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/organization-in-project', organizationInProject.id, 'view']">{{ organizationInProject.id }}</a>
+          </td>
+          <td>{{ organizationInProject.status }}</td>
+          <td>{{ organizationInProject.joinDate | formatMediumDate }}</td>
+          <td>{{ organizationInProject.fundingForOrganization }}</td>
+          <td>{{ organizationInProject.participationToMatchingFunding }}</td>
+          <td>{{ organizationInProject.schoolRegistrationPossible }}</td>
+          <td>{{ organizationInProject.teacherParticipationPossible }}</td>
+          <td>{{ organizationInProject.ambassadorsPilotTeachersLeadingTeachersIdentified }}</td>
+          <td>{{ organizationInProject.usersCanRegisterToPortal }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/organization-in-project', organizationInProject.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/organization-in-project', organizationInProject.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(organizationInProject)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="organizationInProjects && organizationInProjects.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

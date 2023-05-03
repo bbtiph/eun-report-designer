@@ -1,0 +1,238 @@
+<div>
+  <h2 id="page-heading" data-cy="MinistryHeading">
+    <span>Ministries</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-ministry"
+        [routerLink]="['/ministry/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Ministry </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="ministries?.length === 0">
+    <span>No Ministries found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="ministries && ministries.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="languages">
+            <div class="d-flex">
+              <span>Languages</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="formalName">
+            <div class="d-flex">
+              <span>Formal Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="englishName">
+            <div class="d-flex">
+              <span>English Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="acronym">
+            <div class="d-flex">
+              <span>Acronym</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span>Description</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="website">
+            <div class="d-flex">
+              <span>Website</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="steercomMemberName">
+            <div class="d-flex">
+              <span>Steercom Member Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="steercomMemberEmail">
+            <div class="d-flex">
+              <span>Steercom Member Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="postalAddressRegion">
+            <div class="d-flex">
+              <span>Postal Address Region</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="postalAddressPostalCode">
+            <div class="d-flex">
+              <span>Postal Address Postal Code</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="postalAddressCity">
+            <div class="d-flex">
+              <span>Postal Address City</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="postalAddressStreet">
+            <div class="d-flex">
+              <span>Postal Address Street</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span>Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="eunContactFirstname">
+            <div class="d-flex">
+              <span>Eun Contact Firstname</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="eunContactLastname">
+            <div class="d-flex">
+              <span>Eun Contact Lastname</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="eunContactEmail">
+            <div class="d-flex">
+              <span>Eun Contact Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="invoicingAddress">
+            <div class="d-flex">
+              <span>Invoicing Address</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="financialCorrespondingEmail">
+            <div class="d-flex">
+              <span>Financial Corresponding Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organizationInMinistry.id">
+            <div class="d-flex">
+              <span>Organization In Ministry</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ministry of ministries; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/ministry', ministry.id, 'view']">{{ ministry.id }}</a>
+          </td>
+          <td>{{ ministry.languages }}</td>
+          <td>{{ ministry.formalName }}</td>
+          <td>{{ ministry.englishName }}</td>
+          <td>{{ ministry.acronym }}</td>
+          <td>{{ ministry.description }}</td>
+          <td>{{ ministry.website }}</td>
+          <td>{{ ministry.steercomMemberName }}</td>
+          <td>{{ ministry.steercomMemberEmail }}</td>
+          <td>{{ ministry.postalAddressRegion }}</td>
+          <td>{{ ministry.postalAddressPostalCode }}</td>
+          <td>{{ ministry.postalAddressCity }}</td>
+          <td>{{ ministry.postalAddressStreet }}</td>
+          <td>{{ ministry.status }}</td>
+          <td>{{ ministry.eunContactFirstname }}</td>
+          <td>{{ ministry.eunContactLastname }}</td>
+          <td>{{ ministry.eunContactEmail }}</td>
+          <td>{{ ministry.invoicingAddress }}</td>
+          <td>{{ ministry.financialCorrespondingEmail }}</td>
+          <td>
+            <div *ngIf="ministry.organizationInMinistry">
+              <a [routerLink]="['/organization-in-ministry', ministry.organizationInMinistry.id, 'view']">{{
+                ministry.organizationInMinistry.id
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/ministry', ministry.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/ministry', ministry.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(ministry)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="ministries && ministries.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

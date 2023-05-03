@@ -1,0 +1,116 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="person">
+      <h2 data-cy="personDetailsHeading"><span>Person</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ person.id }}</span>
+        </dd>
+        <dt><span>Eun Db Id</span></dt>
+        <dd>
+          <span>{{ person.eunDbId }}</span>
+        </dd>
+        <dt><span>Firstname</span></dt>
+        <dd>
+          <span>{{ person.firstname }}</span>
+        </dd>
+        <dt><span>Lastname</span></dt>
+        <dd>
+          <span>{{ person.lastname }}</span>
+        </dd>
+        <dt><span>Salutation</span></dt>
+        <dd>
+          <span>{{ person.salutation }}</span>
+        </dd>
+        <dt><span>Main Contract Email</span></dt>
+        <dd>
+          <span>{{ person.mainContractEmail }}</span>
+        </dd>
+        <dt><span>Extra Contract Email</span></dt>
+        <dd>
+          <span>{{ person.extraContractEmail }}</span>
+        </dd>
+        <dt><span>Language Mother Tongue</span></dt>
+        <dd>
+          <span>{{ person.languageMotherTongue }}</span>
+        </dd>
+        <dt><span>Language Other</span></dt>
+        <dd>
+          <span>{{ person.languageOther }}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+          <span>{{ person.description }}</span>
+        </dd>
+        <dt><span>Website</span></dt>
+        <dd>
+          <span>{{ person.website }}</span>
+        </dd>
+        <dt><span>Mobile</span></dt>
+        <dd>
+          <span>{{ person.mobile }}</span>
+        </dd>
+        <dt><span>Phone</span></dt>
+        <dd>
+          <span>{{ person.phone }}</span>
+        </dd>
+        <dt><span>Social Network Contacts</span></dt>
+        <dd>
+          <span>{{ person.socialNetworkContacts }}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+          <span>{{ person.status }}</span>
+        </dd>
+        <dt><span>Gdpr Status</span></dt>
+        <dd>
+          <span>{{ person.gdprStatus }}</span>
+        </dd>
+        <dt><span>Last Login Date</span></dt>
+        <dd>
+          <span>{{ person.lastLoginDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Eun Team Member</span></dt>
+        <dd>
+          <div *ngIf="person.eunTeamMember">
+            <a [routerLink]="['/eun-team-member', person.eunTeamMember.id, 'view']">{{ person.eunTeamMember.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Event Participant</span></dt>
+        <dd>
+          <div *ngIf="person.eventParticipant">
+            <a [routerLink]="['/event-participant', person.eventParticipant.id, 'view']">{{ person.eventParticipant.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Person In Organization</span></dt>
+        <dd>
+          <div *ngIf="person.personInOrganization">
+            <a [routerLink]="['/person-in-organization', person.personInOrganization.id, 'view']">{{ person.personInOrganization.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Person In Project</span></dt>
+        <dd>
+          <div *ngIf="person.personInProject">
+            <a [routerLink]="['/person-in-project', person.personInProject.id, 'view']">{{ person.personInProject.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/person', person.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

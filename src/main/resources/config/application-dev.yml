@@ -20,6 +20,18 @@ logging:
     org.hibernate.SQL: DEBUG
     org.eun.back: DEBUG
 
+reports:
+  relative:
+    path: reports/
+
+images:
+  relative:
+    path: images/
+
+os:
+  linux:
+    docker: true
+
 spring:
   devtools:
     restart:

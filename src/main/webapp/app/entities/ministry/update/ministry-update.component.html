@@ -1,0 +1,240 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-ministry-heading" data-cy="MinistryCreateUpdateHeading">Create or edit a Ministry</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_languages">Languages</label>
+          <input type="text" class="form-control" name="languages" id="field_languages" data-cy="languages" formControlName="languages" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_formalName">Formal Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="formalName"
+            id="field_formalName"
+            data-cy="formalName"
+            formControlName="formalName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_englishName">English Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="englishName"
+            id="field_englishName"
+            data-cy="englishName"
+            formControlName="englishName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_acronym">Acronym</label>
+          <input type="text" class="form-control" name="acronym" id="field_acronym" data-cy="acronym" formControlName="acronym" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_website">Website</label>
+          <input type="text" class="form-control" name="website" id="field_website" data-cy="website" formControlName="website" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_steercomMemberName">Steercom Member Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="steercomMemberName"
+            id="field_steercomMemberName"
+            data-cy="steercomMemberName"
+            formControlName="steercomMemberName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_steercomMemberEmail">Steercom Member Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="steercomMemberEmail"
+            id="field_steercomMemberEmail"
+            data-cy="steercomMemberEmail"
+            formControlName="steercomMemberEmail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_postalAddressRegion">Postal Address Region</label>
+          <input
+            type="text"
+            class="form-control"
+            name="postalAddressRegion"
+            id="field_postalAddressRegion"
+            data-cy="postalAddressRegion"
+            formControlName="postalAddressRegion"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_postalAddressPostalCode">Postal Address Postal Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="postalAddressPostalCode"
+            id="field_postalAddressPostalCode"
+            data-cy="postalAddressPostalCode"
+            formControlName="postalAddressPostalCode"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_postalAddressCity">Postal Address City</label>
+          <input
+            type="text"
+            class="form-control"
+            name="postalAddressCity"
+            id="field_postalAddressCity"
+            data-cy="postalAddressCity"
+            formControlName="postalAddressCity"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_postalAddressStreet">Postal Address Street</label>
+          <input
+            type="text"
+            class="form-control"
+            name="postalAddressStreet"
+            id="field_postalAddressStreet"
+            data-cy="postalAddressStreet"
+            formControlName="postalAddressStreet"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_status">Status</label>
+          <input type="text" class="form-control" name="status" id="field_status" data-cy="status" formControlName="status" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eunContactFirstname">Eun Contact Firstname</label>
+          <input
+            type="text"
+            class="form-control"
+            name="eunContactFirstname"
+            id="field_eunContactFirstname"
+            data-cy="eunContactFirstname"
+            formControlName="eunContactFirstname"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eunContactLastname">Eun Contact Lastname</label>
+          <input
+            type="text"
+            class="form-control"
+            name="eunContactLastname"
+            id="field_eunContactLastname"
+            data-cy="eunContactLastname"
+            formControlName="eunContactLastname"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eunContactEmail">Eun Contact Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="eunContactEmail"
+            id="field_eunContactEmail"
+            data-cy="eunContactEmail"
+            formControlName="eunContactEmail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_invoicingAddress">Invoicing Address</label>
+          <input
+            type="text"
+            class="form-control"
+            name="invoicingAddress"
+            id="field_invoicingAddress"
+            data-cy="invoicingAddress"
+            formControlName="invoicingAddress"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_financialCorrespondingEmail">Financial Corresponding Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="financialCorrespondingEmail"
+            id="field_financialCorrespondingEmail"
+            data-cy="financialCorrespondingEmail"
+            formControlName="financialCorrespondingEmail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_organizationInMinistry">Organization In Ministry</label>
+          <select
+            class="form-control"
+            id="field_organizationInMinistry"
+            data-cy="organizationInMinistry"
+            name="organizationInMinistry"
+            formControlName="organizationInMinistry"
+            [compareWith]="compareOrganizationInMinistry"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="organizationInMinistryOption"
+              *ngFor="let organizationInMinistryOption of organizationInMinistriesSharedCollection"
+            >
+              {{ organizationInMinistryOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

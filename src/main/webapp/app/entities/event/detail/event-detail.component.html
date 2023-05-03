@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="event">
+      <h2 data-cy="eventDetailsHeading"><span>Event</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ event.id }}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+          <span>{{ event.type }}</span>
+        </dd>
+        <dt><span>Location</span></dt>
+        <dd>
+          <span>{{ event.location }}</span>
+        </dd>
+        <dt><span>Title</span></dt>
+        <dd>
+          <span>{{ event.title }}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+          <span>{{ event.description }}</span>
+        </dd>
+        <dt><span>Start Date</span></dt>
+        <dd>
+          <span>{{ event.startDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>End Date</span></dt>
+        <dd>
+          <span>{{ event.endDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Url</span></dt>
+        <dd>
+          <span>{{ event.url }}</span>
+        </dd>
+        <dt><span>Eun Contact</span></dt>
+        <dd>
+          <span>{{ event.eunContact }}</span>
+        </dd>
+        <dt><span>Course Modules</span></dt>
+        <dd>
+          <span>{{ event.courseModules }}</span>
+        </dd>
+        <dt><span>Course Duration</span></dt>
+        <dd>
+          <span>{{ event.courseDuration }}</span>
+        </dd>
+        <dt><span>Course Type</span></dt>
+        <dd>
+          <span>{{ event.courseType }}</span>
+        </dd>
+        <dt><span>Modules</span></dt>
+        <dd>
+          <span>{{ event.modules }}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+          <span>{{ event.status }}</span>
+        </dd>
+        <dt><span>Engagement Rate</span></dt>
+        <dd>
+          <span>{{ event.engagementRate }}</span>
+        </dd>
+        <dt><span>Completion Rate</span></dt>
+        <dd>
+          <span>{{ event.completionRate }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ event.name }}</span>
+        </dd>
+        <dt><span>Event In Organization</span></dt>
+        <dd>
+          <div *ngIf="event.eventInOrganization">
+            <a [routerLink]="['/event-in-organization', event.eventInOrganization.id, 'view']">{{ event.eventInOrganization.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Event Participant</span></dt>
+        <dd>
+          <div *ngIf="event.eventParticipant">
+            <a [routerLink]="['/event-participant', event.eventParticipant.id, 'view']">{{ event.eventParticipant.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/event', event.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

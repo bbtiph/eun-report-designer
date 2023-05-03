@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20230428120838",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "eun_team_member",
+  "fields": [
+    {
+      "fieldName": "role",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EunTeamMember",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "eunTeam",
+      "otherEntityRelationshipName": "eunTeamMember",
+      "relationshipName": "team",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "person",
+      "otherEntityRelationshipName": "eunTeamMember",
+      "relationshipName": "person",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,130 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-organization-in-project-heading" data-cy="OrganizationInProjectCreateUpdateHeading">
+        Create or edit a Organization In Project
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_status">Status</label>
+          <input type="text" class="form-control" name="status" id="field_status" data-cy="status" formControlName="status" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_joinDate">Join Date</label>
+          <div class="input-group">
+            <input
+              id="field_joinDate"
+              data-cy="joinDate"
+              type="text"
+              class="form-control"
+              name="joinDate"
+              ngbDatepicker
+              #joinDateDp="ngbDatepicker"
+              formControlName="joinDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="joinDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_fundingForOrganization">Funding For Organization</label>
+          <input
+            type="number"
+            class="form-control"
+            name="fundingForOrganization"
+            id="field_fundingForOrganization"
+            data-cy="fundingForOrganization"
+            formControlName="fundingForOrganization"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_participationToMatchingFunding">Participation To Matching Funding</label>
+          <input
+            type="number"
+            class="form-control"
+            name="participationToMatchingFunding"
+            id="field_participationToMatchingFunding"
+            data-cy="participationToMatchingFunding"
+            formControlName="participationToMatchingFunding"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_schoolRegistrationPossible">School Registration Possible</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="schoolRegistrationPossible"
+            id="field_schoolRegistrationPossible"
+            data-cy="schoolRegistrationPossible"
+            formControlName="schoolRegistrationPossible"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_teacherParticipationPossible">Teacher Participation Possible</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="teacherParticipationPossible"
+            id="field_teacherParticipationPossible"
+            data-cy="teacherParticipationPossible"
+            formControlName="teacherParticipationPossible"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_ambassadorsPilotTeachersLeadingTeachersIdentified"
+            >Ambassadors Pilot Teachers Leading Teachers Identified</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="ambassadorsPilotTeachersLeadingTeachersIdentified"
+            id="field_ambassadorsPilotTeachersLeadingTeachersIdentified"
+            data-cy="ambassadorsPilotTeachersLeadingTeachersIdentified"
+            formControlName="ambassadorsPilotTeachersLeadingTeachersIdentified"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_usersCanRegisterToPortal">Users Can Register To Portal</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="usersCanRegisterToPortal"
+            id="field_usersCanRegisterToPortal"
+            data-cy="usersCanRegisterToPortal"
+            formControlName="usersCanRegisterToPortal"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

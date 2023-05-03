@@ -1,0 +1,286 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-organization-heading" data-cy="OrganizationCreateUpdateHeading">Create or edit a Organization</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eunDbId">Eun Db Id</label>
+          <input type="number" class="form-control" name="eunDbId" id="field_eunDbId" data-cy="eunDbId" formControlName="eunDbId" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let orgStatus of orgStatusValues" [value]="orgStatus">orgStatus</option>
+          </select>
+          <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('status')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_officialName">Official Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="officialName"
+            id="field_officialName"
+            data-cy="officialName"
+            formControlName="officialName"
+          />
+          <div
+            *ngIf="editForm.get('officialName')!.invalid && (editForm.get('officialName')!.dirty || editForm.get('officialName')!.touched)"
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('officialName')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_type">Type</label>
+          <input type="text" class="form-control" name="type" id="field_type" data-cy="type" formControlName="type" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_address">Address</label>
+          <input type="text" class="form-control" name="address" id="field_address" data-cy="address" formControlName="address" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_latitude">Latitude</label>
+          <input type="number" class="form-control" name="latitude" id="field_latitude" data-cy="latitude" formControlName="latitude" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_longitude">Longitude</label>
+          <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_maxAge">Max Age</label>
+          <input type="number" class="form-control" name="maxAge" id="field_maxAge" data-cy="maxAge" formControlName="maxAge" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_minAge">Min Age</label>
+          <input type="number" class="form-control" name="minAge" id="field_minAge" data-cy="minAge" formControlName="minAge" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_area">Area</label>
+          <input type="number" class="form-control" name="area" id="field_area" data-cy="area" formControlName="area" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_specialization">Specialization</label>
+          <input
+            type="text"
+            class="form-control"
+            name="specialization"
+            id="field_specialization"
+            data-cy="specialization"
+            formControlName="specialization"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_numberOfStudents">Number Of Students</label>
+          <input
+            type="text"
+            class="form-control"
+            name="numberOfStudents"
+            id="field_numberOfStudents"
+            data-cy="numberOfStudents"
+            formControlName="numberOfStudents"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_hardwareUsed">Hardware Used</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="hardwareUsed"
+            id="field_hardwareUsed"
+            data-cy="hardwareUsed"
+            formControlName="hardwareUsed"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_ictUsed">Ict Used</label>
+          <input type="checkbox" class="form-check" name="ictUsed" id="field_ictUsed" data-cy="ictUsed" formControlName="ictUsed" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_website">Website</label>
+          <input type="text" class="form-control" name="website" id="field_website" data-cy="website" formControlName="website" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_image">Image</label>
+          <div>
+            <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
+              <a class="pull-start" (click)="openFile(editForm.get('image')!.value!, editForm.get('imageContentType')!.value!)">Open</a
+              ><br />
+              <span class="pull-start">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ image: undefined, imageContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input type="file" id="file_image" data-cy="image" (change)="setFileData($event, 'image', false)" />
+          </div>
+          <input type="hidden" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imageContentType"
+            id="field_imageContentType"
+            formControlName="imageContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_telephone">Telephone</label>
+          <input type="text" class="form-control" name="telephone" id="field_telephone" data-cy="telephone" formControlName="telephone" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_fax">Fax</label>
+          <input type="text" class="form-control" name="fax" id="field_fax" data-cy="fax" formControlName="fax" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_organisationNumber">Organisation Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="organisationNumber"
+            id="field_organisationNumber"
+            data-cy="organisationNumber"
+            formControlName="organisationNumber"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eventInOrganization">Event In Organization</label>
+          <select
+            class="form-control"
+            id="field_eventInOrganization"
+            data-cy="eventInOrganization"
+            name="eventInOrganization"
+            formControlName="eventInOrganization"
+            [compareWith]="compareEventInOrganization"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="eventInOrganizationOption" *ngFor="let eventInOrganizationOption of eventInOrganizationsSharedCollection">
+              {{ eventInOrganizationOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_organizationInMinistry">Organization In Ministry</label>
+          <select
+            class="form-control"
+            id="field_organizationInMinistry"
+            data-cy="organizationInMinistry"
+            name="organizationInMinistry"
+            formControlName="organizationInMinistry"
+            [compareWith]="compareOrganizationInMinistry"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="organizationInMinistryOption"
+              *ngFor="let organizationInMinistryOption of organizationInMinistriesSharedCollection"
+            >
+              {{ organizationInMinistryOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_organizationInProject">Organization In Project</label>
+          <select
+            class="form-control"
+            id="field_organizationInProject"
+            data-cy="organizationInProject"
+            name="organizationInProject"
+            formControlName="organizationInProject"
+            [compareWith]="compareOrganizationInProject"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="organizationInProjectOption"
+              *ngFor="let organizationInProjectOption of organizationInProjectsSharedCollection"
+            >
+              {{ organizationInProjectOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_personInOrganization">Person In Organization</label>
+          <select
+            class="form-control"
+            id="field_personInOrganization"
+            data-cy="personInOrganization"
+            name="personInOrganization"
+            formControlName="personInOrganization"
+            [compareWith]="comparePersonInOrganization"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="personInOrganizationOption" *ngFor="let personInOrganizationOption of personInOrganizationsSharedCollection">
+              {{ personInOrganizationOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

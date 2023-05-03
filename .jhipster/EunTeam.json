@@ -1,0 +1,31 @@
+{
+  "applications": "*",
+  "changelogDate": "20230427114022",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "eun_team",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EunTeam",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "eunTeamMember",
+      "otherEntityRelationshipName": "team",
+      "relationshipName": "eunTeamMember",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

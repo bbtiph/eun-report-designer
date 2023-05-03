@@ -1,0 +1,102 @@
+{
+  "applications": "*",
+  "changelogDate": "20230428120834",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "ministry",
+  "fields": [
+    {
+      "fieldName": "languages",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "formalName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "englishName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "acronym",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "website",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "steercomMemberName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "steercomMemberEmail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "postalAddressRegion",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "postalAddressPostalCode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "postalAddressCity",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "postalAddressStreet",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "eunContactFirstname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "eunContactLastname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "eunContactEmail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "invoicingAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "financialCorrespondingEmail",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Ministry",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "country",
+      "otherEntityRelationshipName": "ministry",
+      "relationshipName": "country",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "organizationInMinistry",
+      "otherEntityRelationshipName": "ministry",
+      "relationshipName": "organizationInMinistry",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="organizationInProject">
+      <h2 data-cy="organizationInProjectDetailsHeading"><span>Organization In Project</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ organizationInProject.id }}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+          <span>{{ organizationInProject.status }}</span>
+        </dd>
+        <dt><span>Join Date</span></dt>
+        <dd>
+          <span>{{ organizationInProject.joinDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Funding For Organization</span></dt>
+        <dd>
+          <span>{{ organizationInProject.fundingForOrganization }}</span>
+        </dd>
+        <dt><span>Participation To Matching Funding</span></dt>
+        <dd>
+          <span>{{ organizationInProject.participationToMatchingFunding }}</span>
+        </dd>
+        <dt><span>School Registration Possible</span></dt>
+        <dd>
+          <span>{{ organizationInProject.schoolRegistrationPossible }}</span>
+        </dd>
+        <dt><span>Teacher Participation Possible</span></dt>
+        <dd>
+          <span>{{ organizationInProject.teacherParticipationPossible }}</span>
+        </dd>
+        <dt><span>Ambassadors Pilot Teachers Leading Teachers Identified</span></dt>
+        <dd>
+          <span>{{ organizationInProject.ambassadorsPilotTeachersLeadingTeachersIdentified }}</span>
+        </dd>
+        <dt><span>Users Can Register To Portal</span></dt>
+        <dd>
+          <span>{{ organizationInProject.usersCanRegisterToPortal }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/organization-in-project', organizationInProject.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
