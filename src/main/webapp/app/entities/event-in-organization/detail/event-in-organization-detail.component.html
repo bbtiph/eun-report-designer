@@ -14,6 +14,18 @@
         <dd>
           <span>{{ eventInOrganization.id }}</span>
         </dd>
+        <dt><span>Event</span></dt>
+        <dd>
+          <div *ngIf="eventInOrganization.event">
+            <a [routerLink]="['/event', eventInOrganization.event.id, 'view']">{{ eventInOrganization.event.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Organization</span></dt>
+        <dd>
+          <div *ngIf="eventInOrganization.organization">
+            <a [routerLink]="['/organization', eventInOrganization.organization.id, 'view']">{{ eventInOrganization.organization.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

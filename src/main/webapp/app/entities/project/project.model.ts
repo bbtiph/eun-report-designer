@@ -1,6 +1,5 @@
 import dayjs from 'dayjs/esm';
-import { IOrganizationInProject } from 'app/entities/organization-in-project/organization-in-project.model';
-import { IPersonInProject } from 'app/entities/person-in-project/person-in-project.model';
+import { IFunding } from 'app/entities/funding/funding.model';
 import { ProjectStatus } from 'app/entities/enumerations/project-status.model';
 
 export interface IProject {
@@ -40,8 +39,7 @@ export interface IProject {
   sysCreatIpAddress?: string | null;
   sysModifTimestamp?: dayjs.Dayjs | null;
   sysModifIpAddress?: string | null;
-  organizationInProject?: Pick<IOrganizationInProject, 'id'> | null;
-  personInProject?: Pick<IPersonInProject, 'id'> | null;
+  funding?: Pick<IFunding, 'id'> | null;
 }
 
 export type NewProject = Omit<IProject, 'id'> & { id: null };

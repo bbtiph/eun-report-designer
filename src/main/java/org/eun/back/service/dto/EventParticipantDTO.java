@@ -13,6 +13,10 @@ public class EventParticipantDTO implements Serializable {
 
     private String type;
 
+    private EventDTO event;
+
+    private PersonDTO person;
+
     public Long getId() {
         return id;
     }
@@ -27,6 +31,22 @@ public class EventParticipantDTO implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public EventDTO getEvent() {
+        return event;
+    }
+
+    public void setEvent(EventDTO event) {
+        this.event = event;
+    }
+
+    public PersonDTO getPerson() {
+        return person;
+    }
+
+    public void setPerson(PersonDTO person) {
+        this.person = person;
     }
 
     @Override
@@ -56,6 +76,8 @@ public class EventParticipantDTO implements Serializable {
         return "EventParticipantDTO{" +
             "id=" + getId() +
             ", type='" + getType() + "'" +
+            ", event=" + getEvent() +
+            ", person=" + getPerson() +
             "}";
     }
 }

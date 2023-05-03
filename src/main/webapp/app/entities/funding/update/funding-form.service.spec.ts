@@ -24,7 +24,6 @@ describe('Funding Form Service', () => {
             type: expect.any(Object),
             parentId: expect.any(Object),
             description: expect.any(Object),
-            project: expect.any(Object),
           })
         );
       });
@@ -39,7 +38,6 @@ describe('Funding Form Service', () => {
             type: expect.any(Object),
             parentId: expect.any(Object),
             description: expect.any(Object),
-            project: expect.any(Object),
           })
         );
       });

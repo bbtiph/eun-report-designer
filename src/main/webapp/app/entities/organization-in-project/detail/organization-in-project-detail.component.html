@@ -46,6 +46,20 @@
         <dd>
           <span>{{ organizationInProject.usersCanRegisterToPortal }}</span>
         </dd>
+        <dt><span>Project</span></dt>
+        <dd>
+          <div *ngIf="organizationInProject.project">
+            <a [routerLink]="['/project', organizationInProject.project.id, 'view']">{{ organizationInProject.project.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Organization</span></dt>
+        <dd>
+          <div *ngIf="organizationInProject.organization">
+            <a [routerLink]="['/organization', organizationInProject.organization.id, 'view']">{{
+              organizationInProject.organization.id
+            }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

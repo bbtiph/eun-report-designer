@@ -9,8 +9,6 @@ import { of, Subject, from } from 'rxjs';
 import { EunTeamFormService } from './eun-team-form.service';
 import { EunTeamService } from '../service/eun-team.service';
 import { IEunTeam } from '../eun-team.model';
-import { IEunTeamMember } from 'app/entities/eun-team-member/eun-team-member.model';
-import { EunTeamMemberService } from 'app/entities/eun-team-member/service/eun-team-member.service';
 
 import { EunTeamUpdateComponent } from './eun-team-update.component';
 
@@ -20,7 +18,6 @@ describe('EunTeam Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let eunTeamFormService: EunTeamFormService;
   let eunTeamService: EunTeamService;
-  let eunTeamMemberService: EunTeamMemberService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,43 +40,17 @@ describe('EunTeam Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     eunTeamFormService = TestBed.inject(EunTeamFormService);
     eunTeamService = TestBed.inject(EunTeamService);
-    eunTeamMemberService = TestBed.inject(EunTeamMemberService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call EunTeamMember query and add missing value', () => {
-      const eunTeam: IEunTeam = { id: 456 };
-      const eunTeamMember: IEunTeamMember = { id: 86747 };
-      eunTeam.eunTeamMember = eunTeamMember;
-
-      const eunTeamMemberCollection: IEunTeamMember[] = [{ id: 49171 }];
-      jest.spyOn(eunTeamMemberService, 'query').mockReturnValue(of(new HttpResponse({ body: eunTeamMemberCollection })));
-      const additionalEunTeamMembers = [eunTeamMember];
-      const expectedCollection: IEunTeamMember[] = [...additionalEunTeamMembers, ...eunTeamMemberCollection];
-      jest.spyOn(eunTeamMemberService, 'addEunTeamMemberToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ eunTeam });
-      comp.ngOnInit();
-
-      expect(eunTeamMemberService.query).toHaveBeenCalled();
-      expect(eunTeamMemberService.addEunTeamMemberToCollectionIfMissing).toHaveBeenCalledWith(
-        eunTeamMemberCollection,
-        ...additionalEunTeamMembers.map(expect.objectContaining)
-      );
-      expect(comp.eunTeamMembersSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const eunTeam: IEunTeam = { id: 456 };
-      const eunTeamMember: IEunTeamMember = { id: 15160 };
-      eunTeam.eunTeamMember = eunTeamMember;
 
       activatedRoute.data = of({ eunTeam });
       comp.ngOnInit();
 
-      expect(comp.eunTeamMembersSharedCollection).toContain(eunTeamMember);
       expect(comp.eunTeam).toEqual(eunTeam);
     });
   });
@@ -149,18 +120,6 @@ describe('EunTeam Management Update Component', () => {
       expect(eunTeamService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Compare relationships', () => {
-    describe('compareEunTeamMember', () => {
-      it('Should forward to eunTeamMemberService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(eunTeamMemberService, 'compareEunTeamMember');
-        comp.compareEunTeamMember(entity, entity2);
-        expect(eunTeamMemberService.compareEunTeamMember).toHaveBeenCalledWith(entity, entity2);
-      });
     });
   });
 });

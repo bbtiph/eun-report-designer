@@ -36,7 +36,7 @@ type MinistryFormGroupContent = {
   eunContactEmail: FormControl<IMinistry['eunContactEmail']>;
   invoicingAddress: FormControl<IMinistry['invoicingAddress']>;
   financialCorrespondingEmail: FormControl<IMinistry['financialCorrespondingEmail']>;
-  organizationInMinistry: FormControl<IMinistry['organizationInMinistry']>;
+  country: FormControl<IMinistry['country']>;
 };
 
 export type MinistryFormGroup = FormGroup<MinistryFormGroupContent>;
@@ -74,7 +74,7 @@ export class MinistryFormService {
       eunContactEmail: new FormControl(ministryRawValue.eunContactEmail),
       invoicingAddress: new FormControl(ministryRawValue.invoicingAddress),
       financialCorrespondingEmail: new FormControl(ministryRawValue.financialCorrespondingEmail),
-      organizationInMinistry: new FormControl(ministryRawValue.organizationInMinistry),
+      country: new FormControl(ministryRawValue.country),
     });
   }
 

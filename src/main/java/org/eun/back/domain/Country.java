@@ -24,23 +24,23 @@ public class Country implements Serializable {
     private String countryName;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "countries", "organizationInMinistry" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "organizationInMinistries", "country" }, allowSetters = true)
     private Ministry ministry;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "countries" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "country" }, allowSetters = true)
     private OperationalBodyMember operationalBodyMember;
 
     @ManyToOne
     @JsonIgnoreProperties(
-        value = { "countries", "eventInOrganization", "organizationInMinistry", "organizationInProject", "personInOrganization" },
+        value = { "eventInOrganizations", "organizationInMinistries", "organizationInProjects", "personInOrganizations", "country" },
         allowSetters = true
     )
     private Organization organization;
 
     @ManyToOne
     @JsonIgnoreProperties(
-        value = { "countries", "eunTeamMember", "eventParticipant", "personInOrganization", "personInProject" },
+        value = { "eunTeamMembers", "eventParticipants", "personInOrganizations", "personInProjects", "country" },
         allowSetters = true
     )
     private Person person;

@@ -19,8 +19,6 @@ public class FundingDTO implements Serializable {
 
     private String description;
 
-    private ProjectDTO project;
-
     public Long getId() {
         return id;
     }
@@ -61,14 +59,6 @@ public class FundingDTO implements Serializable {
         this.description = description;
     }
 
-    public ProjectDTO getProject() {
-        return project;
-    }
-
-    public void setProject(ProjectDTO project) {
-        this.project = project;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -99,7 +89,6 @@ public class FundingDTO implements Serializable {
             ", type='" + getType() + "'" +
             ", parentId=" + getParentId() +
             ", description='" + getDescription() + "'" +
-            ", project=" + getProject() +
             "}";
     }
 }

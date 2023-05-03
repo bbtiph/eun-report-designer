@@ -15,8 +15,6 @@ public class EunTeamDTO implements Serializable {
 
     private String description;
 
-    private EunTeamMemberDTO eunTeamMember;
-
     public Long getId() {
         return id;
     }
@@ -39,14 +37,6 @@ public class EunTeamDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public EunTeamMemberDTO getEunTeamMember() {
-        return eunTeamMember;
-    }
-
-    public void setEunTeamMember(EunTeamMemberDTO eunTeamMember) {
-        this.eunTeamMember = eunTeamMember;
     }
 
     @Override
@@ -77,7 +67,6 @@ public class EunTeamDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", eunTeamMember=" + getEunTeamMember() +
             "}";
     }
 }

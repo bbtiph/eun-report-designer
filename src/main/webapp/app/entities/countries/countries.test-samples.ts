@@ -2,21 +2,19 @@ import { ICountries, NewCountries } from './countries.model';
 
 export const sampleWithRequiredData: ICountries = {
   id: 74119,
-  countryName: 'Berkshire Pizza Outdoors',
 };
 
 export const sampleWithPartialData: ICountries = {
-  id: 269,
-  countryName: 'Identity withdrawal parsing',
+  id: 49448,
+  countryName: 'circuit auxiliary',
 };
 
 export const sampleWithFullData: ICountries = {
-  id: 13219,
-  countryName: 'Zealand haptic',
+  id: 14554,
+  countryName: 'Platinum',
 };
 
 export const sampleWithNewData: NewCountries = {
-  countryName: 'Handmade e-business grey',
   id: null,
 };
 

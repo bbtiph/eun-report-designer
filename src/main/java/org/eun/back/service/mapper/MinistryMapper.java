@@ -1,9 +1,9 @@
 package org.eun.back.service.mapper;
 
+import org.eun.back.domain.Countries;
 import org.eun.back.domain.Ministry;
-import org.eun.back.domain.OrganizationInMinistry;
+import org.eun.back.service.dto.CountriesDTO;
 import org.eun.back.service.dto.MinistryDTO;
-import org.eun.back.service.dto.OrganizationInMinistryDTO;
 import org.mapstruct.*;
 
 /**
@@ -11,11 +11,11 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface MinistryMapper extends EntityMapper<MinistryDTO, Ministry> {
-    @Mapping(target = "organizationInMinistry", source = "organizationInMinistry", qualifiedByName = "organizationInMinistryId")
+    @Mapping(target = "country", source = "country", qualifiedByName = "countriesId")
     MinistryDTO toDto(Ministry s);
 
-    @Named("organizationInMinistryId")
+    @Named("countriesId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    OrganizationInMinistryDTO toDtoOrganizationInMinistryId(OrganizationInMinistry organizationInMinistry);
+    CountriesDTO toDtoCountriesId(Countries countries);
 }

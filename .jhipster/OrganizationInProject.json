@@ -49,14 +49,14 @@
       "otherEntityName": "project",
       "otherEntityRelationshipName": "organizationInProject",
       "relationshipName": "project",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "id",
       "otherEntityName": "organization",
       "otherEntityRelationshipName": "organizationInProject",
       "relationshipName": "organization",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

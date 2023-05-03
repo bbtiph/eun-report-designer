@@ -44,6 +44,18 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="ministry.id">
+            <div class="d-flex">
+              <span>Ministry</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organization.id">
+            <div class="d-flex">
+              <span>Organization</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -53,6 +65,18 @@
             <a [routerLink]="['/organization-in-ministry', organizationInMinistry.id, 'view']">{{ organizationInMinistry.id }}</a>
           </td>
           <td>{{ organizationInMinistry.status }}</td>
+          <td>
+            <div *ngIf="organizationInMinistry.ministry">
+              <a [routerLink]="['/ministry', organizationInMinistry.ministry.id, 'view']">{{ organizationInMinistry.ministry.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="organizationInMinistry.organization">
+              <a [routerLink]="['/organization', organizationInMinistry.organization.id, 'view']">{{
+                organizationInMinistry.organization.id
+              }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

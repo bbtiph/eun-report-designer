@@ -29,6 +29,7 @@ describe('OperationalBodyMember Form Service', () => {
             eunContactLastname: expect.any(Object),
             cooperationField: expect.any(Object),
             status: expect.any(Object),
+            country: expect.any(Object),
           })
         );
       });
@@ -48,6 +49,7 @@ describe('OperationalBodyMember Form Service', () => {
             eunContactLastname: expect.any(Object),
             cooperationField: expect.any(Object),
             status: expect.any(Object),
+            country: expect.any(Object),
           })
         );
       });

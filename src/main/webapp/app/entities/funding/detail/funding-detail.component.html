@@ -30,12 +30,6 @@
         <dd>
           <span>{{ funding.description }}</span>
         </dd>
-        <dt><span>Project</span></dt>
-        <dd>
-          <div *ngIf="funding.project">
-            <a [routerLink]="['/project', funding.project.id, 'view']">{{ funding.project.id }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

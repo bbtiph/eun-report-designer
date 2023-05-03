@@ -21,6 +21,8 @@ describe('PersonInProject Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             roleInProject: expect.any(Object),
+            person: expect.any(Object),
+            project: expect.any(Object),
           })
         );
       });
@@ -32,6 +34,8 @@ describe('PersonInProject Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             roleInProject: expect.any(Object),
+            person: expect.any(Object),
+            project: expect.any(Object),
           })
         );
       });

@@ -135,16 +135,16 @@ public class Project implements Serializable {
     private String sysModifIpAddress;
 
     @OneToMany(mappedBy = "project")
-    @JsonIgnoreProperties(value = { "project" }, allowSetters = true)
-    private Set<Funding> fundings = new HashSet<>();
+    @JsonIgnoreProperties(value = { "project", "organization" }, allowSetters = true)
+    private Set<OrganizationInProject> organizationInProjects = new HashSet<>();
+
+    @OneToMany(mappedBy = "project")
+    @JsonIgnoreProperties(value = { "person", "project" }, allowSetters = true)
+    private Set<PersonInProject> personInProjects = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "projects", "organizations" }, allowSetters = true)
-    private OrganizationInProject organizationInProject;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "people", "projects" }, allowSetters = true)
-    private PersonInProject personInProject;
+    @JsonIgnoreProperties(value = { "projects" }, allowSetters = true)
+    private Funding funding;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -616,60 +616,78 @@ public class Project implements Serializable {
         this.sysModifIpAddress = sysModifIpAddress;
     }
 
-    public Set<Funding> getFundings() {
-        return this.fundings;
+    public Set<OrganizationInProject> getOrganizationInProjects() {
+        return this.organizationInProjects;
     }
 
-    public void setFundings(Set<Funding> fundings) {
-        if (this.fundings != null) {
-            this.fundings.forEach(i -> i.setProject(null));
+    public void setOrganizationInProjects(Set<OrganizationInProject> organizationInProjects) {
+        if (this.organizationInProjects != null) {
+            this.organizationInProjects.forEach(i -> i.setProject(null));
         }
-        if (fundings != null) {
-            fundings.forEach(i -> i.setProject(this));
+        if (organizationInProjects != null) {
+            organizationInProjects.forEach(i -> i.setProject(this));
         }
-        this.fundings = fundings;
+        this.organizationInProjects = organizationInProjects;
     }
 
-    public Project fundings(Set<Funding> fundings) {
-        this.setFundings(fundings);
+    public Project organizationInProjects(Set<OrganizationInProject> organizationInProjects) {
+        this.setOrganizationInProjects(organizationInProjects);
         return this;
     }
 
-    public Project addFunding(Funding funding) {
-        this.fundings.add(funding);
-        funding.setProject(this);
+    public Project addOrganizationInProject(OrganizationInProject organizationInProject) {
+        this.organizationInProjects.add(organizationInProject);
+        organizationInProject.setProject(this);
         return this;
     }
 
-    public Project removeFunding(Funding funding) {
-        this.fundings.remove(funding);
-        funding.setProject(null);
+    public Project removeOrganizationInProject(OrganizationInProject organizationInProject) {
+        this.organizationInProjects.remove(organizationInProject);
+        organizationInProject.setProject(null);
         return this;
     }
 
-    public OrganizationInProject getOrganizationInProject() {
-        return this.organizationInProject;
+    public Set<PersonInProject> getPersonInProjects() {
+        return this.personInProjects;
     }
 
-    public void setOrganizationInProject(OrganizationInProject organizationInProject) {
-        this.organizationInProject = organizationInProject;
+    public void setPersonInProjects(Set<PersonInProject> personInProjects) {
+        if (this.personInProjects != null) {
+            this.personInProjects.forEach(i -> i.setProject(null));
+        }
+        if (personInProjects != null) {
+            personInProjects.forEach(i -> i.setProject(this));
+        }
+        this.personInProjects = personInProjects;
     }
 
-    public Project organizationInProject(OrganizationInProject organizationInProject) {
-        this.setOrganizationInProject(organizationInProject);
+    public Project personInProjects(Set<PersonInProject> personInProjects) {
+        this.setPersonInProjects(personInProjects);
         return this;
     }
 
-    public PersonInProject getPersonInProject() {
-        return this.personInProject;
+    public Project addPersonInProject(PersonInProject personInProject) {
+        this.personInProjects.add(personInProject);
+        personInProject.setProject(this);
+        return this;
     }
 
-    public void setPersonInProject(PersonInProject personInProject) {
-        this.personInProject = personInProject;
+    public Project removePersonInProject(PersonInProject personInProject) {
+        this.personInProjects.remove(personInProject);
+        personInProject.setProject(null);
+        return this;
     }
 
-    public Project personInProject(PersonInProject personInProject) {
-        this.setPersonInProject(personInProject);
+    public Funding getFunding() {
+        return this.funding;
+    }
+
+    public void setFunding(Funding funding) {
+        this.funding = funding;
+    }
+
+    public Project funding(Funding funding) {
+        this.setFunding(funding);
         return this;
     }
 

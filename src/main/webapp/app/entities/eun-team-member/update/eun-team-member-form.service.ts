@@ -20,6 +20,8 @@ type EunTeamMemberFormGroupContent = {
   id: FormControl<IEunTeamMember['id'] | NewEunTeamMember['id']>;
   role: FormControl<IEunTeamMember['role']>;
   status: FormControl<IEunTeamMember['status']>;
+  team: FormControl<IEunTeamMember['team']>;
+  person: FormControl<IEunTeamMember['person']>;
 };
 
 export type EunTeamMemberFormGroup = FormGroup<EunTeamMemberFormGroupContent>;
@@ -41,6 +43,8 @@ export class EunTeamMemberFormService {
       ),
       role: new FormControl(eunTeamMemberRawValue.role),
       status: new FormControl(eunTeamMemberRawValue.status),
+      team: new FormControl(eunTeamMemberRawValue.team),
+      person: new FormControl(eunTeamMemberRawValue.person),
     });
   }
 

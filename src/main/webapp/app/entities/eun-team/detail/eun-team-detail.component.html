@@ -22,12 +22,6 @@
         <dd>
           <span>{{ eunTeam.description }}</span>
         </dd>
-        <dt><span>Eun Team Member</span></dt>
-        <dd>
-          <div *ngIf="eunTeam.eunTeamMember">
-            <a [routerLink]="['/eun-team-member', eunTeam.eunTeamMember.id, 'view']">{{ eunTeam.eunTeamMember.id }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

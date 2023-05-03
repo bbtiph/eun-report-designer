@@ -157,22 +157,22 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "id",
-      "otherEntityName": "funding",
-      "otherEntityRelationshipName": "project",
-      "relationshipName": "funding",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "organizationInProject",
       "otherEntityRelationshipName": "project",
       "relationshipName": "organizationInProject",
-      "relationshipType": "many-to-one"
+      "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "personInProject",
       "otherEntityRelationshipName": "project",
       "relationshipName": "personInProject",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "funding",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "funding",
       "relationshipType": "many-to-one"
     }
   ],

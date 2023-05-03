@@ -46,7 +46,7 @@ public class EventInOrganizationServiceImpl implements EventInOrganizationServic
     public EventInOrganizationDTO update(EventInOrganizationDTO eventInOrganizationDTO) {
         log.debug("Request to update EventInOrganization : {}", eventInOrganizationDTO);
         EventInOrganization eventInOrganization = eventInOrganizationMapper.toEntity(eventInOrganizationDTO);
-        // no save call needed as we have no fields that can be updated
+        eventInOrganization = eventInOrganizationRepository.save(eventInOrganization);
         return eventInOrganizationMapper.toDto(eventInOrganization);
     }
 
@@ -61,7 +61,7 @@ public class EventInOrganizationServiceImpl implements EventInOrganizationServic
 
                 return existingEventInOrganization;
             })
-            // .map(eventInOrganizationRepository::save)
+            .map(eventInOrganizationRepository::save)
             .map(eventInOrganizationMapper::toDto);
     }
 

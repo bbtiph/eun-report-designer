@@ -8,10 +8,10 @@
     -->
     <changeSet id="20230428120834-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="organization_in_ministry_id"
+        <addForeignKeyConstraint baseColumnNames="country_id"
                                  baseTableName="ministry"
-                                 constraintName="fk_ministry__organization_in_ministry_id"
+                                 constraintName="fk_ministry__country_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="organization_in_ministry"/>
+                                 referencedTableName="countries"/>
     </changeSet>
 </databaseChangeLog>

@@ -2,8 +2,6 @@ package org.eun.back.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -25,16 +23,16 @@ public class PersonInProject implements Serializable {
     @Column(name = "role_in_project")
     private String roleInProject;
 
-    @OneToMany(mappedBy = "personInProject")
+    @ManyToOne
     @JsonIgnoreProperties(
-        value = { "countries", "eunTeamMember", "eventParticipant", "personInOrganization", "personInProject" },
+        value = { "eunTeamMembers", "eventParticipants", "personInOrganizations", "personInProjects", "country" },
         allowSetters = true
     )
-    private Set<Person> people = new HashSet<>();
+    private Person person;
 
-    @OneToMany(mappedBy = "personInProject")
-    @JsonIgnoreProperties(value = { "fundings", "organizationInProject", "personInProject" }, allowSetters = true)
-    private Set<Project> projects = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "organizationInProjects", "personInProjects", "funding" }, allowSetters = true)
+    private Project project;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -64,65 +62,29 @@ public class PersonInProject implements Serializable {
         this.roleInProject = roleInProject;
     }
 
-    public Set<Person> getPeople() {
-        return this.people;
+    public Person getPerson() {
+        return this.person;
     }
 
-    public void setPeople(Set<Person> people) {
-        if (this.people != null) {
-            this.people.forEach(i -> i.setPersonInProject(null));
-        }
-        if (people != null) {
-            people.forEach(i -> i.setPersonInProject(this));
-        }
-        this.people = people;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public PersonInProject people(Set<Person> people) {
-        this.setPeople(people);
+    public PersonInProject person(Person person) {
+        this.setPerson(person);
         return this;
     }
 
-    public PersonInProject addPerson(Person person) {
-        this.people.add(person);
-        person.setPersonInProject(this);
-        return this;
+    public Project getProject() {
+        return this.project;
     }
 
-    public PersonInProject removePerson(Person person) {
-        this.people.remove(person);
-        person.setPersonInProject(null);
-        return this;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public Set<Project> getProjects() {
-        return this.projects;
-    }
-
-    public void setProjects(Set<Project> projects) {
-        if (this.projects != null) {
-            this.projects.forEach(i -> i.setPersonInProject(null));
-        }
-        if (projects != null) {
-            projects.forEach(i -> i.setPersonInProject(this));
-        }
-        this.projects = projects;
-    }
-
-    public PersonInProject projects(Set<Project> projects) {
-        this.setProjects(projects);
-        return this;
-    }
-
-    public PersonInProject addProject(Project project) {
-        this.projects.add(project);
-        project.setPersonInProject(this);
-        return this;
-    }
-
-    public PersonInProject removeProject(Project project) {
-        this.projects.remove(project);
-        project.setPersonInProject(null);
+    public PersonInProject project(Project project) {
+        this.setProject(project);
         return this;
     }
 

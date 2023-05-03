@@ -2,8 +2,6 @@ package org.eun.back.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -25,16 +23,16 @@ public class OrganizationInMinistry implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "organizationInMinistry")
-    @JsonIgnoreProperties(value = { "countries", "organizationInMinistry" }, allowSetters = true)
-    private Set<Ministry> ministries = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "organizationInMinistries", "country" }, allowSetters = true)
+    private Ministry ministry;
 
-    @OneToMany(mappedBy = "organizationInMinistry")
+    @ManyToOne
     @JsonIgnoreProperties(
-        value = { "countries", "eventInOrganization", "organizationInMinistry", "organizationInProject", "personInOrganization" },
+        value = { "eventInOrganizations", "organizationInMinistries", "organizationInProjects", "personInOrganizations", "country" },
         allowSetters = true
     )
-    private Set<Organization> organizations = new HashSet<>();
+    private Organization organization;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -64,65 +62,29 @@ public class OrganizationInMinistry implements Serializable {
         this.status = status;
     }
 
-    public Set<Ministry> getMinistries() {
-        return this.ministries;
+    public Ministry getMinistry() {
+        return this.ministry;
     }
 
-    public void setMinistries(Set<Ministry> ministries) {
-        if (this.ministries != null) {
-            this.ministries.forEach(i -> i.setOrganizationInMinistry(null));
-        }
-        if (ministries != null) {
-            ministries.forEach(i -> i.setOrganizationInMinistry(this));
-        }
-        this.ministries = ministries;
+    public void setMinistry(Ministry ministry) {
+        this.ministry = ministry;
     }
 
-    public OrganizationInMinistry ministries(Set<Ministry> ministries) {
-        this.setMinistries(ministries);
+    public OrganizationInMinistry ministry(Ministry ministry) {
+        this.setMinistry(ministry);
         return this;
     }
 
-    public OrganizationInMinistry addMinistry(Ministry ministry) {
-        this.ministries.add(ministry);
-        ministry.setOrganizationInMinistry(this);
-        return this;
+    public Organization getOrganization() {
+        return this.organization;
     }
 
-    public OrganizationInMinistry removeMinistry(Ministry ministry) {
-        this.ministries.remove(ministry);
-        ministry.setOrganizationInMinistry(null);
-        return this;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
-    public Set<Organization> getOrganizations() {
-        return this.organizations;
-    }
-
-    public void setOrganizations(Set<Organization> organizations) {
-        if (this.organizations != null) {
-            this.organizations.forEach(i -> i.setOrganizationInMinistry(null));
-        }
-        if (organizations != null) {
-            organizations.forEach(i -> i.setOrganizationInMinistry(this));
-        }
-        this.organizations = organizations;
-    }
-
-    public OrganizationInMinistry organizations(Set<Organization> organizations) {
-        this.setOrganizations(organizations);
-        return this;
-    }
-
-    public OrganizationInMinistry addOrganization(Organization organization) {
-        this.organizations.add(organization);
-        organization.setOrganizationInMinistry(this);
-        return this;
-    }
-
-    public OrganizationInMinistry removeOrganization(Organization organization) {
-        this.organizations.remove(organization);
-        organization.setOrganizationInMinistry(null);
+    public OrganizationInMinistry organization(Organization organization) {
+        this.setOrganization(organization);
         return this;
     }
 

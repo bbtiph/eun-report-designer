@@ -21,6 +21,8 @@ describe('EventParticipant Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             type: expect.any(Object),
+            event: expect.any(Object),
+            person: expect.any(Object),
           })
         );
       });
@@ -32,6 +34,8 @@ describe('EventParticipant Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             type: expect.any(Object),
+            event: expect.any(Object),
+            person: expect.any(Object),
           })
         );
       });

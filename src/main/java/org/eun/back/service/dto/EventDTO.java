@@ -44,10 +44,6 @@ public class EventDTO implements Serializable {
 
     private String name;
 
-    private EventInOrganizationDTO eventInOrganization;
-
-    private EventParticipantDTO eventParticipant;
-
     public Long getId() {
         return id;
     }
@@ -184,22 +180,6 @@ public class EventDTO implements Serializable {
         this.name = name;
     }
 
-    public EventInOrganizationDTO getEventInOrganization() {
-        return eventInOrganization;
-    }
-
-    public void setEventInOrganization(EventInOrganizationDTO eventInOrganization) {
-        this.eventInOrganization = eventInOrganization;
-    }
-
-    public EventParticipantDTO getEventParticipant() {
-        return eventParticipant;
-    }
-
-    public void setEventParticipant(EventParticipantDTO eventParticipant) {
-        this.eventParticipant = eventParticipant;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -242,8 +222,6 @@ public class EventDTO implements Serializable {
             ", engagementRate=" + getEngagementRate() +
             ", completionRate=" + getCompletionRate() +
             ", name='" + getName() + "'" +
-            ", eventInOrganization=" + getEventInOrganization() +
-            ", eventParticipant=" + getEventParticipant() +
             "}";
     }
 }

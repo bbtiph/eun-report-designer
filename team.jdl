@@ -97,7 +97,7 @@ entity Project {
     sysModifIpAddress String
 }
 
-entity Country {
+entity Countries {
     countryName String
 }
 
@@ -213,27 +213,27 @@ entity PersonInProject {
 }
 
 relationship OneToMany {
-    Project{funding(id)} to Funding,
-    Ministry{country(id)} to Country,
-    OperationalBodyMember{country(id)} to Country,
-    Organization{country(id)} to Country,
-    Person{country(id)} to Country,
-    EunTeamMember{team(id)} to EunTeam,
-    EunTeamMember{person(id)} to Person,
-    EventInOrganization{event(id)} to Event,
-    EventInOrganization{organization(id)} to Organization,
-    EventParticipant{event(id)} to Event,
-    EventParticipant{person(id)} to Person,
-    OrganizationInMinistry{ministry(id)} to Ministry,
-    OrganizationInMinistry{organization(id)} to Organization,
-    OrganizationInProject{project(id)} to Project,
-    OrganizationInProject{organization(id)} to Organization,
-    PersonInOrganization{person(id)} to Person,
-    PersonInOrganization{organization(id)} to Organization,
-    PersonInProject{person(id)} to Person,
-    PersonInProject{project(id)} to Project
+    Funding to Project{funding(id)},
+    Countries to Ministry{country(id)},
+    Countries to OperationalBodyMember{country(id)},
+    Countries to Organization{country(id)},
+    Countries to Person{country(id)},
+    EunTeam to EunTeamMember{team(id)},
+    Person to EunTeamMember{person(id)},
+    Event to EventInOrganization{event(id)},
+    Organization to EventInOrganization{organization(id)},
+    Event to EventParticipant{event(id)},
+    Person to EventParticipant{person(id)},
+    Ministry to OrganizationInMinistry{ministry(id)},
+    Organization to OrganizationInMinistry{organization(id)},
+    Project to OrganizationInProject{project(id)},
+    Organization to OrganizationInProject{organization(id)},
+    Person to PersonInOrganization{person(id)},
+    Organization to PersonInOrganization{organization(id)},
+    Person to PersonInProject{person(id)},
+    Project to PersonInProject{project(id)}
 }
 
-paginate Event, Organization, Person, EunTeam, OperationalBody, Funding, Project, Country, Ministry, OperationalBodyMember, EunTeamMember, EventInOrganization, EventParticipant, OrganizationInMinistry, OrganizationInProject, PersonInOrganization, PersonInProject with pagination
-dto Event, Organization, Person, EunTeam, OperationalBody, Funding, Project, Country, Ministry, OperationalBodyMember, EunTeamMember, EventInOrganization, EventParticipant, OrganizationInMinistry, OrganizationInProject, PersonInOrganization, PersonInProject with mapstruct
-service Event, Organization, Person, EunTeam, OperationalBody, Funding, Project, Country, Ministry, OperationalBodyMember, EunTeamMember, EventInOrganization, EventParticipant, OrganizationInMinistry, OrganizationInProject, PersonInOrganization, PersonInProject with serviceImpl
+paginate Event, Organization, Person, EunTeam, OperationalBody, Funding, Project, Countries, Ministry, OperationalBodyMember, EunTeamMember, EventInOrganization, EventParticipant, OrganizationInMinistry, OrganizationInProject, PersonInOrganization, PersonInProject with pagination
+dto Event, Organization, Person, EunTeam, OperationalBody, Funding, Project, Countries, Ministry, OperationalBodyMember, EunTeamMember, EventInOrganization, EventParticipant, OrganizationInMinistry, OrganizationInProject, PersonInOrganization, PersonInProject with mapstruct
+service Event, Organization, Person, EunTeam, OperationalBody, Funding, Project, Countries, Ministry, OperationalBodyMember, EunTeamMember, EventInOrganization, EventParticipant, OrganizationInMinistry, OrganizationInProject, PersonInOrganization, PersonInProject with serviceImpl

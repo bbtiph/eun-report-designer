@@ -11,12 +11,32 @@ public class EventInOrganizationDTO implements Serializable {
 
     private Long id;
 
+    private EventDTO event;
+
+    private OrganizationDTO organization;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EventDTO getEvent() {
+        return event;
+    }
+
+    public void setEvent(EventDTO event) {
+        this.event = event;
+    }
+
+    public OrganizationDTO getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(OrganizationDTO organization) {
+        this.organization = organization;
     }
 
     @Override
@@ -45,6 +65,8 @@ public class EventInOrganizationDTO implements Serializable {
     public String toString() {
         return "EventInOrganizationDTO{" +
             "id=" + getId() +
+            ", event=" + getEvent() +
+            ", organization=" + getOrganization() +
             "}";
     }
 }

@@ -77,12 +77,12 @@ public class Ministry implements Serializable {
     private String financialCorrespondingEmail;
 
     @OneToMany(mappedBy = "ministry")
-    @JsonIgnoreProperties(value = { "ministry", "operationalBodyMember", "organization", "person" }, allowSetters = true)
-    private Set<Country> countries = new HashSet<>();
+    @JsonIgnoreProperties(value = { "ministry", "organization" }, allowSetters = true)
+    private Set<OrganizationInMinistry> organizationInMinistries = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "ministries", "organizations" }, allowSetters = true)
-    private OrganizationInMinistry organizationInMinistry;
+    @JsonIgnoreProperties(value = { "ministries", "operationalBodyMembers", "organizations", "people" }, allowSetters = true)
+    private Countries country;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -333,47 +333,47 @@ public class Ministry implements Serializable {
         this.financialCorrespondingEmail = financialCorrespondingEmail;
     }
 
-    public Set<Country> getCountries() {
-        return this.countries;
+    public Set<OrganizationInMinistry> getOrganizationInMinistries() {
+        return this.organizationInMinistries;
     }
 
-    public void setCountries(Set<Country> countries) {
-        if (this.countries != null) {
-            this.countries.forEach(i -> i.setMinistry(null));
+    public void setOrganizationInMinistries(Set<OrganizationInMinistry> organizationInMinistries) {
+        if (this.organizationInMinistries != null) {
+            this.organizationInMinistries.forEach(i -> i.setMinistry(null));
         }
-        if (countries != null) {
-            countries.forEach(i -> i.setMinistry(this));
+        if (organizationInMinistries != null) {
+            organizationInMinistries.forEach(i -> i.setMinistry(this));
         }
-        this.countries = countries;
+        this.organizationInMinistries = organizationInMinistries;
     }
 
-    public Ministry countries(Set<Country> countries) {
-        this.setCountries(countries);
+    public Ministry organizationInMinistries(Set<OrganizationInMinistry> organizationInMinistries) {
+        this.setOrganizationInMinistries(organizationInMinistries);
         return this;
     }
 
-    public Ministry addCountry(Country country) {
-        this.countries.add(country);
-        country.setMinistry(this);
+    public Ministry addOrganizationInMinistry(OrganizationInMinistry organizationInMinistry) {
+        this.organizationInMinistries.add(organizationInMinistry);
+        organizationInMinistry.setMinistry(this);
         return this;
     }
 
-    public Ministry removeCountry(Country country) {
-        this.countries.remove(country);
-        country.setMinistry(null);
+    public Ministry removeOrganizationInMinistry(OrganizationInMinistry organizationInMinistry) {
+        this.organizationInMinistries.remove(organizationInMinistry);
+        organizationInMinistry.setMinistry(null);
         return this;
     }
 
-    public OrganizationInMinistry getOrganizationInMinistry() {
-        return this.organizationInMinistry;
+    public Countries getCountry() {
+        return this.country;
     }
 
-    public void setOrganizationInMinistry(OrganizationInMinistry organizationInMinistry) {
-        this.organizationInMinistry = organizationInMinistry;
+    public void setCountry(Countries countries) {
+        this.country = countries;
     }
 
-    public Ministry organizationInMinistry(OrganizationInMinistry organizationInMinistry) {
-        this.setOrganizationInMinistry(organizationInMinistry);
+    public Ministry country(Countries countries) {
+        this.setCountry(countries);
         return this;
     }
 

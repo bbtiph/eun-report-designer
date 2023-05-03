@@ -25,14 +25,14 @@
       "otherEntityName": "eunTeam",
       "otherEntityRelationshipName": "eunTeamMember",
       "relationshipName": "team",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "id",
       "otherEntityName": "person",
       "otherEntityRelationshipName": "eunTeamMember",
       "relationshipName": "person",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

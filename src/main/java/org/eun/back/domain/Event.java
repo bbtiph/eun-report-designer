@@ -3,6 +3,8 @@ package org.eun.back.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -69,13 +71,13 @@ public class Event implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "events", "organizations" }, allowSetters = true)
-    private EventInOrganization eventInOrganization;
+    @OneToMany(mappedBy = "event")
+    @JsonIgnoreProperties(value = { "event", "organization" }, allowSetters = true)
+    private Set<EventInOrganization> eventInOrganizations = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "events", "people" }, allowSetters = true)
-    private EventParticipant eventParticipant;
+    @OneToMany(mappedBy = "event")
+    @JsonIgnoreProperties(value = { "event", "person" }, allowSetters = true)
+    private Set<EventParticipant> eventParticipants = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -300,29 +302,65 @@ public class Event implements Serializable {
         this.name = name;
     }
 
-    public EventInOrganization getEventInOrganization() {
-        return this.eventInOrganization;
+    public Set<EventInOrganization> getEventInOrganizations() {
+        return this.eventInOrganizations;
     }
 
-    public void setEventInOrganization(EventInOrganization eventInOrganization) {
-        this.eventInOrganization = eventInOrganization;
+    public void setEventInOrganizations(Set<EventInOrganization> eventInOrganizations) {
+        if (this.eventInOrganizations != null) {
+            this.eventInOrganizations.forEach(i -> i.setEvent(null));
+        }
+        if (eventInOrganizations != null) {
+            eventInOrganizations.forEach(i -> i.setEvent(this));
+        }
+        this.eventInOrganizations = eventInOrganizations;
     }
 
-    public Event eventInOrganization(EventInOrganization eventInOrganization) {
-        this.setEventInOrganization(eventInOrganization);
+    public Event eventInOrganizations(Set<EventInOrganization> eventInOrganizations) {
+        this.setEventInOrganizations(eventInOrganizations);
         return this;
     }
 
-    public EventParticipant getEventParticipant() {
-        return this.eventParticipant;
+    public Event addEventInOrganization(EventInOrganization eventInOrganization) {
+        this.eventInOrganizations.add(eventInOrganization);
+        eventInOrganization.setEvent(this);
+        return this;
     }
 
-    public void setEventParticipant(EventParticipant eventParticipant) {
-        this.eventParticipant = eventParticipant;
+    public Event removeEventInOrganization(EventInOrganization eventInOrganization) {
+        this.eventInOrganizations.remove(eventInOrganization);
+        eventInOrganization.setEvent(null);
+        return this;
     }
 
-    public Event eventParticipant(EventParticipant eventParticipant) {
-        this.setEventParticipant(eventParticipant);
+    public Set<EventParticipant> getEventParticipants() {
+        return this.eventParticipants;
+    }
+
+    public void setEventParticipants(Set<EventParticipant> eventParticipants) {
+        if (this.eventParticipants != null) {
+            this.eventParticipants.forEach(i -> i.setEvent(null));
+        }
+        if (eventParticipants != null) {
+            eventParticipants.forEach(i -> i.setEvent(this));
+        }
+        this.eventParticipants = eventParticipants;
+    }
+
+    public Event eventParticipants(Set<EventParticipant> eventParticipants) {
+        this.setEventParticipants(eventParticipants);
+        return this;
+    }
+
+    public Event addEventParticipant(EventParticipant eventParticipant) {
+        this.eventParticipants.add(eventParticipant);
+        eventParticipant.setEvent(this);
+        return this;
+    }
+
+    public Event removeEventParticipant(EventParticipant eventParticipant) {
+        this.eventParticipants.remove(eventParticipant);
+        eventParticipant.setEvent(null);
         return this;
     }
 

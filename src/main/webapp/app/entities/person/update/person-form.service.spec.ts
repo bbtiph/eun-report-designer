@@ -36,10 +36,7 @@ describe('Person Form Service', () => {
             status: expect.any(Object),
             gdprStatus: expect.any(Object),
             lastLoginDate: expect.any(Object),
-            eunTeamMember: expect.any(Object),
-            eventParticipant: expect.any(Object),
-            personInOrganization: expect.any(Object),
-            personInProject: expect.any(Object),
+            country: expect.any(Object),
           })
         );
       });
@@ -66,10 +63,7 @@ describe('Person Form Service', () => {
             status: expect.any(Object),
             gdprStatus: expect.any(Object),
             lastLoginDate: expect.any(Object),
-            eunTeamMember: expect.any(Object),
-            eventParticipant: expect.any(Object),
-            personInOrganization: expect.any(Object),
-            personInProject: expect.any(Object),
+            country: expect.any(Object),
           })
         );
       });

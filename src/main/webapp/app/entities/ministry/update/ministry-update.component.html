@@ -200,21 +200,18 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_organizationInMinistry">Organization In Ministry</label>
+          <label class="form-label" for="field_country">Country</label>
           <select
             class="form-control"
-            id="field_organizationInMinistry"
-            data-cy="organizationInMinistry"
-            name="organizationInMinistry"
-            formControlName="organizationInMinistry"
-            [compareWith]="compareOrganizationInMinistry"
+            id="field_country"
+            data-cy="country"
+            name="country"
+            formControlName="country"
+            [compareWith]="compareCountries"
           >
             <option [ngValue]="null"></option>
-            <option
-              [ngValue]="organizationInMinistryOption"
-              *ngFor="let organizationInMinistryOption of organizationInMinistriesSharedCollection"
-            >
-              {{ organizationInMinistryOption.id }}
+            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">
+              {{ countriesOption.countryName }}
             </option>
           </select>
         </div>

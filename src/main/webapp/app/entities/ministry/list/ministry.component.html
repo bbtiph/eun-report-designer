@@ -146,9 +146,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="organizationInMinistry.id">
+          <th scope="col" jhiSortBy="country.id">
             <div class="d-flex">
-              <span>Organization In Ministry</span>
+              <span>Country</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -179,10 +179,8 @@
           <td>{{ ministry.invoicingAddress }}</td>
           <td>{{ ministry.financialCorrespondingEmail }}</td>
           <td>
-            <div *ngIf="ministry.organizationInMinistry">
-              <a [routerLink]="['/organization-in-ministry', ministry.organizationInMinistry.id, 'view']">{{
-                ministry.organizationInMinistry.id
-              }}</a>
+            <div *ngIf="ministry.country">
+              <a [routerLink]="['/countries', ministry.country.id, 'view']">{{ ministry.country.id }}</a>
             </div>
           </td>
           <td class="text-end">

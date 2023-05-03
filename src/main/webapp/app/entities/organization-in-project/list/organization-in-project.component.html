@@ -86,6 +86,18 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="project.id">
+            <div class="d-flex">
+              <span>Project</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organization.id">
+            <div class="d-flex">
+              <span>Organization</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -102,6 +114,18 @@
           <td>{{ organizationInProject.teacherParticipationPossible }}</td>
           <td>{{ organizationInProject.ambassadorsPilotTeachersLeadingTeachersIdentified }}</td>
           <td>{{ organizationInProject.usersCanRegisterToPortal }}</td>
+          <td>
+            <div *ngIf="organizationInProject.project">
+              <a [routerLink]="['/project', organizationInProject.project.id, 'view']">{{ organizationInProject.project.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="organizationInProject.organization">
+              <a [routerLink]="['/organization', organizationInProject.organization.id, 'view']">{{
+                organizationInProject.organization.id
+              }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

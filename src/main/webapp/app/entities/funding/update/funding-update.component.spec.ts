@@ -9,8 +9,6 @@ import { of, Subject, from } from 'rxjs';
 import { FundingFormService } from './funding-form.service';
 import { FundingService } from '../service/funding.service';
 import { IFunding } from '../funding.model';
-import { IProject } from 'app/entities/project/project.model';
-import { ProjectService } from 'app/entities/project/service/project.service';
 
 import { FundingUpdateComponent } from './funding-update.component';
 
@@ -20,7 +18,6 @@ describe('Funding Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let fundingFormService: FundingFormService;
   let fundingService: FundingService;
-  let projectService: ProjectService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,43 +40,17 @@ describe('Funding Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     fundingFormService = TestBed.inject(FundingFormService);
     fundingService = TestBed.inject(FundingService);
-    projectService = TestBed.inject(ProjectService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Project query and add missing value', () => {
-      const funding: IFunding = { id: 456 };
-      const project: IProject = { id: 53181 };
-      funding.project = project;
-
-      const projectCollection: IProject[] = [{ id: 29726 }];
-      jest.spyOn(projectService, 'query').mockReturnValue(of(new HttpResponse({ body: projectCollection })));
-      const additionalProjects = [project];
-      const expectedCollection: IProject[] = [...additionalProjects, ...projectCollection];
-      jest.spyOn(projectService, 'addProjectToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ funding });
-      comp.ngOnInit();
-
-      expect(projectService.query).toHaveBeenCalled();
-      expect(projectService.addProjectToCollectionIfMissing).toHaveBeenCalledWith(
-        projectCollection,
-        ...additionalProjects.map(expect.objectContaining)
-      );
-      expect(comp.projectsSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const funding: IFunding = { id: 456 };
-      const project: IProject = { id: 81547 };
-      funding.project = project;
 
       activatedRoute.data = of({ funding });
       comp.ngOnInit();
 
-      expect(comp.projectsSharedCollection).toContain(project);
       expect(comp.funding).toEqual(funding);
     });
   });
@@ -149,18 +120,6 @@ describe('Funding Management Update Component', () => {
       expect(fundingService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Compare relationships', () => {
-    describe('compareProject', () => {
-      it('Should forward to projectService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(projectService, 'compareProject');
-        comp.compareProject(entity, entity2);
-        expect(projectService.compareProject).toHaveBeenCalledWith(entity, entity2);
-      });
     });
   });
 });

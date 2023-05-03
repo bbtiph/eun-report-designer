@@ -60,13 +60,7 @@ public class OrganizationDTO implements Serializable {
 
     private String organisationNumber;
 
-    private EventInOrganizationDTO eventInOrganization;
-
-    private OrganizationInMinistryDTO organizationInMinistry;
-
-    private OrganizationInProjectDTO organizationInProject;
-
-    private PersonInOrganizationDTO personInOrganization;
+    private CountriesDTO country;
 
     public Long getId() {
         return id;
@@ -252,36 +246,12 @@ public class OrganizationDTO implements Serializable {
         this.organisationNumber = organisationNumber;
     }
 
-    public EventInOrganizationDTO getEventInOrganization() {
-        return eventInOrganization;
+    public CountriesDTO getCountry() {
+        return country;
     }
 
-    public void setEventInOrganization(EventInOrganizationDTO eventInOrganization) {
-        this.eventInOrganization = eventInOrganization;
-    }
-
-    public OrganizationInMinistryDTO getOrganizationInMinistry() {
-        return organizationInMinistry;
-    }
-
-    public void setOrganizationInMinistry(OrganizationInMinistryDTO organizationInMinistry) {
-        this.organizationInMinistry = organizationInMinistry;
-    }
-
-    public OrganizationInProjectDTO getOrganizationInProject() {
-        return organizationInProject;
-    }
-
-    public void setOrganizationInProject(OrganizationInProjectDTO organizationInProject) {
-        this.organizationInProject = organizationInProject;
-    }
-
-    public PersonInOrganizationDTO getPersonInOrganization() {
-        return personInOrganization;
-    }
-
-    public void setPersonInOrganization(PersonInOrganizationDTO personInOrganization) {
-        this.personInOrganization = personInOrganization;
+    public void setCountry(CountriesDTO country) {
+        this.country = country;
     }
 
     @Override
@@ -331,10 +301,7 @@ public class OrganizationDTO implements Serializable {
             ", fax='" + getFax() + "'" +
             ", email='" + getEmail() + "'" +
             ", organisationNumber='" + getOrganisationNumber() + "'" +
-            ", eventInOrganization=" + getEventInOrganization() +
-            ", organizationInMinistry=" + getOrganizationInMinistry() +
-            ", organizationInProject=" + getOrganizationInProject() +
-            ", personInOrganization=" + getPersonInOrganization() +
+            ", country=" + getCountry() +
             "}";
     }
 }

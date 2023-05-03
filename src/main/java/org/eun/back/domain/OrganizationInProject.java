@@ -3,8 +3,6 @@ package org.eun.back.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -47,16 +45,16 @@ public class OrganizationInProject implements Serializable {
     @Column(name = "users_can_register_to_portal")
     private Boolean usersCanRegisterToPortal;
 
-    @OneToMany(mappedBy = "organizationInProject")
-    @JsonIgnoreProperties(value = { "fundings", "organizationInProject", "personInProject" }, allowSetters = true)
-    private Set<Project> projects = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "organizationInProjects", "personInProjects", "funding" }, allowSetters = true)
+    private Project project;
 
-    @OneToMany(mappedBy = "organizationInProject")
+    @ManyToOne
     @JsonIgnoreProperties(
-        value = { "countries", "eventInOrganization", "organizationInMinistry", "organizationInProject", "personInOrganization" },
+        value = { "eventInOrganizations", "organizationInMinistries", "organizationInProjects", "personInOrganizations", "country" },
         allowSetters = true
     )
-    private Set<Organization> organizations = new HashSet<>();
+    private Organization organization;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -179,65 +177,29 @@ public class OrganizationInProject implements Serializable {
         this.usersCanRegisterToPortal = usersCanRegisterToPortal;
     }
 
-    public Set<Project> getProjects() {
-        return this.projects;
+    public Project getProject() {
+        return this.project;
     }
 
-    public void setProjects(Set<Project> projects) {
-        if (this.projects != null) {
-            this.projects.forEach(i -> i.setOrganizationInProject(null));
-        }
-        if (projects != null) {
-            projects.forEach(i -> i.setOrganizationInProject(this));
-        }
-        this.projects = projects;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public OrganizationInProject projects(Set<Project> projects) {
-        this.setProjects(projects);
+    public OrganizationInProject project(Project project) {
+        this.setProject(project);
         return this;
     }
 
-    public OrganizationInProject addProject(Project project) {
-        this.projects.add(project);
-        project.setOrganizationInProject(this);
-        return this;
+    public Organization getOrganization() {
+        return this.organization;
     }
 
-    public OrganizationInProject removeProject(Project project) {
-        this.projects.remove(project);
-        project.setOrganizationInProject(null);
-        return this;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
-    public Set<Organization> getOrganizations() {
-        return this.organizations;
-    }
-
-    public void setOrganizations(Set<Organization> organizations) {
-        if (this.organizations != null) {
-            this.organizations.forEach(i -> i.setOrganizationInProject(null));
-        }
-        if (organizations != null) {
-            organizations.forEach(i -> i.setOrganizationInProject(this));
-        }
-        this.organizations = organizations;
-    }
-
-    public OrganizationInProject organizations(Set<Organization> organizations) {
-        this.setOrganizations(organizations);
-        return this;
-    }
-
-    public OrganizationInProject addOrganization(Organization organization) {
-        this.organizations.add(organization);
-        organization.setOrganizationInProject(this);
-        return this;
-    }
-
-    public OrganizationInProject removeOrganization(Organization organization) {
-        this.organizations.remove(organization);
-        organization.setOrganizationInProject(null);
+    public OrganizationInProject organization(Organization organization) {
+        this.setOrganization(organization);
         return this;
     }
 

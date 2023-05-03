@@ -164,27 +164,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="eventInOrganization.id">
+          <th scope="col" jhiSortBy="country.id">
             <div class="d-flex">
-              <span>Event In Organization</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="organizationInMinistry.id">
-            <div class="d-flex">
-              <span>Organization In Ministry</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="organizationInProject.id">
-            <div class="d-flex">
-              <span>Organization In Project</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="personInOrganization.id">
-            <div class="d-flex">
-              <span>Person In Organization</span>
+              <span>Country</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -221,31 +203,8 @@
           <td>{{ organization.email }}</td>
           <td>{{ organization.organisationNumber }}</td>
           <td>
-            <div *ngIf="organization.eventInOrganization">
-              <a [routerLink]="['/event-in-organization', organization.eventInOrganization.id, 'view']">{{
-                organization.eventInOrganization.id
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="organization.organizationInMinistry">
-              <a [routerLink]="['/organization-in-ministry', organization.organizationInMinistry.id, 'view']">{{
-                organization.organizationInMinistry.id
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="organization.organizationInProject">
-              <a [routerLink]="['/organization-in-project', organization.organizationInProject.id, 'view']">{{
-                organization.organizationInProject.id
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="organization.personInOrganization">
-              <a [routerLink]="['/person-in-organization', organization.personInOrganization.id, 'view']">{{
-                organization.personInOrganization.id
-              }}</a>
+            <div *ngIf="organization.country">
+              <a [routerLink]="['/countries', organization.country.id, 'view']">{{ organization.country.id }}</a>
             </div>
           </td>
           <td class="text-end">

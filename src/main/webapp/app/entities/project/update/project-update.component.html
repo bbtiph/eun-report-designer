@@ -380,39 +380,17 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_organizationInProject">Organization In Project</label>
+          <label class="form-label" for="field_funding">Funding</label>
           <select
             class="form-control"
-            id="field_organizationInProject"
-            data-cy="organizationInProject"
-            name="organizationInProject"
-            formControlName="organizationInProject"
-            [compareWith]="compareOrganizationInProject"
+            id="field_funding"
+            data-cy="funding"
+            name="funding"
+            formControlName="funding"
+            [compareWith]="compareFunding"
           >
             <option [ngValue]="null"></option>
-            <option
-              [ngValue]="organizationInProjectOption"
-              *ngFor="let organizationInProjectOption of organizationInProjectsSharedCollection"
-            >
-              {{ organizationInProjectOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_personInProject">Person In Project</label>
-          <select
-            class="form-control"
-            id="field_personInProject"
-            data-cy="personInProject"
-            name="personInProject"
-            formControlName="personInProject"
-            [compareWith]="comparePersonInProject"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="personInProjectOption" *ngFor="let personInProjectOption of personInProjectsSharedCollection">
-              {{ personInProjectOption.id }}
-            </option>
+            <option [ngValue]="fundingOption" *ngFor="let fundingOption of fundingsSharedCollection">{{ fundingOption.id }}</option>
           </select>
         </div>
       </div>

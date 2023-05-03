@@ -86,7 +86,9 @@
             [compareWith]="comparePerson"
           >
             <option [ngValue]="null"></option>
-            <option [ngValue]="personOption" *ngFor="let personOption of peopleSharedCollection">{{ personOption.id }}</option>
+            <option [ngValue]="personOption" *ngFor="let personOption of peopleSharedCollection">
+              {{ personOption.firstname + ' ' + personOption.lastname }}
+            </option>
           </select>
         </div>
       </div>

@@ -41,10 +41,7 @@ describe('Organization Form Service', () => {
             fax: expect.any(Object),
             email: expect.any(Object),
             organisationNumber: expect.any(Object),
-            eventInOrganization: expect.any(Object),
-            organizationInMinistry: expect.any(Object),
-            organizationInProject: expect.any(Object),
-            personInOrganization: expect.any(Object),
+            country: expect.any(Object),
           })
         );
       });
@@ -76,10 +73,7 @@ describe('Organization Form Service', () => {
             fax: expect.any(Object),
             email: expect.any(Object),
             organisationNumber: expect.any(Object),
-            eventInOrganization: expect.any(Object),
-            organizationInMinistry: expect.any(Object),
-            organizationInProject: expect.any(Object),
-            personInOrganization: expect.any(Object),
+            country: expect.any(Object),
           })
         );
       });

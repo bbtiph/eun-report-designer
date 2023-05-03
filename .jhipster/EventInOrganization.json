@@ -16,14 +16,14 @@
       "otherEntityName": "event",
       "otherEntityRelationshipName": "eventInOrganization",
       "relationshipName": "event",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "id",
       "otherEntityName": "organization",
       "otherEntityRelationshipName": "eventInOrganization",
       "relationshipName": "organization",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

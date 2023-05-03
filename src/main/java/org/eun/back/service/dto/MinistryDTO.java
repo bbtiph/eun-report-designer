@@ -47,7 +47,7 @@ public class MinistryDTO implements Serializable {
 
     private String financialCorrespondingEmail;
 
-    private OrganizationInMinistryDTO organizationInMinistry;
+    private CountriesDTO country;
 
     public Long getId() {
         return id;
@@ -201,12 +201,12 @@ public class MinistryDTO implements Serializable {
         this.financialCorrespondingEmail = financialCorrespondingEmail;
     }
 
-    public OrganizationInMinistryDTO getOrganizationInMinistry() {
-        return organizationInMinistry;
+    public CountriesDTO getCountry() {
+        return country;
     }
 
-    public void setOrganizationInMinistry(OrganizationInMinistryDTO organizationInMinistry) {
-        this.organizationInMinistry = organizationInMinistry;
+    public void setCountry(CountriesDTO country) {
+        this.country = country;
     }
 
     @Override
@@ -253,7 +253,7 @@ public class MinistryDTO implements Serializable {
             ", eunContactEmail='" + getEunContactEmail() + "'" +
             ", invoicingAddress='" + getInvoicingAddress() + "'" +
             ", financialCorrespondingEmail='" + getFinancialCorrespondingEmail() + "'" +
-            ", organizationInMinistry=" + getOrganizationInMinistry() +
+            ", country=" + getCountry() +
             "}";
     }
 }

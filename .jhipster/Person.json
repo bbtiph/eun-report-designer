@@ -78,34 +78,34 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "id",
-      "otherEntityName": "country",
-      "otherEntityRelationshipName": "person",
-      "relationshipName": "country",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "eunTeamMember",
       "otherEntityRelationshipName": "person",
       "relationshipName": "eunTeamMember",
-      "relationshipType": "many-to-one"
+      "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "eventParticipant",
       "otherEntityRelationshipName": "person",
       "relationshipName": "eventParticipant",
-      "relationshipType": "many-to-one"
+      "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "personInOrganization",
       "otherEntityRelationshipName": "person",
       "relationshipName": "personInOrganization",
-      "relationshipType": "many-to-one"
+      "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "personInProject",
       "otherEntityRelationshipName": "person",
       "relationshipName": "personInProject",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "countries",
+      "otherEntityRelationshipName": "person",
+      "relationshipName": "country",
       "relationshipType": "many-to-one"
     }
   ],

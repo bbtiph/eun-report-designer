@@ -22,7 +22,6 @@ type FundingFormGroupContent = {
   type: FormControl<IFunding['type']>;
   parentId: FormControl<IFunding['parentId']>;
   description: FormControl<IFunding['description']>;
-  project: FormControl<IFunding['project']>;
 };
 
 export type FundingFormGroup = FormGroup<FundingFormGroupContent>;
@@ -46,7 +45,6 @@ export class FundingFormService {
       type: new FormControl(fundingRawValue.type),
       parentId: new FormControl(fundingRawValue.parentId),
       description: new FormControl(fundingRawValue.description),
-      project: new FormControl(fundingRawValue.project),
     });
   }
 

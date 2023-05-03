@@ -78,28 +78,10 @@
         <dd>
           <span>{{ person.lastLoginDate | formatMediumDate }}</span>
         </dd>
-        <dt><span>Eun Team Member</span></dt>
+        <dt><span>Country</span></dt>
         <dd>
-          <div *ngIf="person.eunTeamMember">
-            <a [routerLink]="['/eun-team-member', person.eunTeamMember.id, 'view']">{{ person.eunTeamMember.id }}</a>
-          </div>
-        </dd>
-        <dt><span>Event Participant</span></dt>
-        <dd>
-          <div *ngIf="person.eventParticipant">
-            <a [routerLink]="['/event-participant', person.eventParticipant.id, 'view']">{{ person.eventParticipant.id }}</a>
-          </div>
-        </dd>
-        <dt><span>Person In Organization</span></dt>
-        <dd>
-          <div *ngIf="person.personInOrganization">
-            <a [routerLink]="['/person-in-organization', person.personInOrganization.id, 'view']">{{ person.personInOrganization.id }}</a>
-          </div>
-        </dd>
-        <dt><span>Person In Project</span></dt>
-        <dd>
-          <div *ngIf="person.personInProject">
-            <a [routerLink]="['/person-in-project', person.personInProject.id, 'view']">{{ person.personInProject.id }}</a>
+          <div *ngIf="person.country">
+            <a [routerLink]="['/countries', person.country.id, 'view']">{{ person.country.id }}</a>
           </div>
         </dd>
       </dl>

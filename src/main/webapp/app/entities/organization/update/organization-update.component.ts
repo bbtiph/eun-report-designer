@@ -10,14 +10,8 @@ import { OrganizationService } from '../service/organization.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
-import { IEventInOrganization } from 'app/entities/event-in-organization/event-in-organization.model';
-import { EventInOrganizationService } from 'app/entities/event-in-organization/service/event-in-organization.service';
-import { IOrganizationInMinistry } from 'app/entities/organization-in-ministry/organization-in-ministry.model';
-import { OrganizationInMinistryService } from 'app/entities/organization-in-ministry/service/organization-in-ministry.service';
-import { IOrganizationInProject } from 'app/entities/organization-in-project/organization-in-project.model';
-import { OrganizationInProjectService } from 'app/entities/organization-in-project/service/organization-in-project.service';
-import { IPersonInOrganization } from 'app/entities/person-in-organization/person-in-organization.model';
-import { PersonInOrganizationService } from 'app/entities/person-in-organization/service/person-in-organization.service';
+import { ICountries } from 'app/entities/countries/countries.model';
+import { CountriesService } from 'app/entities/countries/service/countries.service';
 import { OrgStatus } from 'app/entities/enumerations/org-status.model';
 
 @Component({
@@ -29,10 +23,7 @@ export class OrganizationUpdateComponent implements OnInit {
   organization: IOrganization | null = null;
   orgStatusValues = Object.keys(OrgStatus);
 
-  eventInOrganizationsSharedCollection: IEventInOrganization[] = [];
-  organizationInMinistriesSharedCollection: IOrganizationInMinistry[] = [];
-  organizationInProjectsSharedCollection: IOrganizationInProject[] = [];
-  personInOrganizationsSharedCollection: IPersonInOrganization[] = [];
+  countriesSharedCollection: ICountries[] = [];
 
   editForm: OrganizationFormGroup = this.organizationFormService.createOrganizationFormGroup();
 
@@ -41,24 +32,11 @@ export class OrganizationUpdateComponent implements OnInit {
     protected eventManager: EventManager,
     protected organizationService: OrganizationService,
     protected organizationFormService: OrganizationFormService,
-    protected eventInOrganizationService: EventInOrganizationService,
-    protected organizationInMinistryService: OrganizationInMinistryService,
-    protected organizationInProjectService: OrganizationInProjectService,
-    protected personInOrganizationService: PersonInOrganizationService,
+    protected countriesService: CountriesService,
     protected activatedRoute: ActivatedRoute
   ) {}
 
-  compareEventInOrganization = (o1: IEventInOrganization | null, o2: IEventInOrganization | null): boolean =>
-    this.eventInOrganizationService.compareEventInOrganization(o1, o2);
-
-  compareOrganizationInMinistry = (o1: IOrganizationInMinistry | null, o2: IOrganizationInMinistry | null): boolean =>
-    this.organizationInMinistryService.compareOrganizationInMinistry(o1, o2);
-
-  compareOrganizationInProject = (o1: IOrganizationInProject | null, o2: IOrganizationInProject | null): boolean =>
-    this.organizationInProjectService.compareOrganizationInProject(o1, o2);
-
-  comparePersonInOrganization = (o1: IPersonInOrganization | null, o2: IPersonInOrganization | null): boolean =>
-    this.personInOrganizationService.comparePersonInOrganization(o1, o2);
+  compareCountries = (o1: ICountries | null, o2: ICountries | null): boolean => this.countriesService.compareCountries(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ organization }) => {
@@ -123,83 +101,21 @@ export class OrganizationUpdateComponent implements OnInit {
     this.organization = organization;
     this.organizationFormService.resetForm(this.editForm, organization);
 
-    this.eventInOrganizationsSharedCollection =
-      this.eventInOrganizationService.addEventInOrganizationToCollectionIfMissing<IEventInOrganization>(
-        this.eventInOrganizationsSharedCollection,
-        organization.eventInOrganization
-      );
-    this.organizationInMinistriesSharedCollection =
-      this.organizationInMinistryService.addOrganizationInMinistryToCollectionIfMissing<IOrganizationInMinistry>(
-        this.organizationInMinistriesSharedCollection,
-        organization.organizationInMinistry
-      );
-    this.organizationInProjectsSharedCollection =
-      this.organizationInProjectService.addOrganizationInProjectToCollectionIfMissing<IOrganizationInProject>(
-        this.organizationInProjectsSharedCollection,
-        organization.organizationInProject
-      );
-    this.personInOrganizationsSharedCollection =
-      this.personInOrganizationService.addPersonInOrganizationToCollectionIfMissing<IPersonInOrganization>(
-        this.personInOrganizationsSharedCollection,
-        organization.personInOrganization
-      );
+    this.countriesSharedCollection = this.countriesService.addCountriesToCollectionIfMissing<ICountries>(
+      this.countriesSharedCollection,
+      organization.country
+    );
   }
 
   protected loadRelationshipsOptions(): void {
-    this.eventInOrganizationService
+    this.countriesService
       .query()
-      .pipe(map((res: HttpResponse<IEventInOrganization[]>) => res.body ?? []))
+      .pipe(map((res: HttpResponse<ICountries[]>) => res.body ?? []))
       .pipe(
-        map((eventInOrganizations: IEventInOrganization[]) =>
-          this.eventInOrganizationService.addEventInOrganizationToCollectionIfMissing<IEventInOrganization>(
-            eventInOrganizations,
-            this.organization?.eventInOrganization
-          )
+        map((countries: ICountries[]) =>
+          this.countriesService.addCountriesToCollectionIfMissing<ICountries>(countries, this.organization?.country)
         )
       )
-      .subscribe((eventInOrganizations: IEventInOrganization[]) => (this.eventInOrganizationsSharedCollection = eventInOrganizations));
-
-    this.organizationInMinistryService
-      .query()
-      .pipe(map((res: HttpResponse<IOrganizationInMinistry[]>) => res.body ?? []))
-      .pipe(
-        map((organizationInMinistries: IOrganizationInMinistry[]) =>
-          this.organizationInMinistryService.addOrganizationInMinistryToCollectionIfMissing<IOrganizationInMinistry>(
-            organizationInMinistries,
-            this.organization?.organizationInMinistry
-          )
-        )
-      )
-      .subscribe(
-        (organizationInMinistries: IOrganizationInMinistry[]) => (this.organizationInMinistriesSharedCollection = organizationInMinistries)
-      );
-
-    this.organizationInProjectService
-      .query()
-      .pipe(map((res: HttpResponse<IOrganizationInProject[]>) => res.body ?? []))
-      .pipe(
-        map((organizationInProjects: IOrganizationInProject[]) =>
-          this.organizationInProjectService.addOrganizationInProjectToCollectionIfMissing<IOrganizationInProject>(
-            organizationInProjects,
-            this.organization?.organizationInProject
-          )
-        )
-      )
-      .subscribe(
-        (organizationInProjects: IOrganizationInProject[]) => (this.organizationInProjectsSharedCollection = organizationInProjects)
-      );
-
-    this.personInOrganizationService
-      .query()
-      .pipe(map((res: HttpResponse<IPersonInOrganization[]>) => res.body ?? []))
-      .pipe(
-        map((personInOrganizations: IPersonInOrganization[]) =>
-          this.personInOrganizationService.addPersonInOrganizationToCollectionIfMissing<IPersonInOrganization>(
-            personInOrganizations,
-            this.organization?.personInOrganization
-          )
-        )
-      )
-      .subscribe((personInOrganizations: IPersonInOrganization[]) => (this.personInOrganizationsSharedCollection = personInOrganizations));
+      .subscribe((countries: ICountries[]) => (this.countriesSharedCollection = countries));
   }
 }

@@ -7,10 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 import { ProjectFormService, ProjectFormGroup } from './project-form.service';
 import { IProject } from '../project.model';
 import { ProjectService } from '../service/project.service';
-import { IOrganizationInProject } from 'app/entities/organization-in-project/organization-in-project.model';
-import { OrganizationInProjectService } from 'app/entities/organization-in-project/service/organization-in-project.service';
-import { IPersonInProject } from 'app/entities/person-in-project/person-in-project.model';
-import { PersonInProjectService } from 'app/entities/person-in-project/service/person-in-project.service';
+import { IFunding } from 'app/entities/funding/funding.model';
+import { FundingService } from 'app/entities/funding/service/funding.service';
 import { ProjectStatus } from 'app/entities/enumerations/project-status.model';
 
 @Component({
@@ -22,24 +20,18 @@ export class ProjectUpdateComponent implements OnInit {
   project: IProject | null = null;
   projectStatusValues = Object.keys(ProjectStatus);
 
-  organizationInProjectsSharedCollection: IOrganizationInProject[] = [];
-  personInProjectsSharedCollection: IPersonInProject[] = [];
+  fundingsSharedCollection: IFunding[] = [];
 
   editForm: ProjectFormGroup = this.projectFormService.createProjectFormGroup();
 
   constructor(
     protected projectService: ProjectService,
     protected projectFormService: ProjectFormService,
-    protected organizationInProjectService: OrganizationInProjectService,
-    protected personInProjectService: PersonInProjectService,
+    protected fundingService: FundingService,
     protected activatedRoute: ActivatedRoute
   ) {}
 
-  compareOrganizationInProject = (o1: IOrganizationInProject | null, o2: IOrganizationInProject | null): boolean =>
-    this.organizationInProjectService.compareOrganizationInProject(o1, o2);
-
-  comparePersonInProject = (o1: IPersonInProject | null, o2: IPersonInProject | null): boolean =>
-    this.personInProjectService.comparePersonInProject(o1, o2);
+  compareFunding = (o1: IFunding | null, o2: IFunding | null): boolean => this.fundingService.compareFunding(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ project }) => {
@@ -89,44 +81,17 @@ export class ProjectUpdateComponent implements OnInit {
     this.project = project;
     this.projectFormService.resetForm(this.editForm, project);
 
-    this.organizationInProjectsSharedCollection =
-      this.organizationInProjectService.addOrganizationInProjectToCollectionIfMissing<IOrganizationInProject>(
-        this.organizationInProjectsSharedCollection,
-        project.organizationInProject
-      );
-    this.personInProjectsSharedCollection = this.personInProjectService.addPersonInProjectToCollectionIfMissing<IPersonInProject>(
-      this.personInProjectsSharedCollection,
-      project.personInProject
+    this.fundingsSharedCollection = this.fundingService.addFundingToCollectionIfMissing<IFunding>(
+      this.fundingsSharedCollection,
+      project.funding
     );
   }
 
   protected loadRelationshipsOptions(): void {
-    this.organizationInProjectService
+    this.fundingService
       .query()
-      .pipe(map((res: HttpResponse<IOrganizationInProject[]>) => res.body ?? []))
-      .pipe(
-        map((organizationInProjects: IOrganizationInProject[]) =>
-          this.organizationInProjectService.addOrganizationInProjectToCollectionIfMissing<IOrganizationInProject>(
-            organizationInProjects,
-            this.project?.organizationInProject
-          )
-        )
-      )
-      .subscribe(
-        (organizationInProjects: IOrganizationInProject[]) => (this.organizationInProjectsSharedCollection = organizationInProjects)
-      );
-
-    this.personInProjectService
-      .query()
-      .pipe(map((res: HttpResponse<IPersonInProject[]>) => res.body ?? []))
-      .pipe(
-        map((personInProjects: IPersonInProject[]) =>
-          this.personInProjectService.addPersonInProjectToCollectionIfMissing<IPersonInProject>(
-            personInProjects,
-            this.project?.personInProject
-          )
-        )
-      )
-      .subscribe((personInProjects: IPersonInProject[]) => (this.personInProjectsSharedCollection = personInProjects));
+      .pipe(map((res: HttpResponse<IFunding[]>) => res.body ?? []))
+      .pipe(map((fundings: IFunding[]) => this.fundingService.addFundingToCollectionIfMissing<IFunding>(fundings, this.project?.funding)))
+      .subscribe((fundings: IFunding[]) => (this.fundingsSharedCollection = fundings));
   }
 }

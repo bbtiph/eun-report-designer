@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity OperationalBodyMember.
+    -->
+    <changeSet id="20230428120835-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="operational_body_member"
+                                 constraintName="fk_operational_body_member__country_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="countries"/>
+    </changeSet>
+</databaseChangeLog>

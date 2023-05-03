@@ -38,6 +38,18 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="event.id">
+            <div class="d-flex">
+              <span>Event</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organization.id">
+            <div class="d-flex">
+              <span>Organization</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -45,6 +57,16 @@
         <tr *ngFor="let eventInOrganization of eventInOrganizations; trackBy: trackId" data-cy="entityTable">
           <td>
             <a [routerLink]="['/event-in-organization', eventInOrganization.id, 'view']">{{ eventInOrganization.id }}</a>
+          </td>
+          <td>
+            <div *ngIf="eventInOrganization.event">
+              <a [routerLink]="['/event', eventInOrganization.event.id, 'view']">{{ eventInOrganization.event.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="eventInOrganization.organization">
+              <a [routerLink]="['/organization', eventInOrganization.organization.id, 'view']">{{ eventInOrganization.organization.id }}</a>
+            </div>
           </td>
           <td class="text-end">
             <div class="btn-group">

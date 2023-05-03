@@ -2,6 +2,8 @@ package org.eun.back.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -32,9 +34,9 @@ public class Funding implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "fundings", "organizationInProject", "personInProject" }, allowSetters = true)
-    private Project project;
+    @OneToMany(mappedBy = "funding")
+    @JsonIgnoreProperties(value = { "organizationInProjects", "personInProjects", "funding" }, allowSetters = true)
+    private Set<Project> projects = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -103,16 +105,34 @@ public class Funding implements Serializable {
         this.description = description;
     }
 
-    public Project getProject() {
-        return this.project;
+    public Set<Project> getProjects() {
+        return this.projects;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjects(Set<Project> projects) {
+        if (this.projects != null) {
+            this.projects.forEach(i -> i.setFunding(null));
+        }
+        if (projects != null) {
+            projects.forEach(i -> i.setFunding(this));
+        }
+        this.projects = projects;
     }
 
-    public Funding project(Project project) {
-        this.setProject(project);
+    public Funding projects(Set<Project> projects) {
+        this.setProjects(projects);
+        return this;
+    }
+
+    public Funding addProject(Project project) {
+        this.projects.add(project);
+        project.setFunding(this);
+        return this;
+    }
+
+    public Funding removeProject(Project project) {
+        this.projects.remove(project);
+        project.setFunding(null);
         return this;
     }
 

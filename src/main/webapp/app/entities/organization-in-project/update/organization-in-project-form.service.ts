@@ -35,6 +35,8 @@ type OrganizationInProjectFormGroupContent = {
     IOrganizationInProject['ambassadorsPilotTeachersLeadingTeachersIdentified']
   >;
   usersCanRegisterToPortal: FormControl<IOrganizationInProject['usersCanRegisterToPortal']>;
+  project: FormControl<IOrganizationInProject['project']>;
+  organization: FormControl<IOrganizationInProject['organization']>;
 };
 
 export type OrganizationInProjectFormGroup = FormGroup<OrganizationInProjectFormGroupContent>;
@@ -66,6 +68,8 @@ export class OrganizationInProjectFormService {
         organizationInProjectRawValue.ambassadorsPilotTeachersLeadingTeachersIdentified
       ),
       usersCanRegisterToPortal: new FormControl(organizationInProjectRawValue.usersCanRegisterToPortal),
+      project: new FormControl(organizationInProjectRawValue.project),
+      organization: new FormControl(organizationInProjectRawValue.organization),
     });
   }
 

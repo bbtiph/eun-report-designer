@@ -20,6 +20,8 @@ describe('EventInOrganization Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            event: expect.any(Object),
+            organization: expect.any(Object),
           })
         );
       });
@@ -30,6 +32,8 @@ describe('EventInOrganization Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            event: expect.any(Object),
+            organization: expect.any(Object),
           })
         );
       });

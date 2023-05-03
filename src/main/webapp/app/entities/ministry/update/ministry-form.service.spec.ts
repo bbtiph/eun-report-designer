@@ -38,7 +38,7 @@ describe('Ministry Form Service', () => {
             eunContactEmail: expect.any(Object),
             invoicingAddress: expect.any(Object),
             financialCorrespondingEmail: expect.any(Object),
-            organizationInMinistry: expect.any(Object),
+            country: expect.any(Object),
           })
         );
       });
@@ -67,7 +67,7 @@ describe('Ministry Form Service', () => {
             eunContactEmail: expect.any(Object),
             invoicingAddress: expect.any(Object),
             financialCorrespondingEmail: expect.any(Object),
-            organizationInMinistry: expect.any(Object),
+            country: expect.any(Object),
           })
         );
       });

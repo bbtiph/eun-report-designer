@@ -20,7 +20,6 @@ type EunTeamFormGroupContent = {
   id: FormControl<IEunTeam['id'] | NewEunTeam['id']>;
   name: FormControl<IEunTeam['name']>;
   description: FormControl<IEunTeam['description']>;
-  eunTeamMember: FormControl<IEunTeam['eunTeamMember']>;
 };
 
 export type EunTeamFormGroup = FormGroup<EunTeamFormGroupContent>;
@@ -42,7 +41,6 @@ export class EunTeamFormService {
       ),
       name: new FormControl(eunTeamRawValue.name),
       description: new FormControl(eunTeamRawValue.description),
-      eunTeamMember: new FormControl(eunTeamRawValue.eunTeamMember),
     });
   }
 

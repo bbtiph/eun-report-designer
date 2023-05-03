@@ -85,16 +85,16 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "id",
-      "otherEntityName": "country",
-      "otherEntityRelationshipName": "ministry",
-      "relationshipName": "country",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "organizationInMinistry",
       "otherEntityRelationshipName": "ministry",
       "relationshipName": "organizationInMinistry",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "countries",
+      "otherEntityRelationshipName": "ministry",
+      "relationshipName": "country",
       "relationshipType": "many-to-one"
     }
   ],

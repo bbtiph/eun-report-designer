@@ -19,6 +19,8 @@ type PersonInProjectFormDefaults = Pick<NewPersonInProject, 'id'>;
 type PersonInProjectFormGroupContent = {
   id: FormControl<IPersonInProject['id'] | NewPersonInProject['id']>;
   roleInProject: FormControl<IPersonInProject['roleInProject']>;
+  person: FormControl<IPersonInProject['person']>;
+  project: FormControl<IPersonInProject['project']>;
 };
 
 export type PersonInProjectFormGroup = FormGroup<PersonInProjectFormGroupContent>;
@@ -39,6 +41,8 @@ export class PersonInProjectFormService {
         }
       ),
       roleInProject: new FormControl(personInProjectRawValue.roleInProject),
+      person: new FormControl(personInProjectRawValue.person),
+      project: new FormControl(personInProjectRawValue.project),
     });
   }
 

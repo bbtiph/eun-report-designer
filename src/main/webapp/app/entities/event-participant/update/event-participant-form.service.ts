@@ -19,6 +19,8 @@ type EventParticipantFormDefaults = Pick<NewEventParticipant, 'id'>;
 type EventParticipantFormGroupContent = {
   id: FormControl<IEventParticipant['id'] | NewEventParticipant['id']>;
   type: FormControl<IEventParticipant['type']>;
+  event: FormControl<IEventParticipant['event']>;
+  person: FormControl<IEventParticipant['person']>;
 };
 
 export type EventParticipantFormGroup = FormGroup<EventParticipantFormGroupContent>;
@@ -39,6 +41,8 @@ export class EventParticipantFormService {
         }
       ),
       type: new FormControl(eventParticipantRawValue.type),
+      event: new FormControl(eventParticipantRawValue.event),
+      person: new FormControl(eventParticipantRawValue.person),
     });
   }
 

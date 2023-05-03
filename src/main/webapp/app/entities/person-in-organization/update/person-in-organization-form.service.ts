@@ -19,6 +19,8 @@ type PersonInOrganizationFormDefaults = Pick<NewPersonInOrganization, 'id'>;
 type PersonInOrganizationFormGroupContent = {
   id: FormControl<IPersonInOrganization['id'] | NewPersonInOrganization['id']>;
   roleInOrganization: FormControl<IPersonInOrganization['roleInOrganization']>;
+  person: FormControl<IPersonInOrganization['person']>;
+  organization: FormControl<IPersonInOrganization['organization']>;
 };
 
 export type PersonInOrganizationFormGroup = FormGroup<PersonInOrganizationFormGroupContent>;
@@ -41,6 +43,8 @@ export class PersonInOrganizationFormService {
         }
       ),
       roleInOrganization: new FormControl(personInOrganizationRawValue.roleInOrganization),
+      person: new FormControl(personInOrganizationRawValue.person),
+      organization: new FormControl(personInOrganizationRawValue.organization),
     });
   }
 

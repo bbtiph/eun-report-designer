@@ -1,4 +1,5 @@
 import dayjs from 'dayjs/esm';
+import { ICountries } from 'app/entities/countries/countries.model';
 
 export interface IOperationalBodyMember {
   id: number;
@@ -11,6 +12,7 @@ export interface IOperationalBodyMember {
   eunContactLastname?: string | null;
   cooperationField?: string | null;
   status?: string | null;
+  country?: Pick<ICountries, 'id'> | null;
 }
 
 export type NewOperationalBodyMember = Omit<IOperationalBodyMember, 'id'> & { id: null };

@@ -134,27 +134,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="eunTeamMember.id">
+          <th scope="col" jhiSortBy="country.id">
             <div class="d-flex">
-              <span>Eun Team Member</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="eventParticipant.id">
-            <div class="d-flex">
-              <span>Event Participant</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="personInOrganization.id">
-            <div class="d-flex">
-              <span>Person In Organization</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="personInProject.id">
-            <div class="d-flex">
-              <span>Person In Project</span>
+              <span>Country</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -183,23 +165,8 @@
           <td>{{ person.gdprStatus }}</td>
           <td>{{ person.lastLoginDate | formatMediumDate }}</td>
           <td>
-            <div *ngIf="person.eunTeamMember">
-              <a [routerLink]="['/eun-team-member', person.eunTeamMember.id, 'view']">{{ person.eunTeamMember.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="person.eventParticipant">
-              <a [routerLink]="['/event-participant', person.eventParticipant.id, 'view']">{{ person.eventParticipant.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="person.personInOrganization">
-              <a [routerLink]="['/person-in-organization', person.personInOrganization.id, 'view']">{{ person.personInOrganization.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="person.personInProject">
-              <a [routerLink]="['/person-in-project', person.personInProject.id, 'view']">{{ person.personInProject.id }}</a>
+            <div *ngIf="person.country">
+              <a [routerLink]="['/countries', person.country.id, 'view']">{{ person.country.id }}</a>
             </div>
           </td>
           <td class="text-end">

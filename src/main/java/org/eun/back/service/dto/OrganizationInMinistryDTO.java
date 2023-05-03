@@ -13,6 +13,10 @@ public class OrganizationInMinistryDTO implements Serializable {
 
     private String status;
 
+    private MinistryDTO ministry;
+
+    private OrganizationDTO organization;
+
     public Long getId() {
         return id;
     }
@@ -27,6 +31,22 @@ public class OrganizationInMinistryDTO implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public MinistryDTO getMinistry() {
+        return ministry;
+    }
+
+    public void setMinistry(MinistryDTO ministry) {
+        this.ministry = ministry;
+    }
+
+    public OrganizationDTO getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(OrganizationDTO organization) {
+        this.organization = organization;
     }
 
     @Override
@@ -56,6 +76,8 @@ public class OrganizationInMinistryDTO implements Serializable {
         return "OrganizationInMinistryDTO{" +
             "id=" + getId() +
             ", status='" + getStatus() + "'" +
+            ", ministry=" + getMinistry() +
+            ", organization=" + getOrganization() +
             "}";
     }
 }

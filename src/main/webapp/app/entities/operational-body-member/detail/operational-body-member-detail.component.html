@@ -50,6 +50,12 @@
         <dd>
           <span>{{ operationalBodyMember.status }}</span>
         </dd>
+        <dt><span>Country</span></dt>
+        <dd>
+          <div *ngIf="operationalBodyMember.country">
+            <a [routerLink]="['/countries', operationalBodyMember.country.id, 'view']">{{ operationalBodyMember.country.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

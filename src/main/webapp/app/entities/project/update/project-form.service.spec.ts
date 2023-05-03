@@ -55,8 +55,7 @@ describe('Project Form Service', () => {
             sysCreatIpAddress: expect.any(Object),
             sysModifTimestamp: expect.any(Object),
             sysModifIpAddress: expect.any(Object),
-            organizationInProject: expect.any(Object),
-            personInProject: expect.any(Object),
+            funding: expect.any(Object),
           })
         );
       });
@@ -102,8 +101,7 @@ describe('Project Form Service', () => {
             sysCreatIpAddress: expect.any(Object),
             sysModifTimestamp: expect.any(Object),
             sysModifIpAddress: expect.any(Object),
-            organizationInProject: expect.any(Object),
-            personInProject: expect.any(Object),
+            funding: expect.any(Object),
           })
         );
       });

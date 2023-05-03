@@ -18,6 +18,8 @@ type EventInOrganizationFormDefaults = Pick<NewEventInOrganization, 'id'>;
 
 type EventInOrganizationFormGroupContent = {
   id: FormControl<IEventInOrganization['id'] | NewEventInOrganization['id']>;
+  event: FormControl<IEventInOrganization['event']>;
+  organization: FormControl<IEventInOrganization['organization']>;
 };
 
 export type EventInOrganizationFormGroup = FormGroup<EventInOrganizationFormGroupContent>;
@@ -37,14 +39,12 @@ export class EventInOrganizationFormService {
           validators: [Validators.required],
         }
       ),
+      event: new FormControl(eventInOrganizationRawValue.event),
+      organization: new FormControl(eventInOrganizationRawValue.organization),
     });
   }
 
   getEventInOrganization(form: EventInOrganizationFormGroup): IEventInOrganization | NewEventInOrganization {
-    // if (form.controls.id.disabled) {
-    // form.value returns id with null value for FormGroup with only one FormControl
-    // return null;
-    // }
     return form.getRawValue() as IEventInOrganization | NewEventInOrganization;
   }
 

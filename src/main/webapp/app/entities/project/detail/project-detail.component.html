@@ -154,18 +154,10 @@
         <dd>
           <span>{{ project.sysModifIpAddress }}</span>
         </dd>
-        <dt><span>Organization In Project</span></dt>
+        <dt><span>Funding</span></dt>
         <dd>
-          <div *ngIf="project.organizationInProject">
-            <a [routerLink]="['/organization-in-project', project.organizationInProject.id, 'view']">{{
-              project.organizationInProject.id
-            }}</a>
-          </div>
-        </dd>
-        <dt><span>Person In Project</span></dt>
-        <dd>
-          <div *ngIf="project.personInProject">
-            <a [routerLink]="['/person-in-project', project.personInProject.id, 'view']">{{ project.personInProject.id }}</a>
+          <div *ngIf="project.funding">
+            <a [routerLink]="['/funding', project.funding.id, 'view']">{{ project.funding.id }}</a>
           </div>
         </dd>
       </dl>

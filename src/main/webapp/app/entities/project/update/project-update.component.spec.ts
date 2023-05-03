@@ -9,10 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { ProjectFormService } from './project-form.service';
 import { ProjectService } from '../service/project.service';
 import { IProject } from '../project.model';
-import { IOrganizationInProject } from 'app/entities/organization-in-project/organization-in-project.model';
-import { OrganizationInProjectService } from 'app/entities/organization-in-project/service/organization-in-project.service';
-import { IPersonInProject } from 'app/entities/person-in-project/person-in-project.model';
-import { PersonInProjectService } from 'app/entities/person-in-project/service/person-in-project.service';
+import { IFunding } from 'app/entities/funding/funding.model';
+import { FundingService } from 'app/entities/funding/service/funding.service';
 
 import { ProjectUpdateComponent } from './project-update.component';
 
@@ -22,8 +20,7 @@ describe('Project Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let projectFormService: ProjectFormService;
   let projectService: ProjectService;
-  let organizationInProjectService: OrganizationInProjectService;
-  let personInProjectService: PersonInProjectService;
+  let fundingService: FundingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -46,69 +43,43 @@ describe('Project Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     projectFormService = TestBed.inject(ProjectFormService);
     projectService = TestBed.inject(ProjectService);
-    organizationInProjectService = TestBed.inject(OrganizationInProjectService);
-    personInProjectService = TestBed.inject(PersonInProjectService);
+    fundingService = TestBed.inject(FundingService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call OrganizationInProject query and add missing value', () => {
+    it('Should call Funding query and add missing value', () => {
       const project: IProject = { id: 456 };
-      const organizationInProject: IOrganizationInProject = { id: 48541 };
-      project.organizationInProject = organizationInProject;
+      const funding: IFunding = { id: 77933 };
+      project.funding = funding;
 
-      const organizationInProjectCollection: IOrganizationInProject[] = [{ id: 48172 }];
-      jest.spyOn(organizationInProjectService, 'query').mockReturnValue(of(new HttpResponse({ body: organizationInProjectCollection })));
-      const additionalOrganizationInProjects = [organizationInProject];
-      const expectedCollection: IOrganizationInProject[] = [...additionalOrganizationInProjects, ...organizationInProjectCollection];
-      jest.spyOn(organizationInProjectService, 'addOrganizationInProjectToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const fundingCollection: IFunding[] = [{ id: 54659 }];
+      jest.spyOn(fundingService, 'query').mockReturnValue(of(new HttpResponse({ body: fundingCollection })));
+      const additionalFundings = [funding];
+      const expectedCollection: IFunding[] = [...additionalFundings, ...fundingCollection];
+      jest.spyOn(fundingService, 'addFundingToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ project });
       comp.ngOnInit();
 
-      expect(organizationInProjectService.query).toHaveBeenCalled();
-      expect(organizationInProjectService.addOrganizationInProjectToCollectionIfMissing).toHaveBeenCalledWith(
-        organizationInProjectCollection,
-        ...additionalOrganizationInProjects.map(expect.objectContaining)
+      expect(fundingService.query).toHaveBeenCalled();
+      expect(fundingService.addFundingToCollectionIfMissing).toHaveBeenCalledWith(
+        fundingCollection,
+        ...additionalFundings.map(expect.objectContaining)
       );
-      expect(comp.organizationInProjectsSharedCollection).toEqual(expectedCollection);
-    });
-
-    it('Should call PersonInProject query and add missing value', () => {
-      const project: IProject = { id: 456 };
-      const personInProject: IPersonInProject = { id: 37760 };
-      project.personInProject = personInProject;
-
-      const personInProjectCollection: IPersonInProject[] = [{ id: 345 }];
-      jest.spyOn(personInProjectService, 'query').mockReturnValue(of(new HttpResponse({ body: personInProjectCollection })));
-      const additionalPersonInProjects = [personInProject];
-      const expectedCollection: IPersonInProject[] = [...additionalPersonInProjects, ...personInProjectCollection];
-      jest.spyOn(personInProjectService, 'addPersonInProjectToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ project });
-      comp.ngOnInit();
-
-      expect(personInProjectService.query).toHaveBeenCalled();
-      expect(personInProjectService.addPersonInProjectToCollectionIfMissing).toHaveBeenCalledWith(
-        personInProjectCollection,
-        ...additionalPersonInProjects.map(expect.objectContaining)
-      );
-      expect(comp.personInProjectsSharedCollection).toEqual(expectedCollection);
+      expect(comp.fundingsSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
       const project: IProject = { id: 456 };
-      const organizationInProject: IOrganizationInProject = { id: 50973 };
-      project.organizationInProject = organizationInProject;
-      const personInProject: IPersonInProject = { id: 14558 };
-      project.personInProject = personInProject;
+      const funding: IFunding = { id: 32943 };
+      project.funding = funding;
 
       activatedRoute.data = of({ project });
       comp.ngOnInit();
 
-      expect(comp.organizationInProjectsSharedCollection).toContain(organizationInProject);
-      expect(comp.personInProjectsSharedCollection).toContain(personInProject);
+      expect(comp.fundingsSharedCollection).toContain(funding);
       expect(comp.project).toEqual(project);
     });
   });
@@ -182,23 +153,13 @@ describe('Project Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareOrganizationInProject', () => {
-      it('Should forward to organizationInProjectService', () => {
+    describe('compareFunding', () => {
+      it('Should forward to fundingService', () => {
         const entity = { id: 123 };
         const entity2 = { id: 456 };
-        jest.spyOn(organizationInProjectService, 'compareOrganizationInProject');
-        comp.compareOrganizationInProject(entity, entity2);
-        expect(organizationInProjectService.compareOrganizationInProject).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('comparePersonInProject', () => {
-      it('Should forward to personInProjectService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(personInProjectService, 'comparePersonInProject');
-        comp.comparePersonInProject(entity, entity2);
-        expect(personInProjectService.comparePersonInProject).toHaveBeenCalledWith(entity, entity2);
+        jest.spyOn(fundingService, 'compareFunding');
+        comp.compareFunding(entity, entity2);
+        expect(fundingService.compareFunding).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

@@ -38,6 +38,12 @@
             <column name="users_can_register_to_portal" type="boolean">
                 <constraints nullable="true" />
             </column>
+            <column name="project_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="organization_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

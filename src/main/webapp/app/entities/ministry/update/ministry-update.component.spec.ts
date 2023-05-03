@@ -9,8 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { MinistryFormService } from './ministry-form.service';
 import { MinistryService } from '../service/ministry.service';
 import { IMinistry } from '../ministry.model';
-import { IOrganizationInMinistry } from 'app/entities/organization-in-ministry/organization-in-ministry.model';
-import { OrganizationInMinistryService } from 'app/entities/organization-in-ministry/service/organization-in-ministry.service';
+import { ICountries } from 'app/entities/countries/countries.model';
+import { CountriesService } from 'app/entities/countries/service/countries.service';
 
 import { MinistryUpdateComponent } from './ministry-update.component';
 
@@ -20,7 +20,7 @@ describe('Ministry Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let ministryFormService: MinistryFormService;
   let ministryService: MinistryService;
-  let organizationInMinistryService: OrganizationInMinistryService;
+  let countriesService: CountriesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,43 +43,43 @@ describe('Ministry Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     ministryFormService = TestBed.inject(MinistryFormService);
     ministryService = TestBed.inject(MinistryService);
-    organizationInMinistryService = TestBed.inject(OrganizationInMinistryService);
+    countriesService = TestBed.inject(CountriesService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call OrganizationInMinistry query and add missing value', () => {
+    it('Should call Countries query and add missing value', () => {
       const ministry: IMinistry = { id: 456 };
-      const organizationInMinistry: IOrganizationInMinistry = { id: 10182 };
-      ministry.organizationInMinistry = organizationInMinistry;
+      const country: ICountries = { id: 77485 };
+      ministry.country = country;
 
-      const organizationInMinistryCollection: IOrganizationInMinistry[] = [{ id: 86863 }];
-      jest.spyOn(organizationInMinistryService, 'query').mockReturnValue(of(new HttpResponse({ body: organizationInMinistryCollection })));
-      const additionalOrganizationInMinistries = [organizationInMinistry];
-      const expectedCollection: IOrganizationInMinistry[] = [...additionalOrganizationInMinistries, ...organizationInMinistryCollection];
-      jest.spyOn(organizationInMinistryService, 'addOrganizationInMinistryToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const countriesCollection: ICountries[] = [{ id: 99699 }];
+      jest.spyOn(countriesService, 'query').mockReturnValue(of(new HttpResponse({ body: countriesCollection })));
+      const additionalCountries = [country];
+      const expectedCollection: ICountries[] = [...additionalCountries, ...countriesCollection];
+      jest.spyOn(countriesService, 'addCountriesToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ ministry });
       comp.ngOnInit();
 
-      expect(organizationInMinistryService.query).toHaveBeenCalled();
-      expect(organizationInMinistryService.addOrganizationInMinistryToCollectionIfMissing).toHaveBeenCalledWith(
-        organizationInMinistryCollection,
-        ...additionalOrganizationInMinistries.map(expect.objectContaining)
+      expect(countriesService.query).toHaveBeenCalled();
+      expect(countriesService.addCountriesToCollectionIfMissing).toHaveBeenCalledWith(
+        countriesCollection,
+        ...additionalCountries.map(expect.objectContaining)
       );
-      expect(comp.organizationInMinistriesSharedCollection).toEqual(expectedCollection);
+      expect(comp.countriesSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
       const ministry: IMinistry = { id: 456 };
-      const organizationInMinistry: IOrganizationInMinistry = { id: 76489 };
-      ministry.organizationInMinistry = organizationInMinistry;
+      const country: ICountries = { id: 58824 };
+      ministry.country = country;
 
       activatedRoute.data = of({ ministry });
       comp.ngOnInit();
 
-      expect(comp.organizationInMinistriesSharedCollection).toContain(organizationInMinistry);
+      expect(comp.countriesSharedCollection).toContain(country);
       expect(comp.ministry).toEqual(ministry);
     });
   });
@@ -153,13 +153,13 @@ describe('Ministry Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareOrganizationInMinistry', () => {
-      it('Should forward to organizationInMinistryService', () => {
+    describe('compareCountries', () => {
+      it('Should forward to countriesService', () => {
         const entity = { id: 123 };
         const entity2 = { id: 456 };
-        jest.spyOn(organizationInMinistryService, 'compareOrganizationInMinistry');
-        comp.compareOrganizationInMinistry(entity, entity2);
-        expect(organizationInMinistryService.compareOrganizationInMinistry).toHaveBeenCalledWith(entity, entity2);
+        jest.spyOn(countriesService, 'compareCountries');
+        comp.compareCountries(entity, entity2);
+        expect(countriesService.compareCountries).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

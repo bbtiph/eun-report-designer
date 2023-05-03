@@ -28,6 +28,8 @@ describe('OrganizationInProject Form Service', () => {
             teacherParticipationPossible: expect.any(Object),
             ambassadorsPilotTeachersLeadingTeachersIdentified: expect.any(Object),
             usersCanRegisterToPortal: expect.any(Object),
+            project: expect.any(Object),
+            organization: expect.any(Object),
           })
         );
       });
@@ -46,6 +48,8 @@ describe('OrganizationInProject Form Service', () => {
             teacherParticipationPossible: expect.any(Object),
             ambassadorsPilotTeachersLeadingTeachersIdentified: expect.any(Object),
             usersCanRegisterToPortal: expect.any(Object),
+            project: expect.any(Object),
+            organization: expect.any(Object),
           })
         );
       });

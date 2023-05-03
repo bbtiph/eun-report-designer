@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
 import org.eun.back.IntegrationTest;
 import org.eun.back.domain.Countries;
 import org.eun.back.repository.CountriesRepository;
+import org.eun.back.service.dto.CountriesDTO;
+import org.eun.back.service.mapper.CountriesMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,9 @@ class CountriesResourceIT {
 
     @Autowired
     private CountriesRepository countriesRepository;
+
+    @Autowired
+    private CountriesMapper countriesMapper;
 
     @Autowired
     private EntityManager em;
@@ -81,8 +86,9 @@ class CountriesResourceIT {
     void createCountries() throws Exception {
         int databaseSizeBeforeCreate = countriesRepository.findAll().size();
         // Create the Countries
+        CountriesDTO countriesDTO = countriesMapper.toDto(countries);
         restCountriesMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(countries)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(countriesDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Countries in the database
@@ -97,34 +103,18 @@ class CountriesResourceIT {
     void createCountriesWithExistingId() throws Exception {
         // Create the Countries with an existing ID
         countries.setId(1L);
+        CountriesDTO countriesDTO = countriesMapper.toDto(countries);
 
         int databaseSizeBeforeCreate = countriesRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCountriesMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(countries)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(countriesDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Countries in the database
         List<Countries> countriesList = countriesRepository.findAll();
         assertThat(countriesList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void checkCountryNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = countriesRepository.findAll().size();
-        // set the field null
-        countries.setCountryName(null);
-
-        // Create the Countries, which fails.
-
-        restCountriesMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(countries)))
-            .andExpect(status().isBadRequest());
-
-        List<Countries> countriesList = countriesRepository.findAll();
-        assertThat(countriesList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -177,12 +167,13 @@ class CountriesResourceIT {
         // Disconnect from session so that the updates on updatedCountries are not directly saved in db
         em.detach(updatedCountries);
         updatedCountries.countryName(UPDATED_COUNTRY_NAME);
+        CountriesDTO countriesDTO = countriesMapper.toDto(updatedCountries);
 
         restCountriesMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedCountries.getId())
+                put(ENTITY_API_URL_ID, countriesDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedCountries))
+                    .content(TestUtil.convertObjectToJsonBytes(countriesDTO))
             )
             .andExpect(status().isOk());
 
@@ -199,12 +190,15 @@ class CountriesResourceIT {
         int databaseSizeBeforeUpdate = countriesRepository.findAll().size();
         countries.setId(count.incrementAndGet());
 
+        // Create the Countries
+        CountriesDTO countriesDTO = countriesMapper.toDto(countries);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCountriesMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, countries.getId())
+                put(ENTITY_API_URL_ID, countriesDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(countries))
+                    .content(TestUtil.convertObjectToJsonBytes(countriesDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -219,12 +213,15 @@ class CountriesResourceIT {
         int databaseSizeBeforeUpdate = countriesRepository.findAll().size();
         countries.setId(count.incrementAndGet());
 
+        // Create the Countries
+        CountriesDTO countriesDTO = countriesMapper.toDto(countries);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCountriesMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(countries))
+                    .content(TestUtil.convertObjectToJsonBytes(countriesDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -239,9 +236,12 @@ class CountriesResourceIT {
         int databaseSizeBeforeUpdate = countriesRepository.findAll().size();
         countries.setId(count.incrementAndGet());
 
+        // Create the Countries
+        CountriesDTO countriesDTO = countriesMapper.toDto(countries);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCountriesMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(countries)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(countriesDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Countries in the database
@@ -313,12 +313,15 @@ class CountriesResourceIT {
         int databaseSizeBeforeUpdate = countriesRepository.findAll().size();
         countries.setId(count.incrementAndGet());
 
+        // Create the Countries
+        CountriesDTO countriesDTO = countriesMapper.toDto(countries);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCountriesMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, countries.getId())
+                patch(ENTITY_API_URL_ID, countriesDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(countries))
+                    .content(TestUtil.convertObjectToJsonBytes(countriesDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -333,12 +336,15 @@ class CountriesResourceIT {
         int databaseSizeBeforeUpdate = countriesRepository.findAll().size();
         countries.setId(count.incrementAndGet());
 
+        // Create the Countries
+        CountriesDTO countriesDTO = countriesMapper.toDto(countries);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCountriesMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(countries))
+                    .content(TestUtil.convertObjectToJsonBytes(countriesDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -353,10 +359,13 @@ class CountriesResourceIT {
         int databaseSizeBeforeUpdate = countriesRepository.findAll().size();
         countries.setId(count.incrementAndGet());
 
+        // Create the Countries
+        CountriesDTO countriesDTO = countriesMapper.toDto(countries);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCountriesMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(countries))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(countriesDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

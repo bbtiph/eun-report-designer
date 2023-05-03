@@ -87,9 +87,7 @@ public class ProjectDTO implements Serializable {
 
     private String sysModifIpAddress;
 
-    private OrganizationInProjectDTO organizationInProject;
-
-    private PersonInProjectDTO personInProject;
+    private FundingDTO funding;
 
     public Long getId() {
         return id;
@@ -379,20 +377,12 @@ public class ProjectDTO implements Serializable {
         this.sysModifIpAddress = sysModifIpAddress;
     }
 
-    public OrganizationInProjectDTO getOrganizationInProject() {
-        return organizationInProject;
+    public FundingDTO getFunding() {
+        return funding;
     }
 
-    public void setOrganizationInProject(OrganizationInProjectDTO organizationInProject) {
-        this.organizationInProject = organizationInProject;
-    }
-
-    public PersonInProjectDTO getPersonInProject() {
-        return personInProject;
-    }
-
-    public void setPersonInProject(PersonInProjectDTO personInProject) {
-        this.personInProject = personInProject;
+    public void setFunding(FundingDTO funding) {
+        this.funding = funding;
     }
 
     @Override
@@ -456,8 +446,7 @@ public class ProjectDTO implements Serializable {
             ", sysCreatIpAddress='" + getSysCreatIpAddress() + "'" +
             ", sysModifTimestamp='" + getSysModifTimestamp() + "'" +
             ", sysModifIpAddress='" + getSysModifIpAddress() + "'" +
-            ", organizationInProject=" + getOrganizationInProject() +
-            ", personInProject=" + getPersonInProject() +
+            ", funding=" + getFunding() +
             "}";
     }
 }

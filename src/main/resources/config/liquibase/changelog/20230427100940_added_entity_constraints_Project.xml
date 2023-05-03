@@ -8,16 +8,10 @@
     -->
     <changeSet id="20230427100940-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="organization_in_project_id"
+        <addForeignKeyConstraint baseColumnNames="funding_id"
                                  baseTableName="project"
-                                 constraintName="fk_project__organization_in_project_id"
+                                 constraintName="fk_project__funding_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="organization_in_project"/>
-
-        <addForeignKeyConstraint baseColumnNames="person_in_project_id"
-                                 baseTableName="project"
-                                 constraintName="fk_project__person_in_project_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="person_in_project"/>
+                                 referencedTableName="funding"/>
     </changeSet>
 </databaseChangeLog>

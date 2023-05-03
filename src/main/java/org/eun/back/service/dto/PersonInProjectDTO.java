@@ -13,6 +13,10 @@ public class PersonInProjectDTO implements Serializable {
 
     private String roleInProject;
 
+    private PersonDTO person;
+
+    private ProjectDTO project;
+
     public Long getId() {
         return id;
     }
@@ -27,6 +31,22 @@ public class PersonInProjectDTO implements Serializable {
 
     public void setRoleInProject(String roleInProject) {
         this.roleInProject = roleInProject;
+    }
+
+    public PersonDTO getPerson() {
+        return person;
+    }
+
+    public void setPerson(PersonDTO person) {
+        this.person = person;
+    }
+
+    public ProjectDTO getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectDTO project) {
+        this.project = project;
     }
 
     @Override
@@ -56,6 +76,8 @@ public class PersonInProjectDTO implements Serializable {
         return "PersonInProjectDTO{" +
             "id=" + getId() +
             ", roleInProject='" + getRoleInProject() + "'" +
+            ", person=" + getPerson() +
+            ", project=" + getProject() +
             "}";
     }
 }

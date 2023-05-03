@@ -22,6 +22,8 @@ describe('EunTeamMember Form Service', () => {
             id: expect.any(Object),
             role: expect.any(Object),
             status: expect.any(Object),
+            team: expect.any(Object),
+            person: expect.any(Object),
           })
         );
       });
@@ -34,6 +36,8 @@ describe('EunTeamMember Form Service', () => {
             id: expect.any(Object),
             role: expect.any(Object),
             status: expect.any(Object),
+            team: expect.any(Object),
+            person: expect.any(Object),
           })
         );
       });

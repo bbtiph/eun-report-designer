@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { OperationalBodyMemberFormService, OperationalBodyMemberFormGroup } from './operational-body-member-form.service';
 import { IOperationalBodyMember } from '../operational-body-member.model';
 import { OperationalBodyMemberService } from '../service/operational-body-member.service';
+import { ICountries } from 'app/entities/countries/countries.model';
+import { CountriesService } from 'app/entities/countries/service/countries.service';
 
 @Component({
   selector: 'jhi-operational-body-member-update',
@@ -16,13 +18,18 @@ export class OperationalBodyMemberUpdateComponent implements OnInit {
   isSaving = false;
   operationalBodyMember: IOperationalBodyMember | null = null;
 
+  countriesSharedCollection: ICountries[] = [];
+
   editForm: OperationalBodyMemberFormGroup = this.operationalBodyMemberFormService.createOperationalBodyMemberFormGroup();
 
   constructor(
     protected operationalBodyMemberService: OperationalBodyMemberService,
     protected operationalBodyMemberFormService: OperationalBodyMemberFormService,
+    protected countriesService: CountriesService,
     protected activatedRoute: ActivatedRoute
   ) {}
+
+  compareCountries = (o1: ICountries | null, o2: ICountries | null): boolean => this.countriesService.compareCountries(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ operationalBodyMember }) => {
@@ -30,6 +37,8 @@ export class OperationalBodyMemberUpdateComponent implements OnInit {
       if (operationalBodyMember) {
         this.updateForm(operationalBodyMember);
       }
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -69,5 +78,22 @@ export class OperationalBodyMemberUpdateComponent implements OnInit {
   protected updateForm(operationalBodyMember: IOperationalBodyMember): void {
     this.operationalBodyMember = operationalBodyMember;
     this.operationalBodyMemberFormService.resetForm(this.editForm, operationalBodyMember);
+
+    this.countriesSharedCollection = this.countriesService.addCountriesToCollectionIfMissing<ICountries>(
+      this.countriesSharedCollection,
+      operationalBodyMember.country
+    );
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.countriesService
+      .query()
+      .pipe(map((res: HttpResponse<ICountries[]>) => res.body ?? []))
+      .pipe(
+        map((countries: ICountries[]) =>
+          this.countriesService.addCountriesToCollectionIfMissing<ICountries>(countries, this.operationalBodyMember?.country)
+        )
+      )
+      .subscribe((countries: ICountries[]) => (this.countriesSharedCollection = countries));
   }
 }

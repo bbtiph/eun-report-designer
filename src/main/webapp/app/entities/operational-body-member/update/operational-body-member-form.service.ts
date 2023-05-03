@@ -27,6 +27,7 @@ type OperationalBodyMemberFormGroupContent = {
   eunContactLastname: FormControl<IOperationalBodyMember['eunContactLastname']>;
   cooperationField: FormControl<IOperationalBodyMember['cooperationField']>;
   status: FormControl<IOperationalBodyMember['status']>;
+  country: FormControl<IOperationalBodyMember['country']>;
 };
 
 export type OperationalBodyMemberFormGroup = FormGroup<OperationalBodyMemberFormGroupContent>;
@@ -57,6 +58,7 @@ export class OperationalBodyMemberFormService {
       eunContactLastname: new FormControl(operationalBodyMemberRawValue.eunContactLastname),
       cooperationField: new FormControl(operationalBodyMemberRawValue.cooperationField),
       status: new FormControl(operationalBodyMemberRawValue.status),
+      country: new FormControl(operationalBodyMemberRawValue.country),
     });
   }
 

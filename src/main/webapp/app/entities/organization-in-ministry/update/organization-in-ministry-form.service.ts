@@ -19,6 +19,8 @@ type OrganizationInMinistryFormDefaults = Pick<NewOrganizationInMinistry, 'id'>;
 type OrganizationInMinistryFormGroupContent = {
   id: FormControl<IOrganizationInMinistry['id'] | NewOrganizationInMinistry['id']>;
   status: FormControl<IOrganizationInMinistry['status']>;
+  ministry: FormControl<IOrganizationInMinistry['ministry']>;
+  organization: FormControl<IOrganizationInMinistry['organization']>;
 };
 
 export type OrganizationInMinistryFormGroup = FormGroup<OrganizationInMinistryFormGroupContent>;
@@ -41,6 +43,8 @@ export class OrganizationInMinistryFormService {
         }
       ),
       status: new FormControl(organizationInMinistryRawValue.status),
+      ministry: new FormControl(organizationInMinistryRawValue.ministry),
+      organization: new FormControl(organizationInMinistryRawValue.organization),
     });
   }
 

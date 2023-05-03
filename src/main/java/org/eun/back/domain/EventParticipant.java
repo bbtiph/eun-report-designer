@@ -2,8 +2,6 @@ package org.eun.back.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -25,16 +23,16 @@ public class EventParticipant implements Serializable {
     @Column(name = "type")
     private String type;
 
-    @OneToMany(mappedBy = "eventParticipant")
-    @JsonIgnoreProperties(value = { "eventInOrganization", "eventParticipant" }, allowSetters = true)
-    private Set<Event> events = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "eventInOrganizations", "eventParticipants" }, allowSetters = true)
+    private Event event;
 
-    @OneToMany(mappedBy = "eventParticipant")
+    @ManyToOne
     @JsonIgnoreProperties(
-        value = { "countries", "eunTeamMember", "eventParticipant", "personInOrganization", "personInProject" },
+        value = { "eunTeamMembers", "eventParticipants", "personInOrganizations", "personInProjects", "country" },
         allowSetters = true
     )
-    private Set<Person> people = new HashSet<>();
+    private Person person;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -64,65 +62,29 @@ public class EventParticipant implements Serializable {
         this.type = type;
     }
 
-    public Set<Event> getEvents() {
-        return this.events;
+    public Event getEvent() {
+        return this.event;
     }
 
-    public void setEvents(Set<Event> events) {
-        if (this.events != null) {
-            this.events.forEach(i -> i.setEventParticipant(null));
-        }
-        if (events != null) {
-            events.forEach(i -> i.setEventParticipant(this));
-        }
-        this.events = events;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
-    public EventParticipant events(Set<Event> events) {
-        this.setEvents(events);
+    public EventParticipant event(Event event) {
+        this.setEvent(event);
         return this;
     }
 
-    public EventParticipant addEvent(Event event) {
-        this.events.add(event);
-        event.setEventParticipant(this);
-        return this;
+    public Person getPerson() {
+        return this.person;
     }
 
-    public EventParticipant removeEvent(Event event) {
-        this.events.remove(event);
-        event.setEventParticipant(null);
-        return this;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public Set<Person> getPeople() {
-        return this.people;
-    }
-
-    public void setPeople(Set<Person> people) {
-        if (this.people != null) {
-            this.people.forEach(i -> i.setEventParticipant(null));
-        }
-        if (people != null) {
-            people.forEach(i -> i.setEventParticipant(this));
-        }
-        this.people = people;
-    }
-
-    public EventParticipant people(Set<Person> people) {
-        this.setPeople(people);
-        return this;
-    }
-
-    public EventParticipant addPerson(Person person) {
-        this.people.add(person);
-        person.setEventParticipant(this);
-        return this;
-    }
-
-    public EventParticipant removePerson(Person person) {
-        this.people.remove(person);
-        person.setEventParticipant(null);
+    public EventParticipant person(Person person) {
+        this.setPerson(person);
         return this;
     }
 

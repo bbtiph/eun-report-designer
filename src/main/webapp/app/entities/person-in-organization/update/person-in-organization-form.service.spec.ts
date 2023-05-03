@@ -21,6 +21,8 @@ describe('PersonInOrganization Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             roleInOrganization: expect.any(Object),
+            person: expect.any(Object),
+            organization: expect.any(Object),
           })
         );
       });
@@ -32,6 +34,8 @@ describe('PersonInOrganization Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             roleInOrganization: expect.any(Object),
+            person: expect.any(Object),
+            organization: expect.any(Object),
           })
         );
       });

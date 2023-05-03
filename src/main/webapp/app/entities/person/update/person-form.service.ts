@@ -34,10 +34,7 @@ type PersonFormGroupContent = {
   status: FormControl<IPerson['status']>;
   gdprStatus: FormControl<IPerson['gdprStatus']>;
   lastLoginDate: FormControl<IPerson['lastLoginDate']>;
-  eunTeamMember: FormControl<IPerson['eunTeamMember']>;
-  eventParticipant: FormControl<IPerson['eventParticipant']>;
-  personInOrganization: FormControl<IPerson['personInOrganization']>;
-  personInProject: FormControl<IPerson['personInProject']>;
+  country: FormControl<IPerson['country']>;
 };
 
 export type PersonFormGroup = FormGroup<PersonFormGroupContent>;
@@ -73,10 +70,7 @@ export class PersonFormService {
       status: new FormControl(personRawValue.status),
       gdprStatus: new FormControl(personRawValue.gdprStatus),
       lastLoginDate: new FormControl(personRawValue.lastLoginDate),
-      eunTeamMember: new FormControl(personRawValue.eunTeamMember),
-      eventParticipant: new FormControl(personRawValue.eventParticipant),
-      personInOrganization: new FormControl(personRawValue.personInOrganization),
-      personInProject: new FormControl(personRawValue.personInProject),
+      country: new FormControl(personRawValue.country),
     });
   }
 

@@ -2,8 +2,6 @@ package org.eun.back.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -28,16 +26,16 @@ public class EunTeamMember implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "eunTeamMember")
-    @JsonIgnoreProperties(value = { "eunTeamMember" }, allowSetters = true)
-    private Set<EunTeam> teams = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "eunTeamMembers" }, allowSetters = true)
+    private EunTeam team;
 
-    @OneToMany(mappedBy = "eunTeamMember")
+    @ManyToOne
     @JsonIgnoreProperties(
-        value = { "countries", "eunTeamMember", "eventParticipant", "personInOrganization", "personInProject" },
+        value = { "eunTeamMembers", "eventParticipants", "personInOrganizations", "personInProjects", "country" },
         allowSetters = true
     )
-    private Set<Person> people = new HashSet<>();
+    private Person person;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -80,65 +78,29 @@ public class EunTeamMember implements Serializable {
         this.status = status;
     }
 
-    public Set<EunTeam> getTeams() {
-        return this.teams;
+    public EunTeam getTeam() {
+        return this.team;
     }
 
-    public void setTeams(Set<EunTeam> eunTeams) {
-        if (this.teams != null) {
-            this.teams.forEach(i -> i.setEunTeamMember(null));
-        }
-        if (eunTeams != null) {
-            eunTeams.forEach(i -> i.setEunTeamMember(this));
-        }
-        this.teams = eunTeams;
+    public void setTeam(EunTeam eunTeam) {
+        this.team = eunTeam;
     }
 
-    public EunTeamMember teams(Set<EunTeam> eunTeams) {
-        this.setTeams(eunTeams);
+    public EunTeamMember team(EunTeam eunTeam) {
+        this.setTeam(eunTeam);
         return this;
     }
 
-    public EunTeamMember addTeam(EunTeam eunTeam) {
-        this.teams.add(eunTeam);
-        eunTeam.setEunTeamMember(this);
-        return this;
+    public Person getPerson() {
+        return this.person;
     }
 
-    public EunTeamMember removeTeam(EunTeam eunTeam) {
-        this.teams.remove(eunTeam);
-        eunTeam.setEunTeamMember(null);
-        return this;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public Set<Person> getPeople() {
-        return this.people;
-    }
-
-    public void setPeople(Set<Person> people) {
-        if (this.people != null) {
-            this.people.forEach(i -> i.setEunTeamMember(null));
-        }
-        if (people != null) {
-            people.forEach(i -> i.setEunTeamMember(this));
-        }
-        this.people = people;
-    }
-
-    public EunTeamMember people(Set<Person> people) {
-        this.setPeople(people);
-        return this;
-    }
-
-    public EunTeamMember addPerson(Person person) {
-        this.people.add(person);
-        person.setEunTeamMember(this);
-        return this;
-    }
-
-    public EunTeamMember removePerson(Person person) {
-        this.people.remove(person);
-        person.setEunTeamMember(null);
+    public EunTeamMember person(Person person) {
+        this.setPerson(person);
         return this;
     }
 

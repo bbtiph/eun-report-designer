@@ -28,6 +28,10 @@ public class OrganizationInProjectDTO implements Serializable {
 
     private Boolean usersCanRegisterToPortal;
 
+    private ProjectDTO project;
+
+    private OrganizationDTO organization;
+
     public Long getId() {
         return id;
     }
@@ -100,6 +104,22 @@ public class OrganizationInProjectDTO implements Serializable {
         this.usersCanRegisterToPortal = usersCanRegisterToPortal;
     }
 
+    public ProjectDTO getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectDTO project) {
+        this.project = project;
+    }
+
+    public OrganizationDTO getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(OrganizationDTO organization) {
+        this.organization = organization;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -134,6 +154,8 @@ public class OrganizationInProjectDTO implements Serializable {
             ", teacherParticipationPossible='" + getTeacherParticipationPossible() + "'" +
             ", ambassadorsPilotTeachersLeadingTeachersIdentified='" + getAmbassadorsPilotTeachersLeadingTeachersIdentified() + "'" +
             ", usersCanRegisterToPortal='" + getUsersCanRegisterToPortal() + "'" +
+            ", project=" + getProject() +
+            ", organization=" + getOrganization() +
             "}";
     }
 }

@@ -21,14 +21,14 @@
       "otherEntityName": "person",
       "otherEntityRelationshipName": "personInProject",
       "relationshipName": "person",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "id",
       "otherEntityName": "project",
       "otherEntityRelationshipName": "personInProject",
       "relationshipName": "project",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

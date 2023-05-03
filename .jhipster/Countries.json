@@ -1,21 +1,45 @@
 {
   "applications": "*",
   "changelogDate": "20230427111606",
-  "dto": "no",
+  "dto": "mapstruct",
   "embedded": false,
   "entityTableName": "countries",
   "fields": [
     {
       "fieldName": "countryName",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "Countries",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
-  "service": "no"
+  "relationships": [
+    {
+      "otherEntityName": "ministry",
+      "otherEntityRelationshipName": "country",
+      "relationshipName": "ministry",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "operationalBodyMember",
+      "otherEntityRelationshipName": "country",
+      "relationshipName": "operationalBodyMember",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "organization",
+      "otherEntityRelationshipName": "country",
+      "relationshipName": "organization",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "person",
+      "otherEntityRelationshipName": "country",
+      "relationshipName": "person",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
 }

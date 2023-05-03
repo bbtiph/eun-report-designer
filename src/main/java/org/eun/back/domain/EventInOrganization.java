@@ -2,8 +2,6 @@ package org.eun.back.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -22,16 +20,16 @@ public class EventInOrganization implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany(mappedBy = "eventInOrganization")
-    @JsonIgnoreProperties(value = { "eventInOrganization", "eventParticipant" }, allowSetters = true)
-    private Set<Event> events = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "eventInOrganizations", "eventParticipants" }, allowSetters = true)
+    private Event event;
 
-    @OneToMany(mappedBy = "eventInOrganization")
+    @ManyToOne
     @JsonIgnoreProperties(
-        value = { "countries", "eventInOrganization", "organizationInMinistry", "organizationInProject", "personInOrganization" },
+        value = { "eventInOrganizations", "organizationInMinistries", "organizationInProjects", "personInOrganizations", "country" },
         allowSetters = true
     )
-    private Set<Organization> organizations = new HashSet<>();
+    private Organization organization;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -48,65 +46,29 @@ public class EventInOrganization implements Serializable {
         this.id = id;
     }
 
-    public Set<Event> getEvents() {
-        return this.events;
+    public Event getEvent() {
+        return this.event;
     }
 
-    public void setEvents(Set<Event> events) {
-        if (this.events != null) {
-            this.events.forEach(i -> i.setEventInOrganization(null));
-        }
-        if (events != null) {
-            events.forEach(i -> i.setEventInOrganization(this));
-        }
-        this.events = events;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
-    public EventInOrganization events(Set<Event> events) {
-        this.setEvents(events);
+    public EventInOrganization event(Event event) {
+        this.setEvent(event);
         return this;
     }
 
-    public EventInOrganization addEvent(Event event) {
-        this.events.add(event);
-        event.setEventInOrganization(this);
-        return this;
+    public Organization getOrganization() {
+        return this.organization;
     }
 
-    public EventInOrganization removeEvent(Event event) {
-        this.events.remove(event);
-        event.setEventInOrganization(null);
-        return this;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
-    public Set<Organization> getOrganizations() {
-        return this.organizations;
-    }
-
-    public void setOrganizations(Set<Organization> organizations) {
-        if (this.organizations != null) {
-            this.organizations.forEach(i -> i.setEventInOrganization(null));
-        }
-        if (organizations != null) {
-            organizations.forEach(i -> i.setEventInOrganization(this));
-        }
-        this.organizations = organizations;
-    }
-
-    public EventInOrganization organizations(Set<Organization> organizations) {
-        this.setOrganizations(organizations);
-        return this;
-    }
-
-    public EventInOrganization addOrganization(Organization organization) {
-        this.organizations.add(organization);
-        organization.setEventInOrganization(this);
-        return this;
-    }
-
-    public EventInOrganization removeOrganization(Organization organization) {
-        this.organizations.remove(organization);
-        organization.setEventInOrganization(null);
+    public EventInOrganization organization(Organization organization) {
+        this.setOrganization(organization);
         return this;
     }
 

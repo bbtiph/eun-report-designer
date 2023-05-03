@@ -7,14 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 import { PersonFormService, PersonFormGroup } from './person-form.service';
 import { IPerson } from '../person.model';
 import { PersonService } from '../service/person.service';
-import { IEunTeamMember } from 'app/entities/eun-team-member/eun-team-member.model';
-import { EunTeamMemberService } from 'app/entities/eun-team-member/service/eun-team-member.service';
-import { IEventParticipant } from 'app/entities/event-participant/event-participant.model';
-import { EventParticipantService } from 'app/entities/event-participant/service/event-participant.service';
-import { IPersonInOrganization } from 'app/entities/person-in-organization/person-in-organization.model';
-import { PersonInOrganizationService } from 'app/entities/person-in-organization/service/person-in-organization.service';
-import { IPersonInProject } from 'app/entities/person-in-project/person-in-project.model';
-import { PersonInProjectService } from 'app/entities/person-in-project/service/person-in-project.service';
+import { ICountries } from 'app/entities/countries/countries.model';
+import { CountriesService } from 'app/entities/countries/service/countries.service';
 import { GdprStatus } from 'app/entities/enumerations/gdpr-status.model';
 
 @Component({
@@ -26,34 +20,18 @@ export class PersonUpdateComponent implements OnInit {
   person: IPerson | null = null;
   gdprStatusValues = Object.keys(GdprStatus);
 
-  eunTeamMembersSharedCollection: IEunTeamMember[] = [];
-  eventParticipantsSharedCollection: IEventParticipant[] = [];
-  personInOrganizationsSharedCollection: IPersonInOrganization[] = [];
-  personInProjectsSharedCollection: IPersonInProject[] = [];
+  countriesSharedCollection: ICountries[] = [];
 
   editForm: PersonFormGroup = this.personFormService.createPersonFormGroup();
 
   constructor(
     protected personService: PersonService,
     protected personFormService: PersonFormService,
-    protected eunTeamMemberService: EunTeamMemberService,
-    protected eventParticipantService: EventParticipantService,
-    protected personInOrganizationService: PersonInOrganizationService,
-    protected personInProjectService: PersonInProjectService,
+    protected countriesService: CountriesService,
     protected activatedRoute: ActivatedRoute
   ) {}
 
-  compareEunTeamMember = (o1: IEunTeamMember | null, o2: IEunTeamMember | null): boolean =>
-    this.eunTeamMemberService.compareEunTeamMember(o1, o2);
-
-  compareEventParticipant = (o1: IEventParticipant | null, o2: IEventParticipant | null): boolean =>
-    this.eventParticipantService.compareEventParticipant(o1, o2);
-
-  comparePersonInOrganization = (o1: IPersonInOrganization | null, o2: IPersonInOrganization | null): boolean =>
-    this.personInOrganizationService.comparePersonInOrganization(o1, o2);
-
-  comparePersonInProject = (o1: IPersonInProject | null, o2: IPersonInProject | null): boolean =>
-    this.personInProjectService.comparePersonInProject(o1, o2);
+  compareCountries = (o1: ICountries | null, o2: ICountries | null): boolean => this.countriesService.compareCountries(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ person }) => {
@@ -103,73 +81,21 @@ export class PersonUpdateComponent implements OnInit {
     this.person = person;
     this.personFormService.resetForm(this.editForm, person);
 
-    this.eunTeamMembersSharedCollection = this.eunTeamMemberService.addEunTeamMemberToCollectionIfMissing<IEunTeamMember>(
-      this.eunTeamMembersSharedCollection,
-      person.eunTeamMember
-    );
-    this.eventParticipantsSharedCollection = this.eventParticipantService.addEventParticipantToCollectionIfMissing<IEventParticipant>(
-      this.eventParticipantsSharedCollection,
-      person.eventParticipant
-    );
-    this.personInOrganizationsSharedCollection =
-      this.personInOrganizationService.addPersonInOrganizationToCollectionIfMissing<IPersonInOrganization>(
-        this.personInOrganizationsSharedCollection,
-        person.personInOrganization
-      );
-    this.personInProjectsSharedCollection = this.personInProjectService.addPersonInProjectToCollectionIfMissing<IPersonInProject>(
-      this.personInProjectsSharedCollection,
-      person.personInProject
+    this.countriesSharedCollection = this.countriesService.addCountriesToCollectionIfMissing<ICountries>(
+      this.countriesSharedCollection,
+      person.country
     );
   }
 
   protected loadRelationshipsOptions(): void {
-    this.eunTeamMemberService
+    this.countriesService
       .query()
-      .pipe(map((res: HttpResponse<IEunTeamMember[]>) => res.body ?? []))
+      .pipe(map((res: HttpResponse<ICountries[]>) => res.body ?? []))
       .pipe(
-        map((eunTeamMembers: IEunTeamMember[]) =>
-          this.eunTeamMemberService.addEunTeamMemberToCollectionIfMissing<IEunTeamMember>(eunTeamMembers, this.person?.eunTeamMember)
+        map((countries: ICountries[]) =>
+          this.countriesService.addCountriesToCollectionIfMissing<ICountries>(countries, this.person?.country)
         )
       )
-      .subscribe((eunTeamMembers: IEunTeamMember[]) => (this.eunTeamMembersSharedCollection = eunTeamMembers));
-
-    this.eventParticipantService
-      .query()
-      .pipe(map((res: HttpResponse<IEventParticipant[]>) => res.body ?? []))
-      .pipe(
-        map((eventParticipants: IEventParticipant[]) =>
-          this.eventParticipantService.addEventParticipantToCollectionIfMissing<IEventParticipant>(
-            eventParticipants,
-            this.person?.eventParticipant
-          )
-        )
-      )
-      .subscribe((eventParticipants: IEventParticipant[]) => (this.eventParticipantsSharedCollection = eventParticipants));
-
-    this.personInOrganizationService
-      .query()
-      .pipe(map((res: HttpResponse<IPersonInOrganization[]>) => res.body ?? []))
-      .pipe(
-        map((personInOrganizations: IPersonInOrganization[]) =>
-          this.personInOrganizationService.addPersonInOrganizationToCollectionIfMissing<IPersonInOrganization>(
-            personInOrganizations,
-            this.person?.personInOrganization
-          )
-        )
-      )
-      .subscribe((personInOrganizations: IPersonInOrganization[]) => (this.personInOrganizationsSharedCollection = personInOrganizations));
-
-    this.personInProjectService
-      .query()
-      .pipe(map((res: HttpResponse<IPersonInProject[]>) => res.body ?? []))
-      .pipe(
-        map((personInProjects: IPersonInProject[]) =>
-          this.personInProjectService.addPersonInProjectToCollectionIfMissing<IPersonInProject>(
-            personInProjects,
-            this.person?.personInProject
-          )
-        )
-      )
-      .subscribe((personInProjects: IPersonInProject[]) => (this.personInProjectsSharedCollection = personInProjects));
+      .subscribe((countries: ICountries[]) => (this.countriesSharedCollection = countries));
   }
 }

@@ -21,14 +21,14 @@
       "otherEntityName": "ministry",
       "otherEntityRelationshipName": "organizationInMinistry",
       "relationshipName": "ministry",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "id",
       "otherEntityName": "organization",
       "otherEntityRelationshipName": "organizationInMinistry",
       "relationshipName": "organization",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

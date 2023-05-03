@@ -101,34 +101,34 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "id",
-      "otherEntityName": "country",
-      "otherEntityRelationshipName": "organization",
-      "relationshipName": "country",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "eventInOrganization",
       "otherEntityRelationshipName": "organization",
       "relationshipName": "eventInOrganization",
-      "relationshipType": "many-to-one"
+      "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "organizationInMinistry",
       "otherEntityRelationshipName": "organization",
       "relationshipName": "organizationInMinistry",
-      "relationshipType": "many-to-one"
+      "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "organizationInProject",
       "otherEntityRelationshipName": "organization",
       "relationshipName": "organizationInProject",
-      "relationshipType": "many-to-one"
+      "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "personInOrganization",
       "otherEntityRelationshipName": "organization",
       "relationshipName": "personInOrganization",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "countries",
+      "otherEntityRelationshipName": "organization",
+      "relationshipName": "country",
       "relationshipType": "many-to-one"
     }
   ],

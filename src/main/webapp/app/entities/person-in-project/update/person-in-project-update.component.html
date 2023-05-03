@@ -22,6 +22,38 @@
             formControlName="roleInProject"
           />
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_person">Person</label>
+          <select
+            class="form-control"
+            id="field_person"
+            data-cy="person"
+            name="person"
+            formControlName="person"
+            [compareWith]="comparePerson"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="personOption" *ngFor="let personOption of peopleSharedCollection">
+              {{ personOption.firstname + ' ' + personOption.lastname }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_project">Project</label>
+          <select
+            class="form-control"
+            id="field_project"
+            data-cy="project"
+            name="project"
+            formControlName="project"
+            [compareWith]="compareProject"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="projectOption" *ngFor="let projectOption of projectsSharedCollection">{{ projectOption.name }}</option>
+          </select>
+        </div>
       </div>
 
       <div>

@@ -38,9 +38,7 @@ export class CountriesFormService {
           validators: [Validators.required],
         }
       ),
-      countryName: new FormControl(countriesRawValue.countryName, {
-        validators: [Validators.required],
-      }),
+      countryName: new FormControl(countriesRawValue.countryName),
     });
   }
 

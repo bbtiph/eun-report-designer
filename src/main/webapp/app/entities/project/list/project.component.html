@@ -248,15 +248,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="organizationInProject.id">
+          <th scope="col" jhiSortBy="funding.id">
             <div class="d-flex">
-              <span>Organization In Project</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="personInProject.id">
-            <div class="d-flex">
-              <span>Person In Project</span>
+              <span>Funding</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -304,15 +298,8 @@
           <td>{{ project.sysModifTimestamp | formatMediumDatetime }}</td>
           <td>{{ project.sysModifIpAddress }}</td>
           <td>
-            <div *ngIf="project.organizationInProject">
-              <a [routerLink]="['/organization-in-project', project.organizationInProject.id, 'view']">{{
-                project.organizationInProject.id
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="project.personInProject">
-              <a [routerLink]="['/person-in-project', project.personInProject.id, 'view']">{{ project.personInProject.id }}</a>
+            <div *ngIf="project.funding">
+              <a [routerLink]="['/funding', project.funding.id, 'view']">{{ project.funding.id }}</a>
             </div>
           </td>
           <td class="text-end">

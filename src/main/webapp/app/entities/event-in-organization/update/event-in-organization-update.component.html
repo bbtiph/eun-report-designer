@@ -12,6 +12,31 @@
           <label class="form-label" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_event">Event</label>
+          <select class="form-control" id="field_event" data-cy="event" name="event" formControlName="event" [compareWith]="compareEvent">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="eventOption" *ngFor="let eventOption of eventsSharedCollection">{{ eventOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_organization">Organization</label>
+          <select
+            class="form-control"
+            id="field_organization"
+            data-cy="organization"
+            name="organization"
+            formControlName="organization"
+            [compareWith]="compareOrganization"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="organizationOption" *ngFor="let organizationOption of organizationsSharedCollection">
+              {{ organizationOption.id }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>

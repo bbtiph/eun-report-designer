@@ -32,7 +32,7 @@
       "otherEntityName": "project",
       "otherEntityRelationshipName": "funding",
       "relationshipName": "project",
-      "relationshipType": "many-to-one"
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "serviceImpl"

@@ -30,6 +30,8 @@ public class OperationalBodyMemberDTO implements Serializable {
 
     private String status;
 
+    private CountriesDTO country;
+
     public Long getId() {
         return id;
     }
@@ -110,6 +112,14 @@ public class OperationalBodyMemberDTO implements Serializable {
         this.status = status;
     }
 
+    public CountriesDTO getCountry() {
+        return country;
+    }
+
+    public void setCountry(CountriesDTO country) {
+        this.country = country;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -145,6 +155,7 @@ public class OperationalBodyMemberDTO implements Serializable {
             ", eunContactLastname='" + getEunContactLastname() + "'" +
             ", cooperationField='" + getCooperationField() + "'" +
             ", status='" + getStatus() + "'" +
+            ", country=" + getCountry() +
             "}";
     }
 }

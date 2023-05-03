@@ -67,8 +67,7 @@ type ProjectFormGroupContent = {
   sysCreatIpAddress: FormControl<ProjectFormRawValue['sysCreatIpAddress']>;
   sysModifTimestamp: FormControl<ProjectFormRawValue['sysModifTimestamp']>;
   sysModifIpAddress: FormControl<ProjectFormRawValue['sysModifIpAddress']>;
-  organizationInProject: FormControl<ProjectFormRawValue['organizationInProject']>;
-  personInProject: FormControl<ProjectFormRawValue['personInProject']>;
+  funding: FormControl<ProjectFormRawValue['funding']>;
 };
 
 export type ProjectFormGroup = FormGroup<ProjectFormGroupContent>;
@@ -129,8 +128,7 @@ export class ProjectFormService {
       sysCreatIpAddress: new FormControl(projectRawValue.sysCreatIpAddress),
       sysModifTimestamp: new FormControl(projectRawValue.sysModifTimestamp),
       sysModifIpAddress: new FormControl(projectRawValue.sysModifIpAddress),
-      organizationInProject: new FormControl(projectRawValue.organizationInProject),
-      personInProject: new FormControl(projectRawValue.personInProject),
+      funding: new FormControl(projectRawValue.funding),
     });
   }
 

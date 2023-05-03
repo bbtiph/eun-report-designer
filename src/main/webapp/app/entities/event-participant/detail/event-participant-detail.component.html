@@ -18,6 +18,18 @@
         <dd>
           <span>{{ eventParticipant.type }}</span>
         </dd>
+        <dt><span>Event</span></dt>
+        <dd>
+          <div *ngIf="eventParticipant.event">
+            <a [routerLink]="['/event', eventParticipant.event.id, 'view']">{{ eventParticipant.event.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Person</span></dt>
+        <dd>
+          <div *ngIf="eventParticipant.person">
+            <a [routerLink]="['/person', eventParticipant.person.id, 'view']">{{ eventParticipant.person.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

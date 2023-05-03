@@ -2,6 +2,8 @@ package org.eun.back.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -26,9 +28,9 @@ public class EunTeam implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "teams", "people" }, allowSetters = true)
-    private EunTeamMember eunTeamMember;
+    @OneToMany(mappedBy = "team")
+    @JsonIgnoreProperties(value = { "team", "person" }, allowSetters = true)
+    private Set<EunTeamMember> eunTeamMembers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -71,16 +73,34 @@ public class EunTeam implements Serializable {
         this.description = description;
     }
 
-    public EunTeamMember getEunTeamMember() {
-        return this.eunTeamMember;
+    public Set<EunTeamMember> getEunTeamMembers() {
+        return this.eunTeamMembers;
     }
 
-    public void setEunTeamMember(EunTeamMember eunTeamMember) {
-        this.eunTeamMember = eunTeamMember;
+    public void setEunTeamMembers(Set<EunTeamMember> eunTeamMembers) {
+        if (this.eunTeamMembers != null) {
+            this.eunTeamMembers.forEach(i -> i.setTeam(null));
+        }
+        if (eunTeamMembers != null) {
+            eunTeamMembers.forEach(i -> i.setTeam(this));
+        }
+        this.eunTeamMembers = eunTeamMembers;
     }
 
-    public EunTeam eunTeamMember(EunTeamMember eunTeamMember) {
-        this.setEunTeamMember(eunTeamMember);
+    public EunTeam eunTeamMembers(Set<EunTeamMember> eunTeamMembers) {
+        this.setEunTeamMembers(eunTeamMembers);
+        return this;
+    }
+
+    public EunTeam addEunTeamMember(EunTeamMember eunTeamMember) {
+        this.eunTeamMembers.add(eunTeamMember);
+        eunTeamMember.setTeam(this);
+        return this;
+    }
+
+    public EunTeam removeEunTeamMember(EunTeamMember eunTeamMember) {
+        this.eunTeamMembers.remove(eunTeamMember);
+        eunTeamMember.setTeam(null);
         return this;
     }
 

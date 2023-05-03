@@ -109,6 +109,23 @@
           <label class="form-label" for="field_status">Status</label>
           <input type="text" class="form-control" name="status" id="field_status" data-cy="status" formControlName="status" />
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_country">Country</label>
+          <select
+            class="form-control"
+            id="field_country"
+            data-cy="country"
+            name="country"
+            formControlName="country"
+            [compareWith]="compareCountries"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">
+              {{ countriesOption.countryName }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>

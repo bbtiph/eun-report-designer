@@ -119,10 +119,7 @@
             <column name="sys_modif_ip_address" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="organization_in_project_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="person_in_project_id" type="bigint">
+            <column name="funding_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

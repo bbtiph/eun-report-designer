@@ -1,7 +1,4 @@
-import { IEventInOrganization } from 'app/entities/event-in-organization/event-in-organization.model';
-import { IOrganizationInMinistry } from 'app/entities/organization-in-ministry/organization-in-ministry.model';
-import { IOrganizationInProject } from 'app/entities/organization-in-project/organization-in-project.model';
-import { IPersonInOrganization } from 'app/entities/person-in-organization/person-in-organization.model';
+import { ICountries } from 'app/entities/countries/countries.model';
 import { OrgStatus } from 'app/entities/enumerations/org-status.model';
 
 export interface IOrganization {
@@ -28,10 +25,7 @@ export interface IOrganization {
   fax?: string | null;
   email?: string | null;
   organisationNumber?: string | null;
-  eventInOrganization?: Pick<IEventInOrganization, 'id'> | null;
-  organizationInMinistry?: Pick<IOrganizationInMinistry, 'id'> | null;
-  organizationInProject?: Pick<IOrganizationInProject, 'id'> | null;
-  personInOrganization?: Pick<IPersonInOrganization, 'id'> | null;
+  country?: Pick<ICountries, 'id'> | null;
 }
 
 export type NewOrganization = Omit<IOrganization, 'id'> & { id: null };

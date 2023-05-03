@@ -3,8 +3,6 @@ package org.eun.back.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -50,9 +48,9 @@ public class OperationalBodyMember implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "operationalBodyMember")
-    @JsonIgnoreProperties(value = { "ministry", "operationalBodyMember", "organization", "person" }, allowSetters = true)
-    private Set<Country> countries = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "ministries", "operationalBodyMembers", "organizations", "people" }, allowSetters = true)
+    private Countries country;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -186,34 +184,16 @@ public class OperationalBodyMember implements Serializable {
         this.status = status;
     }
 
-    public Set<Country> getCountries() {
-        return this.countries;
+    public Countries getCountry() {
+        return this.country;
     }
 
-    public void setCountries(Set<Country> countries) {
-        if (this.countries != null) {
-            this.countries.forEach(i -> i.setOperationalBodyMember(null));
-        }
-        if (countries != null) {
-            countries.forEach(i -> i.setOperationalBodyMember(this));
-        }
-        this.countries = countries;
+    public void setCountry(Countries countries) {
+        this.country = countries;
     }
 
-    public OperationalBodyMember countries(Set<Country> countries) {
-        this.setCountries(countries);
-        return this;
-    }
-
-    public OperationalBodyMember addCountry(Country country) {
-        this.countries.add(country);
-        country.setOperationalBodyMember(this);
-        return this;
-    }
-
-    public OperationalBodyMember removeCountry(Country country) {
-        this.countries.remove(country);
-        country.setOperationalBodyMember(null);
+    public OperationalBodyMember country(Countries countries) {
+        this.setCountry(countries);
         return this;
     }
 

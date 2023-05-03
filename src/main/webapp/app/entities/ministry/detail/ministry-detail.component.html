@@ -86,12 +86,10 @@
         <dd>
           <span>{{ ministry.financialCorrespondingEmail }}</span>
         </dd>
-        <dt><span>Organization In Ministry</span></dt>
+        <dt><span>Country</span></dt>
         <dd>
-          <div *ngIf="ministry.organizationInMinistry">
-            <a [routerLink]="['/organization-in-ministry', ministry.organizationInMinistry.id, 'view']">{{
-              ministry.organizationInMinistry.id
-            }}</a>
+          <div *ngIf="ministry.country">
+            <a [routerLink]="['/countries', ministry.country.id, 'view']">{{ ministry.country.id }}</a>
           </div>
         </dd>
       </dl>

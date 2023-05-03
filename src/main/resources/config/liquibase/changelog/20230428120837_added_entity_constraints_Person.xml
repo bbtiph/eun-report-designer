@@ -8,28 +8,10 @@
     -->
     <changeSet id="20230428120837-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="eun_team_member_id"
+        <addForeignKeyConstraint baseColumnNames="country_id"
                                  baseTableName="person"
-                                 constraintName="fk_person__eun_team_member_id"
+                                 constraintName="fk_person__country_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="eun_team_member"/>
-
-        <addForeignKeyConstraint baseColumnNames="event_participant_id"
-                                 baseTableName="person"
-                                 constraintName="fk_person__event_participant_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="event_participant"/>
-
-        <addForeignKeyConstraint baseColumnNames="person_in_organization_id"
-                                 baseTableName="person"
-                                 constraintName="fk_person__person_in_organization_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="person_in_organization"/>
-
-        <addForeignKeyConstraint baseColumnNames="person_in_project_id"
-                                 baseTableName="person"
-                                 constraintName="fk_person__person_in_project_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="person_in_project"/>
+                                 referencedTableName="countries"/>
     </changeSet>
 </databaseChangeLog>

@@ -18,6 +18,18 @@
         <dd>
           <span>{{ personInProject.roleInProject }}</span>
         </dd>
+        <dt><span>Person</span></dt>
+        <dd>
+          <div *ngIf="personInProject.person">
+            <a [routerLink]="['/person', personInProject.person.id, 'view']">{{ personInProject.person.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Project</span></dt>
+        <dd>
+          <div *ngIf="personInProject.project">
+            <a [routerLink]="['/project', personInProject.project.id, 'view']">{{ personInProject.project.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

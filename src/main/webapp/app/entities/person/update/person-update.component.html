@@ -158,69 +158,18 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_eunTeamMember">Eun Team Member</label>
+          <label class="form-label" for="field_country">Country</label>
           <select
             class="form-control"
-            id="field_eunTeamMember"
-            data-cy="eunTeamMember"
-            name="eunTeamMember"
-            formControlName="eunTeamMember"
-            [compareWith]="compareEunTeamMember"
+            id="field_country"
+            data-cy="country"
+            name="country"
+            formControlName="country"
+            [compareWith]="compareCountries"
           >
             <option [ngValue]="null"></option>
-            <option [ngValue]="eunTeamMemberOption" *ngFor="let eunTeamMemberOption of eunTeamMembersSharedCollection">
-              {{ eunTeamMemberOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_eventParticipant">Event Participant</label>
-          <select
-            class="form-control"
-            id="field_eventParticipant"
-            data-cy="eventParticipant"
-            name="eventParticipant"
-            formControlName="eventParticipant"
-            [compareWith]="compareEventParticipant"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="eventParticipantOption" *ngFor="let eventParticipantOption of eventParticipantsSharedCollection">
-              {{ eventParticipantOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_personInOrganization">Person In Organization</label>
-          <select
-            class="form-control"
-            id="field_personInOrganization"
-            data-cy="personInOrganization"
-            name="personInOrganization"
-            formControlName="personInOrganization"
-            [compareWith]="comparePersonInOrganization"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="personInOrganizationOption" *ngFor="let personInOrganizationOption of personInOrganizationsSharedCollection">
-              {{ personInOrganizationOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_personInProject">Person In Project</label>
-          <select
-            class="form-control"
-            id="field_personInProject"
-            data-cy="personInProject"
-            name="personInProject"
-            formControlName="personInProject"
-            [compareWith]="comparePersonInProject"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="personInProjectOption" *ngFor="let personInProjectOption of personInProjectsSharedCollection">
-              {{ personInProjectOption.id }}
+            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">
+              {{ countriesOption.countryName }}
             </option>
           </select>
         </div>

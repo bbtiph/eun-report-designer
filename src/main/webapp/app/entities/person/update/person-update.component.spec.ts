@@ -9,14 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { PersonFormService } from './person-form.service';
 import { PersonService } from '../service/person.service';
 import { IPerson } from '../person.model';
-import { IEunTeamMember } from 'app/entities/eun-team-member/eun-team-member.model';
-import { EunTeamMemberService } from 'app/entities/eun-team-member/service/eun-team-member.service';
-import { IEventParticipant } from 'app/entities/event-participant/event-participant.model';
-import { EventParticipantService } from 'app/entities/event-participant/service/event-participant.service';
-import { IPersonInOrganization } from 'app/entities/person-in-organization/person-in-organization.model';
-import { PersonInOrganizationService } from 'app/entities/person-in-organization/service/person-in-organization.service';
-import { IPersonInProject } from 'app/entities/person-in-project/person-in-project.model';
-import { PersonInProjectService } from 'app/entities/person-in-project/service/person-in-project.service';
+import { ICountries } from 'app/entities/countries/countries.model';
+import { CountriesService } from 'app/entities/countries/service/countries.service';
 
 import { PersonUpdateComponent } from './person-update.component';
 
@@ -26,10 +20,7 @@ describe('Person Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let personFormService: PersonFormService;
   let personService: PersonService;
-  let eunTeamMemberService: EunTeamMemberService;
-  let eventParticipantService: EventParticipantService;
-  let personInOrganizationService: PersonInOrganizationService;
-  let personInProjectService: PersonInProjectService;
+  let countriesService: CountriesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -52,121 +43,43 @@ describe('Person Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     personFormService = TestBed.inject(PersonFormService);
     personService = TestBed.inject(PersonService);
-    eunTeamMemberService = TestBed.inject(EunTeamMemberService);
-    eventParticipantService = TestBed.inject(EventParticipantService);
-    personInOrganizationService = TestBed.inject(PersonInOrganizationService);
-    personInProjectService = TestBed.inject(PersonInProjectService);
+    countriesService = TestBed.inject(CountriesService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call EunTeamMember query and add missing value', () => {
+    it('Should call Countries query and add missing value', () => {
       const person: IPerson = { id: 456 };
-      const eunTeamMember: IEunTeamMember = { id: 54364 };
-      person.eunTeamMember = eunTeamMember;
+      const country: ICountries = { id: 14659 };
+      person.country = country;
 
-      const eunTeamMemberCollection: IEunTeamMember[] = [{ id: 77881 }];
-      jest.spyOn(eunTeamMemberService, 'query').mockReturnValue(of(new HttpResponse({ body: eunTeamMemberCollection })));
-      const additionalEunTeamMembers = [eunTeamMember];
-      const expectedCollection: IEunTeamMember[] = [...additionalEunTeamMembers, ...eunTeamMemberCollection];
-      jest.spyOn(eunTeamMemberService, 'addEunTeamMemberToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const countriesCollection: ICountries[] = [{ id: 83248 }];
+      jest.spyOn(countriesService, 'query').mockReturnValue(of(new HttpResponse({ body: countriesCollection })));
+      const additionalCountries = [country];
+      const expectedCollection: ICountries[] = [...additionalCountries, ...countriesCollection];
+      jest.spyOn(countriesService, 'addCountriesToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ person });
       comp.ngOnInit();
 
-      expect(eunTeamMemberService.query).toHaveBeenCalled();
-      expect(eunTeamMemberService.addEunTeamMemberToCollectionIfMissing).toHaveBeenCalledWith(
-        eunTeamMemberCollection,
-        ...additionalEunTeamMembers.map(expect.objectContaining)
+      expect(countriesService.query).toHaveBeenCalled();
+      expect(countriesService.addCountriesToCollectionIfMissing).toHaveBeenCalledWith(
+        countriesCollection,
+        ...additionalCountries.map(expect.objectContaining)
       );
-      expect(comp.eunTeamMembersSharedCollection).toEqual(expectedCollection);
-    });
-
-    it('Should call EventParticipant query and add missing value', () => {
-      const person: IPerson = { id: 456 };
-      const eventParticipant: IEventParticipant = { id: 90919 };
-      person.eventParticipant = eventParticipant;
-
-      const eventParticipantCollection: IEventParticipant[] = [{ id: 4644 }];
-      jest.spyOn(eventParticipantService, 'query').mockReturnValue(of(new HttpResponse({ body: eventParticipantCollection })));
-      const additionalEventParticipants = [eventParticipant];
-      const expectedCollection: IEventParticipant[] = [...additionalEventParticipants, ...eventParticipantCollection];
-      jest.spyOn(eventParticipantService, 'addEventParticipantToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ person });
-      comp.ngOnInit();
-
-      expect(eventParticipantService.query).toHaveBeenCalled();
-      expect(eventParticipantService.addEventParticipantToCollectionIfMissing).toHaveBeenCalledWith(
-        eventParticipantCollection,
-        ...additionalEventParticipants.map(expect.objectContaining)
-      );
-      expect(comp.eventParticipantsSharedCollection).toEqual(expectedCollection);
-    });
-
-    it('Should call PersonInOrganization query and add missing value', () => {
-      const person: IPerson = { id: 456 };
-      const personInOrganization: IPersonInOrganization = { id: 99816 };
-      person.personInOrganization = personInOrganization;
-
-      const personInOrganizationCollection: IPersonInOrganization[] = [{ id: 82123 }];
-      jest.spyOn(personInOrganizationService, 'query').mockReturnValue(of(new HttpResponse({ body: personInOrganizationCollection })));
-      const additionalPersonInOrganizations = [personInOrganization];
-      const expectedCollection: IPersonInOrganization[] = [...additionalPersonInOrganizations, ...personInOrganizationCollection];
-      jest.spyOn(personInOrganizationService, 'addPersonInOrganizationToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ person });
-      comp.ngOnInit();
-
-      expect(personInOrganizationService.query).toHaveBeenCalled();
-      expect(personInOrganizationService.addPersonInOrganizationToCollectionIfMissing).toHaveBeenCalledWith(
-        personInOrganizationCollection,
-        ...additionalPersonInOrganizations.map(expect.objectContaining)
-      );
-      expect(comp.personInOrganizationsSharedCollection).toEqual(expectedCollection);
-    });
-
-    it('Should call PersonInProject query and add missing value', () => {
-      const person: IPerson = { id: 456 };
-      const personInProject: IPersonInProject = { id: 24070 };
-      person.personInProject = personInProject;
-
-      const personInProjectCollection: IPersonInProject[] = [{ id: 72443 }];
-      jest.spyOn(personInProjectService, 'query').mockReturnValue(of(new HttpResponse({ body: personInProjectCollection })));
-      const additionalPersonInProjects = [personInProject];
-      const expectedCollection: IPersonInProject[] = [...additionalPersonInProjects, ...personInProjectCollection];
-      jest.spyOn(personInProjectService, 'addPersonInProjectToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ person });
-      comp.ngOnInit();
-
-      expect(personInProjectService.query).toHaveBeenCalled();
-      expect(personInProjectService.addPersonInProjectToCollectionIfMissing).toHaveBeenCalledWith(
-        personInProjectCollection,
-        ...additionalPersonInProjects.map(expect.objectContaining)
-      );
-      expect(comp.personInProjectsSharedCollection).toEqual(expectedCollection);
+      expect(comp.countriesSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
       const person: IPerson = { id: 456 };
-      const eunTeamMember: IEunTeamMember = { id: 80596 };
-      person.eunTeamMember = eunTeamMember;
-      const eventParticipant: IEventParticipant = { id: 61172 };
-      person.eventParticipant = eventParticipant;
-      const personInOrganization: IPersonInOrganization = { id: 66764 };
-      person.personInOrganization = personInOrganization;
-      const personInProject: IPersonInProject = { id: 85125 };
-      person.personInProject = personInProject;
+      const country: ICountries = { id: 34897 };
+      person.country = country;
 
       activatedRoute.data = of({ person });
       comp.ngOnInit();
 
-      expect(comp.eunTeamMembersSharedCollection).toContain(eunTeamMember);
-      expect(comp.eventParticipantsSharedCollection).toContain(eventParticipant);
-      expect(comp.personInOrganizationsSharedCollection).toContain(personInOrganization);
-      expect(comp.personInProjectsSharedCollection).toContain(personInProject);
+      expect(comp.countriesSharedCollection).toContain(country);
       expect(comp.person).toEqual(person);
     });
   });
@@ -240,43 +153,13 @@ describe('Person Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareEunTeamMember', () => {
-      it('Should forward to eunTeamMemberService', () => {
+    describe('compareCountries', () => {
+      it('Should forward to countriesService', () => {
         const entity = { id: 123 };
         const entity2 = { id: 456 };
-        jest.spyOn(eunTeamMemberService, 'compareEunTeamMember');
-        comp.compareEunTeamMember(entity, entity2);
-        expect(eunTeamMemberService.compareEunTeamMember).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('compareEventParticipant', () => {
-      it('Should forward to eventParticipantService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(eventParticipantService, 'compareEventParticipant');
-        comp.compareEventParticipant(entity, entity2);
-        expect(eventParticipantService.compareEventParticipant).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('comparePersonInOrganization', () => {
-      it('Should forward to personInOrganizationService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(personInOrganizationService, 'comparePersonInOrganization');
-        comp.comparePersonInOrganization(entity, entity2);
-        expect(personInOrganizationService.comparePersonInOrganization).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('comparePersonInProject', () => {
-      it('Should forward to personInProjectService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(personInProjectService, 'comparePersonInProject');
-        comp.comparePersonInProject(entity, entity2);
-        expect(personInProjectService.comparePersonInProject).toHaveBeenCalledWith(entity, entity2);
+        jest.spyOn(countriesService, 'compareCountries');
+        comp.compareCountries(entity, entity2);
+        expect(countriesService.compareCountries).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

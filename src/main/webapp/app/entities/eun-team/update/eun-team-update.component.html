@@ -27,23 +27,6 @@
             formControlName="description"
           />
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_eunTeamMember">Eun Team Member</label>
-          <select
-            class="form-control"
-            id="field_eunTeamMember"
-            data-cy="eunTeamMember"
-            name="eunTeamMember"
-            formControlName="eunTeamMember"
-            [compareWith]="compareEunTeamMember"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="eunTeamMemberOption" *ngFor="let eunTeamMemberOption of eunTeamMembersSharedCollection">
-              {{ eunTeamMemberOption.id }}
-            </option>
-          </select>
-        </div>
       </div>
 
       <div>

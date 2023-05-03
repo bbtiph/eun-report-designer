@@ -9,6 +9,10 @@ import { of, Subject, from } from 'rxjs';
 import { EventParticipantFormService } from './event-participant-form.service';
 import { EventParticipantService } from '../service/event-participant.service';
 import { IEventParticipant } from '../event-participant.model';
+import { IEvent } from 'app/entities/event/event.model';
+import { EventService } from 'app/entities/event/service/event.service';
+import { IPerson } from 'app/entities/person/person.model';
+import { PersonService } from 'app/entities/person/service/person.service';
 
 import { EventParticipantUpdateComponent } from './event-participant-update.component';
 
@@ -18,6 +22,8 @@ describe('EventParticipant Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let eventParticipantFormService: EventParticipantFormService;
   let eventParticipantService: EventParticipantService;
+  let eventService: EventService;
+  let personService: PersonService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +46,69 @@ describe('EventParticipant Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     eventParticipantFormService = TestBed.inject(EventParticipantFormService);
     eventParticipantService = TestBed.inject(EventParticipantService);
+    eventService = TestBed.inject(EventService);
+    personService = TestBed.inject(PersonService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call Event query and add missing value', () => {
       const eventParticipant: IEventParticipant = { id: 456 };
+      const event: IEvent = { id: 60170 };
+      eventParticipant.event = event;
+
+      const eventCollection: IEvent[] = [{ id: 83530 }];
+      jest.spyOn(eventService, 'query').mockReturnValue(of(new HttpResponse({ body: eventCollection })));
+      const additionalEvents = [event];
+      const expectedCollection: IEvent[] = [...additionalEvents, ...eventCollection];
+      jest.spyOn(eventService, 'addEventToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ eventParticipant });
       comp.ngOnInit();
 
+      expect(eventService.query).toHaveBeenCalled();
+      expect(eventService.addEventToCollectionIfMissing).toHaveBeenCalledWith(
+        eventCollection,
+        ...additionalEvents.map(expect.objectContaining)
+      );
+      expect(comp.eventsSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should call Person query and add missing value', () => {
+      const eventParticipant: IEventParticipant = { id: 456 };
+      const person: IPerson = { id: 77792 };
+      eventParticipant.person = person;
+
+      const personCollection: IPerson[] = [{ id: 24201 }];
+      jest.spyOn(personService, 'query').mockReturnValue(of(new HttpResponse({ body: personCollection })));
+      const additionalPeople = [person];
+      const expectedCollection: IPerson[] = [...additionalPeople, ...personCollection];
+      jest.spyOn(personService, 'addPersonToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ eventParticipant });
+      comp.ngOnInit();
+
+      expect(personService.query).toHaveBeenCalled();
+      expect(personService.addPersonToCollectionIfMissing).toHaveBeenCalledWith(
+        personCollection,
+        ...additionalPeople.map(expect.objectContaining)
+      );
+      expect(comp.peopleSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const eventParticipant: IEventParticipant = { id: 456 };
+      const event: IEvent = { id: 26026 };
+      eventParticipant.event = event;
+      const person: IPerson = { id: 85756 };
+      eventParticipant.person = person;
+
+      activatedRoute.data = of({ eventParticipant });
+      comp.ngOnInit();
+
+      expect(comp.eventsSharedCollection).toContain(event);
+      expect(comp.peopleSharedCollection).toContain(person);
       expect(comp.eventParticipant).toEqual(eventParticipant);
     });
   });
@@ -120,6 +178,28 @@ describe('EventParticipant Management Update Component', () => {
       expect(eventParticipantService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareEvent', () => {
+      it('Should forward to eventService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(eventService, 'compareEvent');
+        comp.compareEvent(entity, entity2);
+        expect(eventService.compareEvent).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('comparePerson', () => {
+      it('Should forward to personService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(personService, 'comparePerson');
+        comp.comparePerson(entity, entity2);
+        expect(personService.comparePerson).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

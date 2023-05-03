@@ -21,6 +21,8 @@ describe('OrganizationInMinistry Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             status: expect.any(Object),
+            ministry: expect.any(Object),
+            organization: expect.any(Object),
           })
         );
       });
@@ -32,6 +34,8 @@ describe('OrganizationInMinistry Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             status: expect.any(Object),
+            ministry: expect.any(Object),
+            organization: expect.any(Object),
           })
         );
       });

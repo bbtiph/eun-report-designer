@@ -50,12 +50,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="eunTeamMember.id">
-            <div class="d-flex">
-              <span>Eun Team Member</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -66,11 +60,6 @@
           </td>
           <td>{{ eunTeam.name }}</td>
           <td>{{ eunTeam.description }}</td>
-          <td>
-            <div *ngIf="eunTeam.eunTeamMember">
-              <a [routerLink]="['/eun-team-member', eunTeam.eunTeamMember.id, 'view']">{{ eunTeam.eunTeamMember.id }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

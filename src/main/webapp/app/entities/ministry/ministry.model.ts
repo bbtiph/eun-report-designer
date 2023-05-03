@@ -1,4 +1,4 @@
-import { IOrganizationInMinistry } from 'app/entities/organization-in-ministry/organization-in-ministry.model';
+import { ICountries } from 'app/entities/countries/countries.model';
 
 export interface IMinistry {
   id: number;
@@ -20,7 +20,7 @@ export interface IMinistry {
   eunContactEmail?: string | null;
   invoicingAddress?: string | null;
   financialCorrespondingEmail?: string | null;
-  organizationInMinistry?: Pick<IOrganizationInMinistry, 'id'> | null;
+  country?: Pick<ICountries, 'id'> | null;
 }
 
 export type NewMinistry = Omit<IMinistry, 'id'> & { id: null };

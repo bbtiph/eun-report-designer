@@ -21,14 +21,14 @@
       "otherEntityName": "event",
       "otherEntityRelationshipName": "eventParticipant",
       "relationshipName": "event",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "id",
       "otherEntityName": "person",
       "otherEntityRelationshipName": "eventParticipant",
       "relationshipName": "person",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

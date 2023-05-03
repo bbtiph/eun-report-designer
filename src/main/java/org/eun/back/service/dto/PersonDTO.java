@@ -45,13 +45,7 @@ public class PersonDTO implements Serializable {
 
     private LocalDate lastLoginDate;
 
-    private EunTeamMemberDTO eunTeamMember;
-
-    private EventParticipantDTO eventParticipant;
-
-    private PersonInOrganizationDTO personInOrganization;
-
-    private PersonInProjectDTO personInProject;
+    private CountriesDTO country;
 
     public Long getId() {
         return id;
@@ -189,36 +183,12 @@ public class PersonDTO implements Serializable {
         this.lastLoginDate = lastLoginDate;
     }
 
-    public EunTeamMemberDTO getEunTeamMember() {
-        return eunTeamMember;
+    public CountriesDTO getCountry() {
+        return country;
     }
 
-    public void setEunTeamMember(EunTeamMemberDTO eunTeamMember) {
-        this.eunTeamMember = eunTeamMember;
-    }
-
-    public EventParticipantDTO getEventParticipant() {
-        return eventParticipant;
-    }
-
-    public void setEventParticipant(EventParticipantDTO eventParticipant) {
-        this.eventParticipant = eventParticipant;
-    }
-
-    public PersonInOrganizationDTO getPersonInOrganization() {
-        return personInOrganization;
-    }
-
-    public void setPersonInOrganization(PersonInOrganizationDTO personInOrganization) {
-        this.personInOrganization = personInOrganization;
-    }
-
-    public PersonInProjectDTO getPersonInProject() {
-        return personInProject;
-    }
-
-    public void setPersonInProject(PersonInProjectDTO personInProject) {
-        this.personInProject = personInProject;
+    public void setCountry(CountriesDTO country) {
+        this.country = country;
     }
 
     @Override
@@ -263,10 +233,7 @@ public class PersonDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", gdprStatus='" + getGdprStatus() + "'" +
             ", lastLoginDate='" + getLastLoginDate() + "'" +
-            ", eunTeamMember=" + getEunTeamMember() +
-            ", eventParticipant=" + getEventParticipant() +
-            ", personInOrganization=" + getPersonInOrganization() +
-            ", personInProject=" + getPersonInProject() +
+            ", country=" + getCountry() +
             "}";
     }
 }

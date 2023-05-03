@@ -95,24 +95,24 @@ public class Organization implements Serializable {
     private String organisationNumber;
 
     @OneToMany(mappedBy = "organization")
-    @JsonIgnoreProperties(value = { "ministry", "operationalBodyMember", "organization", "person" }, allowSetters = true)
-    private Set<Country> countries = new HashSet<>();
+    @JsonIgnoreProperties(value = { "event", "organization" }, allowSetters = true)
+    private Set<EventInOrganization> eventInOrganizations = new HashSet<>();
+
+    @OneToMany(mappedBy = "organization")
+    @JsonIgnoreProperties(value = { "ministry", "organization" }, allowSetters = true)
+    private Set<OrganizationInMinistry> organizationInMinistries = new HashSet<>();
+
+    @OneToMany(mappedBy = "organization")
+    @JsonIgnoreProperties(value = { "project", "organization" }, allowSetters = true)
+    private Set<OrganizationInProject> organizationInProjects = new HashSet<>();
+
+    @OneToMany(mappedBy = "organization")
+    @JsonIgnoreProperties(value = { "person", "organization" }, allowSetters = true)
+    private Set<PersonInOrganization> personInOrganizations = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "events", "organizations" }, allowSetters = true)
-    private EventInOrganization eventInOrganization;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "ministries", "organizations" }, allowSetters = true)
-    private OrganizationInMinistry organizationInMinistry;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "projects", "organizations" }, allowSetters = true)
-    private OrganizationInProject organizationInProject;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "people", "organizations" }, allowSetters = true)
-    private PersonInOrganization personInOrganization;
+    @JsonIgnoreProperties(value = { "ministries", "operationalBodyMembers", "organizations", "people" }, allowSetters = true)
+    private Countries country;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -415,86 +415,140 @@ public class Organization implements Serializable {
         this.organisationNumber = organisationNumber;
     }
 
-    public Set<Country> getCountries() {
-        return this.countries;
+    public Set<EventInOrganization> getEventInOrganizations() {
+        return this.eventInOrganizations;
     }
 
-    public void setCountries(Set<Country> countries) {
-        if (this.countries != null) {
-            this.countries.forEach(i -> i.setOrganization(null));
+    public void setEventInOrganizations(Set<EventInOrganization> eventInOrganizations) {
+        if (this.eventInOrganizations != null) {
+            this.eventInOrganizations.forEach(i -> i.setOrganization(null));
         }
-        if (countries != null) {
-            countries.forEach(i -> i.setOrganization(this));
+        if (eventInOrganizations != null) {
+            eventInOrganizations.forEach(i -> i.setOrganization(this));
         }
-        this.countries = countries;
+        this.eventInOrganizations = eventInOrganizations;
     }
 
-    public Organization countries(Set<Country> countries) {
-        this.setCountries(countries);
+    public Organization eventInOrganizations(Set<EventInOrganization> eventInOrganizations) {
+        this.setEventInOrganizations(eventInOrganizations);
         return this;
     }
 
-    public Organization addCountry(Country country) {
-        this.countries.add(country);
-        country.setOrganization(this);
+    public Organization addEventInOrganization(EventInOrganization eventInOrganization) {
+        this.eventInOrganizations.add(eventInOrganization);
+        eventInOrganization.setOrganization(this);
         return this;
     }
 
-    public Organization removeCountry(Country country) {
-        this.countries.remove(country);
-        country.setOrganization(null);
+    public Organization removeEventInOrganization(EventInOrganization eventInOrganization) {
+        this.eventInOrganizations.remove(eventInOrganization);
+        eventInOrganization.setOrganization(null);
         return this;
     }
 
-    public EventInOrganization getEventInOrganization() {
-        return this.eventInOrganization;
+    public Set<OrganizationInMinistry> getOrganizationInMinistries() {
+        return this.organizationInMinistries;
     }
 
-    public void setEventInOrganization(EventInOrganization eventInOrganization) {
-        this.eventInOrganization = eventInOrganization;
+    public void setOrganizationInMinistries(Set<OrganizationInMinistry> organizationInMinistries) {
+        if (this.organizationInMinistries != null) {
+            this.organizationInMinistries.forEach(i -> i.setOrganization(null));
+        }
+        if (organizationInMinistries != null) {
+            organizationInMinistries.forEach(i -> i.setOrganization(this));
+        }
+        this.organizationInMinistries = organizationInMinistries;
     }
 
-    public Organization eventInOrganization(EventInOrganization eventInOrganization) {
-        this.setEventInOrganization(eventInOrganization);
+    public Organization organizationInMinistries(Set<OrganizationInMinistry> organizationInMinistries) {
+        this.setOrganizationInMinistries(organizationInMinistries);
         return this;
     }
 
-    public OrganizationInMinistry getOrganizationInMinistry() {
-        return this.organizationInMinistry;
-    }
-
-    public void setOrganizationInMinistry(OrganizationInMinistry organizationInMinistry) {
-        this.organizationInMinistry = organizationInMinistry;
-    }
-
-    public Organization organizationInMinistry(OrganizationInMinistry organizationInMinistry) {
-        this.setOrganizationInMinistry(organizationInMinistry);
+    public Organization addOrganizationInMinistry(OrganizationInMinistry organizationInMinistry) {
+        this.organizationInMinistries.add(organizationInMinistry);
+        organizationInMinistry.setOrganization(this);
         return this;
     }
 
-    public OrganizationInProject getOrganizationInProject() {
-        return this.organizationInProject;
-    }
-
-    public void setOrganizationInProject(OrganizationInProject organizationInProject) {
-        this.organizationInProject = organizationInProject;
-    }
-
-    public Organization organizationInProject(OrganizationInProject organizationInProject) {
-        this.setOrganizationInProject(organizationInProject);
+    public Organization removeOrganizationInMinistry(OrganizationInMinistry organizationInMinistry) {
+        this.organizationInMinistries.remove(organizationInMinistry);
+        organizationInMinistry.setOrganization(null);
         return this;
     }
 
-    public PersonInOrganization getPersonInOrganization() {
-        return this.personInOrganization;
+    public Set<OrganizationInProject> getOrganizationInProjects() {
+        return this.organizationInProjects;
     }
 
-    public void setPersonInOrganization(PersonInOrganization personInOrganization) {
-        this.personInOrganization = personInOrganization;
+    public void setOrganizationInProjects(Set<OrganizationInProject> organizationInProjects) {
+        if (this.organizationInProjects != null) {
+            this.organizationInProjects.forEach(i -> i.setOrganization(null));
+        }
+        if (organizationInProjects != null) {
+            organizationInProjects.forEach(i -> i.setOrganization(this));
+        }
+        this.organizationInProjects = organizationInProjects;
     }
 
-    public Organization personInOrganization(PersonInOrganization personInOrganization) {
-        this.setPersonInOrganization(personInOrganization);
+    public Organization organizationInProjects(Set<OrganizationInProject> organizationInProjects) {
+        this.setOrganizationInProjects(organizationInProjects);
+        return this;
+    }
+
+    public Organization addOrganizationInProject(OrganizationInProject organizationInProject) {
+        this.organizationInProjects.add(organizationInProject);
+        organizationInProject.setOrganization(this);
+        return this;
+    }
+
+    public Organization removeOrganizationInProject(OrganizationInProject organizationInProject) {
+        this.organizationInProjects.remove(organizationInProject);
+        organizationInProject.setOrganization(null);
+        return this;
+    }
+
+    public Set<PersonInOrganization> getPersonInOrganizations() {
+        return this.personInOrganizations;
+    }
+
+    public void setPersonInOrganizations(Set<PersonInOrganization> personInOrganizations) {
+        if (this.personInOrganizations != null) {
+            this.personInOrganizations.forEach(i -> i.setOrganization(null));
+        }
+        if (personInOrganizations != null) {
+            personInOrganizations.forEach(i -> i.setOrganization(this));
+        }
+        this.personInOrganizations = personInOrganizations;
+    }
+
+    public Organization personInOrganizations(Set<PersonInOrganization> personInOrganizations) {
+        this.setPersonInOrganizations(personInOrganizations);
+        return this;
+    }
+
+    public Organization addPersonInOrganization(PersonInOrganization personInOrganization) {
+        this.personInOrganizations.add(personInOrganization);
+        personInOrganization.setOrganization(this);
+        return this;
+    }
+
+    public Organization removePersonInOrganization(PersonInOrganization personInOrganization) {
+        this.personInOrganizations.remove(personInOrganization);
+        personInOrganization.setOrganization(null);
+        return this;
+    }
+
+    public Countries getCountry() {
+        return this.country;
+    }
+
+    public void setCountry(Countries countries) {
+        this.country = countries;
+    }
+
+    public Organization country(Countries countries) {
+        this.setCountry(countries);
         return this;
     }
 

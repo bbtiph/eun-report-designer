@@ -36,8 +36,6 @@ describe('Event Form Service', () => {
             engagementRate: expect.any(Object),
             completionRate: expect.any(Object),
             name: expect.any(Object),
-            eventInOrganization: expect.any(Object),
-            eventParticipant: expect.any(Object),
           })
         );
       });
@@ -64,8 +62,6 @@ describe('Event Form Service', () => {
             engagementRate: expect.any(Object),
             completionRate: expect.any(Object),
             name: expect.any(Object),
-            eventInOrganization: expect.any(Object),
-            eventParticipant: expect.any(Object),
           })
         );
       });

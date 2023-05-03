@@ -34,8 +34,6 @@ type EventFormGroupContent = {
   engagementRate: FormControl<IEvent['engagementRate']>;
   completionRate: FormControl<IEvent['completionRate']>;
   name: FormControl<IEvent['name']>;
-  eventInOrganization: FormControl<IEvent['eventInOrganization']>;
-  eventParticipant: FormControl<IEvent['eventParticipant']>;
 };
 
 export type EventFormGroup = FormGroup<EventFormGroupContent>;
@@ -71,8 +69,6 @@ export class EventFormService {
       engagementRate: new FormControl(eventRawValue.engagementRate),
       completionRate: new FormControl(eventRawValue.completionRate),
       name: new FormControl(eventRawValue.name),
-      eventInOrganization: new FormControl(eventRawValue.eventInOrganization),
-      eventParticipant: new FormControl(eventRawValue.eventParticipant),
     });
   }
 

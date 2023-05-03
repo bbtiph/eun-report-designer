@@ -40,10 +40,7 @@ type OrganizationFormGroupContent = {
   fax: FormControl<IOrganization['fax']>;
   email: FormControl<IOrganization['email']>;
   organisationNumber: FormControl<IOrganization['organisationNumber']>;
-  eventInOrganization: FormControl<IOrganization['eventInOrganization']>;
-  organizationInMinistry: FormControl<IOrganization['organizationInMinistry']>;
-  organizationInProject: FormControl<IOrganization['organizationInProject']>;
-  personInOrganization: FormControl<IOrganization['personInOrganization']>;
+  country: FormControl<IOrganization['country']>;
 };
 
 export type OrganizationFormGroup = FormGroup<OrganizationFormGroupContent>;
@@ -89,10 +86,7 @@ export class OrganizationFormService {
       fax: new FormControl(organizationRawValue.fax),
       email: new FormControl(organizationRawValue.email),
       organisationNumber: new FormControl(organizationRawValue.organisationNumber),
-      eventInOrganization: new FormControl(organizationRawValue.eventInOrganization),
-      organizationInMinistry: new FormControl(organizationRawValue.organizationInMinistry),
-      organizationInProject: new FormControl(organizationRawValue.organizationInProject),
-      personInOrganization: new FormControl(organizationRawValue.personInOrganization),
+      country: new FormControl(organizationRawValue.country),
     });
   }
 

@@ -22,6 +22,18 @@
         <dd>
           <span>{{ eunTeamMember.status }}</span>
         </dd>
+        <dt><span>Team</span></dt>
+        <dd>
+          <div *ngIf="eunTeamMember.team">
+            <a [routerLink]="['/eun-team', eunTeamMember.team.id, 'view']">{{ eunTeamMember.team.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Person</span></dt>
+        <dd>
+          <div *ngIf="eunTeamMember.person">
+            <a [routerLink]="['/person', eunTeamMember.person.id, 'view']">{{ eunTeamMember.person.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

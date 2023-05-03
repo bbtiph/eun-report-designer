@@ -74,24 +74,24 @@ public class Person implements Serializable {
     private LocalDate lastLoginDate;
 
     @OneToMany(mappedBy = "person")
-    @JsonIgnoreProperties(value = { "ministry", "operationalBodyMember", "organization", "person" }, allowSetters = true)
-    private Set<Country> countries = new HashSet<>();
+    @JsonIgnoreProperties(value = { "team", "person" }, allowSetters = true)
+    private Set<EunTeamMember> eunTeamMembers = new HashSet<>();
+
+    @OneToMany(mappedBy = "person")
+    @JsonIgnoreProperties(value = { "event", "person" }, allowSetters = true)
+    private Set<EventParticipant> eventParticipants = new HashSet<>();
+
+    @OneToMany(mappedBy = "person")
+    @JsonIgnoreProperties(value = { "person", "organization" }, allowSetters = true)
+    private Set<PersonInOrganization> personInOrganizations = new HashSet<>();
+
+    @OneToMany(mappedBy = "person")
+    @JsonIgnoreProperties(value = { "person", "project" }, allowSetters = true)
+    private Set<PersonInProject> personInProjects = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "teams", "people" }, allowSetters = true)
-    private EunTeamMember eunTeamMember;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "events", "people" }, allowSetters = true)
-    private EventParticipant eventParticipant;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "people", "organizations" }, allowSetters = true)
-    private PersonInOrganization personInOrganization;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "people", "projects" }, allowSetters = true)
-    private PersonInProject personInProject;
+    @JsonIgnoreProperties(value = { "ministries", "operationalBodyMembers", "organizations", "people" }, allowSetters = true)
+    private Countries country;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -316,86 +316,140 @@ public class Person implements Serializable {
         this.lastLoginDate = lastLoginDate;
     }
 
-    public Set<Country> getCountries() {
-        return this.countries;
+    public Set<EunTeamMember> getEunTeamMembers() {
+        return this.eunTeamMembers;
     }
 
-    public void setCountries(Set<Country> countries) {
-        if (this.countries != null) {
-            this.countries.forEach(i -> i.setPerson(null));
+    public void setEunTeamMembers(Set<EunTeamMember> eunTeamMembers) {
+        if (this.eunTeamMembers != null) {
+            this.eunTeamMembers.forEach(i -> i.setPerson(null));
         }
-        if (countries != null) {
-            countries.forEach(i -> i.setPerson(this));
+        if (eunTeamMembers != null) {
+            eunTeamMembers.forEach(i -> i.setPerson(this));
         }
-        this.countries = countries;
+        this.eunTeamMembers = eunTeamMembers;
     }
 
-    public Person countries(Set<Country> countries) {
-        this.setCountries(countries);
+    public Person eunTeamMembers(Set<EunTeamMember> eunTeamMembers) {
+        this.setEunTeamMembers(eunTeamMembers);
         return this;
     }
 
-    public Person addCountry(Country country) {
-        this.countries.add(country);
-        country.setPerson(this);
+    public Person addEunTeamMember(EunTeamMember eunTeamMember) {
+        this.eunTeamMembers.add(eunTeamMember);
+        eunTeamMember.setPerson(this);
         return this;
     }
 
-    public Person removeCountry(Country country) {
-        this.countries.remove(country);
-        country.setPerson(null);
+    public Person removeEunTeamMember(EunTeamMember eunTeamMember) {
+        this.eunTeamMembers.remove(eunTeamMember);
+        eunTeamMember.setPerson(null);
         return this;
     }
 
-    public EunTeamMember getEunTeamMember() {
-        return this.eunTeamMember;
+    public Set<EventParticipant> getEventParticipants() {
+        return this.eventParticipants;
     }
 
-    public void setEunTeamMember(EunTeamMember eunTeamMember) {
-        this.eunTeamMember = eunTeamMember;
+    public void setEventParticipants(Set<EventParticipant> eventParticipants) {
+        if (this.eventParticipants != null) {
+            this.eventParticipants.forEach(i -> i.setPerson(null));
+        }
+        if (eventParticipants != null) {
+            eventParticipants.forEach(i -> i.setPerson(this));
+        }
+        this.eventParticipants = eventParticipants;
     }
 
-    public Person eunTeamMember(EunTeamMember eunTeamMember) {
-        this.setEunTeamMember(eunTeamMember);
+    public Person eventParticipants(Set<EventParticipant> eventParticipants) {
+        this.setEventParticipants(eventParticipants);
         return this;
     }
 
-    public EventParticipant getEventParticipant() {
-        return this.eventParticipant;
-    }
-
-    public void setEventParticipant(EventParticipant eventParticipant) {
-        this.eventParticipant = eventParticipant;
-    }
-
-    public Person eventParticipant(EventParticipant eventParticipant) {
-        this.setEventParticipant(eventParticipant);
+    public Person addEventParticipant(EventParticipant eventParticipant) {
+        this.eventParticipants.add(eventParticipant);
+        eventParticipant.setPerson(this);
         return this;
     }
 
-    public PersonInOrganization getPersonInOrganization() {
-        return this.personInOrganization;
-    }
-
-    public void setPersonInOrganization(PersonInOrganization personInOrganization) {
-        this.personInOrganization = personInOrganization;
-    }
-
-    public Person personInOrganization(PersonInOrganization personInOrganization) {
-        this.setPersonInOrganization(personInOrganization);
+    public Person removeEventParticipant(EventParticipant eventParticipant) {
+        this.eventParticipants.remove(eventParticipant);
+        eventParticipant.setPerson(null);
         return this;
     }
 
-    public PersonInProject getPersonInProject() {
-        return this.personInProject;
+    public Set<PersonInOrganization> getPersonInOrganizations() {
+        return this.personInOrganizations;
     }
 
-    public void setPersonInProject(PersonInProject personInProject) {
-        this.personInProject = personInProject;
+    public void setPersonInOrganizations(Set<PersonInOrganization> personInOrganizations) {
+        if (this.personInOrganizations != null) {
+            this.personInOrganizations.forEach(i -> i.setPerson(null));
+        }
+        if (personInOrganizations != null) {
+            personInOrganizations.forEach(i -> i.setPerson(this));
+        }
+        this.personInOrganizations = personInOrganizations;
     }
 
-    public Person personInProject(PersonInProject personInProject) {
-        this.setPersonInProject(personInProject);
+    public Person personInOrganizations(Set<PersonInOrganization> personInOrganizations) {
+        this.setPersonInOrganizations(personInOrganizations);
+        return this;
+    }
+
+    public Person addPersonInOrganization(PersonInOrganization personInOrganization) {
+        this.personInOrganizations.add(personInOrganization);
+        personInOrganization.setPerson(this);
+        return this;
+    }
+
+    public Person removePersonInOrganization(PersonInOrganization personInOrganization) {
+        this.personInOrganizations.remove(personInOrganization);
+        personInOrganization.setPerson(null);
+        return this;
+    }
+
+    public Set<PersonInProject> getPersonInProjects() {
+        return this.personInProjects;
+    }
+
+    public void setPersonInProjects(Set<PersonInProject> personInProjects) {
+        if (this.personInProjects != null) {
+            this.personInProjects.forEach(i -> i.setPerson(null));
+        }
+        if (personInProjects != null) {
+            personInProjects.forEach(i -> i.setPerson(this));
+        }
+        this.personInProjects = personInProjects;
+    }
+
+    public Person personInProjects(Set<PersonInProject> personInProjects) {
+        this.setPersonInProjects(personInProjects);
+        return this;
+    }
+
+    public Person addPersonInProject(PersonInProject personInProject) {
+        this.personInProjects.add(personInProject);
+        personInProject.setPerson(this);
+        return this;
+    }
+
+    public Person removePersonInProject(PersonInProject personInProject) {
+        this.personInProjects.remove(personInProject);
+        personInProject.setPerson(null);
+        return this;
+    }
+
+    public Countries getCountry() {
+        return this.country;
+    }
+
+    public void setCountry(Countries countries) {
+        this.country = countries;
+    }
+
+    public Person country(Countries countries) {
+        this.setCountry(countries);
         return this;
     }
 

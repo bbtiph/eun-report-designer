@@ -50,10 +50,10 @@
   "relationships": [
     {
       "otherEntityField": "id",
-      "otherEntityName": "country",
+      "otherEntityName": "countries",
       "otherEntityRelationshipName": "operationalBodyMember",
       "relationshipName": "country",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"
