@@ -1,0 +1,13 @@
+entity Report {
+    reportName String required,
+    acronym String,
+    description String,
+    type String,
+    isActive String,
+    file Blob,
+}
+
+
+paginate Report with pagination
+dto Report with mapstruct
+service Report with serviceImpl
