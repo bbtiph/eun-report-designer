@@ -1,13 +1,15 @@
-entity Report {
-    reportName String required,
-    acronym String,
-    description String,
-    type String,
-    isActive String,
-    file Blob,
+entity Role {
+    name String required maxlength(50)
 }
 
+entity Privilege {
+    id Long,
+    name String
+}
 
-paginate Report with pagination
-dto Report with mapstruct
-service Report with serviceImpl
+relationship ManyToMany {
+    Role{privilege(name)} to Privilege{role}
+}
+
+service Role, Privilege with serviceImpl
+
