@@ -39,7 +39,7 @@ export interface IProject {
   sysCreatIpAddress?: string | null;
   sysModifTimestamp?: dayjs.Dayjs | null;
   sysModifIpAddress?: string | null;
-  funding?: Pick<IFunding, 'id'> | null;
+  funding?: Pick<IFunding, 'id' | 'name'> | null;
 }
 
 export type NewProject = Omit<IProject, 'id'> & { id: null };

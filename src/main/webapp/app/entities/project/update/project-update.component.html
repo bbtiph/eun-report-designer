@@ -15,7 +15,7 @@
           <label class="form-label" for="field_status">Status</label>
           <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
             <option [ngValue]="null"></option>
-            <option *ngFor="let projectStatus of projectStatusValues" [value]="projectStatus">projectStatus</option>
+            <option *ngFor="let projectStatus of projectStatusValues" [value]="projectStatus">{{ projectStatus }}</option>
           </select>
           <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('status')?.errors?.required"> This field is required. </small>
@@ -326,60 +326,6 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_sysCreatTimestamp">Sys Creat Timestamp</label>
-          <div class="d-flex">
-            <input
-              id="field_sysCreatTimestamp"
-              data-cy="sysCreatTimestamp"
-              type="datetime-local"
-              class="form-control"
-              name="sysCreatTimestamp"
-              formControlName="sysCreatTimestamp"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_sysCreatIpAddress">Sys Creat Ip Address</label>
-          <input
-            type="text"
-            class="form-control"
-            name="sysCreatIpAddress"
-            id="field_sysCreatIpAddress"
-            data-cy="sysCreatIpAddress"
-            formControlName="sysCreatIpAddress"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_sysModifTimestamp">Sys Modif Timestamp</label>
-          <div class="d-flex">
-            <input
-              id="field_sysModifTimestamp"
-              data-cy="sysModifTimestamp"
-              type="datetime-local"
-              class="form-control"
-              name="sysModifTimestamp"
-              formControlName="sysModifTimestamp"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_sysModifIpAddress">Sys Modif Ip Address</label>
-          <input
-            type="text"
-            class="form-control"
-            name="sysModifIpAddress"
-            id="field_sysModifIpAddress"
-            data-cy="sysModifIpAddress"
-            formControlName="sysModifIpAddress"
-          />
-        </div>
-
-        <div class="row mb-3">
           <label class="form-label" for="field_funding">Funding</label>
           <select
             class="form-control"
@@ -390,7 +336,7 @@
             [compareWith]="compareFunding"
           >
             <option [ngValue]="null"></option>
-            <option [ngValue]="fundingOption" *ngFor="let fundingOption of fundingsSharedCollection">{{ fundingOption.id }}</option>
+            <option [ngValue]="fundingOption" *ngFor="let fundingOption of fundingsSharedCollection">{{ fundingOption.name }}</option>
           </select>
         </div>
       </div>
