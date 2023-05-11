@@ -224,30 +224,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="sysCreatTimestamp">
-            <div class="d-flex">
-              <span>Sys Creat Timestamp</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="sysCreatIpAddress">
-            <div class="d-flex">
-              <span>Sys Creat Ip Address</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="sysModifTimestamp">
-            <div class="d-flex">
-              <span>Sys Modif Timestamp</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="sysModifIpAddress">
-            <div class="d-flex">
-              <span>Sys Modif Ip Address</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="funding.id">
             <div class="d-flex">
               <span>Funding</span>
@@ -293,10 +269,6 @@
           <td>{{ project.projectManager }}</td>
           <td>{{ project.referenceNumberOfProject }}</td>
           <td>{{ project.eunTeam }}</td>
-          <td>{{ project.sysCreatTimestamp | formatMediumDatetime }}</td>
-          <td>{{ project.sysCreatIpAddress }}</td>
-          <td>{{ project.sysModifTimestamp | formatMediumDatetime }}</td>
-          <td>{{ project.sysModifIpAddress }}</td>
           <td>
             <div *ngIf="project.funding">
               <a [routerLink]="['/funding', project.funding.id, 'view']">{{ project.funding.id }}</a>

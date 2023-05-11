@@ -1,5 +1,6 @@
 package org.eun.back.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.eun.back.domain.Role;
@@ -59,7 +60,17 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(readOnly = true)
     public List<Role> findAll() {
         log.debug("Request to get all Roles");
-        return roleRepository.findAll();
+        List<Role> res = new ArrayList<>();
+        roleRepository
+            .findAll()
+            .forEach(
+                (
+                    role -> {
+                        res.add(this.findOne(role.getId()).get());
+                    }
+                )
+            );
+        return res;
     }
 
     public Page<Role> findAllWithEagerRelationships(Pageable pageable) {
