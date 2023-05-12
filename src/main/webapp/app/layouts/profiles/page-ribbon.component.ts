@@ -7,9 +7,9 @@ import { ProfileService } from './profile.service';
 @Component({
   selector: 'jhi-page-ribbon',
   template: `
-    <div class="ribbon" *ngIf="ribbonEnv$ | async as ribbonEnv">
-      <a href="">{{ { dev: 'Development' }[ribbonEnv] || '' }}</a>
-    </div>
+    <!--    <div class="ribbon" *ngIf="ribbonEnv$ | async as ribbonEnv">-->
+    <!--      <a href="">{{ { dev: 'Developments' }[ribbonEnv] || '' }}</a>-->
+    <!--    </div>-->
   `,
   styleUrls: ['./page-ribbon.component.scss'],
 })
