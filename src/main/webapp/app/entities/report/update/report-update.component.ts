@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -26,6 +26,7 @@ export class ReportUpdateComponent implements OnInit {
     protected eventManager: EventManager,
     protected reportService: ReportService,
     protected reportFormService: ReportFormService,
+    protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute
   ) {}
 
@@ -51,6 +52,16 @@ export class ReportUpdateComponent implements OnInit {
       error: (err: FileLoadError) =>
         this.eventManager.broadcast(new EventWithContent<AlertError>('eunReportDesignerApp.error', { message: err.message })),
     });
+  }
+
+  clearInputImage(field: string, fieldContentType: string, idInput: string): void {
+    this.editForm.patchValue({
+      [field]: null,
+      [fieldContentType]: null,
+    });
+    if (idInput && this.elementRef.nativeElement.querySelector('#' + idInput)) {
+      this.elementRef.nativeElement.querySelector('#' + idInput).value = null;
+    }
   }
 
   previousState(): void {

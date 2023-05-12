@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity ReportBlocks.
+    -->
+    <changeSet id="20230517131900-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="report_blocks_id"
+                                 baseTableName="rel_report_blocks_country_id"
+                                 constraintName="fk_rel_report_blocks_country_id__report_blocks_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="report_blocks"/>
+
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="rel_report_blocks_country_id"
+                                 constraintName="fk_rel_report_blocks_country_id_country_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="countries"/>
+
+        <addForeignKeyConstraint baseColumnNames="report_blocks_id"
+                                 baseTableName="rel_report_blocks_report_id"
+                                 constraintName="fk_rel_report_blocks_report_id__report_blocks_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="report_blocks"/>
+
+        <addForeignKeyConstraint baseColumnNames="report_id"
+                                 baseTableName="rel_report_blocks_report_id"
+                                 constraintName="fk_rel_report_blocks_report_id_report_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="report"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,106 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-report-blocks-heading" data-cy="ReportBlocksCreateUpdateHeading">Create or edit a Report Blocks</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryName">Country Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryName"
+            id="field_countryName"
+            data-cy="countryName"
+            formControlName="countryName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_priorityNumber">Priority Number</label>
+          <input
+            type="number"
+            class="form-control"
+            name="priorityNumber"
+            id="field_priorityNumber"
+            data-cy="priorityNumber"
+            formControlName="priorityNumber"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_content">Content</label>
+          <input type="text" class="form-control" name="content" id="field_content" data-cy="content" formControlName="content" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_isActive">Is Active</label>
+          <input type="checkbox" class="form-check" name="isActive" id="field_isActive" data-cy="isActive" formControlName="isActive" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_type">Type</label>
+          <input type="text" class="form-control" name="type" id="field_type" data-cy="type" formControlName="type" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_sqlScript">Sql Script</label>
+          <input type="text" class="form-control" name="sqlScript" id="field_sqlScript" data-cy="sqlScript" formControlName="sqlScript" />
+        </div>
+
+        <div class="row mb-3">
+          <label for="field_countryIds">Country Id</label>
+          <select
+            class="form-control"
+            id="field_countryIds"
+            data-cy="countryId"
+            multiple
+            name="countryIds"
+            formControlName="countryIds"
+            [compareWith]="compareCountries"
+          >
+            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">{{ countriesOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label for="field_reportIds">Report Id</label>
+          <select
+            class="form-control"
+            id="field_reportIds"
+            data-cy="reportId"
+            multiple
+            name="reportIds"
+            formControlName="reportIds"
+            [compareWith]="compareReport"
+          >
+            <option [ngValue]="reportOption" *ngFor="let reportOption of reportsSharedCollection">{{ reportOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

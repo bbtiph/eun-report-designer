@@ -40,14 +40,15 @@
       "PersonInProject",
       "Report",
       "Role",
-      "Privilege"
+      "Privilege",
+      "ReportBlocks"
     ],
     "entitySuffix": "",
     "jhiPrefix": "jhi",
     "jhipsterVersion": "7.9.3",
     "jwtSecretKey": "MWNjNDQyYmI1NDRlNzAyNmM5Y2M3MjQ1MjUwYWIwZjA1YzI4ZGE2MWFkMDE5OWJkNWM4YWZiYTIzZjg0MjRhNmNhMTg5NzMzOGFhMGExNzNjYWNiMTEwYzM0OWU5OTMxNGYyNGY3YTU3MGE0MWE5M2RhNDMwOWQ0NGJiZGM5MGM=",
     "languages": ["en", "fr"],
-    "lastLiquibaseTimestamp": 1683809114000,
+    "lastLiquibaseTimestamp": 1684329540000,
     "messageBroker": false,
     "microfrontend": false,
     "microfrontends": [],

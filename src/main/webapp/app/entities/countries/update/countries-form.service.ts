@@ -14,11 +14,12 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type CountriesFormGroupInput = ICountries | PartialWithRequiredKeyOf<NewCountries>;
 
-type CountriesFormDefaults = Pick<NewCountries, 'id'>;
+type CountriesFormDefaults = Pick<NewCountries, 'id' | 'reportBlockIds'>;
 
 type CountriesFormGroupContent = {
   id: FormControl<ICountries['id'] | NewCountries['id']>;
   countryName: FormControl<ICountries['countryName']>;
+  reportBlockIds: FormControl<ICountries['reportBlockIds']>;
 };
 
 export type CountriesFormGroup = FormGroup<CountriesFormGroupContent>;
@@ -39,6 +40,7 @@ export class CountriesFormService {
         }
       ),
       countryName: new FormControl(countriesRawValue.countryName),
+      reportBlockIds: new FormControl(countriesRawValue.reportBlockIds ?? []),
     });
   }
 
@@ -59,6 +61,7 @@ export class CountriesFormService {
   private getFormDefaults(): CountriesFormDefaults {
     return {
       id: null,
+      reportBlockIds: [],
     };
   }
 }

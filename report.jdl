@@ -1,4 +1,32 @@
-entity Role {
-    name String required maxlength(50)
+entity Countries {
+    countryName String
 }
+
+entity Report {
+    reportName String required,
+    acronym String,
+    description String,
+    type String,
+    isActive String,
+    file ImageBlob
+}
+
+entity ReportBlocks {
+    countryName String
+    priorityNumber Long
+    content String
+    isActive Boolean
+    type String
+    sqlScript String
+}
+
+relationship ManyToMany {
+    ReportBlocks{countryId} to Countries{ReportBlockId}
+    ReportBlocks{reportId} to Report{ReportBlockId}
+}
+
+paginate Countries, Report  with pagination
+dto Countries, Report, ReportBlocks with mapstruct
+service Countries, Report, ReportBlocks with serviceImpl
+
 

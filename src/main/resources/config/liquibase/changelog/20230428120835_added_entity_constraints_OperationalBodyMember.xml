@@ -10,7 +10,7 @@
 
         <addForeignKeyConstraint baseColumnNames="country_id"
                                  baseTableName="operational_body_member"
-                                 constraintName="fk_operational_body_member__country_id"
+                                 constraintName="fk_operational_body_member_country_id"
                                  referencedColumnNames="id"
                                  referencedTableName="countries"/>
     </changeSet>

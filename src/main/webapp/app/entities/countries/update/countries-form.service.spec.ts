@@ -21,6 +21,7 @@ describe('Countries Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             countryName: expect.any(Object),
+            reportBlockIds: expect.any(Object),
           })
         );
       });
@@ -32,6 +33,7 @@ describe('Countries Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             countryName: expect.any(Object),
+            reportBlockIds: expect.any(Object),
           })
         );
       });

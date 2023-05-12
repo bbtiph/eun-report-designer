@@ -17,28 +17,11 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "ministry",
-      "otherEntityRelationshipName": "country",
-      "relationshipName": "ministry",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "operationalBodyMember",
-      "otherEntityRelationshipName": "country",
-      "relationshipName": "operationalBodyMember",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "organization",
-      "otherEntityRelationshipName": "country",
-      "relationshipName": "organization",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "person",
-      "otherEntityRelationshipName": "country",
-      "relationshipName": "person",
-      "relationshipType": "one-to-many"
+      "otherEntityName": "reportBlocks",
+      "otherEntityRelationshipName": "countryId",
+      "ownerSide": false,
+      "relationshipName": "reportBlockId",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

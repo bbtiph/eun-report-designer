@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +11,6 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, ReportService } from '../service/report.service';
 import { ReportDeleteDialogComponent } from '../delete/report-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
-import { AbstractExportModal } from '../../../shared/modal/abstract-export.modal';
 
 @Component({
   selector: 'jhi-report',
@@ -33,8 +32,7 @@ export class ReportComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected dataUtils: DataUtils,
-    protected modalService: NgbModal,
-    private http: HttpClient
+    protected modalService: NgbModal
   ) {}
 
   trackId = (_index: number, item: IReport): number => this.reportService.getReportIdentifier(item);
@@ -72,41 +70,6 @@ export class ReportComponent implements OnInit {
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
       },
-    });
-  }
-
-  // generateReport(report: IReport): void {
-  //   const body = { id: 0, output: 'pdf', lang: 'en' };
-  //
-  //   this.http.post('api/reports/generate/' + report.acronym, body, { responseType: 'blob' }).subscribe(response => {
-  //     var a = document.createElement('a');
-  //     a.href = URL.createObjectURL(response);
-  //     // @ts-ignore
-  //     a.download = report.reportName;
-  //     a.click();
-  //   });
-  // }
-
-  generateReport(report: IReport): void {
-    const modalRef = this.modalService.open(AbstractExportModal, {
-      animation: true,
-      size: 'lg',
-    });
-    modalRef.componentInstance.param = this;
-    modalRef.componentInstance.reportName = report.reportName;
-
-    modalRef.result.then(params => {
-      console.log(params);
-
-      const body = { id: 0, output: params.format.name, lang: 'ru' };
-
-      this.http.post('api/reports/generate/' + report.acronym, body, { responseType: 'blob' }).subscribe(response => {
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(response);
-        // @ts-ignore
-        a.download = report.reportName;
-        a.click();
-      });
     });
   }
 

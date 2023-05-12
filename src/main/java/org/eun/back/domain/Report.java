@@ -1,6 +1,9 @@
 package org.eun.back.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -42,6 +45,10 @@ public class Report implements Serializable {
 
     @Column(name = "file_content_type")
     private String fileContentType;
+
+    @ManyToMany(mappedBy = "reportIds")
+    @JsonIgnoreProperties(value = { "countryIds", "reportIds" }, allowSetters = true)
+    private Set<ReportBlocks> reportBlockIds = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -147,6 +154,37 @@ public class Report implements Serializable {
 
     public void setFileContentType(String fileContentType) {
         this.fileContentType = fileContentType;
+    }
+
+    public Set<ReportBlocks> getReportBlockIds() {
+        return this.reportBlockIds;
+    }
+
+    public void setReportBlockIds(Set<ReportBlocks> reportBlocks) {
+        if (this.reportBlockIds != null) {
+            this.reportBlockIds.forEach(i -> i.removeReportId(this));
+        }
+        if (reportBlocks != null) {
+            reportBlocks.forEach(i -> i.addReportId(this));
+        }
+        this.reportBlockIds = reportBlocks;
+    }
+
+    public Report reportBlockIds(Set<ReportBlocks> reportBlocks) {
+        this.setReportBlockIds(reportBlocks);
+        return this;
+    }
+
+    public Report addReportBlockId(ReportBlocks reportBlocks) {
+        this.reportBlockIds.add(reportBlocks);
+        reportBlocks.getReportIds().add(this);
+        return this;
+    }
+
+    public Report removeReportBlockId(ReportBlocks reportBlocks) {
+        this.reportBlockIds.remove(reportBlocks);
+        reportBlocks.getReportIds().remove(this);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

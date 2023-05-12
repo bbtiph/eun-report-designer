@@ -29,7 +29,7 @@
     {
       "fieldName": "file",
       "fieldType": "byte[]",
-      "fieldTypeBlobContent": "any"
+      "fieldTypeBlobContent": "image"
     }
   ],
   "fluentMethods": true,
@@ -37,6 +37,14 @@
   "name": "Report",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "reportBlocks",
+      "otherEntityRelationshipName": "reportId",
+      "ownerSide": false,
+      "relationshipName": "reportBlockId",
+      "relationshipType": "many-to-many"
+    }
+  ],
   "service": "serviceImpl"
 }
