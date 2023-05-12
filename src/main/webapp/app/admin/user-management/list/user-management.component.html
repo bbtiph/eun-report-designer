@@ -51,8 +51,8 @@
             </button>
           </td>
           <td>
-            <div *ngFor="let authority of user.authorities">
-              <span class="badge bg-info">{{ authority }}</span>
+            <div *ngFor="let authority of user.roles">
+              <span class="badge bg-info">{{ authority.name }}</span>
             </div>
           </td>
           <td>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</td>

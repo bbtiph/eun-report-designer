@@ -21,6 +21,9 @@ public interface RoleRepository extends RoleRepositoryWithBagRelationships, JpaR
         return this.fetchBagRelationships(this.findById(id));
     }
 
+    Optional<Role> findByName(String name);
+    Optional<Role> findById(Long id);
+
     default List<Role> findAllWithEagerRelationships() {
         return this.fetchBagRelationships(this.findAll());
     }

@@ -17,7 +17,7 @@ describe('Home Component', () => {
   let mockRouter: Router;
   const account: Account = {
     activated: true,
-    authorities: [],
+    roles: [],
     email: '',
     firstName: null,
     langKey: '',

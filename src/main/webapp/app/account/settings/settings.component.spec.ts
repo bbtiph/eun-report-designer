@@ -21,7 +21,7 @@ describe('SettingsComponent', () => {
     email: 'john.doe@mail.com',
     langKey: 'en',
     login: 'john',
-    authorities: [],
+    roles: [],
     imageUrl: '',
   };
 

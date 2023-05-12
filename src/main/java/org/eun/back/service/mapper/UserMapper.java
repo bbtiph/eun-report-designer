@@ -2,7 +2,7 @@ package org.eun.back.service.mapper;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import org.eun.back.domain.Authority;
+import org.eun.back.domain.Role;
 import org.eun.back.domain.User;
 import org.eun.back.service.dto.AdminUserDTO;
 import org.eun.back.service.dto.UserDTO;
@@ -53,28 +53,28 @@ public class UserMapper {
             user.setImageUrl(userDTO.getImageUrl());
             user.setActivated(userDTO.isActivated());
             user.setLangKey(userDTO.getLangKey());
-            Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
-            user.setAuthorities(authorities);
+            Set<Role> roles = userDTO.getRoles();
+            user.setRoles(roles);
             return user;
         }
     }
 
-    private Set<Authority> authoritiesFromStrings(Set<String> authoritiesAsString) {
-        Set<Authority> authorities = new HashSet<>();
+    private Set<Role> authoritiesFromStrings(Set<String> rolesAsLong) {
+        Set<Role> roles = new HashSet<>();
 
-        if (authoritiesAsString != null) {
-            authorities =
-                authoritiesAsString
+        if (rolesAsLong != null) {
+            roles =
+                rolesAsLong
                     .stream()
                     .map(string -> {
-                        Authority auth = new Authority();
+                        Role auth = new Role();
                         auth.setName(string);
                         return auth;
                     })
                     .collect(Collectors.toSet());
         }
 
-        return authorities;
+        return roles;
     }
 
     public User userFromId(Long id) {

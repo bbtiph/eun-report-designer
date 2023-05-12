@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.constraints.*;
 import org.eun.back.config.Constants;
-import org.eun.back.domain.Authority;
+import org.eun.back.domain.Role;
 import org.eun.back.domain.User;
 
 /**
@@ -49,7 +49,7 @@ public class AdminUserDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private Set<String> authorities;
+    private Set<Role> roles;
 
     public AdminUserDTO() {
         // Empty constructor needed for Jackson.
@@ -68,7 +68,7 @@ public class AdminUserDTO implements Serializable {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
-        this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+        this.roles = user.getRoles().stream().collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -167,12 +167,12 @@ public class AdminUserDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public Set<String> getAuthorities() {
-        return authorities;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setAuthorities(Set<String> authorities) {
-        this.authorities = authorities;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     // prettier-ignore
@@ -190,7 +190,7 @@ public class AdminUserDTO implements Serializable {
             ", createdDate=" + createdDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
-            ", authorities=" + authorities +
+            ", authorities=" + roles +
             "}";
     }
 }

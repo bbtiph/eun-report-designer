@@ -40,7 +40,7 @@ describe('User Service', () => {
     it('should return Authorities', () => {
       let expectedResult: string[] = [];
 
-      service.authorities().subscribe(authorities => {
+      service.roles().subscribe(authorities => {
         expectedResult = authorities;
       });
       const req = httpMock.expectOne({ method: 'GET' });

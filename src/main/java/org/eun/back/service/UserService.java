@@ -5,9 +5,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.eun.back.config.Constants;
-import org.eun.back.domain.Authority;
+import org.eun.back.domain.Role;
 import org.eun.back.domain.User;
 import org.eun.back.repository.AuthorityRepository;
+import org.eun.back.repository.RoleRepository;
+import org.eun.back.repository.RoleRepositoryWithBagRelationships;
 import org.eun.back.repository.UserRepository;
 import org.eun.back.security.AuthoritiesConstants;
 import org.eun.back.security.SecurityUtils;
@@ -15,6 +17,7 @@ import org.eun.back.service.dto.AdminUserDTO;
 import org.eun.back.service.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -37,11 +40,18 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthorityRepository authorityRepository;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+    public UserService(
+        UserRepository userRepository,
+        PasswordEncoder passwordEncoder,
+        AuthorityRepository authorityRepository,
+        @Qualifier("roleRepository") RoleRepositoryWithBagRelationships roleRepository
+    ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        this.roleRepository = (RoleRepository) roleRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -114,9 +124,9 @@ public class UserService {
         newUser.setActivated(false);
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
-        Set<Authority> authorities = new HashSet<>();
-        authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
-        newUser.setAuthorities(authorities);
+        Set<Role> authorities = new HashSet<>();
+        roleRepository.findByName(AuthoritiesConstants.USER).ifPresent(authorities::add);
+        newUser.setRoles(authorities);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -150,15 +160,15 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
-        if (userDTO.getAuthorities() != null) {
-            Set<Authority> authorities = userDTO
-                .getAuthorities()
+        if (userDTO.getRoles() != null) {
+            Set<Role> roles = userDTO
+                .getRoles()
                 .stream()
-                .map(authorityRepository::findById)
+                .map(role -> roleRepository.findByName(role.getName()))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toSet());
-            user.setAuthorities(authorities);
+            user.setRoles(roles);
         }
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
@@ -186,15 +196,15 @@ public class UserService {
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
-                Set<Authority> managedAuthorities = user.getAuthorities();
-                managedAuthorities.clear();
+                Set<Role> managedRole = user.getRoles();
+                managedRole.clear();
                 userDTO
-                    .getAuthorities()
+                    .getRoles()
                     .stream()
-                    .map(authorityRepository::findById)
+                    .map(role -> roleRepository.findByName(role.getName()))
                     .filter(Optional::isPresent)
                     .map(Optional::get)
-                    .forEach(managedAuthorities::add);
+                    .forEach(managedRole::add);
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
@@ -263,12 +273,12 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
-        return userRepository.findOneWithAuthoritiesByLogin(login);
+        return userRepository.findOneWithRolesByLogin(login);
     }
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLogin);
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithRolesByLogin);
     }
 
     /**
@@ -291,7 +301,7 @@ public class UserService {
      * @return a list of all the authorities.
      */
     @Transactional(readOnly = true)
-    public List<String> getAuthorities() {
-        return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    public List<String> getRoles() {
+        return roleRepository.findAll().stream().map(Role::getName).collect(Collectors.toList());
     }
 }

@@ -11,6 +11,7 @@ import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 import { FilterComponent } from './filter/filter.component';
+import { AbstractExportModal } from './modal/abstract-export.modal';
 
 @NgModule({
   imports: [SharedLibsModule],
@@ -25,6 +26,7 @@ import { FilterComponent } from './filter/filter.component';
     SortDirective,
     ItemCountComponent,
     FilterComponent,
+    AbstractExportModal,
   ],
   exports: [
     SharedLibsModule,

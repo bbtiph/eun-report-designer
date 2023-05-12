@@ -2,14 +2,3 @@ entity Role {
     name String required maxlength(50)
 }
 
-entity Privilege {
-    id Long,
-    name String
-}
-
-relationship ManyToMany {
-    Role{privilege(name)} to Privilege{role}
-}
-
-service Role, Privilege with serviceImpl
-

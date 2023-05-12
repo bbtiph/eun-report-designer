@@ -47,7 +47,7 @@ describe('User Management Detail Component', () => {
           email: 'first@last.com',
           activated: true,
           langKey: 'en',
-          authorities: [Authority.USER],
+          roles: [Authority.USER],
           createdBy: 'admin',
         })
       );

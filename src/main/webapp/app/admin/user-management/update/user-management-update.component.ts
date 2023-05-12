@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { IUser } from '../user-management.model';
 import { UserManagementService } from '../service/user-management.service';
+import { IRole } from '../../../entities/role/role.model';
 
 const userTemplate = {} as IUser;
 
@@ -16,7 +17,7 @@ const newUser: IUser = {
   templateUrl: './user-management-update.component.html',
 })
 export class UserManagementUpdateComponent implements OnInit {
-  authorities: string[] = [];
+  roles: IRole[] = [];
   isSaving = false;
 
   editForm = new FormGroup({
@@ -37,7 +38,7 @@ export class UserManagementUpdateComponent implements OnInit {
       validators: [Validators.minLength(5), Validators.maxLength(254), Validators.email],
     }),
     activated: new FormControl(userTemplate.activated, { nonNullable: true }),
-    authorities: new FormControl(userTemplate.authorities, { nonNullable: true }),
+    roles: new FormControl(userTemplate.roles, { nonNullable: true }),
   });
 
   constructor(private userService: UserManagementService, private route: ActivatedRoute) {}
@@ -50,7 +51,7 @@ export class UserManagementUpdateComponent implements OnInit {
         this.editForm.reset(newUser);
       }
     });
-    this.userService.authorities().subscribe(authorities => (this.authorities = authorities));
+    this.userService.roles().subscribe(roles => (this.roles = roles));
   }
 
   previousState(): void {

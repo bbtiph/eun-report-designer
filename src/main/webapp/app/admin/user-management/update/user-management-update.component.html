@@ -84,8 +84,8 @@
 
       <div class="mb-3">
         <label>Profiles</label>
-        <select class="form-control" multiple name="authority" formControlName="authorities">
-          <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>
+        <select class="form-control" multiple name="role" formControlName="roles">
+          <option *ngFor="let role of roles" [value]="role">{{ role.name }}</option>
         </select>
       </div>
       <button type="button" class="btn btn-secondary" (click)="previousState()">

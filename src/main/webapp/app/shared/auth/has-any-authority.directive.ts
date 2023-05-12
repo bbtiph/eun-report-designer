@@ -19,7 +19,7 @@ import { AccountService } from 'app/core/auth/account.service';
   selector: '[jhiHasAnyAuthority]',
 })
 export class HasAnyAuthorityDirective implements OnDestroy {
-  private authorities!: string | string[];
+  private roles!: string | string[];
 
   private readonly destroy$ = new Subject<void>();
 
@@ -27,7 +27,7 @@ export class HasAnyAuthorityDirective implements OnDestroy {
 
   @Input()
   set jhiHasAnyAuthority(value: string | string[]) {
-    this.authorities = value;
+    this.roles = value;
     this.updateView();
     // Get notified each time authentication state changes.
     this.accountService
@@ -44,7 +44,7 @@ export class HasAnyAuthorityDirective implements OnDestroy {
   }
 
   private updateView(): void {
-    const hasAnyAuthority = this.accountService.hasAnyAuthority(this.authorities);
+    const hasAnyAuthority = this.accountService.hasAnyAuthority(this.roles);
     this.viewContainerRef.clear();
     if (hasAnyAuthority) {
       this.viewContainerRef.createEmbeddedView(this.templateRef);
