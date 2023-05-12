@@ -30,7 +30,7 @@ public class Role implements Serializable {
 
     @ManyToMany
     @JoinTable(
-        name = "rel_role__privilege",
+        name = "rel_role_privilege",
         joinColumns = @JoinColumn(name = "role_id"),
         inverseJoinColumns = @JoinColumn(name = "privilege_id")
     )

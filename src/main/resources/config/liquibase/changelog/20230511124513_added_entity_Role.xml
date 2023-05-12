@@ -23,7 +23,7 @@
 
     <changeSet id="20230511124513-1-relations" author="jhipster">
 
-        <createTable tableName="rel_role__privilege">
+        <createTable tableName="rel_role_privilege">
             <column name="privilege_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -32,7 +32,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="role_id, privilege_id" tableName="rel_role__privilege"/>
+        <addPrimaryKey columnNames="role_id, privilege_id" tableName="rel_role_privilege"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

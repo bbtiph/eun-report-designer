@@ -9,13 +9,13 @@
     <changeSet id="20230511124513-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="role_id"
-                                 baseTableName="rel_role__privilege"
+                                 baseTableName="rel_role_privilege"
                                  constraintName="fk_rel_role__privilege__role_id"
                                  referencedColumnNames="id"
                                  referencedTableName="role"/>
 
         <addForeignKeyConstraint baseColumnNames="privilege_id"
-                                 baseTableName="rel_role__privilege"
+                                 baseTableName="rel_role_privilege"
                                  constraintName="fk_rel_role__privilege__privilege_id"
                                  referencedColumnNames="id"
                                  referencedTableName="privilege"/>
