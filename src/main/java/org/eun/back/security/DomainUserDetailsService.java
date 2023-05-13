@@ -1,7 +1,7 @@
 package org.eun.back.security;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import org.eun.back.domain.Privilege;
 import org.eun.back.domain.Role;
 import org.eun.back.domain.User;
 import org.eun.back.repository.UserRepository;
@@ -53,12 +53,14 @@ public class DomainUserDetailsService implements UserDetailsService {
         if (!user.isActivated()) {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
-        List<GrantedAuthority> grantedAuthorities = user
-            .getRoles()
-            .stream()
-            .map(Role::getName)
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        Set<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+            for (Privilege privilege : role.getPrivileges()) {
+                grantedAuthorities.add(new SimpleGrantedAuthority(privilege.getName()));
+            }
+        }
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), grantedAuthorities);
     }
 }

@@ -39,8 +39,7 @@ export class RoleService {
     return this.http.get<IRole[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  getRoles(req?: any): Observable<IRole[]> {
-    const options = createRequestOption(req);
+  getRoles(): Observable<IRole[]> {
     return this.http.get<IRole[]>(this.resourceUrl);
   }
 

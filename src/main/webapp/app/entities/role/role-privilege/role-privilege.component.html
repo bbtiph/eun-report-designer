@@ -1,0 +1,16 @@
+<table class="table table-striped" aria-describedby="page-heading">
+  <thead>
+    <tr>
+      <th>Роль/Привилегия</th>
+      <th *ngFor="let privilege of privileges">{{ privilege.name }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let role of roles">
+      <td>{{ role.name }}</td>
+      <td *ngFor="let privilege of privileges">
+        <input type="checkbox" [checked]="isPrivilegeSelected(role, privilege)" (change)="togglePrivilege(role, privilege)" />
+      </td>
+    </tr>
+  </tbody>
+</table>

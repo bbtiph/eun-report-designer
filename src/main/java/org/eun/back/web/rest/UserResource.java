@@ -10,6 +10,7 @@ import org.eun.back.config.Constants;
 import org.eun.back.domain.User;
 import org.eun.back.repository.UserRepository;
 import org.eun.back.security.AuthoritiesConstants;
+import org.eun.back.security.PrivilegeConstants;
 import org.eun.back.service.MailService;
 import org.eun.back.service.UserService;
 import org.eun.back.service.dto.AdminUserDTO;
@@ -187,7 +188,7 @@ public class UserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "login" user, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/users/{login}")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\") and hasAuthority(\"" + PrivilegeConstants.EXECUTE_PRIVILEGE + "\")")
     public ResponseEntity<AdminUserDTO> getUser(@PathVariable @Pattern(regexp = Constants.LOGIN_REGEX) String login) {
         log.debug("REST request to get User : {}", login);
         return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new));

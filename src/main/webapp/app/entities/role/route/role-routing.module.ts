@@ -7,6 +7,7 @@ import { RoleDetailComponent } from '../detail/role-detail.component';
 import { RoleUpdateComponent } from '../update/role-update.component';
 import { RoleRoutingResolveService } from './role-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
+import { RolePrivilegeComponent } from '../role-privilege/role-privilege.component';
 
 const roleRoute: Routes = [
   {
@@ -28,6 +29,14 @@ const roleRoute: Routes = [
   {
     path: 'new',
     component: RoleUpdateComponent,
+    resolve: {
+      role: RoleRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'manage',
+    component: RolePrivilegeComponent,
     resolve: {
       role: RoleRoutingResolveService,
     },

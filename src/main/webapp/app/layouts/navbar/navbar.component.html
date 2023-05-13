@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <span class="navbar-title">EunReportDesigner</span>
+      <span class="navbar-title">EUN Report Designer</span>
       <!--      <span class="navbar-version">{{ version }}</span>-->
     </a>
     <a
@@ -313,6 +313,12 @@
               <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
                 <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
                 <span>User management</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/role/manage" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon [icon]="['fas', 'pencil']" [fixedWidth]="true"></fa-icon>
+                <span>Role management</span>
               </a>
             </li>
             <!--            <li>-->

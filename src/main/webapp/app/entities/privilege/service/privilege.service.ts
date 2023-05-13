@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IPrivilege, NewPrivilege } from '../privilege.model';
+import { IRole } from '../../role/role.model';
 
 export type PartialUpdatePrivilege = Partial<IPrivilege> & Pick<IPrivilege, 'id'>;
 
@@ -37,6 +38,10 @@ export class PrivilegeService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IPrivilege[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  getPrivileges(): Observable<IPrivilege[]> {
+    return this.http.get<IPrivilege[]>(this.resourceUrl);
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
