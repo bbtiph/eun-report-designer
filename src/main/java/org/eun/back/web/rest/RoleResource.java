@@ -9,12 +9,15 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.eun.back.domain.Role;
 import org.eun.back.repository.RoleRepository;
+import org.eun.back.security.AuthoritiesConstants;
+import org.eun.back.security.PrivilegeConstants;
 import org.eun.back.service.RoleService;
 import org.eun.back.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -50,6 +53,7 @@ public class RoleResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/roles")
+    @PreAuthorize("hasAuthority(\"" + PrivilegeConstants.MODERATION_PRIVILEGE + "\")")
     public ResponseEntity<Role> createRole(@Valid @RequestBody Role role) throws URISyntaxException {
         log.debug("REST request to save Role : {}", role);
         if (role.getId() != null) {
@@ -73,6 +77,7 @@ public class RoleResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/roles/{id}")
+    @PreAuthorize("hasAuthority(\"" + PrivilegeConstants.MODERATION_PRIVILEGE + "\")")
     public ResponseEntity<Role> updateRole(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Role role)
         throws URISyntaxException {
         log.debug("REST request to update Role : {}, {}", id, role);
@@ -106,6 +111,7 @@ public class RoleResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/roles/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasAuthority(\"" + PrivilegeConstants.MODERATION_PRIVILEGE + "\")")
     public ResponseEntity<Role> partialUpdateRole(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Role role
@@ -162,6 +168,7 @@ public class RoleResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/roles/{id}")
+    @PreAuthorize("hasAuthority(\"" + PrivilegeConstants.MODERATION_PRIVILEGE + "\")")
     public ResponseEntity<Void> deleteRole(@PathVariable Long id) {
         log.debug("REST request to delete Role : {}", id);
         roleService.delete(id);

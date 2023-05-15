@@ -4,13 +4,46 @@
   </div>
 
   <div class="col-md-9">
-    <h1 class="display-4">EUN Report Designer</h1>
-
-    <p class="lead">This is homepage</p>
-
     <div [ngSwitch]="account !== null">
       <div class="alert alert-success" *ngSwitchCase="true">
         <span id="home-logged-message" *ngIf="account">You are logged in as user "{{ account.login }}".</span>
+      </div>
+
+      <div class="container" *ngSwitchCase="true">
+        <h1>Welcome to EUN Report Designer</h1>
+        <p>Design and generate reports for your business needs with ease.</p>
+
+        <div class="row mt-5">
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Create New Report</h5>
+                <p class="card-text">Design and create a new report with custom parameters and filters.</p>
+                <a routerLink="report/new" class="btn btn-primary">Create</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Manage Reports</h5>
+                <p class="card-text">View, edit, and delete existing reports in the report library.</p>
+                <a routerLink="report" class="btn btn-primary">Manage</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Export Reports</h5>
+                <p class="card-text">Export reports in various formats, such as PDF, Excel, and CSV.</p>
+                <a href="#" class="btn btn-primary">Export</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="alert alert-warning" *ngSwitchCase="false">

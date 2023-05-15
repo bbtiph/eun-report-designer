@@ -1,7 +1,9 @@
+<h2>Roles and Privileges</h2>
+<jhi-alert-error></jhi-alert-error>
 <table class="table table-striped" aria-describedby="page-heading">
   <thead>
     <tr>
-      <th>Роль/Привилегия</th>
+      <th>Role/Privilege</th>
       <th *ngFor="let privilege of privileges">{{ privilege.name }}</th>
     </tr>
   </thead>
@@ -9,8 +11,24 @@
     <tr *ngFor="let role of roles">
       <td>{{ role.name }}</td>
       <td *ngFor="let privilege of privileges">
-        <input type="checkbox" [checked]="isPrivilegeSelected(role, privilege)" (change)="togglePrivilege(role, privilege)" />
+        <input
+          [disabled]="!isEditing"
+          type="checkbox"
+          [checked]="isPrivilegeSelected(role, privilege)"
+          (change)="togglePrivilege(role, privilege)"
+        />
       </td>
     </tr>
   </tbody>
 </table>
+<ul class="list-group">
+  <li class="list-group-item"><i class="fas fa-trash"></i> DA - Delete Access</li>
+  <li class="list-group-item"><i class="fas fa-eye"></i> RA - Read Access</li>
+  <li class="list-group-item"><i class="fas fa-play"></i> EP - Execute Privileges</li>
+  <li class="list-group-item"><i class="fas fa-pencil-alt"></i> WA - Write Access</li>
+  <li class="list-group-item"><i class="fas fa-shield-alt"></i> AC - Access Control</li>
+  <li class="list-group-item"><i class="fas fa-plus"></i> CA - Create Access</li>
+  <li class="list-group-item"><i class="fas fa-cogs"></i> CP - Configuration Privileges</li>
+  <li class="list-group-item"><i class="fas fa-check-circle"></i> AuP - Audit Privileges</li>
+  <li class="list-group-item"><i class="fas fa-ban"></i> MP - Moderation Privileges</li>
+</ul>

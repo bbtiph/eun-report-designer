@@ -26,5 +26,7 @@ public final class PrivilegeConstants {
 
     public static final String CONFIGURATION_PRIVILEGE = "CP";
 
+    public static final String MODERATION_PRIVILEGE = "MP";
+
     private PrivilegeConstants() {}
 }
