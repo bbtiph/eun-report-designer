@@ -11,12 +11,7 @@
     <tr *ngFor="let role of roles">
       <td>{{ role.name }}</td>
       <td *ngFor="let privilege of privileges">
-        <input
-          [disabled]="!isEditing"
-          type="checkbox"
-          [checked]="isPrivilegeSelected(role, privilege)"
-          (change)="togglePrivilege(role, privilege)"
-        />
+        <input type="checkbox" [checked]="isPrivilegeSelected(role, privilege)" (change)="togglePrivilege(role, privilege)" />
       </td>
     </tr>
   </tbody>
