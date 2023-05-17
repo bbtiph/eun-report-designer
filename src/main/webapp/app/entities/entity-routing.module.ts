@@ -109,6 +109,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'Privileges' },
         loadChildren: () => import('./privilege/privilege.module').then(m => m.PrivilegeModule),
       },
+      {
+        path: 'report-blocks',
+        data: { pageTitle: 'ReportBlocks' },
+        loadChildren: () => import('./report-blocks/report-blocks.module').then(m => m.ReportBlocksModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

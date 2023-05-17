@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="reportBlocks">
+      <h2 data-cy="reportBlocksDetailsHeading"><span>Report Blocks</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ reportBlocks.id }}</span>
+        </dd>
+        <dt><span>Country Name</span></dt>
+        <dd>
+          <span>{{ reportBlocks.countryName }}</span>
+        </dd>
+        <dt><span>Priority Number</span></dt>
+        <dd>
+          <span>{{ reportBlocks.priorityNumber }}</span>
+        </dd>
+        <dt><span>Content</span></dt>
+        <dd>
+          <span>{{ reportBlocks.content }}</span>
+        </dd>
+        <dt><span>Is Active</span></dt>
+        <dd>
+          <span>{{ reportBlocks.isActive }}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+          <span>{{ reportBlocks.type }}</span>
+        </dd>
+        <dt><span>Sql Script</span></dt>
+        <dd>
+          <span>{{ reportBlocks.sqlScript }}</span>
+        </dd>
+        <dt><span>Country</span></dt>
+        <dd>
+          <div *ngIf="reportBlocks.country">
+            <a [routerLink]="['/countries', reportBlocks.country.id, 'view']">{{ reportBlocks.country.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/report-blocks', reportBlocks.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

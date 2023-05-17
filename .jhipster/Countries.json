@@ -39,6 +39,12 @@
       "otherEntityRelationshipName": "country",
       "relationshipName": "person",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "reportBlocks",
+      "otherEntityRelationshipName": "country",
+      "relationshipName": "reportBlocks",
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "serviceImpl"

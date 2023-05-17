@@ -1,4 +1,21 @@
-entity Role {
-    name String required maxlength(50)
+entity Countries {
+    countryName String
 }
+
+entity ReportBlocks {
+    countryName String
+    priorityNumber Long
+    content String
+    isActive Boolean
+    type String
+}
+
+relationship OneToMany {
+    Countries to ReportBlocks{country(id)}
+}
+
+paginate Countries with pagination
+dto ReportBlocks, Countries with mapstruct
+service ReportBlocks, Countries with serviceImpl
+
 
