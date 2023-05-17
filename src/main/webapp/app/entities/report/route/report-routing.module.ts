@@ -7,6 +7,7 @@ import { ReportDetailComponent } from '../detail/report-detail.component';
 import { ReportUpdateComponent } from '../update/report-update.component';
 import { ReportRoutingResolveService } from './report-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
+import { ReportBlocksComponent } from '../report-blocks/report-blocks.component';
 
 const reportRoute: Routes = [
   {
@@ -28,6 +29,14 @@ const reportRoute: Routes = [
   {
     path: 'new',
     component: ReportUpdateComponent,
+    resolve: {
+      report: ReportRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'generate',
+    component: ReportBlocksComponent,
     resolve: {
       report: ReportRoutingResolveService,
     },
