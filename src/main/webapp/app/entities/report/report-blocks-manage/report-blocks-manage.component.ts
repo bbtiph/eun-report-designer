@@ -7,13 +7,14 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { IReport } from '../report.model';
 import { AbstractExportModal } from '../../../shared/modal/abstract-export.modal';
 import { ActivatedRoute } from '@angular/router';
+import { ReportBlockEdit } from './report-block-edit/report-block-edit.component';
 
 @Component({
   selector: 'jhi-report-blocks-manage',
   templateUrl: './report-blocks-manage.component.html',
 })
 export class ReportBlocksManageComponent implements OnInit {
-  reportBlocks?: IReportBlocks[];
+  reportBlocks: IReportBlocks[] | undefined;
   report: IReport | null = null;
 
   @ViewChild('editor', { static: false }) editorElement?: ElementRef;
@@ -41,28 +42,29 @@ export class ReportBlocksManageComponent implements OnInit {
     this.reportBlocksService.update(updatedBlock).subscribe();
   }
 
-  openEditor(content: any, block: IReportBlocks) {
-    const modalRef = this.modalService.open(content, { centered: true });
+  openEditor(block: IReportBlocks) {
+    const modalRef = this.modalService.open(ReportBlockEdit, { animation: true, size: 'xl' });
+    modalRef.componentInstance.block = block;
   }
 
-  generateReport(report: IReport): void {
+  generateReport(): void {
     const modalRef = this.modalService.open(AbstractExportModal, {
       animation: true,
       size: 'lg',
     });
     modalRef.componentInstance.param = this;
-    modalRef.componentInstance.reportName = report.reportName;
+    modalRef.componentInstance.reportName = this.report?.reportName;
 
     modalRef.result.then(params => {
       console.log(params);
 
       const body = { id: 0, output: params.format.name, lang: 'ru' };
 
-      this.http.post('api/reports/generate/' + report.acronym, body, { responseType: 'blob' }).subscribe(response => {
+      this.http.post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'blob' }).subscribe(response => {
         var a = document.createElement('a');
         a.href = URL.createObjectURL(response);
         // @ts-ignore
-        a.download = report.reportName;
+        a.download = this.report?.reportName;
         a.click();
       });
     });

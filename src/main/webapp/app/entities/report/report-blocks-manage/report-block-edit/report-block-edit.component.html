@@ -1,0 +1,11 @@
+<div class="container">
+  <header class="header">
+    <h1>Block Editor</h1>
+  </header>
+  <angular-editor [(ngModel)]="block.content" [config]="config"></angular-editor>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">Close</button>
+    <button type="button" class="btn btn-success" (click)="save()">Save</button>
+  </div>
+</div>

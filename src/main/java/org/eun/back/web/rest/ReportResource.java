@@ -174,6 +174,13 @@ public class ReportResource {
         return ResponseUtil.wrapOrNotFound(reportDTO);
     }
 
+    @GetMapping("/reports/block/{id}")
+    public ResponseEntity<ReportDTO> getReportBlocks(@PathVariable Long id) {
+        log.debug("REST request to get Report : {}", id);
+        Optional<ReportDTO> reportDTO = reportService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(reportDTO);
+    }
+
     /**
      * {@code DELETE  /reports/:id} : delete the "id" report.
      *

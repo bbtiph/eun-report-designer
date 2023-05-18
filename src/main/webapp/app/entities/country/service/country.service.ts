@@ -34,6 +34,10 @@ export class CountryService {
     return this.http.get<ICountry>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findAll(): Observable<ICountry[]> {
+    return this.http.get<ICountry[]>(this.resourceUrl);
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ICountry[]>(this.resourceUrl, { params: options, observe: 'response' });

@@ -8,6 +8,7 @@ import { ReportUpdateComponent } from '../update/report-update.component';
 import { ReportRoutingResolveService } from './report-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
 import { ReportBlocksManageComponent } from '../report-blocks-manage/report-blocks-manage.component';
+import { ReportBlockEdit } from '../report-blocks-manage/report-block-edit/report-block-edit.component';
 
 const reportRoute: Routes = [
   {
@@ -37,6 +38,14 @@ const reportRoute: Routes = [
   {
     path: ':id/blocks',
     component: ReportBlocksManageComponent,
+    resolve: {
+      report: ReportRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'blocks/edit',
+    component: ReportBlockEdit,
     resolve: {
       report: ReportRoutingResolveService,
     },

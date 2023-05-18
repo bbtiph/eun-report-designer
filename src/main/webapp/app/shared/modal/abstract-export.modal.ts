@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { CountryService } from '../../entities/country/service/country.service';
+import { ICountry } from '../../entities/country/country.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-abstract-export-modal',
@@ -23,20 +26,31 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
               <option *ngFor="let reportFormat of reportFormats" [value]="reportFormat">{{ reportFormat.fullname }}</option>
             </select>
           </div>
+          <div class="form-group">
+            <label class="col-form-label">Country:</label>
+            <select class="form-control" [(ngModel)]="country" name="reportFormat" id="field_status" data-cy="status">
+              <option [ngValue]="null"></option>
+              <option *ngFor="let country of countries" [value]="country">{{ country.countryName }}</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">Close</button>
-      <button type="button" class="btn btn-success" (click)="modal.close({ lang: lang, format: format })">Download</button>
+      <button type="button" class="btn btn-success" (click)="modal.close({ lang: lang, format: format, id: country.id })">Download</button>
     </div>`,
 })
 export class AbstractExportModal implements OnInit {
   @Input() public reportName?: string;
   public lang = 'ru';
+  // @ts-ignore
+  public countries: ICountry[];
+  // @ts-ignore
+  public country: ICountry;
   public format = { id: 1, name: 'PDF', fullName: 'Acrobat Reader' };
 
-  constructor(public modal: NgbActiveModal) {}
+  constructor(public modal: NgbActiveModal, public countryService: CountryService) {}
 
   reportTypes = [];
 
@@ -47,5 +61,9 @@ export class AbstractExportModal implements OnInit {
     // { id: 4, name: 'DOC', fullname: 'MS Word' },
   ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.countryService.findAll().subscribe((countries: ICountry[]) => {
+      this.countries = countries;
+    });
+  }
 }
