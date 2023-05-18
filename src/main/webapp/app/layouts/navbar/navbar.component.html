@@ -1,7 +1,9 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-primary">
+<a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
+  <span class="logo-img"></span>
+</a>
+<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md" style="background-color: #0077bf">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-      <span class="logo-img"></span>
       <span class="navbar-title">EUN Report Designer</span>
       <!--      <span class="navbar-version">{{ version }}</span>-->
     </a>

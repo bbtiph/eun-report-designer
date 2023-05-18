@@ -43,7 +43,7 @@
             <property name="dataType">string</property>
             <property name="distinct">true</property>
             <simple-property-list name="defaultValue">
-                <value type="constant">32</value>
+                <value type="constant">{ countryId: 19, reportId: 1101}</value>
             </simple-property-list>
             <list-property name="selectionList"/>
             <property name="paramType">simple</property>
@@ -2442,7 +2442,28 @@ from public.project]]></xml-property>
                     <text-property name="heading">sql_script</text-property>
                 </structure>
             </list-property>
-            <list-property name="parameters"/>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">countryId</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">parseInt(ids.countryId)</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">reportId</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                    <property name="position">2</property>
+                    <expression name="defaultValue" type="javascript">parseInt(ids.reportId)</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
@@ -2535,7 +2556,11 @@ from public.project]]></xml-property>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[select rb.*
-from public.report_blocks rb order by rb.priority_number]]></xml-property>
+from public.report_blocks rb
+left join rel_report_blocks_country_id rrbci on rb.id = rrbci.report_blocks_id
+left join rel_report_blocks_report_id rrbri on rb.id = rrbri.report_blocks_id
+where rrbci.country_id = ? and rrbri.report_id = ? and is_active = true
+order by rb.priority_number]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
@@ -2701,6 +2726,14 @@ from public.report_blocks rb order by rb.priority_number]]></xml-property>
             <property name="orientation">auto</property>
             <property name="topMargin">0.05in</property>
             <property name="bottomMargin">0.05in</property>
+            <page-header>
+                <image id="302">
+                    <property name="height">0.4027777777777778in</property>
+                    <property name="width">7.798611111111111in</property>
+                    <property name="source">file</property>
+                    <expression name="uri" type="constant">img_2.png</expression>
+                </image>
+            </page-header>
         </simple-master-page>
         <simple-master-page name="NewSimpleMasterPage" id="271"/>
     </page-setup>

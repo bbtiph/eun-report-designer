@@ -28,9 +28,9 @@ import { Observable } from 'rxjs';
           </div>
           <div class="form-group">
             <label class="col-form-label">Country:</label>
-            <select class="form-control" [(ngModel)]="country" name="reportFormat" id="field_status" data-cy="status">
+            <select class="form-control" [(ngModel)]="country" name="reportCountry" id="field_status" data-cy="status">
               <option [ngValue]="null"></option>
-              <option *ngFor="let country of countries" [value]="country">{{ country.countryName }}</option>
+              <option *ngFor="let cntry of countries" [ngValue]="cntry">{{ cntry.countryName }}</option>
             </select>
           </div>
         </div>
@@ -51,8 +51,6 @@ export class AbstractExportModal implements OnInit {
   public format = { id: 1, name: 'PDF', fullName: 'Acrobat Reader' };
 
   constructor(public modal: NgbActiveModal, public countryService: CountryService) {}
-
-  reportTypes = [];
 
   reportFormats = [
     { id: 1, name: 'PDF', fullname: 'Acrobat Reader' },
