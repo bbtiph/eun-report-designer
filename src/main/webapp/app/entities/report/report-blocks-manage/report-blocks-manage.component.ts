@@ -58,7 +58,7 @@ export class ReportBlocksManageComponent implements OnInit {
     modalRef.result.then(params => {
       console.log(params);
 
-      const body = { id: 0, output: params.format.name, lang: 'ru' };
+      const body = { id: params.id, output: params.format.name, lang: 'ru' };
 
       this.http.post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'blob' }).subscribe(response => {
         var a = document.createElement('a');

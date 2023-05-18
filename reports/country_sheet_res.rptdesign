@@ -1803,7 +1803,7 @@ from public.report_blocks rb where rb.id = 1 order by rb.priority_number]]></xml
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
-            <property name="orientation">landscape</property>
+            <property name="orientation">portrait</property>
             <property name="topMargin">0.05in</property>
             <property name="bottomMargin">0.05in</property>
         </simple-master-page>
