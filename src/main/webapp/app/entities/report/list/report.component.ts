@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +11,7 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, ReportService } from '../service/report.service';
 import { ReportDeleteDialogComponent } from '../delete/report-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
+import { AbstractExportModal } from '../../../shared/modal/abstract-export.modal';
 
 @Component({
   selector: 'jhi-report',
@@ -32,7 +33,8 @@ export class ReportComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected dataUtils: DataUtils,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private http: HttpClient
   ) {}
 
   trackId = (_index: number, item: IReport): number => this.reportService.getReportIdentifier(item);

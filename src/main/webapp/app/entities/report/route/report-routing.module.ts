@@ -35,7 +35,7 @@ const reportRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: 'generate',
+    path: ':id/blocks',
     component: ReportBlocksManageComponent,
     resolve: {
       report: ReportRoutingResolveService,

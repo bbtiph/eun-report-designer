@@ -5,11 +5,17 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.eclipse.birt.report.engine.api.EngineException;
 import org.eun.back.repository.ReportRepository;
+import org.eun.back.service.BirtReportService;
 import org.eun.back.service.ReportService;
+import org.eun.back.service.dto.OutputType;
 import org.eun.back.service.dto.ReportDTO;
+import org.eun.back.service.dto.ReportRequest;
 import org.eun.back.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +49,12 @@ public class ReportResource {
 
     private final ReportRepository reportRepository;
 
-    public ReportResource(ReportService reportService, ReportRepository reportRepository) {
+    private final BirtReportService birtReportService;
+
+    public ReportResource(ReportService reportService, ReportRepository reportRepository, BirtReportService birtReportService) {
         this.reportService = reportService;
         this.reportRepository = reportRepository;
+        this.birtReportService = birtReportService;
     }
 
     /**
@@ -179,5 +188,35 @@ public class ReportResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @RequestMapping(produces = "application/json", method = RequestMethod.GET, value = "/reports/reload")
+    @ResponseBody
+    public ResponseEntity reloadReports(HttpServletResponse response) {
+        try {
+            log.info("Reloading reports");
+            birtReportService.loadReports();
+        } catch (EngineException e) {
+            log.error("There was an error reloading the reports in memory: ", e);
+            return ResponseEntity.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/reports/generate/{name}")
+    @CrossOrigin
+    public void generateFullReport(
+        @PathVariable("name") String name,
+        @RequestBody ReportRequest reportRequest,
+        HttpServletResponse response,
+        HttpServletRequest request
+    ) {
+        String id = reportRequest.getId();
+        String output = reportRequest.getOutput();
+        String lang = reportRequest.getLang();
+
+        log.info("Generating full report: " + name + "; id: " + id + "; format: " + output + "; lang: " + lang);
+        OutputType format = OutputType.from(output);
+        birtReportService.generateMainReport(name, format, id, lang, response, request);
     }
 }

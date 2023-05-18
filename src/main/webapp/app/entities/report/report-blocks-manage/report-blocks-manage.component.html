@@ -7,7 +7,7 @@
         </div>
         <div class="card-footer">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" [(ngModel)]="block.isActive" />
+            <input class="form-check-input" type="checkbox" [(ngModel)]="block.isActive" (click)="changeIsActive(block)" />
             <label class="form-check-label">Active</label>
           </div>
           <button class="btn btn-primary mt-2" (click)="openEditor(editor, block)">Edit</button>
@@ -27,7 +27,7 @@
   <div class="modal-body">
     <div class="form-group">
       <textarea class="form-control" rows="8"></textarea>
-      <!--      <textarea class="form-control" [(ngModel)]="block.content" rows="8"></textarea>-->
+      <!--            <textarea class="form-control" [(ngModel)]="block?.content" rows="8"></textarea>-->
     </div>
   </div>
   <div class="modal-footer">

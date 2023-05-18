@@ -3,6 +3,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IReportBlocks } from '../../report-blocks/report-blocks.model';
 import { ReportBlocksService } from '../../report-blocks/service/report-blocks.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { IReport } from '../report.model';
+import { AbstractExportModal } from '../../../shared/modal/abstract-export.modal';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'jhi-report-blocks-manage',
@@ -10,58 +14,57 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 })
 export class ReportBlocksManageComponent implements OnInit {
   reportBlocks?: IReportBlocks[];
-  block?: IReportBlocks | null;
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: 'auto',
-    minHeight: '0',
-    maxHeight: 'auto',
-    width: 'auto',
-    minWidth: '0',
-    translate: 'yes',
-    enableToolbar: true,
-    showToolbar: true,
-    placeholder: 'Enter text here...',
-    defaultParagraphSeparator: '',
-    defaultFontName: '',
-    defaultFontSize: '',
-    fonts: [
-      { class: 'arial', name: 'Arial' },
-      { class: 'times-new-roman', name: 'Times New Roman' },
-      { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' },
-    ],
-    customClasses: [
-      {
-        name: 'quote',
-        class: 'quote',
-      },
-      {
-        name: 'redText',
-        class: 'redText',
-      },
-      {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
-      },
-    ],
-  };
+  report: IReport | null = null;
 
   @ViewChild('editor', { static: false }) editorElement?: ElementRef;
   editor: any;
 
-  constructor(private modalService: NgbModal, protected reportBlocksService: ReportBlocksService) {}
+  constructor(
+    private modalService: NgbModal,
+    protected reportBlocksService: ReportBlocksService,
+    private http: HttpClient,
+    protected activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.activatedRoute.data.subscribe(({ report }) => {
+      this.report = report;
+    });
     this.reportBlocksService.findAll().subscribe(blocks => {
       this.reportBlocks = blocks;
     });
   }
 
+  changeIsActive(block: IReportBlocks) {
+    const updatedBlock = { ...block };
+    updatedBlock.isActive = !updatedBlock.isActive;
+    this.reportBlocksService.update(updatedBlock).subscribe();
+  }
+
   openEditor(content: any, block: IReportBlocks) {
     const modalRef = this.modalService.open(content, { centered: true });
-    this.block = block;
+  }
+
+  generateReport(report: IReport): void {
+    const modalRef = this.modalService.open(AbstractExportModal, {
+      animation: true,
+      size: 'lg',
+    });
+    modalRef.componentInstance.param = this;
+    modalRef.componentInstance.reportName = report.reportName;
+
+    modalRef.result.then(params => {
+      console.log(params);
+
+      const body = { id: 0, output: params.format.name, lang: 'ru' };
+
+      this.http.post('api/reports/generate/' + report.acronym, body, { responseType: 'blob' }).subscribe(response => {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(response);
+        // @ts-ignore
+        a.download = report.reportName;
+        a.click();
+      });
+    });
   }
 }

@@ -1640,7 +1640,7 @@ from public.project]]></xml-property>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[select rb.*
-from public.report_blocks rb order by rb.priority_number]]></xml-property>
+from public.report_blocks rb where rb.id = 1 order by rb.priority_number]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
@@ -1803,7 +1803,7 @@ from public.report_blocks rb order by rb.priority_number]]></xml-property>
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
-            <property name="orientation">auto</property>
+            <property name="orientation">landscape</property>
             <property name="topMargin">0.05in</property>
             <property name="bottomMargin">0.05in</property>
         </simple-master-page>
@@ -1812,12 +1812,6 @@ from public.report_blocks rb order by rb.priority_number]]></xml-property>
     <body>
         <table id="214">
             <property name="dataSet">Project</property>
-            <list-property name="visibility">
-                <structure>
-                    <property name="format">all</property>
-                    <expression name="valueExpr" type="javascript">true</expression>
-                </structure>
-            </list-property>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">project</property>
@@ -1900,107 +1894,13 @@ blocks.push(obj);</expression>
                 </row>
             </detail>
         </table>
-        <grid id="240">
-            <column id="241"/>
-            <column id="242"/>
-            <column id="243"/>
-            <row id="244">
-                <cell id="245">
-                    <image id="269">
-                        <property name="height">0.40625in</property>
-                        <property name="width">1.1354166666666667in</property>
-                        <property name="source">embed</property>
-                        <property name="imageName">logo.jpg</property>
-                    </image>
-                </cell>
-                <cell id="246">
-                    <property name="colSpan">2</property>
-                    <property name="rowSpan">1</property>
-                    <text id="211">
-                        <property name="textAlign">right</property>
-                        <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[A. Basic information regarding the activities of the ministry at European Schoolnet]]></text-property>
-                    </text>
-                </cell>
-            </row>
-        </grid>
-        <text-data id="239">
-            <property name="paddingTop">0pt</property>
-            <property name="paddingBottom">0pt</property>
-            <method name="onPageBreak"><![CDATA[true]]></method>
-            <expression name="valueExpr">var onconsole = '&lt;br>'; &#13;
-//onconsole += '&lt;p style="text-align:center">&lt;strong>EUN country impact report for Spain, from 2018&lt;/strong>&lt;/p>&lt;p>&lt;strong>This report includes information regarding Spain&amp;#39;s participation in the different activities of EUN, during 2018. It is divided in 5 sections:&lt;/strong>&lt;/p>&lt;ol>    &lt;li>&lt;strong>A. Basic information &lt;/strong>&lt;/li> &lt;li>&lt;strong>B. Organisations in projects &lt;/strong>&lt;/li> &lt;li>&lt;strong>C. Schools in projects &lt;/strong>&lt;/li>   &lt;li>&lt;strong>D. Ambassadors &lt;/strong>&lt;/li>   &lt;li>&lt;strong>E. Workshops in the Future Classroom Lab and participation in the European Schoolnet Academy&lt;/strong>&lt;/li>&lt;/ol>&lt;p>&amp;nbsp;&lt;/p>&lt;p>&lt;strong>A. Basic information&lt;/strong>&lt;/p>&lt;ol>    &lt;li>a. Ministry of education (MoE): Name of organisation representing the MoE in EUN, as well as person(s) representing the MoE in the Steering Committee of EUN.&lt;/li>  &lt;li>b. Participation in the various working groups and subcommittees of EUN: It includes the name of the representative and email, where applicable.&lt;/li>   &lt;li>c. Study visit programmes: Name of the different study programmes EUN has organized for its members, and the number of participants from the country in question. We also provide a link to the study visit report, which includes the names of the participants per country.&lt;/li>  &lt;li>d. Future Classroom Lab (FCL): Name of the FCL Ambassador, where applicable.&lt;/li>&lt;/ol>&lt;p>&amp;nbsp;&lt;/p>&lt;p>&lt;strong>B. Organisations in projects&lt;/strong>&lt;/p>&lt;p>Here we provide all the projects running in 2018 in EUN, that EUN either coordinates or was involved in the set-up of the consortium, in which an organisation from Spain is involved. In case of more than one organisation from Spain is a partner in the project, only the first one is mentioned.&lt;/p>&lt;p>We also provided de total funding per project (and in total) for all organisations from Spain, for the year.&lt;/p>&lt;p>&amp;nbsp;&lt;/p>&lt;p>&lt;strong>Note&lt;/strong>&lt;/p>&lt;p>This is a first attempt at providing a comprehensive report for EUN&amp;#39;s SC members. Data from some projects might still be missing (including participation as well as funding available). Next step will be to include as well the participation in competitions (e.g. STEM Discovery Week), events (e.g. Eminent, SIF, eTwinning conference) and surveys (e.g. STEM Practices survey).&lt;/p>';&#13;
-onconsole += '&lt;p style="text-align:center">&lt;strong>EUN country impact report for Spain, from 2018&lt;/strong>&lt;/p>&lt;p>&lt;strong>This report includes information regarding Spain&amp;#39;s participation in the different activities of EUN, during 2018. It is divided in 5 sections:&lt;/strong>&lt;/p>&lt;ol>    &lt;li>&lt;strong>A. Basic information &lt;/strong>&lt;/li> &lt;li>&lt;strong>B. Organisations in projects &lt;/strong>&lt;/li> &lt;li>&lt;strong>C. Schools in projects &lt;/strong>&lt;/li>   &lt;li>&lt;strong>D. Ambassadors &lt;/strong>&lt;/li>   &lt;li>&lt;strong>E. Workshops in the Future Classroom Lab and participation in the European Schoolnet Academy&lt;/strong>&lt;/li>&lt;/ol>&lt;p>&amp;nbsp;&lt;/p>&lt;p>&lt;strong>A. Basic information&lt;/strong>&lt;/p>&lt;ol>    &lt;li>a. Ministry of education (MoE): Name of organisation representing the MoE in EUN, as well as person(s) representing the MoE in the Steering Committee of EUN.&lt;/li>  &lt;li>b. Participation in the various working groups and subcommittees of EUN: It includes the name of the representative and email, where applicable.&lt;/li>   &lt;li>c. Study visit programmes: Name of the different study programmes EUN has organized for its members, and the number of participants from the country in question. We also provide a link to the study visit report, which includes the names of the participants per country.&lt;/li>  &lt;li>d. Future Classroom Lab (FCL): Name of the FCL Ambassador, where applicable.&lt;/li>&lt;/ol>&lt;p>&amp;nbsp;&lt;/p>&lt;p>&lt;strong>B. Organisations in projects&lt;/strong>&lt;/p>&lt;p>Here we provide all the projects running in 2018 in EUN, that EUN either coordinates or was involved in the set-up of the consortium, in which an organisation from Spain is involved. In case of more than one organisation from Spain is a partner in the project, only the first one is mentioned.&lt;/p>&lt;p>We also provided de total funding per project (and in total) for all organisations from Spain, for the year.&lt;/p>&lt;p>&amp;nbsp;&lt;/p>';</expression>
-            <property name="contentType">html</property>
-        </text-data>
-        <grid id="257">
-            <column id="258"/>
-            <column id="259"/>
-            <column id="260"/>
-            <row id="261">
-                <cell id="262">
-                    <image id="270">
-                        <property name="height">0.40625in</property>
-                        <property name="width">1.1354166666666667in</property>
-                        <property name="source">embed</property>
-                        <property name="imageName">logo.jpg</property>
-                    </image>
-                </cell>
-                <cell id="264">
-                    <property name="colSpan">2</property>
-                    <property name="rowSpan">1</property>
-                    <text id="265">
-                        <property name="textAlign">right</property>
-                        <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[B. Participation of organisations in EUN projects]]></text-property>
-                    </text>
-                </cell>
-            </row>
-        </grid>
         <text-data id="212">
-            <expression name="valueExpr">var onconsole = '&lt;style>#customers {  font-family: Arial, Helvetica, sans-serif;  border-collapse: collapse;  width: 100%;}#customers td, #customers th {  border: 1px solid #ddd;  padding: 8px;#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {  padding-top: 12px;  padding-bottom: 12px;  text-align: left;  background-color: #04AA6D;  color: white;}&lt;/style>'&#13;
-onconsole += '&lt;table id="customers" border="1" bordercolor="#000000" cellspacing="0" cellpadding="10" width="100%" style="font-size : 11px; font-family : Times New Roman;">';&#13;
+            <property name="fontFamily">"Times New Roman"</property>
+            <expression name="valueExpr">var onconsole = ''&#13;
 &#13;
-&#13;
-onconsole += '&lt;tr>';&#13;
-    onconsole += '&lt;th>&lt;b>Projects' + projects.length + '&lt;/b>&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>Status&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>EUN coord/led&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>Team&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>Start&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>End&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>Duration&lt;br>(months)&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>Left in Jan 2018&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>in 2018&lt;/b>&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>Main organisation&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>Funding for the organisation&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>Participation to the matching funding&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>Contact person&lt;/th>';&#13;
-    onconsole += '&lt;th>&lt;b>Organizations in project&lt;/th>';&#13;
-onconsole += '&lt;/tr>';&#13;
-&#13;
-for(var pr = 0; pr &lt; projects.length; pr++) {&#13;
-    onconsole += '&lt;tr>';&#13;
-        onconsole += '&lt;td>' + (projects[pr].name != null ? projects[pr].name : "") + '&lt;/td>';&#13;
-        onconsole += '&lt;td>' + (projects[pr].status != null ? projects[pr].status : "") + '&lt;/td>';&#13;
-        onconsole += '&lt;td>&lt;/td>';&#13;
-        onconsole += '&lt;td>' + (projects[pr].eun_team != null ? projects[pr].eun_team : "") + '&lt;/td>';&#13;
-        onconsole += '&lt;td>' + (projects[pr].period != null ? projects[pr].period : "") + '&lt;/td>';&#13;
-        onconsole += '&lt;td>' + (projects[pr].period != null ? projects[pr].period : "") + '&lt;/td>';&#13;
-        onconsole += '&lt;td>&lt;/td>';&#13;
-        onconsole += '&lt;td>&lt;/td>';&#13;
-        onconsole += '&lt;td>&lt;/td>';&#13;
-        onconsole += '&lt;td>&lt;/td>';&#13;
-        onconsole += '&lt;td>' + (projects[pr].funding_value != null ? projects[pr].funding_value : "") + '&lt;/td>';&#13;
-        onconsole += '&lt;td>&lt;/td>';&#13;
-        onconsole += '&lt;td>' + (projects[pr].contact_name != null ? projects[pr].contact_name : "") + '&lt;/td>';&#13;
-        onconsole += '&lt;td>&lt;/td>';&#13;
-&#13;
-    onconsole += '&lt;/tr>';    &#13;
-}&#13;
-&#13;
-&#13;
-onconsole += '&lt;/table>';</expression>
+for (var i = 0; i &lt; blocks.length; i++) {&#13;
+	onconsole += blocks[i].content;&#13;
+}</expression>
             <property name="contentType">html</property>
         </text-data>
     </body>
