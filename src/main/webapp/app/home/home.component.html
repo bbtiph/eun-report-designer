@@ -14,7 +14,7 @@
         <p>Design and generate reports for your business needs with ease.</p>
 
         <div class="row mt-5">
-          <div class="col-md-4 mb-4">
+          <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="col-md-4 mb-4">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Create New Report</h5>
@@ -34,7 +34,7 @@
             </div>
           </div>
 
-          <div class="col-md-4 mb-4">
+          <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="col-md-4 mb-4">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Export Reports</h5>
