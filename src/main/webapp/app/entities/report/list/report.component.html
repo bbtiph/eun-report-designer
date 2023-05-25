@@ -49,15 +49,25 @@
         </div>
         <div class="card-footer text-end">
           <div class="btn-group">
-            <a [routerLink]="['/report', report.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+            <a
+              *jhiHasAnyAuthority="'ROLE_ADMIN'"
+              [routerLink]="['/report', report.id, 'view']"
+              class="btn btn-info btn-sm"
+              data-cy="entityDetailsButton"
+            >
               <fa-icon icon="eye"></fa-icon>
               <span class="d-none d-md-inline">View</span>
             </a>
-            <a [routerLink]="['/report', report.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+            <a
+              *jhiHasAnyAuthority="'ROLE_ADMIN'"
+              [routerLink]="['/report', report.id, 'edit']"
+              class="btn btn-primary btn-sm"
+              data-cy="entityEditButton"
+            >
               <fa-icon icon="pencil-alt"></fa-icon>
               <span class="d-none d-md-inline">Edit</span>
             </a>
-            <button (click)="delete(report)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+            <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (click)="delete(report)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
               <fa-icon icon="times"></fa-icon>
               <span class="d-none d-md-inline">Delete</span>
             </button>
