@@ -2,12 +2,12 @@ import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit } from '
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IReportBlocks } from '../../report-blocks/report-blocks.model';
 import { ReportBlocksService } from '../../report-blocks/service/report-blocks.service';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { IReport } from '../report.model';
 import { AbstractExportModal } from '../../../shared/modal/abstract-export.modal';
 import { ActivatedRoute } from '@angular/router';
 import { ReportBlockEdit } from './report-block-edit/report-block-edit.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'jhi-report-blocks-manage',

@@ -40,7 +40,7 @@
           </th>
           <th scope="col" jhiSortBy="countryName">
             <div class="d-flex">
-              <span>Country Name</span>
+              <span>Name</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -90,24 +90,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let reportBlocks of reportBlocks; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let reportBlock of reportBlocks; trackBy: trackId" data-cy="entityTable">
           <td>
-            <a [routerLink]="['/report-blocks', reportBlocks.id, 'view']">{{ reportBlocks.id }}</a>
+            <a [routerLink]="['/report-blocks', reportBlock.id, 'view']">{{ reportBlock.id }}</a>
           </td>
-          <td>{{ reportBlocks.countryName }}</td>
-          <td>{{ reportBlocks.priorityNumber }}</td>
-          <td>{{ reportBlocks.content }}</td>
-          <td>{{ reportBlocks.isActive }}</td>
-          <td>{{ reportBlocks.type }}</td>
-          <td>{{ reportBlocks.sqlScript }}</td>
+          <td>{{ reportBlock.countryName }}</td>
+          <td>{{ reportBlock.priorityNumber }}</td>
+          <td>{{ reportBlock.content | slice: 0:200 }}</td>
+          <td>{{ reportBlock.isActive }}</td>
+          <td>{{ reportBlock.type }}</td>
+          <td>{{ reportBlock.sqlScript }}</td>
           <td>
-            <span *ngFor="let countryId of reportBlocks.countryIds; let last = last">
+            <span *ngFor="let countryId of reportBlock.countryIds; let last = last">
               <a class="form-control-static" [routerLink]="['/countries', countryId.id, 'view']">{{ countryId.id }}</a
               >{{ last ? '' : ', ' }}
             </span>
           </td>
           <td>
-            <span *ngFor="let reportId of reportBlocks.reportIds; let last = last">
+            <span *ngFor="let reportId of reportBlock.reportIds; let last = last">
               <a class="form-control-static" [routerLink]="['/report', reportId.id, 'view']">{{ reportId.id }}</a
               >{{ last ? '' : ', ' }}
             </span>
@@ -116,7 +116,7 @@
             <div class="btn-group">
               <button
                 type="submit"
-                [routerLink]="['/report-blocks', reportBlocks.id, 'view']"
+                [routerLink]="['/report-blocks', reportBlock.id, 'view']"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"
               >
@@ -126,7 +126,7 @@
 
               <button
                 type="submit"
-                [routerLink]="['/report-blocks', reportBlocks.id, 'edit']"
+                [routerLink]="['/report-blocks', reportBlock.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
@@ -134,7 +134,7 @@
                 <span class="d-none d-md-inline">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(reportBlocks)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(reportBlock)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Delete</span>
               </button>

@@ -66,7 +66,9 @@
             formControlName="countryIds"
             [compareWith]="compareCountries"
           >
-            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">{{ countriesOption.id }}</option>
+            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">
+              {{ countriesOption.countryName }}
+            </option>
           </select>
         </div>
 
@@ -81,7 +83,7 @@
             formControlName="reportIds"
             [compareWith]="compareReport"
           >
-            <option [ngValue]="reportOption" *ngFor="let reportOption of reportsSharedCollection">{{ reportOption.id }}</option>
+            <option [ngValue]="reportOption" *ngFor="let reportOption of reportsSharedCollection">{{ reportOption.reportName }}</option>
           </select>
         </div>
       </div>

@@ -28,100 +28,47 @@
     <span>No Reports found</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="reports && reports.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="reportName">
-            <div class="d-flex">
-              <span>Report Name</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="acronym">
-            <div class="d-flex">
-              <span>Acronym</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="description">
-            <div class="d-flex">
-              <span>Description</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="type">
-            <div class="d-flex">
-              <span>Type</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="isActive">
-            <div class="d-flex">
-              <span>Is Active</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="file">
-            <div class="d-flex">
-              <span>File</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let report of reports; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/report', report.id, 'view']">{{ report.id }}</a>
-          </td>
-          <td>{{ report.reportName }}</td>
-          <td>{{ report.acronym }}</td>
-          <td>{{ report.description }}</td>
-          <td>{{ report.type }}</td>
-          <td>{{ report.isActive }}</td>
-          <td>
-            <a *ngIf="report.file" (click)="openFile(report.file, report.fileContentType)">Open</a>
-            <span *ngIf="report.file">{{ report.fileContentType }}, {{ byteSize(report.file) }}</span>
-          </td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button type="submit" [routerLink]="['/report', report.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline">View</span>
-              </button>
-
-              <button type="submit" [routerLink]="['/report', report.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit</span>
-              </button>
-
-              <button type="submit" (click)="delete(report)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Delete</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/report', report.id, 'blocks']"
-                class="btn btn-info btn-sm"
-                data-cy="generateReportButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline">Generate report</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let report of reports; trackBy: trackId">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">{{ report.reportName }}</h5>
+          <h6 class="card-subtitle text-muted">{{ report.acronym }}</h6>
+        </div>
+        <div class="card-body">
+          <p class="card-text">{{ report.description }}</p>
+          <p class="card-text"><strong>Type:</strong> {{ report.type }}</p>
+          <p class="card-text"><strong>Is Active:</strong> {{ report.isActive }}</p>
+          <p class="card-text">
+            <strong>File:</strong>
+            <ng-container *ngIf="report.file">
+              <a (click)="openFile(report.file, report.fileContentType)">Open</a>
+              <span>{{ report.fileContentType }}, {{ byteSize(report.file) }}</span>
+            </ng-container>
+          </p>
+        </div>
+        <div class="card-footer text-end">
+          <div class="btn-group">
+            <a [routerLink]="['/report', report.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+              <fa-icon icon="eye"></fa-icon>
+              <span class="d-none d-md-inline">View</span>
+            </a>
+            <a [routerLink]="['/report', report.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+              <fa-icon icon="pencil-alt"></fa-icon>
+              <span class="d-none d-md-inline">Edit</span>
+            </a>
+            <button (click)="delete(report)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <fa-icon icon="times"></fa-icon>
+              <span class="d-none d-md-inline">Delete</span>
+            </button>
+            <a [routerLink]="['/report', report.id, 'blocks']" class="btn btn-info btn-sm" data-cy="generateReportButton">
+              <fa-icon icon="eye"></fa-icon>
+              <span class="d-none d-md-inline">Generate report</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="reports && reports.length > 0">
