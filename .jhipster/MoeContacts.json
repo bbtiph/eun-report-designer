@@ -1,0 +1,56 @@
+{
+  "applications": "*",
+  "changelogDate": "20230526044031",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "moe_contacts",
+  "fields": [
+    {
+      "fieldName": "countryCode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "priorityNumber",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "ministryName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ministryEnglishName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "postalAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "invoicingAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "shippingAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "contactEunFirstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "contactEunLastName",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "MoeContacts",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

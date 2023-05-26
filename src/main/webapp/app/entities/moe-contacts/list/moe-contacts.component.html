@@ -1,0 +1,181 @@
+<div>
+  <h2 id="page-heading" data-cy="MoeContactsHeading">
+    <span>Moe Contacts</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button type="button" class="btn btn-info me-2" (click)="openModal()">
+        <fa-icon icon="plus"></fa-icon>
+        <span>Upload Excel</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-moe-contacts"
+        [routerLink]="['/moe-contacts/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Moe Contacts </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="moeContacts?.length === 0">
+    <span>No Moe Contacts found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="moeContacts && moeContacts.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryCode">
+            <div class="d-flex">
+              <span>Country Code</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryName">
+            <div class="d-flex">
+              <span>Country Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="priorityNumber">
+            <div class="d-flex">
+              <span>Priority Number</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="ministryName">
+            <div class="d-flex">
+              <span>Ministry Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="ministryEnglishName">
+            <div class="d-flex">
+              <span>Ministry English Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="postalAddress">
+            <div class="d-flex">
+              <span>Postal Address</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="invoicingAddress">
+            <div class="d-flex">
+              <span>Invoicing Address</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="shippingAddress">
+            <div class="d-flex">
+              <span>Shipping Address</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="contactEunFirstName">
+            <div class="d-flex">
+              <span>Contact Eun First Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="contactEunLastName">
+            <div class="d-flex">
+              <span>Contact Eun Last Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let moeContacts of moeContacts; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/moe-contacts', moeContacts.id, 'view']">{{ moeContacts.id }}</a>
+          </td>
+          <td>{{ moeContacts.countryCode }}</td>
+          <td>{{ moeContacts.countryName }}</td>
+          <td>{{ moeContacts.priorityNumber }}</td>
+          <td>{{ moeContacts.ministryName }}</td>
+          <td>{{ moeContacts.ministryEnglishName }}</td>
+          <td>{{ moeContacts.postalAddress }}</td>
+          <td>{{ moeContacts.invoicingAddress }}</td>
+          <td>{{ moeContacts.shippingAddress }}</td>
+          <td>{{ moeContacts.contactEunFirstName }}</td>
+          <td>{{ moeContacts.contactEunLastName }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/moe-contacts', moeContacts.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/moe-contacts', moeContacts.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(moeContacts)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" [class.show]="showModal" [class.d-block]="showModal">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload Excel File</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <br />
+      <div class="modal-body">
+        <form (ngSubmit)="uploadFile()" enctype="multipart/form-data">
+          <div class="form-group">
+            <input type="file" class="form-control-file" (change)="onFileChange($event)" />
+          </div>
+          <br />
+          <br />
+          <br />
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

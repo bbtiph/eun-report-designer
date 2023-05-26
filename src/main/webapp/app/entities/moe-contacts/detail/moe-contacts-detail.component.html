@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="moeContacts">
+      <h2 data-cy="moeContactsDetailsHeading"><span>Moe Contacts</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ moeContacts.id }}</span>
+        </dd>
+        <dt><span>Country Code</span></dt>
+        <dd>
+          <span>{{ moeContacts.countryCode }}</span>
+        </dd>
+        <dt><span>Country Name</span></dt>
+        <dd>
+          <span>{{ moeContacts.countryName }}</span>
+        </dd>
+        <dt><span>Priority Number</span></dt>
+        <dd>
+          <span>{{ moeContacts.priorityNumber }}</span>
+        </dd>
+        <dt><span>Ministry Name</span></dt>
+        <dd>
+          <span>{{ moeContacts.ministryName }}</span>
+        </dd>
+        <dt><span>Ministry English Name</span></dt>
+        <dd>
+          <span>{{ moeContacts.ministryEnglishName }}</span>
+        </dd>
+        <dt><span>Postal Address</span></dt>
+        <dd>
+          <span>{{ moeContacts.postalAddress }}</span>
+        </dd>
+        <dt><span>Invoicing Address</span></dt>
+        <dd>
+          <span>{{ moeContacts.invoicingAddress }}</span>
+        </dd>
+        <dt><span>Shipping Address</span></dt>
+        <dd>
+          <span>{{ moeContacts.shippingAddress }}</span>
+        </dd>
+        <dt><span>Contact Eun First Name</span></dt>
+        <dd>
+          <span>{{ moeContacts.contactEunFirstName }}</span>
+        </dd>
+        <dt><span>Contact Eun Last Name</span></dt>
+        <dd>
+          <span>{{ moeContacts.contactEunLastName }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/moe-contacts', moeContacts.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -33,6 +33,7 @@
 <!--    <include file="config/liquibase/changelog/20230511124513_added_entity_Role.xml" relativeToChangelogFile="false"/>-->
     <include file="config/liquibase/changelog/20230511124514_added_entity_Privilege.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230517131900_added_entity_ReportBlocks.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230526044031_added_entity_MoeContacts.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 <!--    <include file="config/liquibase/changelog/20230427100940_added_entity_constraints_Project.xml" relativeToChangelogFile="false"/>-->
 <!--    <include file="config/liquibase/changelog/20230427114022_added_entity_constraints_EunTeam.xml" relativeToChangelogFile="false"/>-->

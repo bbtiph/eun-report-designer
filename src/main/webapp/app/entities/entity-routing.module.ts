@@ -114,6 +114,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'ReportBlocks' },
         loadChildren: () => import('./report-blocks/report-blocks.module').then(m => m.ReportBlocksModule),
       },
+      {
+        path: 'moe-contacts',
+        data: { pageTitle: 'MoeContacts' },
+        loadChildren: () => import('./moe-contacts/moe-contacts.module').then(m => m.MoeContactsModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
