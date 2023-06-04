@@ -44,21 +44,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="priorityNumber">
-            <div class="d-flex">
-              <span>Priority Number</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="isActive">
             <div class="d-flex">
               <span>Is Active</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="config">
-            <div class="d-flex">
-              <span>Config</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -83,9 +71,7 @@
             <a [routerLink]="['/report-blocks', reportBlocks.id, 'view']">{{ reportBlocks.id }}</a>
           </td>
           <td>{{ reportBlocks.name }}</td>
-          <td>{{ reportBlocks.priorityNumber }}</td>
           <td>{{ reportBlocks.isActive }}</td>
-          <td>{{ reportBlocks.config }}</td>
           <td>
             <span *ngFor="let countryId of reportBlocks.countryIds; let last = last">
               <a class="form-control-static" [routerLink]="['/countries', countryId.id, 'view']">{{ countryId.id }}</a

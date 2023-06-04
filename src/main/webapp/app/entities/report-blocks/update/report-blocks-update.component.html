@@ -6,40 +6,13 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
         <div class="row mb-3">
           <label class="form-label" for="field_name">Name</label>
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_priorityNumber">Priority Number</label>
-          <input
-            type="number"
-            class="form-control"
-            name="priorityNumber"
-            id="field_priorityNumber"
-            data-cy="priorityNumber"
-            formControlName="priorityNumber"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_isActive">Is Active</label>
-          <input type="checkbox" class="form-check" name="isActive" id="field_isActive" data-cy="isActive" formControlName="isActive" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_config">Config</label>
-          <input type="text" class="form-control" name="config" id="field_config" data-cy="config" formControlName="config" />
-        </div>
-
-        <div class="row mb-3">
-          <label for="field_countryIds">Country Id</label>
+          <label for="field_countryIds">Country</label>
           <select
             class="form-control"
             id="field_countryIds"
@@ -49,7 +22,9 @@
             formControlName="countryIds"
             [compareWith]="compareCountries"
           >
-            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">{{ countriesOption.id }}</option>
+            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">
+              {{ countriesOption.countryName }}
+            </option>
           </select>
         </div>
 
@@ -64,7 +39,7 @@
             [compareWith]="compareReport"
           >
             <option [ngValue]="null"></option>
-            <option [ngValue]="reportOption" *ngFor="let reportOption of reportsSharedCollection">{{ reportOption.id }}</option>
+            <option [ngValue]="reportOption" *ngFor="let reportOption of reportsSharedCollection">{{ reportOption.reportName }}</option>
           </select>
         </div>
       </div>
