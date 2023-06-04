@@ -6,7 +6,7 @@
   "entityTableName": "report_blocks",
   "fields": [
     {
-      "fieldName": "countryName",
+      "fieldName": "name",
       "fieldType": "String"
     },
     {
@@ -14,19 +14,11 @@
       "fieldType": "Long"
     },
     {
-      "fieldName": "content",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "isActive",
       "fieldType": "Boolean"
     },
     {
-      "fieldName": "type",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "sqlScript",
+      "fieldName": "config",
       "fieldType": "String"
     }
   ],
@@ -44,11 +36,11 @@
       "relationshipType": "many-to-many"
     },
     {
+      "otherEntityField": "id",
       "otherEntityName": "report",
-      "otherEntityRelationshipName": "reportBlockId",
-      "ownerSide": true,
-      "relationshipName": "reportId",
-      "relationshipType": "many-to-many"
+      "otherEntityRelationshipName": "reportBlocks",
+      "relationshipName": "report",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

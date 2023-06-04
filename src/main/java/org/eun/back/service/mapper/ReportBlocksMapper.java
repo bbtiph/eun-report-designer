@@ -16,11 +16,10 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface ReportBlocksMapper extends EntityMapper<ReportBlocksDTO, ReportBlocks> {
     @Mapping(target = "countryIds", source = "countryIds", qualifiedByName = "countriesIdSet")
-    @Mapping(target = "reportIds", source = "reportIds", qualifiedByName = "reportIdSet")
+    @Mapping(target = "report", source = "report", qualifiedByName = "reportId")
     ReportBlocksDTO toDto(ReportBlocks s);
 
     @Mapping(target = "removeCountryId", ignore = true)
-    @Mapping(target = "removeReportId", ignore = true)
     ReportBlocks toEntity(ReportBlocksDTO reportBlocksDTO);
 
     @Named("countriesId")
@@ -37,9 +36,4 @@ public interface ReportBlocksMapper extends EntityMapper<ReportBlocksDTO, Report
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     ReportDTO toDtoReportId(Report report);
-
-    @Named("reportIdSet")
-    default Set<ReportDTO> toDtoReportIdSet(Set<Report> report) {
-        return report.stream().map(this::toDtoReportId).collect(Collectors.toSet());
-    }
 }

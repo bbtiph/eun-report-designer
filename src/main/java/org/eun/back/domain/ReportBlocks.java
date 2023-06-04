@@ -22,41 +22,30 @@ public class ReportBlocks implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "country_name")
-    private String countryName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "priority_number")
     private Long priorityNumber;
 
-    @Column(name = "content")
-    private String content;
-
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @Column(name = "type")
-    private String type;
-
-    @Column(name = "sql_script")
-    private String sqlScript;
+    @Column(name = "config")
+    private String config;
 
     @ManyToMany
     @JoinTable(
-        name = "rel_report_blocks_country_id",
+        name = "rel_report_blocks_country",
         joinColumns = @JoinColumn(name = "report_blocks_id"),
         inverseJoinColumns = @JoinColumn(name = "country_id")
     )
     @JsonIgnoreProperties(value = { "reportBlockIds" }, allowSetters = true)
     private Set<Countries> countryIds = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_report_blocks_report_id",
-        joinColumns = @JoinColumn(name = "report_blocks_id"),
-        inverseJoinColumns = @JoinColumn(name = "report_id")
-    )
-    @JsonIgnoreProperties(value = { "reportBlockIds" }, allowSetters = true)
-    private Set<Report> reportIds = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "reportBlocks" }, allowSetters = true)
+    private Report report;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -73,17 +62,17 @@ public class ReportBlocks implements Serializable {
         this.id = id;
     }
 
-    public String getCountryName() {
-        return this.countryName;
+    public String getName() {
+        return this.name;
     }
 
-    public ReportBlocks countryName(String countryName) {
-        this.setCountryName(countryName);
+    public ReportBlocks name(String name) {
+        this.setName(name);
         return this;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getPriorityNumber() {
@@ -99,19 +88,6 @@ public class ReportBlocks implements Serializable {
         this.priorityNumber = priorityNumber;
     }
 
-    public String getContent() {
-        return this.content;
-    }
-
-    public ReportBlocks content(String content) {
-        this.setContent(content);
-        return this;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public Boolean getIsActive() {
         return this.isActive;
     }
@@ -125,30 +101,17 @@ public class ReportBlocks implements Serializable {
         this.isActive = isActive;
     }
 
-    public String getType() {
-        return this.type;
+    public String getConfig() {
+        return this.config;
     }
 
-    public ReportBlocks type(String type) {
-        this.setType(type);
+    public ReportBlocks config(String config) {
+        this.setConfig(config);
         return this;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getSqlScript() {
-        return this.sqlScript;
-    }
-
-    public ReportBlocks sqlScript(String sqlScript) {
-        this.setSqlScript(sqlScript);
-        return this;
-    }
-
-    public void setSqlScript(String sqlScript) {
-        this.sqlScript = sqlScript;
+    public void setConfig(String config) {
+        this.config = config;
     }
 
     public Set<Countries> getCountryIds() {
@@ -176,28 +139,16 @@ public class ReportBlocks implements Serializable {
         return this;
     }
 
-    public Set<Report> getReportIds() {
-        return this.reportIds;
+    public Report getReport() {
+        return this.report;
     }
 
-    public void setReportIds(Set<Report> reports) {
-        this.reportIds = reports;
+    public void setReport(Report report) {
+        this.report = report;
     }
 
-    public ReportBlocks reportIds(Set<Report> reports) {
-        this.setReportIds(reports);
-        return this;
-    }
-
-    public ReportBlocks addReportId(Report report) {
-        this.reportIds.add(report);
-        report.getReportBlockIds().add(this);
-        return this;
-    }
-
-    public ReportBlocks removeReportId(Report report) {
-        this.reportIds.remove(report);
-        report.getReportBlockIds().remove(this);
+    public ReportBlocks report(Report report) {
+        this.setReport(report);
         return this;
     }
 
@@ -225,12 +176,10 @@ public class ReportBlocks implements Serializable {
     public String toString() {
         return "ReportBlocks{" +
             "id=" + getId() +
-            ", countryName='" + getCountryName() + "'" +
+            ", name='" + getName() + "'" +
             ", priorityNumber=" + getPriorityNumber() +
-            ", content='" + getContent() + "'" +
             ", isActive='" + getIsActive() + "'" +
-            ", type='" + getType() + "'" +
-            ", sqlScript='" + getSqlScript() + "'" +
+            ", config='" + getConfig() + "'" +
             "}";
     }
 }

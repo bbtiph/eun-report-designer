@@ -487,7 +487,7 @@ create table report_blocks
 alter table report_blocks
     owner to "eunReportDesigner";
 
-create table rel_report_blocks_country_id
+create table rel_report_blocks_country
 (
     country_id       bigint not null,
     report_blocks_id bigint not null,
@@ -495,7 +495,7 @@ create table rel_report_blocks_country_id
         primary key (report_blocks_id, country_id)
 );
 
-alter table rel_report_blocks_country_id
+alter table rel_report_blocks_country
     owner to "eunReportDesigner";
 
 create table rel_report_blocks_report_id

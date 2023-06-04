@@ -14,29 +14,21 @@
         <dd>
           <span>{{ reportBlocks.id }}</span>
         </dd>
-        <dt><span>Country Name</span></dt>
+        <dt><span>Name</span></dt>
         <dd>
-          <span>{{ reportBlocks.countryName }}</span>
+          <span>{{ reportBlocks.name }}</span>
         </dd>
         <dt><span>Priority Number</span></dt>
         <dd>
           <span>{{ reportBlocks.priorityNumber }}</span>
         </dd>
-        <dt><span>Content</span></dt>
-        <dd>
-          <span>{{ reportBlocks.content }}</span>
-        </dd>
         <dt><span>Is Active</span></dt>
         <dd>
           <span>{{ reportBlocks.isActive }}</span>
         </dd>
-        <dt><span>Type</span></dt>
+        <dt><span>Config</span></dt>
         <dd>
-          <span>{{ reportBlocks.type }}</span>
-        </dd>
-        <dt><span>Sql Script</span></dt>
-        <dd>
-          <span>{{ reportBlocks.sqlScript }}</span>
+          <span>{{ reportBlocks.config }}</span>
         </dd>
         <dt><span>Country Id</span></dt>
         <dd>
@@ -45,12 +37,11 @@
             >{{ last ? '' : ', ' }}
           </span>
         </dd>
-        <dt><span>Report Id</span></dt>
+        <dt><span>Report</span></dt>
         <dd>
-          <span *ngFor="let reportId of reportBlocks.reportIds; let last = last">
-            <a [routerLink]="['/report', reportId.id, 'view']">{{ reportId.id }}</a
-            >{{ last ? '' : ', ' }}
-          </span>
+          <div *ngIf="reportBlocks.report">
+            <a [routerLink]="['/report', reportBlocks.report.id, 'view']">{{ reportBlocks.report.id }}</a>
+          </div>
         </dd>
       </dl>
 

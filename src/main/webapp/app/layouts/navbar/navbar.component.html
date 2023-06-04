@@ -32,9 +32,21 @@
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="report" (click)="collapseNavbar()">
             <span>
-              <fa-icon [icon]="['fas', 'download']"></fa-icon>
+              <fa-icon icon="th-list"></fa-icon>
               <span>Reports</span>
             </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a
+            class="nav-link"
+            routerLink="report-blocks"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="collapseNavbar()"
+          >
+            <fa-icon icon="th-list" [fixedWidth]="true"></fa-icon>
+            <span>Report Blocks</span>
           </a>
         </li>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
@@ -296,18 +308,6 @@
             <li>
               <a
                 class="dropdown-item"
-                routerLink="report-blocks"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="th-list" [fixedWidth]="true"></fa-icon>
-                <span>Report Blocks</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
                 routerLink="moe-contacts"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -315,6 +315,30 @@
               >
                 <fa-icon icon="th-list" [fixedWidth]="true"></fa-icon>
                 <span>Moe Contacts</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="report-blocks-content"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span>Report Blocks Content</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="report-blocks-content-data"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span>Report Blocks Content Data</span>
               </a>
             </li>
             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->

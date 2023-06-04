@@ -14,22 +14,19 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="country_name" type="varchar(255)">
+            <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="priority_number" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="content" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="is_active" type="boolean">
                 <constraints nullable="true" />
             </column>
-            <column name="type" type="varchar(255)">
+            <column name="config" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="sql_script" type="varchar(255)">
+            <column name="report_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -38,7 +35,7 @@
 
     <changeSet id="20230517131900-1-relations" author="jhipster">
 
-        <createTable tableName="rel_report_blocks_country_id">
+        <createTable tableName="rel_report_blocks_country">
             <column name="country_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -47,18 +44,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="report_blocks_id, country_id" tableName="rel_report_blocks_country_id"/>
-
-        <createTable tableName="rel_report_blocks_report_id">
-            <column name="report_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="report_blocks_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="report_blocks_id, report_id" tableName="rel_report_blocks_report_id"/>
+        <addPrimaryKey columnNames="report_blocks_id, country_id" tableName="rel_report_blocks_country"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -78,12 +64,10 @@
                   tableName="report_blocks"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="country_name" type="string"/>
+            <column name="name" type="string"/>
             <column name="priority_number" type="numeric"/>
-            <column name="content" type="string"/>
             <column name="is_active" type="boolean"/>
-            <column name="type" type="string"/>
-            <column name="sql_script" type="string"/>
+            <column name="config" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

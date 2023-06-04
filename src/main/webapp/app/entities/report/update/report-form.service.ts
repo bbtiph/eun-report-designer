@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type ReportFormGroupInput = IReport | PartialWithRequiredKeyOf<NewReport>;
 
-type ReportFormDefaults = Pick<NewReport, 'id' | 'reportBlockIds'>;
+type ReportFormDefaults = Pick<NewReport, 'id'>;
 
 type ReportFormGroupContent = {
   id: FormControl<IReport['id'] | NewReport['id']>;
@@ -25,7 +25,6 @@ type ReportFormGroupContent = {
   isActive: FormControl<IReport['isActive']>;
   file: FormControl<IReport['file']>;
   fileContentType: FormControl<IReport['fileContentType']>;
-  reportBlockIds: FormControl<IReport['reportBlockIds']>;
 };
 
 export type ReportFormGroup = FormGroup<ReportFormGroupContent>;
@@ -54,7 +53,6 @@ export class ReportFormService {
       isActive: new FormControl(reportRawValue.isActive),
       file: new FormControl(reportRawValue.file),
       fileContentType: new FormControl(reportRawValue.fileContentType),
-      reportBlockIds: new FormControl(reportRawValue.reportBlockIds ?? []),
     });
   }
 
@@ -75,7 +73,6 @@ export class ReportFormService {
   private getFormDefaults(): ReportFormDefaults {
     return {
       id: null,
-      reportBlockIds: [],
     };
   }
 }

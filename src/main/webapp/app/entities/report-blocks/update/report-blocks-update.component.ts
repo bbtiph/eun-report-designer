@@ -91,7 +91,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
     );
     this.reportsSharedCollection = this.reportService.addReportToCollectionIfMissing<IReport>(
       this.reportsSharedCollection,
-      ...(reportBlocks.reportIds ?? [])
+      reportBlocks.report
     );
   }
 
@@ -109,11 +109,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
     this.reportService
       .query()
       .pipe(map((res: HttpResponse<IReport[]>) => res.body ?? []))
-      .pipe(
-        map((reports: IReport[]) =>
-          this.reportService.addReportToCollectionIfMissing<IReport>(reports, ...(this.reportBlocks?.reportIds ?? []))
-        )
-      )
+      .pipe(map((reports: IReport[]) => this.reportService.addReportToCollectionIfMissing<IReport>(reports, this.reportBlocks?.report)))
       .subscribe((reports: IReport[]) => (this.reportsSharedCollection = reports));
   }
 }

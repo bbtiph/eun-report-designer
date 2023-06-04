@@ -41,23 +41,17 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ReportBlocksResourceIT {
 
-    private static final String DEFAULT_COUNTRY_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_COUNTRY_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final Long DEFAULT_PRIORITY_NUMBER = 1L;
     private static final Long UPDATED_PRIORITY_NUMBER = 2L;
 
-    private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
-    private static final String UPDATED_CONTENT = "BBBBBBBBBB";
-
     private static final Boolean DEFAULT_IS_ACTIVE = false;
     private static final Boolean UPDATED_IS_ACTIVE = true;
 
-    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
-    private static final String UPDATED_TYPE = "BBBBBBBBBB";
-
-    private static final String DEFAULT_SQL_SCRIPT = "AAAAAAAAAA";
-    private static final String UPDATED_SQL_SCRIPT = "BBBBBBBBBB";
+    private static final String DEFAULT_CONFIG = "AAAAAAAAAA";
+    private static final String UPDATED_CONFIG = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/report-blocks";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -93,12 +87,10 @@ class ReportBlocksResourceIT {
      */
     public static ReportBlocks createEntity(EntityManager em) {
         ReportBlocks reportBlocks = new ReportBlocks()
-            .countryName(DEFAULT_COUNTRY_NAME)
+            .name(DEFAULT_NAME)
             .priorityNumber(DEFAULT_PRIORITY_NUMBER)
-            .content(DEFAULT_CONTENT)
             .isActive(DEFAULT_IS_ACTIVE)
-            .type(DEFAULT_TYPE)
-            .sqlScript(DEFAULT_SQL_SCRIPT);
+            .config(DEFAULT_CONFIG);
         return reportBlocks;
     }
 
@@ -110,12 +102,10 @@ class ReportBlocksResourceIT {
      */
     public static ReportBlocks createUpdatedEntity(EntityManager em) {
         ReportBlocks reportBlocks = new ReportBlocks()
-            .countryName(UPDATED_COUNTRY_NAME)
+            .name(UPDATED_NAME)
             .priorityNumber(UPDATED_PRIORITY_NUMBER)
-            .content(UPDATED_CONTENT)
             .isActive(UPDATED_IS_ACTIVE)
-            .type(UPDATED_TYPE)
-            .sqlScript(UPDATED_SQL_SCRIPT);
+            .config(UPDATED_CONFIG);
         return reportBlocks;
     }
 
@@ -140,12 +130,10 @@ class ReportBlocksResourceIT {
         List<ReportBlocks> reportBlocksList = reportBlocksRepository.findAll();
         assertThat(reportBlocksList).hasSize(databaseSizeBeforeCreate + 1);
         ReportBlocks testReportBlocks = reportBlocksList.get(reportBlocksList.size() - 1);
-        assertThat(testReportBlocks.getCountryName()).isEqualTo(DEFAULT_COUNTRY_NAME);
+        assertThat(testReportBlocks.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testReportBlocks.getPriorityNumber()).isEqualTo(DEFAULT_PRIORITY_NUMBER);
-        assertThat(testReportBlocks.getContent()).isEqualTo(DEFAULT_CONTENT);
         assertThat(testReportBlocks.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
-        assertThat(testReportBlocks.getType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(testReportBlocks.getSqlScript()).isEqualTo(DEFAULT_SQL_SCRIPT);
+        assertThat(testReportBlocks.getConfig()).isEqualTo(DEFAULT_CONFIG);
     }
 
     @Test
@@ -181,12 +169,10 @@ class ReportBlocksResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(reportBlocks.getId().intValue())))
-            .andExpect(jsonPath("$.[*].countryName").value(hasItem(DEFAULT_COUNTRY_NAME)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].priorityNumber").value(hasItem(DEFAULT_PRIORITY_NUMBER.intValue())))
-            .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT)))
             .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
-            .andExpect(jsonPath("$.[*].sqlScript").value(hasItem(DEFAULT_SQL_SCRIPT)));
+            .andExpect(jsonPath("$.[*].config").value(hasItem(DEFAULT_CONFIG)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -218,12 +204,10 @@ class ReportBlocksResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(reportBlocks.getId().intValue()))
-            .andExpect(jsonPath("$.countryName").value(DEFAULT_COUNTRY_NAME))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.priorityNumber").value(DEFAULT_PRIORITY_NUMBER.intValue()))
-            .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT))
             .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
-            .andExpect(jsonPath("$.sqlScript").value(DEFAULT_SQL_SCRIPT));
+            .andExpect(jsonPath("$.config").value(DEFAULT_CONFIG));
     }
 
     @Test
@@ -245,13 +229,7 @@ class ReportBlocksResourceIT {
         ReportBlocks updatedReportBlocks = reportBlocksRepository.findById(reportBlocks.getId()).get();
         // Disconnect from session so that the updates on updatedReportBlocks are not directly saved in db
         em.detach(updatedReportBlocks);
-        updatedReportBlocks
-            .countryName(UPDATED_COUNTRY_NAME)
-            .priorityNumber(UPDATED_PRIORITY_NUMBER)
-            .content(UPDATED_CONTENT)
-            .isActive(UPDATED_IS_ACTIVE)
-            .type(UPDATED_TYPE)
-            .sqlScript(UPDATED_SQL_SCRIPT);
+        updatedReportBlocks.name(UPDATED_NAME).priorityNumber(UPDATED_PRIORITY_NUMBER).isActive(UPDATED_IS_ACTIVE).config(UPDATED_CONFIG);
         ReportBlocksDTO reportBlocksDTO = reportBlocksMapper.toDto(updatedReportBlocks);
 
         restReportBlocksMockMvc
@@ -266,12 +244,10 @@ class ReportBlocksResourceIT {
         List<ReportBlocks> reportBlocksList = reportBlocksRepository.findAll();
         assertThat(reportBlocksList).hasSize(databaseSizeBeforeUpdate);
         ReportBlocks testReportBlocks = reportBlocksList.get(reportBlocksList.size() - 1);
-        assertThat(testReportBlocks.getCountryName()).isEqualTo(UPDATED_COUNTRY_NAME);
+        assertThat(testReportBlocks.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testReportBlocks.getPriorityNumber()).isEqualTo(UPDATED_PRIORITY_NUMBER);
-        assertThat(testReportBlocks.getContent()).isEqualTo(UPDATED_CONTENT);
         assertThat(testReportBlocks.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
-        assertThat(testReportBlocks.getType()).isEqualTo(UPDATED_TYPE);
-        assertThat(testReportBlocks.getSqlScript()).isEqualTo(UPDATED_SQL_SCRIPT);
+        assertThat(testReportBlocks.getConfig()).isEqualTo(UPDATED_CONFIG);
     }
 
     @Test
@@ -353,7 +329,7 @@ class ReportBlocksResourceIT {
         ReportBlocks partialUpdatedReportBlocks = new ReportBlocks();
         partialUpdatedReportBlocks.setId(reportBlocks.getId());
 
-        partialUpdatedReportBlocks.priorityNumber(UPDATED_PRIORITY_NUMBER).isActive(UPDATED_IS_ACTIVE).sqlScript(UPDATED_SQL_SCRIPT);
+        partialUpdatedReportBlocks.priorityNumber(UPDATED_PRIORITY_NUMBER).config(UPDATED_CONFIG);
 
         restReportBlocksMockMvc
             .perform(
@@ -367,12 +343,10 @@ class ReportBlocksResourceIT {
         List<ReportBlocks> reportBlocksList = reportBlocksRepository.findAll();
         assertThat(reportBlocksList).hasSize(databaseSizeBeforeUpdate);
         ReportBlocks testReportBlocks = reportBlocksList.get(reportBlocksList.size() - 1);
-        assertThat(testReportBlocks.getCountryName()).isEqualTo(DEFAULT_COUNTRY_NAME);
+        assertThat(testReportBlocks.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testReportBlocks.getPriorityNumber()).isEqualTo(UPDATED_PRIORITY_NUMBER);
-        assertThat(testReportBlocks.getContent()).isEqualTo(DEFAULT_CONTENT);
-        assertThat(testReportBlocks.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
-        assertThat(testReportBlocks.getType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(testReportBlocks.getSqlScript()).isEqualTo(UPDATED_SQL_SCRIPT);
+        assertThat(testReportBlocks.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
+        assertThat(testReportBlocks.getConfig()).isEqualTo(UPDATED_CONFIG);
     }
 
     @Test
@@ -388,12 +362,10 @@ class ReportBlocksResourceIT {
         partialUpdatedReportBlocks.setId(reportBlocks.getId());
 
         partialUpdatedReportBlocks
-            .countryName(UPDATED_COUNTRY_NAME)
+            .name(UPDATED_NAME)
             .priorityNumber(UPDATED_PRIORITY_NUMBER)
-            .content(UPDATED_CONTENT)
             .isActive(UPDATED_IS_ACTIVE)
-            .type(UPDATED_TYPE)
-            .sqlScript(UPDATED_SQL_SCRIPT);
+            .config(UPDATED_CONFIG);
 
         restReportBlocksMockMvc
             .perform(
@@ -407,12 +379,10 @@ class ReportBlocksResourceIT {
         List<ReportBlocks> reportBlocksList = reportBlocksRepository.findAll();
         assertThat(reportBlocksList).hasSize(databaseSizeBeforeUpdate);
         ReportBlocks testReportBlocks = reportBlocksList.get(reportBlocksList.size() - 1);
-        assertThat(testReportBlocks.getCountryName()).isEqualTo(UPDATED_COUNTRY_NAME);
+        assertThat(testReportBlocks.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testReportBlocks.getPriorityNumber()).isEqualTo(UPDATED_PRIORITY_NUMBER);
-        assertThat(testReportBlocks.getContent()).isEqualTo(UPDATED_CONTENT);
         assertThat(testReportBlocks.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
-        assertThat(testReportBlocks.getType()).isEqualTo(UPDATED_TYPE);
-        assertThat(testReportBlocks.getSqlScript()).isEqualTo(UPDATED_SQL_SCRIPT);
+        assertThat(testReportBlocks.getConfig()).isEqualTo(UPDATED_CONFIG);
     }
 
     @Test

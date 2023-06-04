@@ -5,20 +5,17 @@ export const sampleWithRequiredData: IReportBlocks = {
 };
 
 export const sampleWithPartialData: IReportBlocks = {
-  id: 75101,
-  content: 'circuit Functionality',
+  id: 47503,
   isActive: true,
-  sqlScript: 'Ergonomic connecting',
+  config: 'envisioneer Personal XSS',
 };
 
 export const sampleWithFullData: IReportBlocks = {
-  id: 41404,
-  countryName: 'Account e-business',
-  priorityNumber: 96832,
-  content: 'deposit hybrid COM',
-  isActive: true,
-  type: 'efficient Account',
-  sqlScript: 'Guyana',
+  id: 7846,
+  name: 'SAS',
+  priorityNumber: 42720,
+  isActive: false,
+  config: 'Account e-business',
 };
 
 export const sampleWithNewData: NewReportBlocks = {

@@ -73,10 +73,7 @@ public class ReportServiceImpl implements ReportService {
     @Transactional(readOnly = true)
     public Optional<ReportDTO> findOne(Long id) {
         log.debug("Request to get Report : {}", id);
-        Optional<Report> report = reportRepository.findById(id);
-        Optional<ReportDTO> res = report.map(reportMapper::toDto);
-        res.get().setReportBlocks(report.get().getReportBlockIds());
-        return res;
+        return reportRepository.findById(id).map(reportMapper::toDto);
     }
 
     @Override

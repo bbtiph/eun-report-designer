@@ -38,7 +38,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="countryName">
+          <th scope="col" jhiSortBy="name">
             <div class="d-flex">
               <span>Name</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -50,27 +50,15 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="content">
-            <div class="d-flex">
-              <span>Content</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="isActive">
             <div class="d-flex">
               <span>Is Active</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="type">
+          <th scope="col" jhiSortBy="config">
             <div class="d-flex">
-              <span>Type</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="sqlScript">
-            <div class="d-flex">
-              <span>Sql Script</span>
+              <span>Config</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -80,9 +68,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="reportId.id">
+          <th scope="col" jhiSortBy="report.id">
             <div class="d-flex">
-              <span>Report Id</span>
+              <span>Report</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -90,33 +78,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let reportBlock of reportBlocks; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let reportBlocks of reportBlocks; trackBy: trackId" data-cy="entityTable">
           <td>
-            <a [routerLink]="['/report-blocks', reportBlock.id, 'view']">{{ reportBlock.id }}</a>
+            <a [routerLink]="['/report-blocks', reportBlocks.id, 'view']">{{ reportBlocks.id }}</a>
           </td>
-          <td>{{ reportBlock.countryName }}</td>
-          <td>{{ reportBlock.priorityNumber }}</td>
-          <td>{{ reportBlock.content | slice: 0:200 }}</td>
-          <td>{{ reportBlock.isActive }}</td>
-          <td>{{ reportBlock.type }}</td>
-          <td>{{ reportBlock.sqlScript }}</td>
+          <td>{{ reportBlocks.name }}</td>
+          <td>{{ reportBlocks.priorityNumber }}</td>
+          <td>{{ reportBlocks.isActive }}</td>
+          <td>{{ reportBlocks.config }}</td>
           <td>
-            <span *ngFor="let countryId of reportBlock.countryIds; let last = last">
+            <span *ngFor="let countryId of reportBlocks.countryIds; let last = last">
               <a class="form-control-static" [routerLink]="['/countries', countryId.id, 'view']">{{ countryId.id }}</a
               >{{ last ? '' : ', ' }}
             </span>
           </td>
           <td>
-            <span *ngFor="let reportId of reportBlock.reportIds; let last = last">
-              <a class="form-control-static" [routerLink]="['/report', reportId.id, 'view']">{{ reportId.id }}</a
-              >{{ last ? '' : ', ' }}
-            </span>
+            <div *ngIf="reportBlocks.report">
+              <a [routerLink]="['/report', reportBlocks.report.id, 'view']">{{ reportBlocks.report.id }}</a>
+            </div>
           </td>
           <td class="text-end">
             <div class="btn-group">
               <button
                 type="submit"
-                [routerLink]="['/report-blocks', reportBlock.id, 'view']"
+                [routerLink]="['/report-blocks', reportBlocks.id, 'view']"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"
               >
@@ -126,7 +111,7 @@
 
               <button
                 type="submit"
-                [routerLink]="['/report-blocks', reportBlock.id, 'edit']"
+                [routerLink]="['/report-blocks', reportBlocks.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
@@ -134,7 +119,7 @@
                 <span class="d-none d-md-inline">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(reportBlock)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(reportBlocks)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Delete</span>
               </button>

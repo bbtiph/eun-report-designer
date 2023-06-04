@@ -9,26 +9,20 @@
     <changeSet id="20230517131900-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="report_blocks_id"
-                                 baseTableName="rel_report_blocks_country_id"
-                                 constraintName="fk_rel_report_blocks_country_id__report_blocks_id"
+                                 baseTableName="rel_report_blocks_country"
+                                 constraintName="fk_rel_report_blocks_country__report_blocks_id"
                                  referencedColumnNames="id"
                                  referencedTableName="report_blocks"/>
 
         <addForeignKeyConstraint baseColumnNames="country_id"
-                                 baseTableName="rel_report_blocks_country_id"
-                                 constraintName="fk_rel_report_blocks_country_id_country_id"
+                                 baseTableName="rel_report_blocks_country"
+                                 constraintName="fk_rel_report_blocks_country__country_id"
                                  referencedColumnNames="id"
                                  referencedTableName="countries"/>
 
-        <addForeignKeyConstraint baseColumnNames="report_blocks_id"
-                                 baseTableName="rel_report_blocks_report_id"
-                                 constraintName="fk_rel_report_blocks_report_id__report_blocks_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="report_blocks"/>
-
         <addForeignKeyConstraint baseColumnNames="report_id"
-                                 baseTableName="rel_report_blocks_report_id"
-                                 constraintName="fk_rel_report_blocks_report_id_report_id"
+                                 baseTableName="report_blocks"
+                                 constraintName="fk_report_blocks__report_id"
                                  referencedColumnNames="id"
                                  referencedTableName="report"/>
     </changeSet>

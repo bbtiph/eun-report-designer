@@ -2,10 +2,8 @@ package org.eun.back.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.Lob;
 import javax.validation.constraints.*;
-import org.eun.back.domain.ReportBlocks;
 
 /**
  * A DTO for the {@link org.eun.back.domain.Report} entity.
@@ -28,8 +26,6 @@ public class ReportDTO implements Serializable {
 
     @Lob
     private byte[] file;
-
-    private Set<ReportBlocks> reportBlocks;
 
     private String fileContentType;
 
@@ -95,14 +91,6 @@ public class ReportDTO implements Serializable {
 
     public void setFileContentType(String fileContentType) {
         this.fileContentType = fileContentType;
-    }
-
-    public Set<ReportBlocks> getReportBlocks() {
-        return reportBlocks;
-    }
-
-    public void setReportBlocks(Set<ReportBlocks> reportBlocks) {
-        this.reportBlocks = reportBlocks;
     }
 
     @Override

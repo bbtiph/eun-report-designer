@@ -1,17 +1,17 @@
-entity MoeContacts {
-    countryCode String
-    countryName String
+entity ReportBlocksContent {
+    type String
     priorityNumber Long
-    ministryName String
-    ministryEnglishName String
-    postalAddress String
-    invoicingAddress String
-    shippingAddress String
-    contactEunFirstName String
-    contactEunLastName String
+    template String
+    isActive Boolean
 }
 
-dto MoeContacts with mapstruct
-service MoeContacts with serviceImpl
+entity ReportBlocksContentData {
+    data String
+}
+
+
+
+dto ReportBlocksContent,ReportBlocksContentData with mapstruct
+service ReportBlocksContent,ReportBlocksContentData with serviceImpl
 
 

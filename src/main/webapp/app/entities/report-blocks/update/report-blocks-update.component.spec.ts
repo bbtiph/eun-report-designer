@@ -77,12 +77,12 @@ describe('ReportBlocks Management Update Component', () => {
 
     it('Should call Report query and add missing value', () => {
       const reportBlocks: IReportBlocks = { id: 456 };
-      const reportIds: IReport[] = [{ id: 98678 }];
-      reportBlocks.reportIds = reportIds;
+      const report: IReport = { id: 98678 };
+      reportBlocks.report = report;
 
       const reportCollection: IReport[] = [{ id: 53248 }];
       jest.spyOn(reportService, 'query').mockReturnValue(of(new HttpResponse({ body: reportCollection })));
-      const additionalReports = [...reportIds];
+      const additionalReports = [report];
       const expectedCollection: IReport[] = [...additionalReports, ...reportCollection];
       jest.spyOn(reportService, 'addReportToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -101,14 +101,14 @@ describe('ReportBlocks Management Update Component', () => {
       const reportBlocks: IReportBlocks = { id: 456 };
       const countryId: ICountries = { id: 32508 };
       reportBlocks.countryIds = [countryId];
-      const reportId: IReport = { id: 18079 };
-      reportBlocks.reportIds = [reportId];
+      const report: IReport = { id: 18079 };
+      reportBlocks.report = report;
 
       activatedRoute.data = of({ reportBlocks });
       comp.ngOnInit();
 
       expect(comp.countriesSharedCollection).toContain(countryId);
-      expect(comp.reportsSharedCollection).toContain(reportId);
+      expect(comp.reportsSharedCollection).toContain(report);
       expect(comp.reportBlocks).toEqual(reportBlocks);
     });
   });

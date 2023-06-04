@@ -13,21 +13,17 @@ public class ReportBlocksDTO implements Serializable {
 
     private Long id;
 
-    private String countryName;
+    private String name;
 
     private Long priorityNumber;
 
-    private String content;
-
     private Boolean isActive;
 
-    private String type;
-
-    private String sqlScript;
+    private String config;
 
     private Set<CountriesDTO> countryIds = new HashSet<>();
 
-    private Set<ReportDTO> reportIds = new HashSet<>();
+    private ReportDTO report;
 
     public Long getId() {
         return id;
@@ -37,12 +33,12 @@ public class ReportBlocksDTO implements Serializable {
         this.id = id;
     }
 
-    public String getCountryName() {
-        return countryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getPriorityNumber() {
@@ -53,14 +49,6 @@ public class ReportBlocksDTO implements Serializable {
         this.priorityNumber = priorityNumber;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public Boolean getIsActive() {
         return isActive;
     }
@@ -69,20 +57,12 @@ public class ReportBlocksDTO implements Serializable {
         this.isActive = isActive;
     }
 
-    public String getType() {
-        return type;
+    public String getConfig() {
+        return config;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getSqlScript() {
-        return sqlScript;
-    }
-
-    public void setSqlScript(String sqlScript) {
-        this.sqlScript = sqlScript;
+    public void setConfig(String config) {
+        this.config = config;
     }
 
     public Set<CountriesDTO> getCountryIds() {
@@ -93,12 +73,12 @@ public class ReportBlocksDTO implements Serializable {
         this.countryIds = countryIds;
     }
 
-    public Set<ReportDTO> getReportIds() {
-        return reportIds;
+    public ReportDTO getReport() {
+        return report;
     }
 
-    public void setReportIds(Set<ReportDTO> reportIds) {
-        this.reportIds = reportIds;
+    public void setReport(ReportDTO report) {
+        this.report = report;
     }
 
     @Override
@@ -127,14 +107,12 @@ public class ReportBlocksDTO implements Serializable {
     public String toString() {
         return "ReportBlocksDTO{" +
             "id=" + getId() +
-            ", countryName='" + getCountryName() + "'" +
+            ", name='" + getName() + "'" +
             ", priorityNumber=" + getPriorityNumber() +
-            ", content='" + getContent() + "'" +
             ", isActive='" + getIsActive() + "'" +
-            ", type='" + getType() + "'" +
-            ", sqlScript='" + getSqlScript() + "'" +
+            ", config='" + getConfig() + "'" +
             ", countryIds=" + getCountryIds() +
-            ", reportIds=" + getReportIds() +
+            ", report=" + getReport() +
             "}";
     }
 }

@@ -26,7 +26,6 @@ describe('Report Form Service', () => {
             type: expect.any(Object),
             isActive: expect.any(Object),
             file: expect.any(Object),
-            reportBlockIds: expect.any(Object),
           })
         );
       });
@@ -43,7 +42,6 @@ describe('Report Form Service', () => {
             type: expect.any(Object),
             isActive: expect.any(Object),
             file: expect.any(Object),
-            reportBlockIds: expect.any(Object),
           })
         );
       });

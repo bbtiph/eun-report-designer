@@ -9,16 +9,16 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card mb-4" *ngFor="let block of reportBlocks">
-        <div class="card-body">
-          <div *ngIf="block.type != '2'" [innerHTML]="block.content"></div>
-          <div *ngIf="block.type == '2'" [innerHTML]="block.countryName"></div>
-        </div>
+        <!--        <div class="card-body">-->
+        <!--          <div *ngIf="block.type != '2'" [innerHTML]="block.content"></div>-->
+        <!--          <div *ngIf="block.type == '2'" [innerHTML]="block.countryName"></div>-->
+        <!--        </div>-->
         <div class="card-footer">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" [(ngModel)]="block.isActive" (click)="changeIsActive(block)" />
             <label class="form-check-label">Active</label>
           </div>
-          <button [disabled]="block.type == '2'" class="btn btn-primary mt-2" (click)="openEditor(block)">Edit</button>
+          <button class="btn btn-primary mt-2" (click)="openEditor(block)">Edit</button>
         </div>
       </div>
     </div>

@@ -14,18 +14,16 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type ReportBlocksFormGroupInput = IReportBlocks | PartialWithRequiredKeyOf<NewReportBlocks>;
 
-type ReportBlocksFormDefaults = Pick<NewReportBlocks, 'id' | 'isActive' | 'countryIds' | 'reportIds'>;
+type ReportBlocksFormDefaults = Pick<NewReportBlocks, 'id' | 'isActive' | 'countryIds'>;
 
 type ReportBlocksFormGroupContent = {
   id: FormControl<IReportBlocks['id'] | NewReportBlocks['id']>;
-  countryName: FormControl<IReportBlocks['countryName']>;
+  name: FormControl<IReportBlocks['name']>;
   priorityNumber: FormControl<IReportBlocks['priorityNumber']>;
-  content: FormControl<IReportBlocks['content']>;
   isActive: FormControl<IReportBlocks['isActive']>;
-  type: FormControl<IReportBlocks['type']>;
-  sqlScript: FormControl<IReportBlocks['sqlScript']>;
+  config: FormControl<IReportBlocks['config']>;
   countryIds: FormControl<IReportBlocks['countryIds']>;
-  reportIds: FormControl<IReportBlocks['reportIds']>;
+  report: FormControl<IReportBlocks['report']>;
 };
 
 export type ReportBlocksFormGroup = FormGroup<ReportBlocksFormGroupContent>;
@@ -45,14 +43,12 @@ export class ReportBlocksFormService {
           validators: [Validators.required],
         }
       ),
-      countryName: new FormControl(reportBlocksRawValue.countryName),
+      name: new FormControl(reportBlocksRawValue.name),
       priorityNumber: new FormControl(reportBlocksRawValue.priorityNumber),
-      content: new FormControl(reportBlocksRawValue.content),
       isActive: new FormControl(reportBlocksRawValue.isActive),
-      type: new FormControl(reportBlocksRawValue.type),
-      sqlScript: new FormControl(reportBlocksRawValue.sqlScript),
+      config: new FormControl(reportBlocksRawValue.config),
       countryIds: new FormControl(reportBlocksRawValue.countryIds ?? []),
-      reportIds: new FormControl(reportBlocksRawValue.reportIds ?? []),
+      report: new FormControl(reportBlocksRawValue.report),
     });
   }
 
@@ -75,7 +71,6 @@ export class ReportBlocksFormService {
       id: null,
       isActive: false,
       countryIds: [],
-      reportIds: [],
     };
   }
 }

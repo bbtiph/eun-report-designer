@@ -40,10 +40,9 @@
   "relationships": [
     {
       "otherEntityName": "reportBlocks",
-      "otherEntityRelationshipName": "reportId",
-      "ownerSide": false,
-      "relationshipName": "reportBlockId",
-      "relationshipType": "many-to-many"
+      "otherEntityRelationshipName": "report",
+      "relationshipName": "reportBlocks",
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "serviceImpl"

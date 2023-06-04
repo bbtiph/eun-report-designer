@@ -3,14 +3,12 @@ import { IReport } from 'app/entities/report/report.model';
 
 export interface IReportBlocks {
   id: number;
-  countryName?: string | null;
+  name?: string | null;
   priorityNumber?: number | null;
-  content?: string | null;
   isActive?: boolean | null;
-  type?: string | null;
-  sqlScript?: string | null;
+  config?: string | null;
   countryIds?: Pick<ICountries, 'id'>[] | null;
-  reportIds?: Pick<IReport, 'id'>[] | null;
+  report?: Pick<IReport, 'id'> | null;
 }
 
 export type NewReportBlocks = Omit<IReportBlocks, 'id'> & { id: null };

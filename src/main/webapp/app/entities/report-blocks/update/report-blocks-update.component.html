@@ -12,15 +12,8 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_countryName">Country Name</label>
-          <input
-            type="text"
-            class="form-control"
-            name="countryName"
-            id="field_countryName"
-            data-cy="countryName"
-            formControlName="countryName"
-          />
+          <label class="form-label" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
         </div>
 
         <div class="row mb-3">
@@ -36,22 +29,17 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_content">Content</label>
-          <input type="text" class="form-control" name="content" id="field_content" data-cy="content" formControlName="content" />
+          <label class="form-label" for="field_isActive">Is Active</label>
+          <input type="checkbox" class="form-check" name="isActive" id="field_isActive" data-cy="isActive" formControlName="isActive" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_type">Type</label>
-          <input type="text" class="form-control" name="type" id="field_type" data-cy="type" formControlName="type" />
+          <label class="form-label" for="field_config">Config</label>
+          <input type="text" class="form-control" name="config" id="field_config" data-cy="config" formControlName="config" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_sqlScript">Sql Script</label>
-          <input type="text" class="form-control" name="sqlScript" id="field_sqlScript" data-cy="sqlScript" formControlName="sqlScript" />
-        </div>
-
-        <div class="row mb-3">
-          <label for="field_countryIds">Countries</label>
+          <label for="field_countryIds">Country Id</label>
           <select
             class="form-control"
             id="field_countryIds"
@@ -61,41 +49,23 @@
             formControlName="countryIds"
             [compareWith]="compareCountries"
           >
-            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">
-              {{ countriesOption.countryName }}
-            </option>
+            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">{{ countriesOption.id }}</option>
           </select>
         </div>
 
         <div class="row mb-3">
-          <label for="field_reportIds">Reports</label>
+          <label class="form-label" for="field_report">Report</label>
           <select
             class="form-control"
-            id="field_reportIds"
-            data-cy="reportId"
-            multiple
-            name="reportIds"
-            formControlName="reportIds"
+            id="field_report"
+            data-cy="report"
+            name="report"
+            formControlName="report"
             [compareWith]="compareReport"
           >
-            <option [ngValue]="reportOption" *ngFor="let reportOption of reportsSharedCollection">{{ reportOption.reportName }}</option>
+            <option [ngValue]="null"></option>
+            <option [ngValue]="reportOption" *ngFor="let reportOption of reportsSharedCollection">{{ reportOption.id }}</option>
           </select>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-12">
-            <div class="form-check">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                name="isActive"
-                id="field_isActive"
-                data-cy="isActive"
-                formControlName="isActive"
-              />
-              <label class="form-check-label" for="field_isActive">Is Active</label>
-            </div>
-          </div>
         </div>
       </div>
 

@@ -20,14 +20,12 @@ describe('ReportBlocks Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            countryName: expect.any(Object),
+            name: expect.any(Object),
             priorityNumber: expect.any(Object),
-            content: expect.any(Object),
             isActive: expect.any(Object),
-            type: expect.any(Object),
-            sqlScript: expect.any(Object),
+            config: expect.any(Object),
             countryIds: expect.any(Object),
-            reportIds: expect.any(Object),
+            report: expect.any(Object),
           })
         );
       });
@@ -38,14 +36,12 @@ describe('ReportBlocks Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            countryName: expect.any(Object),
+            name: expect.any(Object),
             priorityNumber: expect.any(Object),
-            content: expect.any(Object),
             isActive: expect.any(Object),
-            type: expect.any(Object),
-            sqlScript: expect.any(Object),
+            config: expect.any(Object),
             countryIds: expect.any(Object),
-            reportIds: expect.any(Object),
+            report: expect.any(Object),
           })
         );
       });
