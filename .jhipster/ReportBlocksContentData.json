@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20230530095340",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "report_blocks_content_data",
+  "fields": [
+    {
+      "fieldName": "data",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ReportBlocksContentData",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "reportBlocksContent",
+      "otherEntityRelationshipName": "reportBlocksContentData",
+      "relationshipName": "reportBlocksContent",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "countries",
+      "otherEntityRelationshipName": "reportBlocksContentData",
+      "relationshipName": "country",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

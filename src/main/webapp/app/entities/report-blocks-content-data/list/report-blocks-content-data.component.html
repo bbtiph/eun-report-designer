@@ -1,0 +1,112 @@
+<div>
+  <h2 id="page-heading" data-cy="ReportBlocksContentDataHeading">
+    <span>Report Blocks Content Data</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-report-blocks-content-data"
+        [routerLink]="['/report-blocks-content-data/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Report Blocks Content Data </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="reportBlocksContentData?.length === 0">
+    <span>No Report Blocks Content Data found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="reportBlocksContentData && reportBlocksContentData.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="data">
+            <div class="d-flex">
+              <span>Data</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="reportBlocksContent.id">
+            <div class="d-flex">
+              <span>Report Blocks Content</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="country.id">
+            <div class="d-flex">
+              <span>Country</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reportBlocksContentData of reportBlocksContentData; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/report-blocks-content-data', reportBlocksContentData.id, 'view']">{{ reportBlocksContentData.id }}</a>
+          </td>
+          <td>{{ reportBlocksContentData.data }}</td>
+          <td>
+            <div *ngIf="reportBlocksContentData.reportBlocksContent">
+              <a [routerLink]="['/report-blocks-content', reportBlocksContentData.reportBlocksContent.id, 'view']">{{
+                reportBlocksContentData.reportBlocksContent.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="reportBlocksContentData.country">
+              <a [routerLink]="['/countries', reportBlocksContentData.country.id, 'view']">{{ reportBlocksContentData.country.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/report-blocks-content-data', reportBlocksContentData.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/report-blocks-content-data', reportBlocksContentData.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(reportBlocksContentData)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

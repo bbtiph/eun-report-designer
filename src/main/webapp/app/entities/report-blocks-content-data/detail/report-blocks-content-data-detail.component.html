@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="reportBlocksContentData">
+      <h2 data-cy="reportBlocksContentDataDetailsHeading"><span>Report Blocks Content Data</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ reportBlocksContentData.id }}</span>
+        </dd>
+        <dt><span>Data</span></dt>
+        <dd>
+          <span>{{ reportBlocksContentData.data }}</span>
+        </dd>
+        <dt><span>Report Blocks Content</span></dt>
+        <dd>
+          <div *ngIf="reportBlocksContentData.reportBlocksContent">
+            <a [routerLink]="['/report-blocks-content', reportBlocksContentData.reportBlocksContent.id, 'view']">{{
+              reportBlocksContentData.reportBlocksContent.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Country</span></dt>
+        <dd>
+          <div *ngIf="reportBlocksContentData.country">
+            <a [routerLink]="['/countries', reportBlocksContentData.country.id, 'view']">{{ reportBlocksContentData.country.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/report-blocks-content-data', reportBlocksContentData.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

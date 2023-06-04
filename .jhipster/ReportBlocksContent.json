@@ -1,0 +1,46 @@
+{
+  "applications": "*",
+  "changelogDate": "20230530095339",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "report_blocks_content",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "priorityNumber",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "template",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isActive",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ReportBlocksContent",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "reportBlocks",
+      "otherEntityRelationshipName": "reportBlocksContent",
+      "relationshipName": "reportBlocks",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "reportBlocksContentData",
+      "otherEntityRelationshipName": "reportBlocksContent",
+      "relationshipName": "reportBlocksContentData",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}
