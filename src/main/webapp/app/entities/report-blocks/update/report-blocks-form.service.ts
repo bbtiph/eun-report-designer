@@ -24,6 +24,7 @@ type ReportBlocksFormGroupContent = {
   config: FormControl<IReportBlocks['config']>;
   countryIds: FormControl<IReportBlocks['countryIds']>;
   report: FormControl<IReportBlocks['report']>;
+  reportBlocksContents: FormControl<IReportBlocks['reportBlocksContents']>;
 };
 
 export type ReportBlocksFormGroup = FormGroup<ReportBlocksFormGroupContent>;
@@ -43,12 +44,13 @@ export class ReportBlocksFormService {
           validators: [Validators.required],
         }
       ),
-      name: new FormControl(reportBlocksRawValue.name),
+      name: new FormControl(reportBlocksRawValue?.name),
       priorityNumber: new FormControl(reportBlocksRawValue.priorityNumber),
       isActive: new FormControl(reportBlocksRawValue.isActive),
       config: new FormControl(reportBlocksRawValue.config),
       countryIds: new FormControl(reportBlocksRawValue.countryIds ?? []),
       report: new FormControl(reportBlocksRawValue.report),
+      reportBlocksContents: new FormControl(reportBlocksRawValue.reportBlocksContents ?? []),
     });
   }
 

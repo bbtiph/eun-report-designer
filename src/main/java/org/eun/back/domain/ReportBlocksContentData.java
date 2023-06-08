@@ -1,5 +1,6 @@
 package org.eun.back.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -23,8 +24,9 @@ public class ReportBlocksContentData implements Serializable {
     @Column(name = "data")
     private String data;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "reportBlocks", "reportBlocksContentData" }, allowSetters = true)
+    @ManyToOne(cascade = CascadeType.ALL)
+    //    @JsonBackReference
+    @JsonIgnoreProperties(value = { "reportBlocks", "reportBlocksContentData", "reportBlocksContent" }, allowSetters = true)
     private ReportBlocksContent reportBlocksContent;
 
     @ManyToOne

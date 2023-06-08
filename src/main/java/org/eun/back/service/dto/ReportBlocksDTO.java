@@ -23,6 +23,8 @@ public class ReportBlocksDTO implements Serializable {
 
     private Set<CountriesDTO> countryIds = new HashSet<>();
 
+    private Set<ReportBlocksContentDTO> reportBlocksContents = new HashSet<>();
+
     private ReportDTO report;
 
     public Long getId() {
@@ -47,6 +49,14 @@ public class ReportBlocksDTO implements Serializable {
 
     public void setPriorityNumber(Long priorityNumber) {
         this.priorityNumber = priorityNumber;
+    }
+
+    public Set<ReportBlocksContentDTO> getReportBlocksContents() {
+        return reportBlocksContents;
+    }
+
+    public void setReportBlocksContents(Set<ReportBlocksContentDTO> reportBlocksContents) {
+        this.reportBlocksContents = reportBlocksContents;
     }
 
     public Boolean getIsActive() {

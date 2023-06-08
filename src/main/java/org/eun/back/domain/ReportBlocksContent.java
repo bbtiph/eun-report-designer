@@ -1,6 +1,8 @@
 package org.eun.back.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,10 +37,12 @@ public class ReportBlocksContent implements Serializable {
     private Boolean isActive;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "countryIds", "report" }, allowSetters = true)
+    //    @JsonBackReference
+    @JsonIgnoreProperties(value = { "countryIds", "report", "reportBlocksContents", "reportBlocks" }, allowSetters = true)
     private ReportBlocks reportBlocks;
 
-    @OneToMany(mappedBy = "reportBlocksContent")
+    @OneToMany(mappedBy = "reportBlocksContent", cascade = CascadeType.ALL)
+    //    @JsonManagedReference
     @JsonIgnoreProperties(value = { "reportBlocksContent", "country" }, allowSetters = true)
     private Set<ReportBlocksContentData> reportBlocksContentData = new HashSet<>();
 

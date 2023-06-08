@@ -47,7 +47,7 @@ public class Report implements Serializable {
     private String fileContentType;
 
     @OneToMany(mappedBy = "report")
-    @JsonIgnoreProperties(value = { "countryIds", "report" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "countryIds", "report", "reportBlocksContents" }, allowSetters = true)
     private Set<ReportBlocks> reportBlocks = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

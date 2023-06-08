@@ -1,7 +1,10 @@
 package org.eun.back.service.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import org.eun.back.domain.ReportBlocksContentData;
 
 /**
  * A DTO for the {@link org.eun.back.domain.ReportBlocksContent} entity.
@@ -19,7 +22,17 @@ public class ReportBlocksContentDTO implements Serializable {
 
     private Boolean isActive;
 
-    private ReportBlocksDTO reportBlocks;
+    //    private ReportBlocksDTO reportBlocks;
+
+    private Set<ReportBlocksContentDataDTO> reportBlocksContentData = new HashSet<>();
+
+    public Set<ReportBlocksContentDataDTO> getReportBlocksContentData() {
+        return reportBlocksContentData;
+    }
+
+    public void setReportBlocksContentData(Set<ReportBlocksContentDataDTO> reportBlocksContentData) {
+        this.reportBlocksContentData = reportBlocksContentData;
+    }
 
     public Long getId() {
         return id;
@@ -61,13 +74,13 @@ public class ReportBlocksContentDTO implements Serializable {
         this.isActive = isActive;
     }
 
-    public ReportBlocksDTO getReportBlocks() {
-        return reportBlocks;
-    }
-
-    public void setReportBlocks(ReportBlocksDTO reportBlocks) {
-        this.reportBlocks = reportBlocks;
-    }
+    //    public ReportBlocksDTO getReportBlocks() {
+    //        return reportBlocks;
+    //    }
+    //
+    //    public void setReportBlocks(ReportBlocksDTO reportBlocks) {
+    //        this.reportBlocks = reportBlocks;
+    //    }
 
     @Override
     public boolean equals(Object o) {
@@ -99,7 +112,7 @@ public class ReportBlocksContentDTO implements Serializable {
             ", priorityNumber=" + getPriorityNumber() +
             ", template='" + getTemplate() + "'" +
             ", isActive='" + getIsActive() + "'" +
-            ", reportBlocks=" + getReportBlocks() +
+//            ", reportBlocks=" + getReportBlocks() +
             "}";
     }
 }

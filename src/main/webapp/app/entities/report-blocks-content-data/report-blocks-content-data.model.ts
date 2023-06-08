@@ -4,7 +4,7 @@ import { ICountries } from 'app/entities/countries/countries.model';
 export interface IReportBlocksContentData {
   id: number;
   data?: string | null;
-  reportBlocksContent?: Pick<IReportBlocksContent, 'id'> | null;
+  reportBlocksContent?: IReportBlocksContent | null;
   country?: Pick<ICountries, 'id'> | null;
 }
 

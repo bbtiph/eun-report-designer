@@ -13,7 +13,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface ReportBlocksContentDataMapper extends EntityMapper<ReportBlocksContentDataDTO, ReportBlocksContentData> {
-    @Mapping(target = "reportBlocksContent", source = "reportBlocksContent", qualifiedByName = "reportBlocksContentId")
+    //    @Mapping(target = "reportBlocksContent", source = "reportBlocksContent", qualifiedByName = "reportBlocksContentId")
     @Mapping(target = "country", source = "country", qualifiedByName = "countriesId")
     ReportBlocksContentDataDTO toDto(ReportBlocksContentData s);
 

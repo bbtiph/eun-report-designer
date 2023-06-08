@@ -13,7 +13,7 @@ public class ReportBlocksContentDataDTO implements Serializable {
 
     private String data;
 
-    private ReportBlocksContentDTO reportBlocksContent;
+    //    private ReportBlocksContentDTO reportBlocksContent;
 
     private CountriesDTO country;
 
@@ -33,13 +33,13 @@ public class ReportBlocksContentDataDTO implements Serializable {
         this.data = data;
     }
 
-    public ReportBlocksContentDTO getReportBlocksContent() {
-        return reportBlocksContent;
-    }
-
-    public void setReportBlocksContent(ReportBlocksContentDTO reportBlocksContent) {
-        this.reportBlocksContent = reportBlocksContent;
-    }
+    //    public ReportBlocksContentDTO getReportBlocksContent() {
+    //        return reportBlocksContent;
+    //    }
+    //
+    //    public void setReportBlocksContent(ReportBlocksContentDTO reportBlocksContent) {
+    //        this.reportBlocksContent = reportBlocksContent;
+    //    }
 
     public CountriesDTO getCountry() {
         return country;
@@ -76,7 +76,7 @@ public class ReportBlocksContentDataDTO implements Serializable {
         return "ReportBlocksContentDataDTO{" +
             "id=" + getId() +
             ", data='" + getData() + "'" +
-            ", reportBlocksContent=" + getReportBlocksContent() +
+//            ", reportBlocksContent=" + getReportBlocksContent() +
             ", country=" + getCountry() +
             "}";
     }

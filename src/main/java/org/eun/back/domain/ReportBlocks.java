@@ -1,5 +1,6 @@
 package org.eun.back.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -46,6 +47,11 @@ public class ReportBlocks implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = { "reportBlocks" }, allowSetters = true)
     private Report report;
+
+    @OneToMany(mappedBy = "reportBlocks", cascade = CascadeType.ALL)
+    //    @JsonBackReference
+    @JsonIgnoreProperties(value = { "reportBlocks", "reportBlocksContentData" }, allowSetters = true)
+    private Set<ReportBlocksContent> reportBlocksContents = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -149,6 +155,37 @@ public class ReportBlocks implements Serializable {
 
     public ReportBlocks report(Report report) {
         this.setReport(report);
+        return this;
+    }
+
+    public Set<ReportBlocksContent> getReportBlocksContents() {
+        return this.reportBlocksContents;
+    }
+
+    public void setReportBlocksContents(Set<ReportBlocksContent> reportBlocksContents) {
+        if (this.reportBlocksContents != null) {
+            this.reportBlocksContents.forEach(i -> i.setReportBlocks(null));
+        }
+        if (reportBlocksContents != null) {
+            reportBlocksContents.forEach(i -> i.setReportBlocks(this));
+        }
+        this.reportBlocksContents = reportBlocksContents;
+    }
+
+    public ReportBlocks reportBlocksContents(Set<ReportBlocksContent> reportBlocksContents) {
+        this.setReportBlocksContents(reportBlocksContents);
+        return this;
+    }
+
+    public ReportBlocks addReportBlocksContent(ReportBlocksContent reportBlocksContent) {
+        this.reportBlocksContents.add(reportBlocksContent);
+        reportBlocksContent.setReportBlocks(this);
+        return this;
+    }
+
+    public ReportBlocks removeReportBlocksContent(ReportBlocksContent reportBlocksContent) {
+        this.reportBlocksContents.remove(reportBlocksContent);
+        reportBlocksContent.setReportBlocks(null);
         return this;
     }
 

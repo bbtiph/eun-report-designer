@@ -42,7 +42,7 @@ export class ReportBlocksContentDataFormService {
           validators: [Validators.required],
         }
       ),
-      data: new FormControl(reportBlocksContentDataRawValue.data),
+      data: new FormControl(reportBlocksContentDataRawValue.data ?? undefined),
       reportBlocksContent: new FormControl(reportBlocksContentDataRawValue.reportBlocksContent),
       country: new FormControl(reportBlocksContentDataRawValue.country),
     });

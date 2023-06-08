@@ -55,7 +55,7 @@ export class ReportBlocksContentService {
     return reportBlocksContent.id;
   }
 
-  compareReportBlocksContent(o1: Pick<IReportBlocksContent, 'id'> | null, o2: Pick<IReportBlocksContent, 'id'> | null): boolean {
+  compareReportBlocksContent(o1: Pick<IReportBlocksContent, 'id'> | null, o2: IReportBlocksContent | null): boolean {
     return o1 && o2 ? this.getReportBlocksContentIdentifier(o1) === this.getReportBlocksContentIdentifier(o2) : o1 === o2;
   }
 
