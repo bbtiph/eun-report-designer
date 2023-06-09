@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.eun.back.domain.ReportBlocksContentData;
 import org.eun.back.repository.ReportBlocksContentDataRepository;
 import org.eun.back.service.ReportBlocksContentDataService;
 import org.eun.back.service.dto.ReportBlocksContentDataDTO;
@@ -59,6 +60,33 @@ public class ReportBlocksContentDataResource {
             throw new BadRequestAlertException("A new reportBlocksContentData cannot already have an ID", ENTITY_NAME, "idexists");
         }
         ReportBlocksContentDataDTO result = reportBlocksContentDataService.save(reportBlocksContentDataDTO);
+        return ResponseEntity
+            .created(new URI("/api/report-blocks-content-data/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code POST  /report-blocks-content-data} : Create a new reportBlocksContentData.
+     *
+     * @param reportBlocksContentDataDTO the reportBlocksContentDataDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new reportBlocksContentDataDTO, or with status {@code 400 (Bad Request)} if the reportBlocksContentData has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/report-blocks-content-data/{contentId}")
+    public ResponseEntity<ReportBlocksContentData> createReportBlocksContentDataWithContent(
+        @PathVariable(value = "contentId", required = false) final Long contentId,
+        @RequestBody ReportBlocksContentDataDTO reportBlocksContentDataDTO
+    ) throws URISyntaxException {
+        log.debug("REST request to save ReportBlocksContentData and content : {}", reportBlocksContentDataDTO);
+        if (reportBlocksContentDataDTO.getId() != null) {
+            throw new BadRequestAlertException(
+                "A new reportBlocksContentData with content cannot already have an ID",
+                ENTITY_NAME,
+                "idexists"
+            );
+        }
+        ReportBlocksContentData result = reportBlocksContentDataService.saveWithContent(reportBlocksContentDataDTO, contentId);
         return ResponseEntity
             .created(new URI("/api/report-blocks-content-data/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))

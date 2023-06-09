@@ -13,7 +13,7 @@ import { IReport } from 'app/entities/report/report.model';
 import { ReportService } from 'app/entities/report/service/report.service';
 import { IReportBlocksContent } from '../../report-blocks-content/report-blocks-content.model';
 import { IReportBlocksContentData, NewReportBlocksContentData } from '../../report-blocks-content-data/report-blocks-content-data.model';
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReportBlocksContentDataService } from '../../report-blocks-content-data/service/report-blocks-content-data.service';
 
 @Component({
@@ -71,6 +71,14 @@ export class ReportBlocksUpdateComponent implements OnInit {
     for (const content of reportBlocks.reportBlocksContents) {
       // @ts-ignore
       const columns = this.getColumns(content.template);
+      for (const column of columns) {
+        // @ts-ignore
+        const columnData = JSON.parse(content.template);
+        const formControlName = `column_${content.id}_${column.index}`;
+        const formControl = this.formGroup.get(formControlName) as FormControl;
+        columnData.columns.find((c: any) => c.index === column.index).name = formControl.value;
+        content.template = JSON.stringify(columnData);
+      }
       for (const row of content.reportBlocksContentData) {
         // @ts-ignore
         const rowData = JSON.parse(row.data);
@@ -144,34 +152,28 @@ export class ReportBlocksUpdateComponent implements OnInit {
   addRow(content: IReportBlocksContent): void {
     let newRow: NewReportBlocksContentData = {
       id: null,
-      data: '',
+      data: this.generateInitialData(content),
       reportBlocksContent: content,
       country: null,
     };
-    this.reportBlocksContentDataService.create(newRow).subscribe((res: HttpResponse<IReportBlocksContentData>) => {
+    this.reportBlocksContentDataService.createWithContent(newRow, content.id).subscribe((res: HttpResponse<IReportBlocksContentData>) => {
       const newRow: IReportBlocksContentData = res.body!;
       // @ts-ignore
       content.reportBlocksContentData.push(newRow);
-
-      const rowControls = content.reportBlocksContentData.map(row => {
-        const controls: { [key: string]: AbstractControl } = {};
-
-        // @ts-ignore
-        const columns = this.getColumns(content.template ?? '{}');
-        for (const column of columns) {
-          const formControlName = `row_${content.id}_${row.id}_column_${column.index}`;
-          controls[formControlName] = new FormControl('');
-        }
-
-        return controls;
-      });
-
-      // @ts-ignore
-      this.formGroup.addControl('rowGroup', new FormGroup(rowControls));
+      this.initializeFormControls();
     });
   }
 
-  removeRow(content: IReportBlocksContent, rowIndex: number): void {
+  generateInitialData(content: IReportBlocksContent): string {
+    const columns = this.getColumns(content.template ?? '{}');
+    const initialData = { rows: columns.map(column => ({ data: '', index: column.index })) };
+    return JSON.stringify(initialData);
+  }
+
+  removeRow(content: IReportBlocksContent, rowIndex: number, rowId: number): void {
+    this.reportBlocksContentDataService.delete(rowId).subscribe(() => {
+      console.log('deleted row ID: ', rowId);
+    });
     content.reportBlocksContentData.splice(rowIndex, 1);
   }
 
@@ -180,18 +182,21 @@ export class ReportBlocksUpdateComponent implements OnInit {
       // @ts-ignore
       const template = JSON.parse(content.template);
       if (Array.isArray(template.columns)) {
-        const newColumnIndex = template.columns.length + 1;
+        const columnIndices = template.columns.map((column: { name: string; index: any }) => column.index);
+        const newColumnIndex = Math.max(...columnIndices) + 1;
 
         template.columns.push({ name: '', index: newColumnIndex });
         content.template = JSON.stringify(template);
+        const formControlName1 = `column_${content.id}_${newColumnIndex}`;
+        this.formGroup.addControl(formControlName1, new FormControl(''));
 
         for (const row of content.reportBlocksContentData) {
           // @ts-ignore
           const rowData = JSON.parse(row.data);
-          rowData.rows.push({ data: '', index: newColumnIndex });
-          row.data = JSON.stringify(rowData);
           const formControlName = `row_${content.id}_${row.id}_column_${newColumnIndex}`;
           this.formGroup.addControl(formControlName, new FormControl(''));
+          rowData.rows.push({ data: '', index: newColumnIndex });
+          row.data = JSON.stringify(rowData);
         }
       }
     } catch (error) {

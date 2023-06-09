@@ -4,8 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.eun.back.domain.ReportBlocksContent;
 import org.eun.back.domain.ReportBlocksContentData;
 import org.eun.back.repository.ReportBlocksContentDataRepository;
+import org.eun.back.repository.ReportBlocksContentRepository;
 import org.eun.back.service.ReportBlocksContentDataService;
 import org.eun.back.service.dto.ReportBlocksContentDataDTO;
 import org.eun.back.service.mapper.ReportBlocksContentDataMapper;
@@ -25,13 +27,17 @@ public class ReportBlocksContentDataServiceImpl implements ReportBlocksContentDa
 
     private final ReportBlocksContentDataRepository reportBlocksContentDataRepository;
 
+    private final ReportBlocksContentRepository reportBlocksContentRepository;
+
     private final ReportBlocksContentDataMapper reportBlocksContentDataMapper;
 
     public ReportBlocksContentDataServiceImpl(
         ReportBlocksContentDataRepository reportBlocksContentDataRepository,
+        ReportBlocksContentRepository reportBlocksContentRepository,
         ReportBlocksContentDataMapper reportBlocksContentDataMapper
     ) {
         this.reportBlocksContentDataRepository = reportBlocksContentDataRepository;
+        this.reportBlocksContentRepository = reportBlocksContentRepository;
         this.reportBlocksContentDataMapper = reportBlocksContentDataMapper;
     }
 
@@ -41,6 +47,16 @@ public class ReportBlocksContentDataServiceImpl implements ReportBlocksContentDa
         ReportBlocksContentData reportBlocksContentData = reportBlocksContentDataMapper.toEntity(reportBlocksContentDataDTO);
         reportBlocksContentData = reportBlocksContentDataRepository.save(reportBlocksContentData);
         return reportBlocksContentDataMapper.toDto(reportBlocksContentData);
+    }
+
+    @Override
+    public ReportBlocksContentData saveWithContent(ReportBlocksContentDataDTO reportBlocksContentDataDTO, Long contentId) {
+        log.debug("Request to save ReportBlocksContentData : {}", reportBlocksContentDataDTO);
+        ReportBlocksContentData reportBlocksContentData = reportBlocksContentDataMapper.toEntity(reportBlocksContentDataDTO);
+        ReportBlocksContent reportBlocksContent = reportBlocksContentRepository.findById(contentId).get();
+        reportBlocksContentData.setReportBlocksContent(reportBlocksContent);
+        reportBlocksContentData = reportBlocksContentDataRepository.save(reportBlocksContentData);
+        return reportBlocksContentData;
     }
 
     @Override

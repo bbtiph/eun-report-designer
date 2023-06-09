@@ -2,6 +2,7 @@ package org.eun.back.service;
 
 import java.util.List;
 import java.util.Optional;
+import org.eun.back.domain.ReportBlocksContentData;
 import org.eun.back.service.dto.ReportBlocksContentDataDTO;
 
 /**
@@ -15,6 +16,8 @@ public interface ReportBlocksContentDataService {
      * @return the persisted entity.
      */
     ReportBlocksContentDataDTO save(ReportBlocksContentDataDTO reportBlocksContentDataDTO);
+
+    ReportBlocksContentData saveWithContent(ReportBlocksContentDataDTO reportBlocksContentDataDTO, Long contentId);
 
     /**
      * Updates a reportBlocksContentData.

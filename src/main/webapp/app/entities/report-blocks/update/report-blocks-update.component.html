@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form name="editForm" role="form" novalidate [formGroup]="editForm">
       <h2 id="jhi-report-blocks-heading" data-cy="ReportBlocksCreateUpdateHeading">Create or edit a Report Blocks</h2>
 
       <div>
@@ -42,64 +42,61 @@
             <option [ngValue]="reportOption" *ngFor="let reportOption of reportsSharedCollection">{{ reportOption.reportName }}</option>
           </select>
         </div>
-
-        <ul>
-          <li *ngFor="let content of reportBlocks?.reportBlocksContents">
-            {{ content.template }}
-
-            <table *ngIf="content.type === 'table'" class="table table-bordered">
-              <thead>
-                <tr>
-                  <th *ngFor="let column of getColumns(content.template ?? '{}')">
-                    <input
-                      [formControl]="getColumnFormControl(content, column.index)"
-                      placeholder="Column {{ column.index }}"
-                      class="form-control"
-                    />
-                    <button id="remove-column" (click)="removeColumn(content, column.index)" class="btn btn-danger">Remove</button>
-                  </th>
-                  <th>
-                    <button id="add-column" (click)="addColumn(content)" class="btn btn-primary">Add Column</button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
-                  <td *ngFor="let column of getColumns(content.template ?? '{}')">
-                    <input [formControl]="getRowDataFormControl(content, rowIndex, column.index)" placeholder="Data" class="form-control" />
-                  </td>
-                  <td>
-                    <button id="remove-row" (click)="removeRow(content, row.id)" class="btn btn-danger">Remove</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td [attr.colspan]="getColumns(content.template ?? '{}').length + 1">
-                    <button id="add-row" (click)="addRow(content)" class="btn btn-primary">Add Row</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <!-- Add logic for rendering text editor if content.type is not 'table' -->
-          </li>
-        </ul>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
-        </button>
       </div>
     </form>
+
+    <ul>
+      <li *ngFor="let content of reportBlocks?.reportBlocksContents">
+        {{ content.template }}
+
+        <table *ngIf="content.type === 'table'" class="table table-bordered">
+          <thead>
+            <tr>
+              <th *ngFor="let column of getColumns(content.template ?? '{}'); let columnIndex = index">
+                <input [formControl]="getColumnFormControl(content, column.index)" placeholder="New column" class="form-control" />
+                <button id="remove-column" (click)="removeColumn(content, columnIndex)" class="btn btn-danger">-</button>
+              </th>
+              <th>
+                <button id="add-column" (click)="addColumn(content)" class="btn btn-primary">+</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
+              <td *ngFor="let column of getColumns(content.template ?? '{}')">
+                <input [formControl]="getRowDataFormControl(content, rowIndex, column.index)" placeholder="Data" class="form-control" />
+              </td>
+              <td>
+                <button id="remove-row" (click)="removeRow(content, rowIndex, row.id)" class="btn btn-danger">-</button>
+              </td>
+            </tr>
+            <tr>
+              <td [attr.colspan]="getColumns(content.template ?? '{}').length + 1">
+                <button id="add-row" (click)="addRow(content)" class="btn btn-primary">+</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Add logic for rendering text editor if content.type is not 'table' -->
+      </li>
+    </ul>
+
+    <div>
+      <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+      </button>
+
+      <button
+        type="submit"
+        (click)="save()"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving"
+        class="btn btn-primary"
+      >
+        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+      </button>
+    </div>
   </div>
 </div>

@@ -24,7 +24,7 @@ public class ReportBlocksContentData implements Serializable {
     @Column(name = "data")
     private String data;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     //    @JsonBackReference
     @JsonIgnoreProperties(value = { "reportBlocks", "reportBlocksContentData", "reportBlocksContent" }, allowSetters = true)
     private ReportBlocksContent reportBlocksContent;

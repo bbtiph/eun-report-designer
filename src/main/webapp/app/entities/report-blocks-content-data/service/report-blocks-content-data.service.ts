@@ -22,6 +22,10 @@ export class ReportBlocksContentDataService {
     return this.http.post<IReportBlocksContentData>(this.resourceUrl, reportBlocksContentData, { observe: 'response' });
   }
 
+  createWithContent(reportBlocksContentData: NewReportBlocksContentData, contentId: number): Observable<EntityResponseType> {
+    return this.http.post<IReportBlocksContentData>(`${this.resourceUrl}/${contentId}`, reportBlocksContentData, { observe: 'response' });
+  }
+
   update(reportBlocksContentData: IReportBlocksContentData): Observable<EntityResponseType> {
     return this.http.put<IReportBlocksContentData>(
       `${this.resourceUrl}/${this.getReportBlocksContentDataIdentifier(reportBlocksContentData)}`,
