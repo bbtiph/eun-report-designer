@@ -1,0 +1,21 @@
+.custom-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.custom-list li {
+  background-color: rgba(0, 128, 255, 0.07);
+  padding: 20px 20px 20px 20px;
+  margin-bottom: 20px;
+  border-radius: 1.5%;
+}
+
+.btn-add-sub-block {
+  background-color: #0077bf;
+}
+
+.plus-icon {
+  color: white;
+  font-size: 16px;
+  margin-right: 5px;
+}

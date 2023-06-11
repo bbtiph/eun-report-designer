@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable, switchMap, tap } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 import { ReportBlocksFormService, ReportBlocksFormGroup } from './report-blocks-form.service';
-import { IColumn, IReportBlocks, ITemplate } from '../report-blocks.model';
+import { IReportBlocks } from '../report-blocks.model';
 import { ReportBlocksService } from '../service/report-blocks.service';
 import { ICountries } from 'app/entities/countries/countries.model';
 import { CountriesService } from 'app/entities/countries/service/countries.service';
@@ -19,11 +19,14 @@ import { ReportBlocksContentDataService } from '../../report-blocks-content-data
 @Component({
   selector: 'jhi-report-blocks-update',
   templateUrl: './report-blocks-update.component.html',
+  styleUrls: ['./report-block-update.component.scss'],
 })
 export class ReportBlocksUpdateComponent implements OnInit {
   isSaving = false;
+  type: string = '';
   reportBlocks: IReportBlocks | null = null;
   reportBlocksContents?: IReportBlocksContent[];
+  tableData: any = {};
 
   countriesSharedCollection: ICountries[] = [];
   reportsSharedCollection: IReport[] = [];
@@ -48,6 +51,10 @@ export class ReportBlocksUpdateComponent implements OnInit {
   compareReport = (o1: IReport | null, o2: IReport | null): boolean => this.reportService.compareReport(o1, o2);
 
   ngOnInit(): void {
+    // this.tableData['column_1'] = 'some data1';
+    // this.tableData['column_2'] = 'some data';
+    // @ts-ignore
+    this.type = this.activatedRoute.data.value.type;
     this.activatedRoute.data.subscribe(({ reportBlocks }) => {
       this.reportBlocks = reportBlocks;
       if (reportBlocks) {
@@ -69,25 +76,38 @@ export class ReportBlocksUpdateComponent implements OnInit {
 
     // @ts-ignore
     for (const content of reportBlocks.reportBlocksContents) {
+      const formControl = this.formGroup.get(`content_${content.id}_name`) as FormControl;
       // @ts-ignore
-      const columns = this.getColumns(content.template);
-      for (const column of columns) {
+      const contentData = JSON.parse(content.template);
+      contentData.name = formControl.value;
+      content.template = JSON.stringify(contentData);
+      if (content.type === 'text') {
+        const formControl = this.formGroup.get(`content_${content.id}_data`) as FormControl;
         // @ts-ignore
-        const columnData = JSON.parse(content.template);
-        const formControlName = `column_${content.id}_${column.index}`;
-        const formControl = this.formGroup.get(formControlName) as FormControl;
-        columnData.columns.find((c: any) => c.index === column.index).name = formControl.value;
-        content.template = JSON.stringify(columnData);
-      }
-      for (const row of content.reportBlocksContentData) {
+        const contentData = JSON.parse(content.template);
+        contentData.data = formControl.value;
+        content.template = JSON.stringify(contentData);
+      } else {
         // @ts-ignore
-        const rowData = JSON.parse(row.data);
+        const columns = this.getColumns(content.template);
         for (const column of columns) {
-          const formControlName = `row_${content.id}_${row.id}_column_${column.index}`;
+          // @ts-ignore
+          const columnData = JSON.parse(content.template);
+          const formControlName = `column_${content.id}_${column.index}`;
           const formControl = this.formGroup.get(formControlName) as FormControl;
-          rowData.rows.find((r: any) => r.index === column.index).data = formControl.value;
+          columnData.columns.find((c: any) => c.index === column.index).name = formControl.value;
+          content.template = JSON.stringify(columnData);
         }
-        row.data = JSON.stringify(rowData);
+        for (const row of content.reportBlocksContentData) {
+          // @ts-ignore
+          const rowData = JSON.parse(row.data);
+          for (const column of columns) {
+            const formControlName = `row_${content.id}_${row.id}_column_${column.index}`;
+            const formControl = this.formGroup.get(formControlName) as FormControl;
+            rowData.rows.find((r: any) => r.index === column.index).data = formControl.value;
+          }
+          row.data = JSON.stringify(rowData);
+        }
       }
     }
 
@@ -182,8 +202,11 @@ export class ReportBlocksUpdateComponent implements OnInit {
       // @ts-ignore
       const template = JSON.parse(content.template);
       if (Array.isArray(template.columns)) {
-        const columnIndices = template.columns.map((column: { name: string; index: any }) => column.index);
-        const newColumnIndex = Math.max(...columnIndices) + 1;
+        let newColumnIndex = 1;
+        if (template.columns.length > 0) {
+          const columnIndices = template.columns.map((column: { name: string; index: any }) => column.index);
+          newColumnIndex = Math.max(...columnIndices) + 1;
+        }
 
         template.columns.push({ name: '', index: newColumnIndex });
         content.template = JSON.stringify(template);
@@ -222,14 +245,13 @@ export class ReportBlocksUpdateComponent implements OnInit {
             row.data = JSON.stringify(rowData);
 
             const formControlName = `row_${content.id}_${row.id}_column_${columnIndex}`;
-            console.log('r>>', columnIndex, formControlName);
+            // console.log('r>>', columnIndex, formControlName);
             // console.log('r2>>', this.formGroup.controls)
-            console.log('data>>', row.data);
-            console.log('template>>', content.template);
+            // console.log('data>>', row.data);
+            // console.log('template>>', content.template);
             this.formGroup.removeControl(formControlName);
           }
         }
-        debugger;
       }
     } catch (error) {
       console.error('Error parsing JSON:', error);
@@ -242,6 +264,15 @@ export class ReportBlocksUpdateComponent implements OnInit {
     } catch (error) {
       console.error('Error parsing template JSON:', error);
       return [];
+    }
+  }
+
+  getName(template: string): string {
+    try {
+      return JSON.parse(template).name;
+    } catch (error) {
+      console.error('Error parsing template JSON:', error);
+      return '';
     }
   }
 
@@ -258,25 +289,39 @@ export class ReportBlocksUpdateComponent implements OnInit {
     // @ts-ignore
     for (const content of this.reportBlocks?.reportBlocksContents) {
       // @ts-ignore
-      const columns = this.getColumns(content.template);
-      for (const column of columns) {
-        const formControlName = `column_${content.id}_${column.index}`;
-        this.formGroup.addControl(formControlName, new FormControl(column.name));
-      }
-      for (const row of content.reportBlocksContentData) {
-        for (const column of columns) {
-          const formControlName = `row_${content.id}_${row.id}_column_${column.index}`;
+      const contentData = JSON.parse(content.template);
+      this.formGroup.addControl(`content_${content.id}_name`, new FormControl(contentData.name));
 
-          const desiredObject = this.getRows(row.data ?? '{}').find(row => row.index === column.index);
-          if (desiredObject) {
-            const dataValue = desiredObject.data;
-            this.formGroup.addControl(formControlName, new FormControl(dataValue));
-          } else {
-            this.formGroup.addControl(formControlName, new FormControl(''));
+      if (content.type === 'text') {
+        this.formGroup.addControl(`content_${content.id}_data`, new FormControl(contentData.data));
+      } else {
+        // @ts-ignore
+        const columns = this.getColumns(content.template);
+        for (const column of columns) {
+          const formControlName = `column_${content.id}_${column.index}`;
+          this.formGroup.addControl(formControlName, new FormControl(column.name));
+        }
+        for (const row of content.reportBlocksContentData) {
+          for (const column of columns) {
+            const formControlName = `row_${content.id}_${row.id}_column_${column.index}`;
+            const desiredObject = this.getRows(row.data ?? '{}').find(row => row.index === column.index);
+            if (desiredObject) {
+              const dataValue = desiredObject.data;
+              this.formGroup.addControl(formControlName, new FormControl(dataValue));
+            } else {
+              this.formGroup.addControl(formControlName, new FormControl(''));
+            }
           }
         }
       }
     }
+    // console.log(this.formGroup.controls)
+  }
+
+  getFormControlByKey(key: string): FormControl {
+    if ((this.formGroup.get(key) as FormControl) == null) console.log('teeeeeeeeee???', key);
+    // console.log(this.formGroup.controls)
+    return this.formGroup.get(key) as FormControl;
   }
 
   getColumnFormControl(content: IReportBlocksContent, columnIndex: number): FormControl {
@@ -289,5 +334,41 @@ export class ReportBlocksUpdateComponent implements OnInit {
     const formControlName = `row_${content.id}_${content.reportBlocksContentData[rowIndex].id}_column_${columnIndex}`;
     if ((this.formGroup.get(formControlName) as FormControl) == null) console.log('eeeeeeeeee???', formControlName);
     return this.formGroup.get(formControlName) as FormControl;
+  }
+
+  addStructuredSubBlock() {
+    const subBlock = {
+      id: 0,
+      type: 'table',
+      priorityNumber: 0,
+      template: '{"name":"","columns":[]}',
+      isActive: true,
+      reportBlocksContentData: [
+        {
+          id: 0,
+          data: '{"rows":[]}',
+        },
+      ],
+    };
+    this.reportBlocks?.reportBlocksContents?.push(subBlock);
+    this.initializeFormControls();
+  }
+
+  addTextSubBlock() {
+    const subBlock = {
+      id: 0,
+      type: 'text',
+      priorityNumber: 0,
+      template: '{"name":"","data":""}',
+      isActive: true,
+      reportBlocksContentData: [
+        {
+          id: 0,
+          data: '{"data":""}',
+        },
+      ],
+    };
+    this.reportBlocks?.reportBlocksContents?.push(subBlock);
+    this.initializeFormControls();
   }
 }

@@ -13,14 +13,4 @@ export interface IReportBlocks {
   reportBlocksContents: IReportBlocksContent[] | null;
 }
 
-export interface ITemplate {
-  name: string;
-  columns: IColumn[];
-}
-
-export interface IColumn {
-  name: string;
-  index: number;
-}
-
 export type NewReportBlocks = Omit<IReportBlocks, 'id'> & { id: null };

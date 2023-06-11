@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate [formGroup]="editForm">
-      <h2 id="jhi-report-blocks-heading" data-cy="ReportBlocksCreateUpdateHeading">Create or edit a Report Blocks</h2>
+      <h2 id="jhi-report-blocks-heading" data-cy="ReportBlocksCreateUpdateHeading">Edit template</h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
@@ -12,8 +12,9 @@
         </div>
 
         <div class="row mb-3">
-          <label for="field_countryIds">Country</label>
+          <label>Country: Cyprus</label>
           <select
+            *ngIf="type === 'template'"
             class="form-control"
             id="field_countryIds"
             data-cy="countryId"
@@ -42,50 +43,82 @@
             <option [ngValue]="reportOption" *ngFor="let reportOption of reportsSharedCollection">{{ reportOption.reportName }}</option>
           </select>
         </div>
+
+        <ul class="custom-list">
+          <li *ngFor="let content of reportBlocks?.reportBlocksContents; let contentIndex = index">
+            <span>Type: </span>
+            {{ content.type }}
+            <br />
+            <span>Name: </span>
+            <input [formControl]="getFormControlByKey('content_' + content.id + '_name')" placeholder="New column" class="form-control" />
+            <br />
+
+            <table *ngIf="content.type === 'table'" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th *ngFor="let column of getColumns(content.template ?? '{}'); let columnIndex = index" class="text-center">
+                    <input
+                      [formControl]="getColumnFormControl(content, column.index)"
+                      placeholder="New column"
+                      class="form-control"
+                      *ngIf="type === 'template'"
+                    />
+                    <h6 *ngIf="type === 'content'">{{ getColumnFormControl(content, column.index).value }}</h6>
+                    <button
+                      *ngIf="type === 'template'"
+                      id="remove-column"
+                      (click)="removeColumn(content, columnIndex)"
+                      class="btn btn-outline-primary"
+                    >
+                      <b>-</b>
+                    </button>
+                  </th>
+                  <th class="text-center">
+                    <button *ngIf="type === 'template'" id="add-column" (click)="addColumn(content)" class="btn btn-outline-success">
+                      <b>+</b>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="type === 'content'">
+                <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
+                  <td *ngFor="let column of getColumns(content.template ?? '{}')" class="text-center">
+                    <input [formControl]="getRowDataFormControl(content, rowIndex, column.index)" placeholder="Data" class="form-control" />
+                  </td>
+                  <td class="text-center">
+                    <button id="remove-row" (click)="removeRow(content, rowIndex, row.id)" class="btn btn-outline-primary"><b>-</b></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td [attr.colspan]="getColumns(content.template ?? '{}').length + 1" class="text-center">
+                    <button id="add-row" (click)="addRow(content)" class="btn btn-outline-success"><b>+</b></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <angular-editor
+              *ngIf="content.type === 'text'"
+              [formControl]="getFormControlByKey('content_' + content.id + '_data')"
+            ></angular-editor>
+          </li>
+        </ul>
       </div>
     </form>
-
-    <ul>
-      <li *ngFor="let content of reportBlocks?.reportBlocksContents">
-        {{ content.template }}
-
-        <table *ngIf="content.type === 'table'" class="table table-bordered">
-          <thead>
-            <tr>
-              <th *ngFor="let column of getColumns(content.template ?? '{}'); let columnIndex = index">
-                <input [formControl]="getColumnFormControl(content, column.index)" placeholder="New column" class="form-control" />
-                <button id="remove-column" (click)="removeColumn(content, columnIndex)" class="btn btn-danger">-</button>
-              </th>
-              <th>
-                <button id="add-column" (click)="addColumn(content)" class="btn btn-primary">+</button>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
-              <td *ngFor="let column of getColumns(content.template ?? '{}')">
-                <input [formControl]="getRowDataFormControl(content, rowIndex, column.index)" placeholder="Data" class="form-control" />
-              </td>
-              <td>
-                <button id="remove-row" (click)="removeRow(content, rowIndex, row.id)" class="btn btn-danger">-</button>
-              </td>
-            </tr>
-            <tr>
-              <td [attr.colspan]="getColumns(content.template ?? '{}').length + 1">
-                <button id="add-row" (click)="addRow(content)" class="btn btn-primary">+</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Add logic for rendering text editor if content.type is not 'table' -->
-      </li>
-    </ul>
 
     <div>
       <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
         <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
       </button>
+      <div *ngIf="type === 'template'" class="btn-group">
+        <button class="btn btn btn-success" style="background-color: #0077bf" (click)="addTextSubBlock()">
+          <i class="fas fa-plus plus-icon">+</i>Add Static text
+        </button>
+
+        <button class="btn btn btn-success" style="background-color: #0077bf" (click)="addStructuredSubBlock()">
+          <i class="fas fa-plus plus-icon">+</i>Add Structured table
+        </button>
+      </div>
 
       <button
         type="submit"

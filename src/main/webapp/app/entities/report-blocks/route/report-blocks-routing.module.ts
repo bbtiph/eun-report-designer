@@ -34,10 +34,24 @@ const reportBlocksRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/edit',
+    path: ':id/edit-content',
     component: ReportBlocksUpdateComponent,
     resolve: {
       reportBlocks: ReportBlocksRoutingResolveService,
+    },
+    data: {
+      type: 'content',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/edit-template',
+    component: ReportBlocksUpdateComponent,
+    resolve: {
+      reportBlocks: ReportBlocksRoutingResolveService,
+    },
+    data: {
+      type: 'template',
     },
     canActivate: [UserRouteAccessService],
   },

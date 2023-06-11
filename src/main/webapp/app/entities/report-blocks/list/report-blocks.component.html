@@ -97,12 +97,22 @@
 
               <button
                 type="submit"
-                [routerLink]="['/report-blocks', reportBlocks.id, 'edit']"
+                [routerLink]="['/report-blocks', reportBlocks.id, 'edit-template']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit</span>
+                <span class="d-none d-md-inline">Edit Template</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/report-blocks', reportBlocks.id, 'edit-content']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit Content</span>
               </button>
 
               <button type="submit" (click)="delete(reportBlocks)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
