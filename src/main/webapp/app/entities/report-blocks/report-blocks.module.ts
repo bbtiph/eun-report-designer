@@ -6,9 +6,16 @@ import { ReportBlocksUpdateComponent } from './update/report-blocks-update.compo
 import { ReportBlocksDeleteDialogComponent } from './delete/report-blocks-delete-dialog.component';
 import { ReportBlocksRoutingModule } from './route/report-blocks-routing.module';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { ReportBlocksCountryContentComponent } from './report-blocks-country-content/report-blocks-country-content.component';
 
 @NgModule({
   imports: [SharedModule, ReportBlocksRoutingModule, AngularEditorModule],
-  declarations: [ReportBlocksComponent, ReportBlocksDetailComponent, ReportBlocksUpdateComponent, ReportBlocksDeleteDialogComponent],
+  declarations: [
+    ReportBlocksComponent,
+    ReportBlocksDetailComponent,
+    ReportBlocksUpdateComponent,
+    ReportBlocksDeleteDialogComponent,
+    ReportBlocksCountryContentComponent,
+  ],
 })
 export class ReportBlocksModule {}

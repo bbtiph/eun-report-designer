@@ -155,6 +155,13 @@ public class ReportBlocksResource {
         return ResponseUtil.wrapOrNotFound(reportBlocksDTO);
     }
 
+    @GetMapping("/report-blocks/{id}/{countryId}")
+    public ResponseEntity<ReportBlocksDTO> getReportBlocksWithCountry(@PathVariable Long id, @PathVariable Long countryId) {
+        log.debug("REST request to get ReportBlocks : {}", id);
+        Optional<ReportBlocksDTO> reportBlocksDTO = reportBlocksService.findOneWithCountry(id, countryId);
+        return ResponseUtil.wrapOrNotFound(reportBlocksDTO);
+    }
+
     /**
      * {@code DELETE  /report-blocks/:id} : delete the "id" reportBlocks.
      *

@@ -27,6 +27,8 @@ export class ReportBlocksUpdateComponent implements OnInit {
   type: string = '';
   reportBlocks: IReportBlocks | null = null;
   reportBlocksContents?: IReportBlocksContent[];
+  selectedCountry: ICountries | null = null;
+  countryId: number | undefined;
   tableData: any = {};
 
   countriesSharedCollection: ICountries[] = [];
@@ -53,10 +55,18 @@ export class ReportBlocksUpdateComponent implements OnInit {
   compareReport = (o1: IReport | null, o2: IReport | null): boolean => this.reportService.compareReport(o1, o2);
 
   ngOnInit(): void {
-    // this.tableData['column_1'] = 'some data1';
-    // this.tableData['column_2'] = 'some data';
     // @ts-ignore
     this.type = this.activatedRoute.data.value.type;
+    // @ts-ignore
+    this.countryId = this.activatedRoute.params.value.countryId;
+    this.countriesService
+      .findById(this.countryId || 1)
+      .subscribe((country: ICountries) => {
+        this.selectedCountry = country;
+      })
+      .unsubscribe();
+    console.log('rrrr>', this.selectedCountry);
+
     this.activatedRoute.data.subscribe(({ reportBlocks }) => {
       this.reportBlocks = reportBlocks;
       if (reportBlocks) {
@@ -66,6 +76,10 @@ export class ReportBlocksUpdateComponent implements OnInit {
 
       this.loadRelationshipsOptions();
     });
+    if (this.type === 'content') {
+      // @ts-ignore
+      this.selectedCountry = this.reportBlocks?.countryIds[0];
+    }
   }
 
   previousState(): void {
@@ -106,7 +120,11 @@ export class ReportBlocksUpdateComponent implements OnInit {
           for (const column of columns) {
             const formControlName = `row_${content.id}_${row.id}_column_${column.index}`;
             const formControl = this.formGroup.get(formControlName) as FormControl;
-            rowData.rows.find((r: any) => r.index === column.index).data = formControl.value;
+            try {
+              rowData.rows.find((r: any) => r.index === column.index).data = formControl.value;
+            } catch (e) {
+              console.log(e);
+            }
           }
           row.data = JSON.stringify(rowData);
         }
@@ -176,7 +194,9 @@ export class ReportBlocksUpdateComponent implements OnInit {
       id: null,
       data: this.generateInitialData(content),
       reportBlocksContent: content,
-      country: null,
+      country: {
+        id: this.countryId || 1,
+      },
       newContentData: false,
     };
     this.reportBlocksContentDataService.createWithContent(newRow, content.id).subscribe((res: HttpResponse<IReportBlocksContentData>) => {

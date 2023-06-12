@@ -57,6 +57,8 @@ public interface ReportBlocksService {
      */
     Optional<ReportBlocksDTO> findOne(Long id);
 
+    Optional<ReportBlocksDTO> findOneWithCountry(Long id, Long countryId);
+
     /**
      * Delete the "id" reportBlocks.
      *

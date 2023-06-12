@@ -34,6 +34,10 @@ export class CountriesService {
     return this.http.get<ICountries>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findById(id: number): Observable<ICountries> {
+    return this.http.get<ICountries>(`${this.resourceUrl}/${id}`);
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ICountries[]>(this.resourceUrl, { params: options, observe: 'response' });
@@ -57,6 +61,7 @@ export class CountriesService {
   ): Type[] {
     const countries: Type[] = countriesToCheck.filter(isPresent);
     if (countries.length > 0) {
+      debugger;
       const countriesCollectionIdentifiers = countriesCollection.map(countriesItem => this.getCountriesIdentifier(countriesItem)!);
       const countriesToAdd = countries.filter(countriesItem => {
         const countriesIdentifier = this.getCountriesIdentifier(countriesItem);

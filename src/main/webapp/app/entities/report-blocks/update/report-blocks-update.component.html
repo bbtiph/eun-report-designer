@@ -14,7 +14,15 @@
         </div>
 
         <div class="row mb-3">
-          <label>Country: </label>
+          <label
+            >Country:
+            {{
+              type === 'content' && reportBlocks && reportBlocks.countryIds && reportBlocks.countryIds.length > 0
+                ? reportBlocks.countryIds[0].countryName
+                : ''
+            }}</label
+          >
+
           <select
             *ngIf="type === 'template' || type === 'new'"
             class="form-control"

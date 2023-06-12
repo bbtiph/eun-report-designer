@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate [formGroup]="form">
+      <h2 id="jhi-report-blocks-heading" data-cy="ReportBlocksCreateUpdateHeading">Country</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3">
+          <label>Country: </label>
+
+          <select
+            class="form-control"
+            id="field_countryIds"
+            data-cy="countryId"
+            name="countryIds"
+            formControlName="countryIds"
+            [(ngModel)]="selectedCountryId"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="country.id" *ngFor="let country of reportBlocks?.countryIds">{{ country.countryName }}</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <div>
+      <button
+        type="submit"
+        [routerLink]="['/report-blocks', reportBlocks?.id, selectedCountryId, 'edit-content']"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="selectedCountryId === null"
+        class="btn btn-primary"
+      >
+        <span>Next</span>
+      </button>
+    </div>
+  </div>
+</div>

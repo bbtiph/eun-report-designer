@@ -8,7 +8,7 @@ export interface IReportBlocks {
   priorityNumber?: number | null;
   isActive?: boolean | null;
   config?: string | null;
-  countryIds?: Pick<ICountries, 'id'>[] | null;
+  countryIds?: ICountries[] | null;
   report?: Pick<IReport, 'id'> | null;
   reportBlocksContents: IReportBlocksContent[] | null;
 }

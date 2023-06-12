@@ -38,6 +38,10 @@ export class ReportBlocksService {
     return this.http.get<IReportBlocks>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findWithCountry(id: number, countryId: number): Observable<EntityResponseType> {
+    return this.http.get<IReportBlocks>(`${this.resourceUrl}/${id}/${countryId}`, { observe: 'response' });
+  }
+
   findAll(): Observable<IReportBlocks[]> {
     return this.http.get<IReportBlocks[]>(this.resourceUrl);
   }
