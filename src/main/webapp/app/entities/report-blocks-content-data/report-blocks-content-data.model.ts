@@ -6,6 +6,7 @@ export interface IReportBlocksContentData {
   data?: string | null;
   reportBlocksContent?: IReportBlocksContent | null;
   country?: Pick<ICountries, 'id'> | null;
+  newContentData: boolean | false;
 }
 
 export type NewReportBlocksContentData = Omit<IReportBlocksContentData, 'id'> & { id: null };

@@ -15,6 +15,7 @@ import { IReportBlocksContent } from '../../report-blocks-content/report-blocks-
 import { IReportBlocksContentData, NewReportBlocksContentData } from '../../report-blocks-content-data/report-blocks-content-data.model';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReportBlocksContentDataService } from '../../report-blocks-content-data/service/report-blocks-content-data.service';
+import { ReportBlocksContentService } from '../../report-blocks-content/service/report-blocks-content.service';
 
 @Component({
   selector: 'jhi-report-blocks-update',
@@ -36,6 +37,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
 
   constructor(
     protected reportBlocksService: ReportBlocksService,
+    protected reportBlocksContentService: ReportBlocksContentService,
     protected reportBlocksFormService: ReportBlocksFormService,
     protected countriesService: CountriesService,
     protected reportService: ReportService,
@@ -175,6 +177,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
       data: this.generateInitialData(content),
       reportBlocksContent: content,
       country: null,
+      newContentData: false,
     };
     this.reportBlocksContentDataService.createWithContent(newRow, content.id).subscribe((res: HttpResponse<IReportBlocksContentData>) => {
       const newRow: IReportBlocksContentData = res.body!;
@@ -320,7 +323,6 @@ export class ReportBlocksUpdateComponent implements OnInit {
 
   getFormControlByKey(key: string): FormControl {
     if ((this.formGroup.get(key) as FormControl) == null) console.log('teeeeeeeeee???', key);
-    // console.log(this.formGroup.controls)
     return this.formGroup.get(key) as FormControl;
   }
 
@@ -337,16 +339,21 @@ export class ReportBlocksUpdateComponent implements OnInit {
   }
 
   addStructuredSubBlock() {
-    const subBlock = {
-      id: 0,
+    const contentIndices = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.id);
+    // @ts-ignore
+    const newContentIndex = 1 + Math.max(...contentIndices);
+    const subBlock: IReportBlocksContent = {
+      id: newContentIndex,
       type: 'table',
       priorityNumber: 0,
       template: '{"name":"","columns":[]}',
       isActive: true,
+      newContentData: true,
       reportBlocksContentData: [
         {
           id: 0,
           data: '{"rows":[]}',
+          newContentData: true,
         },
       ],
     };
@@ -355,16 +362,21 @@ export class ReportBlocksUpdateComponent implements OnInit {
   }
 
   addTextSubBlock() {
-    const subBlock = {
-      id: 0,
+    const contentIndices = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.id);
+    // @ts-ignore
+    const newContentIndex = 1 + Math.max(...contentIndices);
+    const subBlock: IReportBlocksContent = {
+      id: newContentIndex,
       type: 'text',
       priorityNumber: 0,
       template: '{"name":"","data":""}',
       isActive: true,
+      newContentData: true,
       reportBlocksContentData: [
         {
-          id: 0,
+          id: 1,
           data: '{"data":""}',
+          newContentData: true,
         },
       ],
     };

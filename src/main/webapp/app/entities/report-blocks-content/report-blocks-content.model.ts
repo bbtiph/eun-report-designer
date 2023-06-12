@@ -9,6 +9,7 @@ export interface IReportBlocksContent {
   isActive?: boolean | null;
   reportBlocks?: IReportBlocks | null;
   reportBlocksContentData: IReportBlocksContentData[] | [];
+  newContentData: boolean | false;
 }
 
 export type NewReportBlocksContent = Omit<IReportBlocksContent, 'id'> & { id: null };

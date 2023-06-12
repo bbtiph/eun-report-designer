@@ -6,7 +6,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.eun.back.domain.ReportBlocks;
 import org.eun.back.repository.ReportBlocksRepository;
+import org.eun.back.service.ReportBlocksContentDataService;
+import org.eun.back.service.ReportBlocksContentService;
 import org.eun.back.service.ReportBlocksService;
+import org.eun.back.service.dto.ReportBlocksContentDTO;
+import org.eun.back.service.dto.ReportBlocksContentDataDTO;
 import org.eun.back.service.dto.ReportBlocksDTO;
 import org.eun.back.service.mapper.ReportBlocksMapper;
 import org.slf4j.Logger;
@@ -27,10 +31,21 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
 
     private final ReportBlocksRepository reportBlocksRepository;
 
+    private final ReportBlocksContentDataService reportBlocksContentDataService;
+
+    private final ReportBlocksContentService reportBlocksContentService;
+
     private final ReportBlocksMapper reportBlocksMapper;
 
-    public ReportBlocksServiceImpl(ReportBlocksRepository reportBlocksRepository, ReportBlocksMapper reportBlocksMapper) {
+    public ReportBlocksServiceImpl(
+        ReportBlocksRepository reportBlocksRepository,
+        ReportBlocksContentDataService reportBlocksContentDataService,
+        ReportBlocksContentService reportBlocksContentService,
+        ReportBlocksMapper reportBlocksMapper
+    ) {
         this.reportBlocksRepository = reportBlocksRepository;
+        this.reportBlocksContentDataService = reportBlocksContentDataService;
+        this.reportBlocksContentService = reportBlocksContentService;
         this.reportBlocksMapper = reportBlocksMapper;
     }
 
@@ -45,6 +60,20 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
     @Override
     public ReportBlocksDTO update(ReportBlocksDTO reportBlocksDTO) {
         log.debug("Request to update ReportBlocks : {}", reportBlocksDTO);
+        for (ReportBlocksContentDTO reportBlocksContentDTO : reportBlocksDTO.getReportBlocksContents()) {
+            if (reportBlocksContentDTO.getNewContentData() != null && reportBlocksContentDTO.getNewContentData().equals("true")) {
+                for (ReportBlocksContentDataDTO reportBlocksContentDataDTO : reportBlocksContentDTO.getReportBlocksContentData()) {
+                    if (
+                        reportBlocksContentDTO.getNewContentData() != null && reportBlocksContentDataDTO.getNewContentData().equals("true")
+                    ) {
+                        reportBlocksContentDataDTO.setId(null);
+                        //                        reportBlocksContentDataDTO = reportBlocksContentDataService.save(reportBlocksContentDataDTO);
+                    }
+                }
+                reportBlocksContentDTO.setId(null);
+                //                reportBlocksContentDTO = reportBlocksContentService.save(reportBlocksContentDTO);
+            }
+        }
         ReportBlocks reportBlocks = reportBlocksMapper.toEntity(reportBlocksDTO);
         reportBlocks = reportBlocksRepository.save(reportBlocks);
         return reportBlocksMapper.toDto(reportBlocks);

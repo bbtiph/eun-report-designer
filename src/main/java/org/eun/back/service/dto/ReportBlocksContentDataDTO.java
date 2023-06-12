@@ -17,6 +17,16 @@ public class ReportBlocksContentDataDTO implements Serializable {
 
     private CountriesDTO country;
 
+    private String newContentData;
+
+    public String getNewContentData() {
+        return newContentData;
+    }
+
+    public void setNewContentData(String newContentData) {
+        this.newContentData = newContentData;
+    }
+
     public Long getId() {
         return id;
     }

@@ -26,6 +26,16 @@ public class ReportBlocksContentDTO implements Serializable {
 
     private Set<ReportBlocksContentDataDTO> reportBlocksContentData = new HashSet<>();
 
+    private String newContentData;
+
+    public String getNewContentData() {
+        return newContentData;
+    }
+
+    public void setNewContentData(String newContentData) {
+        this.newContentData = newContentData;
+    }
+
     public Set<ReportBlocksContentDataDTO> getReportBlocksContentData() {
         return reportBlocksContentData;
     }
