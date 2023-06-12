@@ -31,6 +31,9 @@ const reportBlocksRoute: Routes = [
     resolve: {
       reportBlocks: ReportBlocksRoutingResolveService,
     },
+    data: {
+      type: 'new',
+    },
     canActivate: [UserRouteAccessService],
   },
   {

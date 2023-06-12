@@ -62,7 +62,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
       if (reportBlocks) {
         this.updateForm(reportBlocks);
       }
-      this.initializeFormControls();
+      if (this.type != 'new') this.initializeFormControls();
 
       this.loadRelationshipsOptions();
     });
@@ -186,6 +186,22 @@ export class ReportBlocksUpdateComponent implements OnInit {
       this.initializeFormControls();
     });
   }
+
+  // addRow(content: IReportBlocksContent): void {
+  //   const dataIndices = content.reportBlocksContentData?.map((data: IReportBlocksContentData) => data.id);
+  //   // @ts-ignore
+  //   const newDataIndex = 1 + Math.max(...dataIndices);
+  //   let newRow = {
+  //     id: newDataIndex,
+  //     data: this.generateInitialData(content),
+  //     reportBlocksContent: content,
+  //     country: null,
+  //     newContentData: true,
+  //   };
+  //   // @ts-ignore
+  //   content.reportBlocksContentData.push(newRow);
+  //   this.initializeFormControls();
+  // }
 
   generateInitialData(content: IReportBlocksContent): string {
     const columns = this.getColumns(content.template ?? '{}');
@@ -350,11 +366,11 @@ export class ReportBlocksUpdateComponent implements OnInit {
       isActive: true,
       newContentData: true,
       reportBlocksContentData: [
-        {
-          id: 0,
-          data: '{"rows":[]}',
-          newContentData: true,
-        },
+        // {
+        //   id: 0,
+        //   data: '{"rows":[]}',
+        //   newContentData: true,
+        // },
       ],
     };
     this.reportBlocks?.reportBlocksContents?.push(subBlock);

@@ -1,7 +1,9 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate [formGroup]="editForm">
-      <h2 id="jhi-report-blocks-heading" data-cy="ReportBlocksCreateUpdateHeading">Edit template</h2>
+      <h2 id="jhi-report-blocks-heading" data-cy="ReportBlocksCreateUpdateHeading">
+        {{ type === 'template' ? 'Edit template' : type === 'content' ? 'Edit content' : 'Add new block' }}
+      </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
@@ -12,9 +14,9 @@
         </div>
 
         <div class="row mb-3">
-          <label>Country: Cyprus</label>
+          <label>Country: </label>
           <select
-            *ngIf="type === 'template'"
+            *ngIf="type === 'template' || type === 'new'"
             class="form-control"
             id="field_countryIds"
             data-cy="countryId"
@@ -44,7 +46,7 @@
           </select>
         </div>
 
-        <ul class="custom-list">
+        <ul *ngIf="type !== 'new'" class="custom-list">
           <li *ngFor="let content of reportBlocks?.reportBlocksContents; let contentIndex = index">
             <span>Type: </span>
             {{ content.type }}

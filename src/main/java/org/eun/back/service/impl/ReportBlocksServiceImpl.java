@@ -67,11 +67,11 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
                         reportBlocksContentDTO.getNewContentData() != null && reportBlocksContentDataDTO.getNewContentData().equals("true")
                     ) {
                         reportBlocksContentDataDTO.setId(null);
-                        //                        reportBlocksContentDataDTO = reportBlocksContentDataService.save(reportBlocksContentDataDTO);
+                        //reportBlocksContentDataDTO = reportBlocksContentDataService.save(reportBlocksContentDataDTO);
                     }
                 }
                 reportBlocksContentDTO.setId(null);
-                //                reportBlocksContentDTO = reportBlocksContentService.save(reportBlocksContentDTO);
+                //reportBlocksContentDTO = reportBlocksContentService.save(reportBlocksContentDTO);
             }
         }
         ReportBlocks reportBlocks = reportBlocksMapper.toEntity(reportBlocksDTO);
