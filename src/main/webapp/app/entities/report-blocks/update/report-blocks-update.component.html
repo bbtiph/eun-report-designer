@@ -107,6 +107,7 @@
               </tbody>
             </table>
 
+            <div *ngIf="type === 'template' && content.type === 'text'"><span>*Default Text</span></div>
             <angular-editor
               *ngIf="content.type === 'text'"
               [formControl]="getFormControlByKey('content_' + content.id + '_data')"
