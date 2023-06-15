@@ -22,11 +22,21 @@ public class ReportBlocksContentDTO implements Serializable {
 
     private Boolean isActive;
 
+    private Boolean deleted;
+
     //    private ReportBlocksDTO reportBlocks;
 
     private Set<ReportBlocksContentDataDTO> reportBlocksContentData = new HashSet<>();
 
     private String newContentData;
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public String getNewContentData() {
         return newContentData;

@@ -84,7 +84,7 @@
             </div>
           </td>
           <td class="text-end">
-            <div class="btn-group">
+            <div>
               <button
                 type="submit"
                 [routerLink]="['/report-blocks', reportBlocks.id, 'view']"
@@ -94,26 +94,27 @@
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline">View</span>
               </button>
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/report-blocks', reportBlocks.id, 'edit-template']"
+                  class="btn btn btn-success btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline">Edit Template</span>
+                </button>
 
-              <button
-                type="submit"
-                [routerLink]="['/report-blocks', reportBlocks.id, 'edit-template']"
-                class="btn btn btn-success btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit Template</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/report-blocks', reportBlocks.id, 'country-content']"
-                class="btn btn btn-success btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit Content</span>
-              </button>
+                <button
+                  type="submit"
+                  [routerLink]="['/report-blocks', reportBlocks.id, 'country-content']"
+                  class="btn btn btn-warning btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline">Edit Content</span>
+                </button>
+              </div>
 
               <button type="submit" (click)="delete(reportBlocks)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>

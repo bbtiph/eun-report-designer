@@ -29,7 +29,6 @@ export class ReportBlocksUpdateComponent implements OnInit {
   reportBlocksContents?: IReportBlocksContent[];
   selectedCountry: ICountries | null = null;
   countryId: number | undefined;
-  tableData: any = {};
 
   countriesSharedCollection: ICountries[] = [];
   reportsSharedCollection: IReport[] = [];
@@ -59,13 +58,9 @@ export class ReportBlocksUpdateComponent implements OnInit {
     this.type = this.activatedRoute.data.value.type;
     // @ts-ignore
     this.countryId = this.activatedRoute.params.value.countryId;
-    this.countriesService
-      .findById(this.countryId || 1)
-      .subscribe((country: ICountries) => {
-        this.selectedCountry = country;
-      })
-      .unsubscribe();
-    console.log('rrrr>', this.selectedCountry);
+    this.countriesService.findById(this.countryId || 1).subscribe((country: ICountries) => {
+      this.selectedCountry = country;
+    });
 
     this.activatedRoute.data.subscribe(({ reportBlocks }) => {
       this.reportBlocks = reportBlocks;
@@ -103,6 +98,13 @@ export class ReportBlocksUpdateComponent implements OnInit {
         const contentData = JSON.parse(content.template);
         contentData.data = formControl.value;
         content.template = JSON.stringify(contentData);
+        for (const row of content.reportBlocksContentData) {
+          const formControl = this.formGroup.get(`content_${content.id}_${row.id}_data`) as FormControl;
+          // @ts-ignore
+          const rowData = JSON.parse(row.data);
+          rowData.data = formControl.value;
+          row.data = JSON.stringify(rowData);
+        }
       } else {
         // @ts-ignore
         const columns = this.getColumns(content.template);
@@ -207,22 +209,6 @@ export class ReportBlocksUpdateComponent implements OnInit {
     });
   }
 
-  // addRow(content: IReportBlocksContent): void {
-  //   const dataIndices = content.reportBlocksContentData?.map((data: IReportBlocksContentData) => data.id);
-  //   // @ts-ignore
-  //   const newDataIndex = 1 + Math.max(...dataIndices);
-  //   let newRow = {
-  //     id: newDataIndex,
-  //     data: this.generateInitialData(content),
-  //     reportBlocksContent: content,
-  //     country: null,
-  //     newContentData: true,
-  //   };
-  //   // @ts-ignore
-  //   content.reportBlocksContentData.push(newRow);
-  //   this.initializeFormControls();
-  // }
-
   generateInitialData(content: IReportBlocksContent): string {
     const columns = this.getColumns(content.template ?? '{}');
     const initialData = { rows: columns.map(column => ({ data: '', index: column.index })) };
@@ -266,12 +252,12 @@ export class ReportBlocksUpdateComponent implements OnInit {
     }
   }
 
-  removeColumn(content: IReportBlocksContent, columnIndex: number): void {
+  removeColumn(content: IReportBlocksContent, index: number, columnIndex: number): void {
     try {
       // @ts-ignore
       const template = JSON.parse(content.template);
       if (Array.isArray(template.columns)) {
-        template.columns.splice(columnIndex, 1);
+        template.columns.splice(index, 1);
         content.template = JSON.stringify(template);
 
         for (const row of content.reportBlocksContentData) {
@@ -280,17 +266,15 @@ export class ReportBlocksUpdateComponent implements OnInit {
           // @ts-ignore
           const rowIndex = rowData.rows.findIndex(rowRes => rowRes.index === columnIndex);
           if (rowIndex !== -1) {
+            console.log('deleted: ', rowIndex);
             rowData.rows.splice(rowIndex, 1);
             row.data = JSON.stringify(rowData);
 
             const formControlName = `row_${content.id}_${row.id}_column_${columnIndex}`;
-            // console.log('r>>', columnIndex, formControlName);
-            // console.log('r2>>', this.formGroup.controls)
-            // console.log('data>>', row.data);
-            // console.log('template>>', content.template);
             this.formGroup.removeControl(formControlName);
           }
         }
+        this.initializeFormControls();
       }
     } catch (error) {
       console.error('Error parsing JSON:', error);
@@ -333,6 +317,10 @@ export class ReportBlocksUpdateComponent implements OnInit {
 
       if (content.type === 'text') {
         this.formGroup.addControl(`content_${content.id}_data`, new FormControl(contentData.data));
+        for (const row of content.reportBlocksContentData) {
+          const formControlName = `content_${content.id}_${row.id}_data`;
+          this.formGroup.addControl(formControlName, new FormControl(JSON.parse(row.data ?? '{}').data));
+        }
       } else {
         // @ts-ignore
         const columns = this.getColumns(content.template);
@@ -354,7 +342,6 @@ export class ReportBlocksUpdateComponent implements OnInit {
         }
       }
     }
-    // console.log(this.formGroup.controls)
   }
 
   getFormControlByKey(key: string): FormControl {
@@ -409,14 +396,18 @@ export class ReportBlocksUpdateComponent implements OnInit {
       isActive: true,
       newContentData: true,
       reportBlocksContentData: [
-        {
-          id: 1,
-          data: '{"data":""}',
-          newContentData: true,
-        },
+        // {
+        //   id: 1,
+        //   data: '{"data":""}',
+        //   newContentData: true,
+        // },
       ],
     };
     this.reportBlocks?.reportBlocksContents?.push(subBlock);
     this.initializeFormControls();
+  }
+
+  removeSubBlock(content: IReportBlocksContent) {
+    content.deleted = true;
   }
 }

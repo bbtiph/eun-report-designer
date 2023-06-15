@@ -9,19 +9,12 @@
         <jhi-alert-error></jhi-alert-error>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_name">Name</label>
+          <label class="form-label" for="field_name">Name:</label>
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
         </div>
 
         <div class="row mb-3">
-          <label
-            >Country:
-            {{
-              type === 'content' && reportBlocks && reportBlocks.countryIds && reportBlocks.countryIds.length > 0
-                ? reportBlocks.countryIds[0].countryName
-                : ''
-            }}</label
-          >
+          <label>Country: {{ type === 'content' ? selectedCountry?.countryName : '' }}</label>
 
           <select
             *ngIf="type === 'template' || type === 'new'"
@@ -40,7 +33,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_report">Report</label>
+          <label class="form-label" for="field_report">Report:</label>
           <select
             class="form-control"
             id="field_report"
@@ -54,64 +47,82 @@
           </select>
         </div>
 
-        <ul *ngIf="type !== 'new'" class="custom-list">
-          <li *ngFor="let content of reportBlocks?.reportBlocksContents; let contentIndex = index">
-            <span>Type: </span>
-            {{ content.type }}
-            <br />
-            <span>Name: </span>
-            <input [formControl]="getFormControlByKey('content_' + content.id + '_name')" placeholder="New column" class="form-control" />
-            <br />
+        <ul *ngIf="type !== 'new'">
+          <li *ngFor="let content of reportBlocks?.reportBlocksContents; let contentIndex = index" class="custom-list-li">
+            <div *ngIf="!content.deleted" class="custom-list">
+              <div style="display: flex; justify-content: space-between">
+                <span>Type: {{ content.type }}</span>
+                <button *ngIf="type === 'template'" (click)="removeSubBlock(content)" class="btn btn-outline-danger">
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+              <span>Name: </span>
 
-            <table *ngIf="content.type === 'table'" class="table table-bordered">
-              <thead>
-                <tr>
-                  <th *ngFor="let column of getColumns(content.template ?? '{}'); let columnIndex = index" class="text-center">
-                    <input
-                      [formControl]="getColumnFormControl(content, column.index)"
-                      placeholder="New column"
-                      class="form-control"
-                      *ngIf="type === 'template'"
-                    />
-                    <h6 *ngIf="type === 'content'">{{ getColumnFormControl(content, column.index).value }}</h6>
-                    <button
-                      *ngIf="type === 'template'"
-                      id="remove-column"
-                      (click)="removeColumn(content, columnIndex)"
-                      class="btn btn-outline-primary"
-                    >
-                      <b>-</b>
-                    </button>
-                  </th>
-                  <th class="text-center">
-                    <button *ngIf="type === 'template'" id="add-column" (click)="addColumn(content)" class="btn btn-outline-success">
-                      <b>+</b>
-                    </button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody *ngIf="type === 'content'">
-                <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
-                  <td *ngFor="let column of getColumns(content.template ?? '{}')" class="text-center">
-                    <input [formControl]="getRowDataFormControl(content, rowIndex, column.index)" placeholder="Data" class="form-control" />
-                  </td>
-                  <td class="text-center">
-                    <button id="remove-row" (click)="removeRow(content, rowIndex, row.id)" class="btn btn-outline-primary"><b>-</b></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td [attr.colspan]="getColumns(content.template ?? '{}').length + 1" class="text-center">
-                    <button id="add-row" (click)="addRow(content)" class="btn btn-outline-success"><b>+</b></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+              <input [formControl]="getFormControlByKey('content_' + content.id + '_name')" placeholder="Enter..." class="form-control" />
+              <br />
 
-            <div *ngIf="type === 'template' && content.type === 'text'"><span>*Default Text</span></div>
-            <angular-editor
-              *ngIf="content.type === 'text'"
-              [formControl]="getFormControlByKey('content_' + content.id + '_data')"
-            ></angular-editor>
+              <table *ngIf="content.type === 'table'" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th *ngFor="let column of getColumns(content.template ?? '{}'); let columnIndex = index" class="text-center">
+                      <input
+                        [formControl]="getColumnFormControl(content, column.index)"
+                        placeholder="New column"
+                        class="form-control"
+                        *ngIf="type === 'template'"
+                      />
+                      <h6 *ngIf="type === 'content'">{{ getColumnFormControl(content, column.index).value }}</h6>
+                      <button
+                        *ngIf="type === 'template'"
+                        id="remove-column"
+                        (click)="removeColumn(content, columnIndex, column.index)"
+                        class="btn btn-outline-primary"
+                      >
+                        <b>-</b>
+                      </button>
+                    </th>
+                    <th class="text-center">
+                      <button *ngIf="type === 'template'" id="add-column" (click)="addColumn(content)" class="btn btn-outline-success">
+                        <b>+</b>
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="type === 'content'">
+                  <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
+                    <td *ngFor="let column of getColumns(content.template ?? '{}')" class="text-center">
+                      <input
+                        [formControl]="getRowDataFormControl(content, rowIndex, column.index)"
+                        placeholder="Data"
+                        class="form-control"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <button id="remove-row" (click)="removeRow(content, rowIndex, row.id)" class="btn btn-outline-primary">
+                        <b>-</b>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td [attr.colspan]="getColumns(content.template ?? '{}').length + 1" class="text-center">
+                      <button id="add-row" (click)="addRow(content)" class="btn btn-outline-success"><b>+</b></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <span *ngIf="type === 'template' && content.type === 'text'">*Default text for selected countries</span>
+              <angular-editor
+                *ngIf="content.type === 'text' && type === 'template'"
+                [formControl]="getFormControlByKey('content_' + content.id + '_data')"
+              ></angular-editor>
+              <div *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
+                <angular-editor
+                  *ngIf="content.type === 'text' && type === 'content'"
+                  [formControl]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data')"
+                ></angular-editor>
+              </div>
+            </div>
           </li>
         </ul>
       </div>

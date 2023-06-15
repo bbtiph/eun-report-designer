@@ -68,18 +68,24 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
     @Override
     public ReportBlocksDTO update(ReportBlocksDTO reportBlocksDTO) {
         log.debug("Request to update ReportBlocks : {}", reportBlocksDTO);
-        for (ReportBlocksContentDTO reportBlocksContentDTO : reportBlocksDTO.getReportBlocksContents()) {
-            if (reportBlocksContentDTO.getNewContentData() != null && reportBlocksContentDTO.getNewContentData().equals("true")) {
-                for (ReportBlocksContentDataDTO reportBlocksContentDataDTO : reportBlocksContentDTO.getReportBlocksContentData()) {
-                    if (
-                        reportBlocksContentDTO.getNewContentData() != null && reportBlocksContentDataDTO.getNewContentData().equals("true")
-                    ) {
-                        reportBlocksContentDataDTO.setId(null);
-                        //reportBlocksContentDataDTO = reportBlocksContentDataService.save(reportBlocksContentDataDTO);
+        Iterator<ReportBlocksContentDTO> iterator = reportBlocksDTO.getReportBlocksContents().iterator();
+        while (iterator.hasNext()) {
+            ReportBlocksContentDTO reportBlocksContentDTO = iterator.next();
+            if (reportBlocksContentDTO.getDeleted() != null && reportBlocksContentDTO.getDeleted()) {
+                iterator.remove();
+                reportBlocksContentService.delete(reportBlocksContentDTO.getId());
+            } else if (reportBlocksContentDTO.getNewContentData() != null && reportBlocksContentDTO.getNewContentData().equals("true")) {
+                if (reportBlocksContentDTO.getType().equals("text")) {
+                    for (CountriesDTO countriesDTO : reportBlocksDTO.getCountryIds()) {
+                        ReportBlocksContentDataDTO reportBlocksContentDataDTONew = new ReportBlocksContentDataDTO();
+                        reportBlocksContentDataDTONew.setCountry(countriesDTO);
+                        reportBlocksContentDataDTONew.setNewContentData("true");
+                        reportBlocksContentDataDTONew.setData("{\"data\":\"\"}");
+                        reportBlocksContentDataDTONew.setId(null);
+                        reportBlocksContentDTO.getReportBlocksContentData().add(reportBlocksContentDataDTONew);
                     }
                 }
                 reportBlocksContentDTO.setId(null);
-                //reportBlocksContentDTO = reportBlocksContentService.save(reportBlocksContentDTO);
             }
         }
         ReportBlocks reportBlocks = reportBlocksMapper.toEntity(reportBlocksDTO);

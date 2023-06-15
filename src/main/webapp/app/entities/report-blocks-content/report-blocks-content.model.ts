@@ -7,6 +7,7 @@ export interface IReportBlocksContent {
   priorityNumber?: number | null;
   template?: string | null;
   isActive?: boolean | null;
+  deleted?: boolean | false;
   reportBlocks?: IReportBlocks | null;
   reportBlocksContentData: IReportBlocksContentData[] | [];
   newContentData: boolean | false;
