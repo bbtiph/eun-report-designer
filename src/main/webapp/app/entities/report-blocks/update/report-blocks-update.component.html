@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate [formGroup]="editForm">
-      <h2 id="jhi-report-blocks-heading" data-cy="ReportBlocksCreateUpdateHeading">
+      <h2 id="jhi-report-blocks-heading" data-cy="ReportBlocksCreateUpdateHeading" *ngIf="type !== 'report'">
         {{ type === 'template' ? 'Edit template' : type === 'content' ? 'Edit content' : 'Add new block' }}
       </h2>
 
@@ -13,9 +13,8 @@
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" *ngIf="type !== 'report'">
           <label>Country: {{ type === 'content' ? selectedCountry?.countryName : '' }}</label>
-
           <select
             *ngIf="type === 'template' || type === 'new'"
             class="form-control"
@@ -32,7 +31,7 @@
           </select>
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" *ngIf="type !== 'report'">
           <label class="form-label" for="field_report">Report:</label>
           <select
             class="form-control"
@@ -71,7 +70,7 @@
                         class="form-control"
                         *ngIf="type === 'template'"
                       />
-                      <h6 *ngIf="type === 'content'">{{ getColumnFormControl(content, column.index).value }}</h6>
+                      <h6 *ngIf="type === 'content' || type === 'report'">{{ getColumnFormControl(content, column.index).value }}</h6>
                       <button
                         *ngIf="type === 'template'"
                         id="remove-column"
@@ -88,7 +87,7 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody *ngIf="type === 'content'">
+                <tbody *ngIf="type === 'content' || type === 'report'">
                   <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
                     <td *ngFor="let column of getColumns(content.template ?? '{}')" class="text-center">
                       <input
@@ -118,7 +117,7 @@
               ></angular-editor>
               <div *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
                 <angular-editor
-                  *ngIf="content.type === 'text' && type === 'content'"
+                  *ngIf="content.type === 'text' && (type === 'content' || type === 'report')"
                   [formControl]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data')"
                 ></angular-editor>
               </div>
@@ -129,7 +128,14 @@
     </form>
 
     <div>
-      <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+      <button
+        *ngIf="type !== 'report'"
+        type="button"
+        id="cancel-save"
+        data-cy="entityCreateCancelButton"
+        class="btn btn-secondary"
+        (click)="previousState()"
+      >
         <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
       </button>
       <div *ngIf="type === 'template'" class="btn-group">

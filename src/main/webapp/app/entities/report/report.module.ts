@@ -8,9 +8,10 @@ import { ReportRoutingModule } from './route/report-routing.module';
 import { ReportBlocksManageComponent } from './report-blocks-manage/report-blocks-manage.component';
 import { ReportBlockEdit } from './report-blocks-manage/report-block-edit/report-block-edit.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { ReportBlocksModule } from '../report-blocks/report-blocks.module';
 
 @NgModule({
-  imports: [SharedModule, ReportRoutingModule, AngularEditorModule],
+  imports: [SharedModule, ReportRoutingModule, AngularEditorModule, ReportBlocksModule],
   declarations: [
     ReportComponent,
     ReportDetailComponent,

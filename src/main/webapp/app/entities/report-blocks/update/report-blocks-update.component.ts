@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, Observable, switchMap, tap } from 'rxjs';
@@ -23,6 +23,8 @@ import { ReportBlocksContentService } from '../../report-blocks-content/service/
   styleUrls: ['./report-block-update.component.scss'],
 })
 export class ReportBlocksUpdateComponent implements OnInit {
+  @Input() block: IReportBlocks | null = null;
+  @Input() isFromReport: boolean | false | undefined;
   isSaving = false;
   type: string = '';
   reportBlocks: IReportBlocks | null = null;
@@ -54,31 +56,34 @@ export class ReportBlocksUpdateComponent implements OnInit {
   compareReport = (o1: IReport | null, o2: IReport | null): boolean => this.reportService.compareReport(o1, o2);
 
   ngOnInit(): void {
-    // @ts-ignore
-    this.type = this.activatedRoute.data.value.type;
-    // @ts-ignore
-    this.countryId = this.activatedRoute.params.value.countryId;
-    this.countriesService.findById(this.countryId || 1).subscribe((country: ICountries) => {
-      this.selectedCountry = country;
-    });
-
-    this.activatedRoute.data.subscribe(({ reportBlocks }) => {
-      this.reportBlocks = reportBlocks;
-      if (reportBlocks) {
-        this.updateForm(reportBlocks);
+    if (this.isFromReport) {
+      this.type = 'report';
+      this.reportBlocks = this.block;
+      if (this.block) {
+        this.updateForm(this.block);
       }
-      if (this.type != 'new') this.initializeFormControls();
-
-      this.loadRelationshipsOptions();
-    });
-    if (this.type === 'content') {
+    } else {
       // @ts-ignore
-      this.selectedCountry = this.reportBlocks?.countryIds[0];
+      this.type = this.activatedRoute.data.value.type;
+      // @ts-ignore
+      this.countryId = this.activatedRoute.params.value.countryId;
+      this.countriesService.findById(this.countryId || 1).subscribe((country: ICountries) => {
+        this.selectedCountry = country;
+      });
+
+      this.activatedRoute.data.subscribe(({ reportBlocks }) => {
+        this.reportBlocks = reportBlocks;
+        if (reportBlocks) {
+          this.updateForm(reportBlocks);
+        }
+        this.loadRelationshipsOptions();
+      });
     }
+    if (this.type != 'new') this.initializeFormControls();
   }
 
   previousState(): void {
-    window.history.back();
+    if (this.type != 'report') window.history.back();
   }
 
   save(): void {

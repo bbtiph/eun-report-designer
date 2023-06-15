@@ -61,7 +61,6 @@ export class CountriesService {
   ): Type[] {
     const countries: Type[] = countriesToCheck.filter(isPresent);
     if (countries.length > 0) {
-      debugger;
       const countriesCollectionIdentifiers = countriesCollection.map(countriesItem => this.getCountriesIdentifier(countriesItem)!);
       const countriesToAdd = countries.filter(countriesItem => {
         const countriesIdentifier = this.getCountriesIdentifier(countriesItem);
