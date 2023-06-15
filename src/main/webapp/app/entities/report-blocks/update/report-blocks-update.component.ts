@@ -370,10 +370,13 @@ export class ReportBlocksUpdateComponent implements OnInit {
     const contentIndices = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.id);
     // @ts-ignore
     const newContentIndex = 1 + Math.max(...contentIndices);
+    const priorityNumbers = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.priorityNumber);
+    // @ts-ignore
+    const priorityNumber = 1 + Math.max(...priorityNumbers);
     const subBlock: IReportBlocksContent = {
       id: newContentIndex,
       type: 'table',
-      priorityNumber: 0,
+      priorityNumber: priorityNumber + 1,
       template: '{"name":"","columns":[]}',
       isActive: true,
       newContentData: true,
@@ -393,10 +396,13 @@ export class ReportBlocksUpdateComponent implements OnInit {
     const contentIndices = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.id);
     // @ts-ignore
     const newContentIndex = 1 + Math.max(...contentIndices);
+    const priorityNumbers = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.priorityNumber);
+    // @ts-ignore
+    const priorityNumber = 1 + Math.max(...priorityNumbers);
     const subBlock: IReportBlocksContent = {
       id: newContentIndex,
       type: 'text',
-      priorityNumber: 0,
+      priorityNumber: priorityNumber + 1,
       template: '{"name":"","data":""}',
       isActive: true,
       newContentData: true,

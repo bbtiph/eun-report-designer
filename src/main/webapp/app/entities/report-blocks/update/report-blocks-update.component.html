@@ -47,7 +47,10 @@
         </div>
 
         <ul *ngIf="type !== 'new'">
-          <li *ngFor="let content of reportBlocks?.reportBlocksContents; let contentIndex = index" class="custom-list-li">
+          <li
+            *ngFor="let content of reportBlocks?.reportBlocksContents | sortContentByPriority; let contentIndex = index"
+            class="custom-list-li"
+          >
             <div *ngIf="!content.deleted" class="custom-list">
               <div style="display: flex; justify-content: space-between">
                 <span>Type: {{ content.type }}</span>
@@ -97,12 +100,17 @@
                       />
                     </td>
                     <td class="text-center">
-                      <button id="remove-row" (click)="removeRow(content, rowIndex, row.id)" class="btn btn-outline-primary">
+                      <button
+                        *ngIf="type !== 'report'"
+                        id="remove-row"
+                        (click)="removeRow(content, rowIndex, row.id)"
+                        class="btn btn-outline-primary"
+                      >
                         <b>-</b>
                       </button>
                     </td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="type !== 'report'">
                     <td [attr.colspan]="getColumns(content.template ?? '{}').length + 1" class="text-center">
                       <button id="add-row" (click)="addRow(content)" class="btn btn-outline-success"><b>+</b></button>
                     </td>
