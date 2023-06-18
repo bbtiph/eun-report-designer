@@ -8,11 +8,14 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3">
+        <h4 *ngIf="type === 'content' || (type === 'report' && !isEdit)">
+          <b>{{ editForm.controls.name.getRawValue() }}</b>
+        </h4>
+        <br />
+        <div *ngIf="type === 'template' || (type === 'report' && isEdit)" class="row mb-3">
           <label class="form-label" for="field_name">Name:</label>
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
         </div>
-
         <div class="row mb-3" *ngIf="type !== 'report'">
           <label>Country: {{ type === 'content' ? selectedCountry?.countryName : '' }}</label>
           <select
@@ -53,29 +56,49 @@
           >
             <div *ngIf="!content.deleted" class="custom-list">
               <div style="display: flex; justify-content: space-between">
-                <span>Type: {{ content.type }}</span>
-                <button *ngIf="type === 'template'" (click)="removeSubBlock(content)" class="btn btn-outline-danger">
+                <span *ngIf="type !== 'report'">Type: {{ content.type }}</span>
+                <span *ngIf="type === 'template' || (type === 'report' && isEdit)"></span>
+                <button
+                  *ngIf="type === 'template' || (type === 'report' && isEdit)"
+                  (click)="removeSubBlock(content)"
+                  class="btn btn-outline-danger"
+                >
                   <fa-icon icon="times"></fa-icon>
                 </button>
               </div>
-              <span>Name: </span>
-
-              <input [formControl]="getFormControlByKey('content_' + content.id + '_name')" placeholder="Enter..." class="form-control" />
-              <br />
 
               <table *ngIf="content.type === 'table'" class="table table-bordered">
                 <thead>
+                  <tr>
+                    <th [attr.colspan]="getColumns(content.template ?? '{}').length + 1" class="text-center">
+                      <span>{{
+                        type === 'content' || (type === 'report' && !isEdit)
+                          ? getFormControlByKey('content_' + content.id + '_name').value
+                          : ''
+                      }}</span>
+
+                      <input
+                        *ngIf="type === 'template' || (type === 'report' && isEdit)"
+                        [formControl]="getFormControlByKey('content_' + content.id + '_name')"
+                        placeholder="Enter..."
+                        class="form-control"
+                      />
+                      <br />
+                    </th>
+                  </tr>
                   <tr>
                     <th *ngFor="let column of getColumns(content.template ?? '{}'); let columnIndex = index" class="text-center">
                       <input
                         [formControl]="getColumnFormControl(content, column.index)"
                         placeholder="New column"
                         class="form-control"
-                        *ngIf="type === 'template'"
+                        *ngIf="type === 'template' || (type === 'report' && isEdit)"
                       />
-                      <h6 *ngIf="type === 'content' || type === 'report'">{{ getColumnFormControl(content, column.index).value }}</h6>
+                      <h6 *ngIf="type === 'content' || (type === 'report' && !isEdit)">
+                        <b>{{ getColumnFormControl(content, column.index).value }}</b>
+                      </h6>
                       <button
-                        *ngIf="type === 'template'"
+                        *ngIf="type === 'template' || (type === 'report' && isEdit)"
                         id="remove-column"
                         (click)="removeColumn(content, columnIndex, column.index)"
                         class="btn btn-outline-primary"
@@ -83,8 +106,8 @@
                         <b>-</b>
                       </button>
                     </th>
-                    <th class="text-center">
-                      <button *ngIf="type === 'template'" id="add-column" (click)="addColumn(content)" class="btn btn-outline-success">
+                    <th *ngIf="type === 'template' || (type === 'report' && isEdit)" class="text-center">
+                      <button id="add-column" (click)="addColumn(content)" class="btn btn-outline-success">
                         <b>+</b>
                       </button>
                     </th>
@@ -94,29 +117,44 @@
                   <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
                     <td *ngFor="let column of getColumns(content.template ?? '{}')" class="text-center">
                       <input
+                        *ngIf="type === 'content' || (type === 'report' && isEdit)"
                         [formControl]="getRowDataFormControl(content, rowIndex, column.index)"
                         placeholder="Data"
                         class="form-control"
                       />
+                      <h6 *ngIf="type === 'content' || (type === 'report' && !isEdit)">
+                        {{ getRowDataFormControl(content, rowIndex, column.index).value }}
+                      </h6>
                     </td>
-                    <td class="text-center">
-                      <button
-                        *ngIf="type !== 'report'"
-                        id="remove-row"
-                        (click)="removeRow(content, rowIndex, row.id)"
-                        class="btn btn-outline-primary"
-                      >
+                    <td *ngIf="type === 'content' || (type === 'report' && isEdit)" class="text-center">
+                      <button id="remove-row" (click)="removeRow(content, rowIndex, row.id)" class="btn btn-outline-primary">
                         <b>-</b>
                       </button>
                     </td>
                   </tr>
-                  <tr *ngIf="type !== 'report'">
+                  <tr *ngIf="type === 'content' || (type === 'report' && isEdit)">
                     <td [attr.colspan]="getColumns(content.template ?? '{}').length + 1" class="text-center">
                       <button id="add-row" (click)="addRow(content)" class="btn btn-outline-success"><b>+</b></button>
                     </td>
                   </tr>
                 </tbody>
               </table>
+              <div *ngIf="content.type === 'text'">
+                <span
+                  >Name:
+                  {{
+                    type === 'content' || (type === 'report' && !isEdit) ? getFormControlByKey('content_' + content.id + '_name').value : ''
+                  }}</span
+                >
+
+                <input
+                  *ngIf="type === 'template' || (type === 'report' && isEdit)"
+                  [formControl]="getFormControlByKey('content_' + content.id + '_name')"
+                  placeholder="Enter..."
+                  class="form-control"
+                />
+                <br />
+              </div>
 
               <span *ngIf="type === 'template' && content.type === 'text'">*Default text for selected countries</span>
               <angular-editor
@@ -125,9 +163,13 @@
               ></angular-editor>
               <div *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
                 <angular-editor
-                  *ngIf="content.type === 'text' && (type === 'content' || type === 'report')"
+                  *ngIf="content.type === 'text' && (type === 'content' || type === 'report') && isEdit"
                   [formControl]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data')"
                 ></angular-editor>
+                <div
+                  *ngIf="content.type === 'text' && (type === 'content' || type === 'report') && !isEdit"
+                  [innerHtml]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data').value"
+                ></div>
               </div>
             </div>
           </li>
@@ -156,7 +198,12 @@
         </button>
       </div>
 
+      <button *ngIf="type === 'report' && !isEdit" (click)="isEditChange()" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+
       <button
+        *ngIf="type !== 'report' || isEdit"
         type="submit"
         (click)="save()"
         id="save-entity"

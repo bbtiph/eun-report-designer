@@ -41,6 +41,8 @@ public interface ReportBlocksService {
      */
     List<ReportBlocksDTO> findAll();
 
+    List<ReportBlocksDTO> findAllByReport(Long reportId, Long countryId);
+
     /**
      * Get all the reportBlocks with eager load of many-to-many relationships.
      *

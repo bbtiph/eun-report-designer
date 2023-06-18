@@ -1,20 +1,17 @@
 package org.eun.back.service.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class ReportRequest {
 
-    private String id;
+    private String data;
     private String output;
     private String lang;
 
-    public String getId() {
-        return id;
+    public String getData() {
+        return data;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setData(String data) {
+        this.data = data;
     }
 
     public String getOutput() {

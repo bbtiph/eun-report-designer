@@ -46,6 +46,10 @@ export class ReportBlocksService {
     return this.http.get<IReportBlocks[]>(this.resourceUrl);
   }
 
+  findAllByReport(reportId: number, countryId: number): Observable<IReportBlocks[]> {
+    return this.http.get<IReportBlocks[]>(`${this.resourceUrl}/report/${reportId}/${countryId}`);
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IReportBlocks[]>(this.resourceUrl, { params: options, observe: 'response' });

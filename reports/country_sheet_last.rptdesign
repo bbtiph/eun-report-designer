@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[
+        var op=[];
+        var blocks=[];
+        var projects=[];
+        var json = eval('(' + params['docId'] + ')');
+	]]></method>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="lang" id="57">
+            <text-property name="promptText">Language</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">ru</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">ru</property>
+                    <property name="label">Russian</property>
+                </structure>
+                <structure>
+                    <property name="value">kz</property>
+                    <property name="label">Kazakh</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="docId" id="58">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">[{"id":3301,"name":"Last Test","priorityNumber":null,"isActive":true,"config":null,"countryIds":[{"id":1,"countryName":null},{"id":3,"countryName":null},{"id":12,"countryName":null},{"id":13,"countryName":null},{"id":15,"countryName":null},{"id":16,"countryName":null}],"reportBlocksContents":[{"id":3351,"type":"text","priorityNumber":2,"template":"{\"name\":\"11111\",\"data\":\"111111111\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3404,"data":"{\"data\":\"&lt;span>Denmark&lt;/span>\"}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null},{"id":3352,"type":"text","priorityNumber":4,"template":"{\"name\":\"123123\",\"data\":\"1232133\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3410,"data":"{\"data\":\"&lt;span>Denmark&lt;/span>\"}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null},{"id":3353,"type":"table","priorityNumber":6,"template":"{\"name\":\"34555555666666\",\"columns\":[{\"name\":\"1\",\"index\":1},{\"name\":\"3\",\"index\":2}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3419,"data":"{\"rows\":[{\"data\":\"1\",\"index\":1},{\"data\":\"2\",\"index\":2}]}","country":{"id":13,"countryName":"Denmark"},"newContentData":null},{"id":3420,"data":"{\"rows\":[{\"data\":\"2\",\"index\":1},{\"data\":\"66\",\"index\":2}]}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null},{"id":3451,"type":"table","priorityNumber":10,"template":"{\"name\":\"wer\",\"columns\":[{\"name\":\"1\",\"index\":1},{\"name\":\"22\",\"index\":2}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3504,"data":"{\"rows\":[{\"index\":1,\"data\":\"33\"},{\"index\":2,\"data\":\"2\"}]}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}},{"id":3551,"name":"LLLL","priorityNumber":null,"isActive":false,"config":null,"countryIds":[{"id":12,"countryName":null},{"id":13,"countryName":null},{"id":14,"countryName":null},{"id":15,"countryName":null}],"reportBlocksContents":[{"id":3601,"type":"text","priorityNumber":2,"template":"{\"name\":\"llllllll\",\"data\":\"LLLL\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3652,"data":"{\"data\":\"\"}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null},{"id":3602,"type":"text","priorityNumber":4,"template":"{\"name\":\":LLLLL\",\"data\":\":LLLL\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3656,"data":"{\"data\":\"\"}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null},{"id":3603,"type":"table","priorityNumber":6,"template":"{\"name\":\":::::LLLL\",\"columns\":[{\"name\":\"1\",\"index\":1},{\"name\":\"4\",\"index\":2}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3660,"data":"{\"rows\":[{\"index\":1,\"data\":\"\"},{\"index\":2,\"data\":\"\"}]}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}}]</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="4">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://localhost:5432/eunReportDesigner</property>
+            <property name="odaUser">eunReportDesigner</property>
+        </oda-data-source>
+    </data-sources>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="orientation">auto</property>
+            <property name="topMargin">0.05in</property>
+            <property name="bottomMargin">0.05in</property>
+            <page-header>
+                <image id="302">
+                    <property name="height">0.4027777777777778in</property>
+                    <property name="width">7.798611111111111in</property>
+                    <property name="source">file</property>
+                    <expression name="uri" type="constant">img_2.png</expression>
+                </image>
+            </page-header>
+        </simple-master-page>
+        <simple-master-page name="NewSimpleMasterPage" id="271"/>
+    </page-setup>
+    <body>
+        <grid id="297">
+            <column id="298"/>
+            <row id="299">
+                <cell id="300">
+                    <text-data id="301">
+                        <property name="fontFamily">serif</property>
+                        <expression name="valueExpr">var tableHTML = '&lt;br>';&#13;
+for (var i = 0; i &lt; json.length; i++) {&#13;
+  var block = json[i];&#13;
+  var blockName = block.name;&#13;
+  var blockContents = block.reportBlocksContents;&#13;
+&#13;
+  for (var j = 0; j &lt; blockContents.length; j++) {&#13;
+    var content = blockContents[j];&#13;
+    var contentType = content.type;&#13;
+    var contentTemplate = JSON.parse(content.template);&#13;
+&#13;
+    if (contentType === 'table') {&#13;
+      var columns = contentTemplate.columns;&#13;
+      var rows = content.reportBlocksContentData;&#13;
+&#13;
+&#13;
+      tableHTML += '&lt;table>&lt;thead>&lt;tr>';&#13;
+&#13;
+      for (var k = 0; k &lt; columns.length; k++) {&#13;
+        tableHTML += '&lt;th>' + columns[k].name + '&lt;/th>';&#13;
+      }&#13;
+&#13;
+      tableHTML += '&lt;/tr>&lt;/thead>';&#13;
+      tableHTML += '&lt;tbody>';&#13;
+&#13;
+      for (var l = 0; l &lt; rows.length; l++) {&#13;
+        tableHTML += '&lt;tr>';&#13;
+&#13;
+        for (var m = 0; m &lt; columns.length; m++) {&#13;
+          var dataIndex = columns[m].index;&#13;
+          var rowData;&#13;
+          for (var n = 0; n &lt; rows[l].data.length; n++) {&#13;
+            if (rows[l].data[n].index === dataIndex) {&#13;
+              rowData = rows[l].data[n];&#13;
+              break;&#13;
+            }&#13;
+          }&#13;
+&#13;
+          tableHTML += '&lt;td>' + rowData.data + '&lt;/td>';&#13;
+        }&#13;
+&#13;
+        tableHTML += '&lt;/tr>';&#13;
+      }&#13;
+&#13;
+      tableHTML += '&lt;/tbody>&lt;/table>';&#13;
+    } else if (contentType === 'text') {&#13;
+      // var textData = content.reportBlocksContentData[0].data;&#13;
+      // tableHTML += '' + textData + '';&#13;
+    }&#13;
+  }&#13;
+}&#13;
+&#13;
+tableHTML += '&lt;/table>';</expression>
+                        <property name="contentType">html</property>
+                    </text-data>
+                </cell>
+            </row>
+        </grid>
+    </body>
+    <list-property name="images">
+        <structure>
+            <property name="name">logo.jpg</property>
+            <property name="data">
+                /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAQDAwQDAwQEAwQFBAQFBgoHBgYGBg0JCggKDw0QEA8NDw4R
+                ExgUERIXEg4PFRwVFxkZGxsbEBQdHx0aHxgaGxr/2wBDAQQFBQYFBgwHBwwaEQ8RGhoaGhoaGhoaGhoa
+                GhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhr/wAARCAAnAG0DASIAAhEBAxEB/8QA
+                HAAAAgIDAQEAAAAAAAAAAAAAAAUCBgMEBwgB/8QAMxAAAQMEAQIEBAUDBQAAAAAAAQIDBAAFBhESITEH
+                ExRhFSJBURYjcXKRJCUyQlJTgqL/xAAaAQACAwEBAAAAAAAAAAAAAAAABQECAwQG/8QALBEAAQMCBAYB
+                BAMBAAAAAAAAAQACEQMhBDFBgQUSE1FhkdEiQnHBFDJiof/aAAwDAQACEQMRAD8A9/UVX8ry+Bh0NiXd
+                m5TjTzyWUenYLh5nsDrtutCdmrkCx3G7zrFcbdEhRXH1LlllO+I2BxS4T1rZtGo8AgWNgud2IpMJaTcX
+                Pj/ic2q6C4SJwQQppp9SGz+08Ff+0qptXM8ReuNrsDKWmvUz0RY6pOx2cWFOOHX7l1dBf4bUfnKeQhaE
+                AvaUCls+6uwpBR4vhq2JqUJgtcQLWMOLRyn7jLTIEkWldooVBRbUOoBPiRN+2acUVTcszpeONWj0dnkX
+                OTdpfpYzHmpYPLgVbJX2Hy02tGQGW3HavMdFnuryFu/D3JKHHAhJ0VDj3Han5o1AwPIsf14zXGK9MvNM
+                G4/eV8ts08opH+L7BuJ/erf/AFYSqN/Uo/NClcUlPX5tq6dPrUomWWGfcnrbCvNvkXBjfmxm5KFOI132
+                kHY1VenUz5T6PwrdWnMcw9j5TqikdtzDH7xMMO03u2z5YRzLMeUhxXH76Br5HzLHZjc1yJfba+3AG5a0
+                S0KDA+6zv5R+tBpVBm0+j8KBWpHJw9j5T2ikLWZ469ATPavltVBW75KZHqkeWXP9vLet+1b1ovltv8MT
+                LJOjXCKVFIdjuhxOx3Gx0qDTe0SWkbFWbVpuMNcDuPlMKKKKotFrToMa5w34lwYbkxX0FDrTg2laT3BF
+                cY8V2XrdYcfwduWqS3f7sxFZ5klxEVKwpaVH/UB8oB967hXnrP8AAsg8V/FFPo33rPYLI0I5ngaUpxQ2
+                4Gh9T1CSaacN5etNR0NbJv3AgbyRl2Sfigd0Ipt5nOhtuxN9oBzylNLnlDTt9kWmxsPX69vuEqt8NekM
+                jfd9zs2kfzVyxuxswoy7zldxiyH4bi9hP5USEpBIVwCvqOvzq6/pWa04IjBbQiN4fNRWFIG3m5ad+qV9
+                1uj5gr36j2qk3ds3jFs0i5q3JxOL8WYktOSEJfaRyDWiddHGy6hW/wBaT8K4Hw7hwP8AEH1E/U83qGTe
+                32iTPK23ckrbFYzFVDOIvAMNFmCBa+ptm6PACdeItpT4kW/H5OLItuTwrfcS/JYTcAht1IbUniHE70dk
+                UskWjIYV8xyTY7Paok6PaZUE2l278iy0pxHF0Ep24ka6/rVaiZvJVbIsZiTb8cs7l8XEuV/s0dKI7oDI
+                UlaCoEIKlAIJNMnY7uRZrjiLBmEuQ38Dm8ruylpTrqUvpHEHjr/t7V6htKpRbyOI5RzRIJ/MxA2s6Nwk
+                7qtOu7qNBLiWzBA/ETJ3u2Z8JrhXhZPttwxx/IGIjibZjq4IUCFlmUXysLQPZJPWtKzeHOQQ2sZtky22
+                2DGxuS5JVdo7/J2aOKxx4aBBXy+fkqk0HO7pdIlh/FeXP4tEcsPq0TW220mZL8xaVAqUCDpISryx96kM
+                8vlxZhHNMkfwofAm5kZTbLbfrZBK9qPMH6BJ8ofetCzGFxLiPR/1lGeZkCY1Flm2pgg0BoPtt/65zlkI
+                JidDBS3w/wAUuOW2LGIbTFus6LdBlOKmx5KVSliQhxtJU0EhSO/1P0pzZ/DLLLXaZbcOA1Fu8e1C3sSn
+                Lql9p9HmIUpKGi1pAICtcuxNJZmX3qFHyK8yV/Cckk4jbpDYCOB2H1Bagk/vp5lGR5dhbuU2+Ne5V3Uz
+                EgSvVPtISqIHXVodUnikgJATv/FWq2qHEueQ0tgnIz3k31F99AFz0xhWMBeHEgRIgaQLaG22pKyW/wAK
+                r44f7zFjmO9k8O5LYkTA+Sw2yULCjxAUqul4NjUnG5uVGQ00zGuN3XLipaI15am0J6gdjtJri11udyue
+                P2ubdMrQ9bIGUxdTYcxuWYzRR1U44G0glKj0OvrXpZlSVsoUlYcSUghX396WY99ZrAHkGZyB0I765Jvw
+                9lBzyWNILYNyDMgjTfwstFFFJE/RRRRQhFQWhLiSlaQpJ7g0UUIWMRI4Y8gMNBn/AI+A4/xUkMNN8fLb
+                QngNJ0kDQ+woooJKgAKC4kdxCUOMNrQk7SkoBAPtU3ozMjj57SHOJ2nkkHRoookogL6thp07cbQs618y
+                QelBZQVElCSSNE67iiigEogKCIrDbPkoZbSye6AgBP8AFZ6KKJQEUUUUKV//2Q==
+</property>
+        </structure>
+    </list-property>
+</report>

@@ -211,12 +211,12 @@ public class ReportResource {
         HttpServletResponse response,
         HttpServletRequest request
     ) {
-        String id = reportRequest.getId();
+        String data = reportRequest.getData();
         String output = reportRequest.getOutput();
         String lang = reportRequest.getLang();
 
-        log.info("Generating full report: " + name + "; id: " + id + "; format: " + output + "; lang: " + lang);
+        log.info("Generating full report: " + name + "; data: " + data + "; format: " + output + "; lang: " + lang);
         OutputType format = OutputType.from(output);
-        birtReportService.generateMainReport(name, format, id, lang, response, request);
+        birtReportService.generateMainReport(name, format, data, lang, response, request);
     }
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.constraints.*;
 import org.eun.back.config.Constants;
+import org.eun.back.domain.Countries;
 import org.eun.back.domain.Role;
 import org.eun.back.domain.User;
 
@@ -51,6 +52,8 @@ public class AdminUserDTO implements Serializable {
 
     private Set<Role> roles;
 
+    private Countries country;
+
     public AdminUserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -69,6 +72,15 @@ public class AdminUserDTO implements Serializable {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.roles = user.getRoles().stream().collect(Collectors.toSet());
+        this.country = user.getCountry();
+    }
+
+    public Countries getCountry() {
+        return country;
+    }
+
+    public void setCountry(Countries country) {
+        this.country = country;
     }
 
     public Long getId() {

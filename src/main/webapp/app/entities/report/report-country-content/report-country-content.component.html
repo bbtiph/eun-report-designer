@@ -1,0 +1,17 @@
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-11">
+      <div class="form-group">
+        <label class="col-form-label">Country:</label>
+        <select class="form-control" [(ngModel)]="country" name="reportCountry" id="field_status" data-cy="status">
+          <option [ngValue]="null"></option>
+          <option *ngFor="let cntry of countriesSharedCollection" [ngValue]="cntry">{{ cntry.countryName }}</option>
+        </select>
+      </div>
+      <br />
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" [routerLink]="['/report', reportId, country?.id, 'blocks']">Next</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,7 +9,7 @@ export interface IReportBlocks {
   isActive?: boolean | null;
   config?: string | null;
   countryIds?: ICountries[] | null;
-  report?: Pick<IReport, 'id'> | null;
+  report?: IReport | null;
   reportBlocksContents: IReportBlocksContent[] | null;
 }
 

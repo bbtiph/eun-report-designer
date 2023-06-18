@@ -111,29 +111,29 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
     public void generateMainReport(
         String reportName,
         OutputType output,
-        Object id,
+        Object data,
         String lang,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
         switch (output) {
             case HTML:
-                generateHTMLReport(reports.get(reportName.toLowerCase()), id, lang, response, request);
+                generateHTMLReport(reports.get(reportName.toLowerCase()), data, lang, response, request);
                 break;
             case PDF:
-                generatePDFReport(reports.get(reportName.toLowerCase()), id, lang, response, request);
+                generatePDFReport(reports.get(reportName.toLowerCase()), data, lang, response, request);
                 break;
             case DOCX:
-                generateDOCXReport(reports.get(reportName.toLowerCase()), id, lang, response, request);
+                generateDOCXReport(reports.get(reportName.toLowerCase()), data, lang, response, request);
                 break;
             case DOC:
-                generateReport(reports.get(reportName.toLowerCase()), output, id, lang, response, request);
+                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, response, request);
                 break;
             case XLSX:
-                generateXLSXReport(reports.get(reportName.toLowerCase()), id, lang, response, request);
+                generateXLSXReport(reports.get(reportName.toLowerCase()), data, lang, response, request);
                 break;
             case ODT:
-                generateReport(reports.get(reportName.toLowerCase()), output, id, lang, response, request);
+                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, response, request);
                 break;
             default:
                 throw new IllegalArgumentException("Output type not recognized:" + output);
@@ -184,7 +184,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
     @SuppressWarnings("unchecked")
     private void generatePDFReport(
         IReportRunnable report,
-        Object id,
+        Object data,
         String lang,
         HttpServletResponse response,
         HttpServletRequest request
@@ -196,7 +196,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         pdfRenderOption.setOutputFormat("pdf");
 
         Map<String, Object> birtParams = new HashMap<>();
-        birtParams.put("docId", id);
+        birtParams.put("docId", data);
         birtParams.put("lang", lang);
 
         runAndRenderTask.setParameterValues(birtParams);

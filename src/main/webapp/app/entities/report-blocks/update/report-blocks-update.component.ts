@@ -26,6 +26,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
   @Input() block: IReportBlocks | null = null;
   @Input() isFromReport: boolean | false | undefined;
   isSaving = false;
+  isEdit = false;
   type: string = '';
   reportBlocks: IReportBlocks | null = null;
   reportBlocksContents?: IReportBlocksContent[];
@@ -86,6 +87,10 @@ export class ReportBlocksUpdateComponent implements OnInit {
     if (this.type != 'report') window.history.back();
   }
 
+  isEditChange(): void {
+    this.isEdit = !this.isEdit;
+  }
+
   save(): void {
     this.isSaving = true;
     const reportBlocks = this.reportBlocksFormService.getReportBlocks(this.editForm);
@@ -143,6 +148,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.reportBlocksService.create(reportBlocks));
     }
+    if (this.type === 'report') this.isEditChange();
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IReportBlocks>>): void {
@@ -369,10 +375,10 @@ export class ReportBlocksUpdateComponent implements OnInit {
   addStructuredSubBlock() {
     const contentIndices = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.id);
     // @ts-ignore
-    const newContentIndex = 1 + Math.max(...contentIndices);
+    const newContentIndex = 1 + (contentIndices.length > 0 ? Math.max(...contentIndices) : 0);
     const priorityNumbers = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.priorityNumber);
     // @ts-ignore
-    const priorityNumber = 1 + Math.max(...priorityNumbers);
+    const priorityNumber = 1 + (priorityNumbers.length > 0 ? Math.max(...priorityNumbers) : 0);
     const subBlock: IReportBlocksContent = {
       id: newContentIndex,
       type: 'table',
@@ -395,10 +401,10 @@ export class ReportBlocksUpdateComponent implements OnInit {
   addTextSubBlock() {
     const contentIndices = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.id);
     // @ts-ignore
-    const newContentIndex = 1 + Math.max(...contentIndices);
+    const newContentIndex = 1 + (contentIndices.length > 0 ? Math.max(...contentIndices) : 0);
     const priorityNumbers = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.priorityNumber);
     // @ts-ignore
-    const priorityNumber = 1 + Math.max(...priorityNumbers);
+    const priorityNumber = 1 + (priorityNumbers.length > 0 ? Math.max(...priorityNumbers) : 0);
     const subBlock: IReportBlocksContent = {
       id: newContentIndex,
       type: 'text',

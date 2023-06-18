@@ -1,5 +1,9 @@
 package org.eun.back.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -75,15 +79,17 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
                 iterator.remove();
                 reportBlocksContentService.delete(reportBlocksContentDTO.getId());
             } else if (reportBlocksContentDTO.getNewContentData() != null && reportBlocksContentDTO.getNewContentData().equals("true")) {
-                if (reportBlocksContentDTO.getType().equals("text")) {
-                    for (CountriesDTO countriesDTO : reportBlocksDTO.getCountryIds()) {
-                        ReportBlocksContentDataDTO reportBlocksContentDataDTONew = new ReportBlocksContentDataDTO();
-                        reportBlocksContentDataDTONew.setCountry(countriesDTO);
-                        reportBlocksContentDataDTONew.setNewContentData("true");
+                for (CountriesDTO countriesDTO : reportBlocksDTO.getCountryIds()) {
+                    ReportBlocksContentDataDTO reportBlocksContentDataDTONew = new ReportBlocksContentDataDTO();
+                    reportBlocksContentDataDTONew.setCountry(countriesDTO);
+                    reportBlocksContentDataDTONew.setNewContentData("true");
+                    if (reportBlocksContentDTO.getType().equals("text")) {
                         reportBlocksContentDataDTONew.setData("{\"data\":\"\"}");
-                        reportBlocksContentDataDTONew.setId(null);
-                        reportBlocksContentDTO.getReportBlocksContentData().add(reportBlocksContentDataDTONew);
+                    } else {
+                        reportBlocksContentDataDTONew.setData(generateContentData(reportBlocksContentDTO.getTemplate()));
                     }
+                    reportBlocksContentDataDTONew.setId(null);
+                    reportBlocksContentDTO.getReportBlocksContentData().add(reportBlocksContentDataDTONew);
                 }
                 reportBlocksContentDTO.setId(null);
             }
@@ -91,6 +97,30 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
         ReportBlocks reportBlocks = reportBlocksMapper.toEntity(reportBlocksDTO);
         reportBlocks = reportBlocksRepository.save(reportBlocks);
         return reportBlocksMapper.toDto(reportBlocks);
+    }
+
+    private String generateContentData(String jsonTemplate) {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            ObjectNode templateNode = (ObjectNode) objectMapper.readTree(jsonTemplate);
+            ObjectNode contentNode = objectMapper.createObjectNode();
+            ArrayNode rowsArrayNode = objectMapper.createArrayNode();
+            ArrayNode columnsArrayNode = (ArrayNode) templateNode.get("columns");
+            for (int i = 0; i < columnsArrayNode.size(); i++) {
+                ObjectNode rowNode = objectMapper.createObjectNode();
+                rowNode.put("index", columnsArrayNode.get(i).get("index").asInt());
+                rowNode.put("data", "");
+                rowsArrayNode.add(rowNode);
+            }
+            contentNode.putArray("rows").addAll(rowsArrayNode);
+            String contentJson = objectMapper.writeValueAsString(contentNode);
+
+            return contentJson;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "{\"rows\": []}";
     }
 
     @Override
@@ -113,6 +143,16 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
     public List<ReportBlocksDTO> findAll() {
         log.debug("Request to get all ReportBlocks");
         return reportBlocksRepository.findAll().stream().map(reportBlocksMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public List<ReportBlocksDTO> findAllByReport(Long reportId, Long countryId) {
+        log.debug("Request to get all ReportBlocks");
+        return reportBlocksRepository
+            .findAllWithEagerRelationshipsByReport(reportId, countryId)
+            .stream()
+            .map(reportBlocksMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     public Page<ReportBlocksDTO> findAllWithEagerRelationships(Pageable pageable) {

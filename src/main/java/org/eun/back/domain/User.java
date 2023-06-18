@@ -1,6 +1,7 @@
 package org.eun.back.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -88,6 +89,17 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     )
     @BatchSize(size = 20)
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToOne
+    private Countries country;
+
+    public Countries getCountry() {
+        return country;
+    }
+
+    public void setCountry(Countries country) {
+        this.country = country;
+    }
 
     public Long getId() {
         return id;

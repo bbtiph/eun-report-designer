@@ -27,22 +27,19 @@ import { Observable } from 'rxjs';
             </select>
           </div>
           <div class="form-group">
-            <label class="col-form-label">Country:</label>
-            <select class="form-control" [(ngModel)]="country" name="reportCountry" id="field_status" data-cy="status">
-              <option [ngValue]="null"></option>
-              <option *ngFor="let cntry of countries" [ngValue]="cntry">{{ cntry.countryName }}</option>
-            </select>
+            <label class="col-form-label">Country: {{ countryName }}</label>
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">Close</button>
-      <button type="button" class="btn btn-success" (click)="modal.close({ lang: lang, format: format, id: country.id })">Download</button>
+      <button type="button" class="btn btn-success" (click)="modal.close({ lang: lang, format: format })">Download</button>
     </div>`,
 })
 export class AbstractExportModal implements OnInit {
   @Input() public reportName?: string;
+  @Input() public countryName?: string;
   public lang = 'ru';
   // @ts-ignore
   public countries: ICountry[];

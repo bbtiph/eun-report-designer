@@ -143,6 +143,22 @@ public class ReportBlocksResource {
     }
 
     /**
+     * {@code GET  /report-blocks} : get all the reportBlocks by report.
+     *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of reportBlocks in body.
+     */
+    @GetMapping("/report-blocks/report/{reportId}/{countryId}")
+    public List<ReportBlocksDTO> getAllReportBlocksByReport(
+        @PathVariable Long reportId,
+        @PathVariable Long countryId,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
+        log.debug("REST request to get all ReportBlocks");
+        return reportBlocksService.findAllByReport(reportId, countryId);
+    }
+
+    /**
      * {@code GET  /report-blocks/:id} : get the "id" reportBlocks.
      *
      * @param id the id of the reportBlocksDTO to retrieve.

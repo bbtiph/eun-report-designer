@@ -9,6 +9,7 @@ import { ReportRoutingResolveService } from './report-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
 import { ReportBlocksManageComponent } from '../report-blocks-manage/report-blocks-manage.component';
 import { ReportBlockEdit } from '../report-blocks-manage/report-block-edit/report-block-edit.component';
+import { ReportCountryContentComponent } from '../report-country-content/report-country-content.component';
 
 const reportRoute: Routes = [
   {
@@ -36,11 +37,16 @@ const reportRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/blocks',
+    path: ':id/:country/blocks',
     component: ReportBlocksManageComponent,
     resolve: {
       report: ReportRoutingResolveService,
     },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/report-country',
+    component: ReportCountryContentComponent,
     canActivate: [UserRouteAccessService],
   },
   {

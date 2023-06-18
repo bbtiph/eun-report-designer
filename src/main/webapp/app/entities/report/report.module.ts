@@ -9,6 +9,7 @@ import { ReportBlocksManageComponent } from './report-blocks-manage/report-block
 import { ReportBlockEdit } from './report-blocks-manage/report-block-edit/report-block-edit.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ReportBlocksModule } from '../report-blocks/report-blocks.module';
+import { ReportCountryContentComponent } from './report-country-content/report-country-content.component';
 
 @NgModule({
   imports: [SharedModule, ReportRoutingModule, AngularEditorModule, ReportBlocksModule],
@@ -19,6 +20,7 @@ import { ReportBlocksModule } from '../report-blocks/report-blocks.module';
     ReportDeleteDialogComponent,
     ReportBlocksManageComponent,
     ReportBlockEdit,
+    ReportCountryContentComponent,
   ],
 })
 export class ReportModule {}
