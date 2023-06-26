@@ -12,7 +12,7 @@
           <b>{{ editForm.controls.name.getRawValue() }}</b>
         </h4>
         <br />
-        <div *ngIf="type === 'template' || (type === 'report' && isEdit)" class="row mb-3">
+        <div *ngIf="type === 'template' || type === 'new' || (type === 'report' && isEdit)" class="row mb-3">
           <label class="form-label" for="field_name">Name:</label>
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
         </div>
@@ -122,7 +122,7 @@
                         placeholder="Data"
                         class="form-control"
                       />
-                      <h6 *ngIf="type === 'content' || (type === 'report' && !isEdit)">
+                      <h6 *ngIf="type === 'report' && !isEdit">
                         {{ getRowDataFormControl(content, rowIndex, column.index).value }}
                       </h6>
                     </td>
@@ -163,11 +163,11 @@
               ></angular-editor>
               <div *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
                 <angular-editor
-                  *ngIf="content.type === 'text' && (type === 'content' || type === 'report') && isEdit"
+                  *ngIf="content.type === 'text' && (type === 'content' || (type === 'report' && isEdit))"
                   [formControl]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data')"
                 ></angular-editor>
                 <div
-                  *ngIf="content.type === 'text' && (type === 'content' || type === 'report') && !isEdit"
+                  *ngIf="content.type === 'text' && type === 'report' && !isEdit"
                   [innerHtml]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data').value"
                 ></div>
               </div>
