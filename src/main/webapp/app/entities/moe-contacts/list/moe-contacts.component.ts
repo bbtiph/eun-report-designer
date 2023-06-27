@@ -8,7 +8,8 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, MoeContactsService } from '../service/moe-contacts.service';
 import { MoeContactsDeleteDialogComponent } from '../delete/moe-contacts-delete-dialog.component';
 import { SortService } from 'app/shared/sort/sort.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-moe-contacts',
@@ -139,14 +140,36 @@ export class MoeContactsComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.selectedFile);
 
-    this.http.post('api/moe-contacts/upload', formData).subscribe(
-      () => {
-        // Успешное выполнение запроса
-        this.closeModal();
-      },
-      error => {
-        // Обработка ошибок при загрузке файла
-      }
-    );
+    this.moeContactsService.upload(formData).subscribe(() => {
+      this.closeModal();
+      this.load();
+    });
+
+    // this.http.post('api/moe-contacts/upload', formData).subscribe(
+    //   (res) => {
+    //     debugger
+    //     // Успешное выполнение запроса
+    //     this.closeModal();
+    //   },
+    //   error => {
+    //     debugger
+    //     // Обработка ошибок при загрузке файла
+    //   }
+    // );
   }
+
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<String>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
+      next: () => this.onSaveSuccess(),
+      error: () => this.onSaveError(),
+    });
+  }
+
+  protected onSaveSuccess(): void {}
+
+  protected onSaveError(): void {
+    // Api for inheritance.
+  }
+
+  protected onSaveFinalize(): void {}
 }

@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface MoeContactsRepository extends JpaRepository<MoeContacts, Long> {}
+public interface MoeContactsRepository extends JpaRepository<MoeContacts, Long> {
+    MoeContacts findByCountryCodeAndMinistryEnglishName(String countryCode, String ministryName);
+}

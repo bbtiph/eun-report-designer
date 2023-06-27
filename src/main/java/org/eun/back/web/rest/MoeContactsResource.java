@@ -64,15 +64,20 @@ public class MoeContactsResource {
     }
 
     @PostMapping(value = "/moe-contacts/upload")
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Void> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
             moeContactsService.upload(file);
         } catch (Exception e) {
-            // Обработка ошибок при сохранении данных
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
+            return ResponseEntity
+                .noContent()
+                .headers(HeaderUtil.createFailureAlert(applicationName, false, ENTITY_NAME, e.toString(), file.getName()))
+                .build();
         }
 
-        return ResponseEntity.ok("Success");
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, file.getName()))
+            .build();
     }
 
     /**

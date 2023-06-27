@@ -95,63 +95,61 @@ public class MoeContactsServiceImpl implements MoeContactsService {
 
             int i = 0;
             for (Row row : sheet) {
-                // Обработка данных в каждой строке
                 i++;
-                if (i > 1 && i < 34) {
+                if (i > 2) {
                     try {
+                        if (row.getCell(0) == null || row.getCell(1) == null) {
+                            break;
+                        }
                         MoeContacts moeContacts = new MoeContacts();
                         moeContacts.setCountryCode(row.getCell(0) != null ? row.getCell(0).toString() : "");
-                        //                        moeContacts.setCountryName(row.getCell(1) !=null ? row.getCell(1).toString() : "");
+                        Cell cell = row.getCell(1);
+                        String cellValue = "";
+
+                        if (cell != null) {
+                            if (cell.getCellType() == CellType.FORMULA) {
+                                FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+                                CellValue evaluatedCellValue = evaluator.evaluate(cell);
+                                switch (evaluatedCellValue.getCellType()) {
+                                    case STRING:
+                                        cellValue = evaluatedCellValue.getStringValue();
+                                        break;
+                                    case NUMERIC:
+                                        cellValue = String.valueOf(evaluatedCellValue.getNumberValue());
+                                        break;
+                                    case BOOLEAN:
+                                        cellValue = String.valueOf(evaluatedCellValue.getBooleanValue());
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            } else {
+                                cellValue = cell.toString();
+                            }
+                        }
+
+                        moeContacts.setCountryName(cellValue);
                         moeContacts.setMinistryName(row.getCell(2) != null ? row.getCell(2).toString() : "");
                         moeContacts.setMinistryEnglishName(row.getCell(3) != null ? row.getCell(3).toString() : "");
                         moeContacts.setPostalAddress(row.getCell(4) != null ? row.getCell(4).toString() : "");
                         moeContacts.setShippingAddress(row.getCell(5) != null ? row.getCell(5).toString() : "");
                         moeContacts.setContactEunFirstName(row.getCell(7) != null ? row.getCell(7).toString() : "");
                         moeContacts.setContactEunLastName(row.getCell(8) != null ? row.getCell(8).toString() : "");
+                        MoeContacts moeContactsRes = moeContactsRepository.findByCountryCodeAndMinistryEnglishName(
+                            moeContacts.getCountryCode(),
+                            moeContacts.getMinistryEnglishName()
+                        );
+                        if (moeContactsRes != null) {
+                            moeContacts.setId(moeContactsRes.getId());
+                        }
                         moeContactsRepository.save(moeContacts);
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                        log.error("Error ", e);
+                    }
                 }
-
-                if (i > 30) {
-                    break;
-                }
-                //                yourService.saveData(cell1.getStringCellValue(), cell2.getStringCellValue());
             }
         } catch (IOException e) {
-            System.out.println("error>> " + e);
             log.error("Error ", e);
         }
-        //        HSSFWorkbook wb = new HSSFWorkbook(file.getInputStream());
-        //
-        //        HSSFSheet sheet=wb.getSheetAt(0);
-        //        HSSFRow row;
-        //        HSSFCell cell;
-        //
-        //        Iterator rows = sheet.rowIterator();
-        //
-        //        while (rows.hasNext())
-        //        {
-        //            row=(HSSFRow) rows.next();
-        //            Iterator cells = row.cellIterator();
-        //
-        //            while (cells.hasNext())
-        //            {
-        //                cell=(HSSFCell) cells.next();
-        //
-        //                if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING)
-        //                {
-        //                    System.out.print(cell.getStringCellValue()+" ");
-        //                }
-        //                else if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC)
-        //                {
-        //                    System.out.print(cell.getNumericCellValue()+" ");
-        //                }
-        //                else
-        //                {
-        //                    //U Can Handel Boolean, Formula, Errors
-        //                }
-        //            }
-        //            System.out.println();
-        //        }
     }
 }

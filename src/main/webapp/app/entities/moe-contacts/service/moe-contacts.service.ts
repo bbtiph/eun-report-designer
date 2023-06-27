@@ -22,8 +22,8 @@ export class MoeContactsService {
     return this.http.post<IMoeContacts>(this.resourceUrl, moeContacts, { observe: 'response' });
   }
 
-  upload(file: File): Observable<HttpResponse<String>> {
-    return this.http.post<String>(`${this.resourceUrl}/upload`, file, { observe: 'response' });
+  upload(data: FormData): Observable<HttpResponse<{}>> {
+    return this.http.post<String>(`${this.resourceUrl}/upload`, data, { observe: 'response' });
   }
 
   update(moeContacts: IMoeContacts): Observable<EntityResponseType> {
