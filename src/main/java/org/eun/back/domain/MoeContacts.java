@@ -25,8 +25,8 @@ public class MoeContacts implements Serializable {
     @Column(name = "country_name")
     private String countryName;
 
-    @Column(name = "priority_number")
-    private Long priorityNumber;
+    @Column(name = "is_active")
+    private Boolean isActive;
 
     @Column(name = "ministry_name")
     private String ministryName;
@@ -88,19 +88,6 @@ public class MoeContacts implements Serializable {
 
     public void setCountryName(String countryName) {
         this.countryName = countryName;
-    }
-
-    public Long getPriorityNumber() {
-        return this.priorityNumber;
-    }
-
-    public MoeContacts priorityNumber(Long priorityNumber) {
-        this.setPriorityNumber(priorityNumber);
-        return this;
-    }
-
-    public void setPriorityNumber(Long priorityNumber) {
-        this.priorityNumber = priorityNumber;
     }
 
     public String getMinistryName() {
@@ -194,6 +181,19 @@ public class MoeContacts implements Serializable {
         this.contactEunLastName = contactEunLastName;
     }
 
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public MoeContacts isActive(Boolean isActive) {
+        this.setActive(isActive);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -220,7 +220,7 @@ public class MoeContacts implements Serializable {
             "id=" + getId() +
             ", countryCode='" + getCountryCode() + "'" +
             ", countryName='" + getCountryName() + "'" +
-            ", priorityNumber=" + getPriorityNumber() +
+            ", isActive=" + getActive() +
             ", ministryName='" + getMinistryName() + "'" +
             ", ministryEnglishName='" + getMinistryEnglishName() + "'" +
             ", postalAddress='" + getPostalAddress() + "'" +

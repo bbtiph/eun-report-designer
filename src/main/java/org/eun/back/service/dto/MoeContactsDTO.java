@@ -15,7 +15,7 @@ public class MoeContactsDTO implements Serializable {
 
     private String countryName;
 
-    private Long priorityNumber;
+    private Boolean isActive;
 
     private String ministryName;
 
@@ -55,12 +55,12 @@ public class MoeContactsDTO implements Serializable {
         this.countryName = countryName;
     }
 
-    public Long getPriorityNumber() {
-        return priorityNumber;
+    public Boolean getIsActive() {
+        return isActive;
     }
 
-    public void setPriorityNumber(Long priorityNumber) {
-        this.priorityNumber = priorityNumber;
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
     public String getMinistryName() {
@@ -147,7 +147,7 @@ public class MoeContactsDTO implements Serializable {
             "id=" + getId() +
             ", countryCode='" + getCountryCode() + "'" +
             ", countryName='" + getCountryName() + "'" +
-            ", priorityNumber=" + getPriorityNumber() +
+            ", isActive='" + getIsActive() + "'" +
             ", ministryName='" + getMinistryName() + "'" +
             ", ministryEnglishName='" + getMinistryEnglishName() + "'" +
             ", postalAddress='" + getPostalAddress() + "'" +

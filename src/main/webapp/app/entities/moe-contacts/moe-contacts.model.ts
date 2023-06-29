@@ -2,7 +2,7 @@ export interface IMoeContacts {
   id: number;
   countryCode?: string | null;
   countryName?: string | null;
-  priorityNumber?: number | null;
+  isActive?: boolean | null;
   ministryName?: string | null;
   ministryEnglishName?: string | null;
   postalAddress?: string | null;

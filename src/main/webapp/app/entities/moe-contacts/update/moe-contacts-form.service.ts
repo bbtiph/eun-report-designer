@@ -14,13 +14,13 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type MoeContactsFormGroupInput = IMoeContacts | PartialWithRequiredKeyOf<NewMoeContacts>;
 
-type MoeContactsFormDefaults = Pick<NewMoeContacts, 'id'>;
+type MoeContactsFormDefaults = Pick<NewMoeContacts, 'id' | 'isActive'>;
 
 type MoeContactsFormGroupContent = {
   id: FormControl<IMoeContacts['id'] | NewMoeContacts['id']>;
   countryCode: FormControl<IMoeContacts['countryCode']>;
   countryName: FormControl<IMoeContacts['countryName']>;
-  priorityNumber: FormControl<IMoeContacts['priorityNumber']>;
+  isActive: FormControl<IMoeContacts['isActive']>;
   ministryName: FormControl<IMoeContacts['ministryName']>;
   ministryEnglishName: FormControl<IMoeContacts['ministryEnglishName']>;
   postalAddress: FormControl<IMoeContacts['postalAddress']>;
@@ -49,7 +49,7 @@ export class MoeContactsFormService {
       ),
       countryCode: new FormControl(moeContactsRawValue.countryCode),
       countryName: new FormControl(moeContactsRawValue.countryName),
-      priorityNumber: new FormControl(moeContactsRawValue.priorityNumber),
+      isActive: new FormControl(moeContactsRawValue.isActive),
       ministryName: new FormControl(moeContactsRawValue.ministryName),
       ministryEnglishName: new FormControl(moeContactsRawValue.ministryEnglishName),
       postalAddress: new FormControl(moeContactsRawValue.postalAddress),
@@ -77,6 +77,7 @@ export class MoeContactsFormService {
   private getFormDefaults(): MoeContactsFormDefaults {
     return {
       id: null,
+      isActive: false,
     };
   }
 }

@@ -37,8 +37,8 @@ class MoeContactsResourceIT {
     private static final String DEFAULT_COUNTRY_NAME = "AAAAAAAAAA";
     private static final String UPDATED_COUNTRY_NAME = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_PRIORITY_NUMBER = 1L;
-    private static final Long UPDATED_PRIORITY_NUMBER = 2L;
+    private static final Boolean DEFAULT_IS_ACTIVE = false;
+    private static final Boolean UPDATED_IS_ACTIVE = true;
 
     private static final String DEFAULT_MINISTRY_NAME = "AAAAAAAAAA";
     private static final String UPDATED_MINISTRY_NAME = "BBBBBBBBBB";
@@ -91,7 +91,7 @@ class MoeContactsResourceIT {
         MoeContacts moeContacts = new MoeContacts()
             .countryCode(DEFAULT_COUNTRY_CODE)
             .countryName(DEFAULT_COUNTRY_NAME)
-            .priorityNumber(DEFAULT_PRIORITY_NUMBER)
+            .isActive(DEFAULT_IS_ACTIVE)
             .ministryName(DEFAULT_MINISTRY_NAME)
             .ministryEnglishName(DEFAULT_MINISTRY_ENGLISH_NAME)
             .postalAddress(DEFAULT_POSTAL_ADDRESS)
@@ -112,7 +112,7 @@ class MoeContactsResourceIT {
         MoeContacts moeContacts = new MoeContacts()
             .countryCode(UPDATED_COUNTRY_CODE)
             .countryName(UPDATED_COUNTRY_NAME)
-            .priorityNumber(UPDATED_PRIORITY_NUMBER)
+            .isActive(UPDATED_IS_ACTIVE)
             .ministryName(UPDATED_MINISTRY_NAME)
             .ministryEnglishName(UPDATED_MINISTRY_ENGLISH_NAME)
             .postalAddress(UPDATED_POSTAL_ADDRESS)
@@ -146,7 +146,7 @@ class MoeContactsResourceIT {
         MoeContacts testMoeContacts = moeContactsList.get(moeContactsList.size() - 1);
         assertThat(testMoeContacts.getCountryCode()).isEqualTo(DEFAULT_COUNTRY_CODE);
         assertThat(testMoeContacts.getCountryName()).isEqualTo(DEFAULT_COUNTRY_NAME);
-        assertThat(testMoeContacts.getPriorityNumber()).isEqualTo(DEFAULT_PRIORITY_NUMBER);
+        assertThat(testMoeContacts.getActive()).isEqualTo(DEFAULT_IS_ACTIVE);
         assertThat(testMoeContacts.getMinistryName()).isEqualTo(DEFAULT_MINISTRY_NAME);
         assertThat(testMoeContacts.getMinistryEnglishName()).isEqualTo(DEFAULT_MINISTRY_ENGLISH_NAME);
         assertThat(testMoeContacts.getPostalAddress()).isEqualTo(DEFAULT_POSTAL_ADDRESS);
@@ -191,7 +191,7 @@ class MoeContactsResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(moeContacts.getId().intValue())))
             .andExpect(jsonPath("$.[*].countryCode").value(hasItem(DEFAULT_COUNTRY_CODE)))
             .andExpect(jsonPath("$.[*].countryName").value(hasItem(DEFAULT_COUNTRY_NAME)))
-            .andExpect(jsonPath("$.[*].priorityNumber").value(hasItem(DEFAULT_PRIORITY_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())))
             .andExpect(jsonPath("$.[*].ministryName").value(hasItem(DEFAULT_MINISTRY_NAME)))
             .andExpect(jsonPath("$.[*].ministryEnglishName").value(hasItem(DEFAULT_MINISTRY_ENGLISH_NAME)))
             .andExpect(jsonPath("$.[*].postalAddress").value(hasItem(DEFAULT_POSTAL_ADDRESS)))
@@ -215,7 +215,7 @@ class MoeContactsResourceIT {
             .andExpect(jsonPath("$.id").value(moeContacts.getId().intValue()))
             .andExpect(jsonPath("$.countryCode").value(DEFAULT_COUNTRY_CODE))
             .andExpect(jsonPath("$.countryName").value(DEFAULT_COUNTRY_NAME))
-            .andExpect(jsonPath("$.priorityNumber").value(DEFAULT_PRIORITY_NUMBER.intValue()))
+            .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()))
             .andExpect(jsonPath("$.ministryName").value(DEFAULT_MINISTRY_NAME))
             .andExpect(jsonPath("$.ministryEnglishName").value(DEFAULT_MINISTRY_ENGLISH_NAME))
             .andExpect(jsonPath("$.postalAddress").value(DEFAULT_POSTAL_ADDRESS))
@@ -247,7 +247,7 @@ class MoeContactsResourceIT {
         updatedMoeContacts
             .countryCode(UPDATED_COUNTRY_CODE)
             .countryName(UPDATED_COUNTRY_NAME)
-            .priorityNumber(UPDATED_PRIORITY_NUMBER)
+            .isActive(UPDATED_IS_ACTIVE)
             .ministryName(UPDATED_MINISTRY_NAME)
             .ministryEnglishName(UPDATED_MINISTRY_ENGLISH_NAME)
             .postalAddress(UPDATED_POSTAL_ADDRESS)
@@ -271,7 +271,7 @@ class MoeContactsResourceIT {
         MoeContacts testMoeContacts = moeContactsList.get(moeContactsList.size() - 1);
         assertThat(testMoeContacts.getCountryCode()).isEqualTo(UPDATED_COUNTRY_CODE);
         assertThat(testMoeContacts.getCountryName()).isEqualTo(UPDATED_COUNTRY_NAME);
-        assertThat(testMoeContacts.getPriorityNumber()).isEqualTo(UPDATED_PRIORITY_NUMBER);
+        assertThat(testMoeContacts.getActive()).isEqualTo(UPDATED_IS_ACTIVE);
         assertThat(testMoeContacts.getMinistryName()).isEqualTo(UPDATED_MINISTRY_NAME);
         assertThat(testMoeContacts.getMinistryEnglishName()).isEqualTo(UPDATED_MINISTRY_ENGLISH_NAME);
         assertThat(testMoeContacts.getPostalAddress()).isEqualTo(UPDATED_POSTAL_ADDRESS);
@@ -360,7 +360,7 @@ class MoeContactsResourceIT {
 
         partialUpdatedMoeContacts
             .countryName(UPDATED_COUNTRY_NAME)
-            .priorityNumber(UPDATED_PRIORITY_NUMBER)
+            .isActive(UPDATED_IS_ACTIVE)
             .ministryName(UPDATED_MINISTRY_NAME)
             .ministryEnglishName(UPDATED_MINISTRY_ENGLISH_NAME)
             .postalAddress(UPDATED_POSTAL_ADDRESS);
@@ -379,7 +379,7 @@ class MoeContactsResourceIT {
         MoeContacts testMoeContacts = moeContactsList.get(moeContactsList.size() - 1);
         assertThat(testMoeContacts.getCountryCode()).isEqualTo(DEFAULT_COUNTRY_CODE);
         assertThat(testMoeContacts.getCountryName()).isEqualTo(UPDATED_COUNTRY_NAME);
-        assertThat(testMoeContacts.getPriorityNumber()).isEqualTo(UPDATED_PRIORITY_NUMBER);
+        assertThat(testMoeContacts.getActive()).isEqualTo(UPDATED_IS_ACTIVE);
         assertThat(testMoeContacts.getMinistryName()).isEqualTo(UPDATED_MINISTRY_NAME);
         assertThat(testMoeContacts.getMinistryEnglishName()).isEqualTo(UPDATED_MINISTRY_ENGLISH_NAME);
         assertThat(testMoeContacts.getPostalAddress()).isEqualTo(UPDATED_POSTAL_ADDRESS);
@@ -404,7 +404,7 @@ class MoeContactsResourceIT {
         partialUpdatedMoeContacts
             .countryCode(UPDATED_COUNTRY_CODE)
             .countryName(UPDATED_COUNTRY_NAME)
-            .priorityNumber(UPDATED_PRIORITY_NUMBER)
+            .isActive(UPDATED_IS_ACTIVE)
             .ministryName(UPDATED_MINISTRY_NAME)
             .ministryEnglishName(UPDATED_MINISTRY_ENGLISH_NAME)
             .postalAddress(UPDATED_POSTAL_ADDRESS)
@@ -427,7 +427,7 @@ class MoeContactsResourceIT {
         MoeContacts testMoeContacts = moeContactsList.get(moeContactsList.size() - 1);
         assertThat(testMoeContacts.getCountryCode()).isEqualTo(UPDATED_COUNTRY_CODE);
         assertThat(testMoeContacts.getCountryName()).isEqualTo(UPDATED_COUNTRY_NAME);
-        assertThat(testMoeContacts.getPriorityNumber()).isEqualTo(UPDATED_PRIORITY_NUMBER);
+        assertThat(testMoeContacts.getActive()).isEqualTo(UPDATED_IS_ACTIVE);
         assertThat(testMoeContacts.getMinistryName()).isEqualTo(UPDATED_MINISTRY_NAME);
         assertThat(testMoeContacts.getMinistryEnglishName()).isEqualTo(UPDATED_MINISTRY_ENGLISH_NAME);
         assertThat(testMoeContacts.getPostalAddress()).isEqualTo(UPDATED_POSTAL_ADDRESS);

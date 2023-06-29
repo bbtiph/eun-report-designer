@@ -14,8 +14,8 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "priorityNumber",
-      "fieldType": "Long"
+      "fieldName": "isActive",
+      "fieldType": "Boolean"
     },
     {
       "fieldName": "ministryName",

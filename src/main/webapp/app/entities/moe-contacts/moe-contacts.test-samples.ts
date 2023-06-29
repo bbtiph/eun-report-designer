@@ -16,7 +16,7 @@ export const sampleWithFullData: IMoeContacts = {
   id: 14609,
   countryCode: 'FM',
   countryName: 'scalable',
-  priorityNumber: 96720,
+  isActive: true,
   ministryName: 'neural Clothing',
   ministryEnglishName: 'Games Functionality COM',
   postalAddress: 'Buckinghamshire calculating',

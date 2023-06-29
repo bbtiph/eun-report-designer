@@ -71,7 +71,12 @@ public class MoeContactsServiceImpl implements MoeContactsService {
     @Transactional(readOnly = true)
     public List<MoeContactsDTO> findAll() {
         log.debug("Request to get all MoeContacts");
-        return moeContactsRepository.findAll().stream().map(moeContactsMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        return moeContactsRepository
+            .findAll()
+            .stream()
+            .filter(MoeContacts::getActive)
+            .map(moeContactsMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
@@ -90,6 +95,7 @@ public class MoeContactsServiceImpl implements MoeContactsService {
     @Override
     public void upload(MultipartFile file) {
         try (InputStream fileInputStream = file.getInputStream()) {
+            moeContactsRepository.updateAllIsActiveToFalse();
             Workbook workbook = WorkbookFactory.create(fileInputStream);
             Sheet sheet = workbook.getSheetAt(0);
 
@@ -142,6 +148,7 @@ public class MoeContactsServiceImpl implements MoeContactsService {
                         if (moeContactsRes != null) {
                             moeContacts.setId(moeContactsRes.getId());
                         }
+                        moeContacts.setActive(true);
                         moeContactsRepository.save(moeContacts);
                     } catch (Exception e) {
                         log.error("Error ", e);
