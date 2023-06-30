@@ -1,10 +1,15 @@
 package org.eun.back.config;
 
+import javax.inject.Inject;
+import org.eun.back.repository.UserRepository;
 import org.eun.back.security.*;
 import org.eun.back.security.jwt.*;
+import org.eun.back.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
+import org.springframework.ldap.core.support.LdapContextSource;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -45,6 +50,11 @@ public class SecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CustomAuthenticationManager customAuthenticationManager(UserService userService) {
+        return new CustomAuthenticationManager(userService, getContextSource());
     }
 
     @Bean
@@ -99,5 +109,28 @@ public class SecurityConfiguration {
 
     private JWTConfigurer securityConfigurerAdapter() {
         return new JWTConfigurer(tokenProvider);
+    }
+
+    public LdapContextSource getContextSource() {
+        LdapContextSource contextSource = new LdapContextSource();
+        contextSource.setUrl("ldap://static.eun.org:389");
+        contextSource.setBase("OU=Users,OU=Brussels,OU=EUN,DC=eun,DC=local");
+        contextSource.setUserDn("visitor");
+        contextSource.setPassword("Sch00l@EUN");
+        contextSource.setPooled(true);
+        contextSource.afterPropertiesSet(); //needed otherwise you will have a NullPointerException in spring
+
+        return contextSource;
+    }
+
+    @Inject
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            .ldapAuthentication()
+            .userSearchBase("o=myO,ou=myOu") //don't add the base
+            .userSearchFilter("(uid={0})")
+            .groupSearchBase("ou=Groups") //don't add the base
+            .groupSearchFilter("member={0}")
+            .contextSource(getContextSource());
     }
 }

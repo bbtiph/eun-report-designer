@@ -2,6 +2,7 @@ package org.eun.back.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.Valid;
+import org.eun.back.config.CustomAuthenticationManager;
 import org.eun.back.security.jwt.JWTFilter;
 import org.eun.back.security.jwt.TokenProvider;
 import org.eun.back.web.rest.vm.LoginVM;
@@ -22,11 +23,17 @@ import org.springframework.web.bind.annotation.*;
 public class UserJWTController {
 
     private final TokenProvider tokenProvider;
+    private final CustomAuthenticationManager customAuthenticationManager;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public UserJWTController(
+        TokenProvider tokenProvider,
+        CustomAuthenticationManager customAuthenticationManager,
+        AuthenticationManagerBuilder authenticationManagerBuilder
+    ) {
         this.tokenProvider = tokenProvider;
+        this.customAuthenticationManager = customAuthenticationManager;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
@@ -37,7 +44,7 @@ public class UserJWTController {
             loginVM.getPassword()
         );
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        Authentication authentication = customAuthenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe());
         HttpHeaders httpHeaders = new HttpHeaders();

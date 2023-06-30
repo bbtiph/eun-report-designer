@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.ldap.userdetails.LdapUserDetails;
 
 /**
  * Utility class for Spring Security.
@@ -34,6 +35,9 @@ public final class SecurityUtils {
             return springSecurityUser.getUsername();
         } else if (authentication.getPrincipal() instanceof String) {
             return (String) authentication.getPrincipal();
+        } else if (authentication.getPrincipal() instanceof LdapUserDetails) {
+            LdapUserDetails ldapUser = (LdapUserDetails) authentication.getPrincipal();
+            return ldapUser.getUsername();
         }
         return null;
     }
