@@ -121,7 +121,7 @@ public class UserService {
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setLangKey(userDTO.getLangKey());
         // new user is not active
-        newUser.setActivated(false);
+        newUser.setActivated(userDTO.isActivated());
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Role> authorities = new HashSet<>();
@@ -276,10 +276,23 @@ public class UserService {
         return userRepository.findOneWithRolesByLogin(login);
     }
 
+    public Optional<String> convertLoginFormatToUs(Optional<String> login) {
+        if (login == null || login.isEmpty()) {
+            return Optional.empty();
+        }
+
+        String[] nameParts = login.get().split(" ");
+        if (nameParts.length == 2) {
+            String formattedName = nameParts[0].toLowerCase() + "." + nameParts[1].toLowerCase();
+            return Optional.of(formattedName);
+        } else {
+            return login;
+        }
+    }
+
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities() {
-        Optional<User> u = SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithRolesByLogin);
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithRolesByLogin);
+        return convertLoginFormatToUs(SecurityUtils.getCurrentUserLogin()).flatMap(userRepository::findOneWithRolesByLogin);
     }
 
     /**

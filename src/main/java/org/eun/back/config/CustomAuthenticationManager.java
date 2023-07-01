@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import org.eun.back.domain.Role;
 import org.eun.back.domain.User;
-import org.eun.back.repository.UserRepository;
 import org.eun.back.service.UserService;
 import org.eun.back.service.dto.AdminUserDTO;
 import org.slf4j.Logger;
@@ -47,14 +46,10 @@ public class CustomAuthenticationManager implements AuthenticationManager {
         log.debug("AUTHENTICATION Password: " + authentication.getCredentials().toString());
 
         BindAuthenticator bindAuth = new BindAuthenticator(ldapContextSource);
-        FilterBasedLdapUserSearch userSearch = new FilterBasedLdapUserSearch("", "(uid={0})", ldapContextSource);
+        FilterBasedLdapUserSearch userSearch = new FilterBasedLdapUserSearch("", "(samaccountname={0})", ldapContextSource);
         try {
             bindAuth.setUserSearch(userSearch);
-            String[] userDnPatterns = new String[] {
-                //                "cn=" + authentication.getName() + "@eun.local",
-                "cn=" + authentication.getName(),
-                //                "OU=Users", "OU=Brussels", "OU=EUN", "DC=eun", "DC=local"
-            };
+            String[] userDnPatterns = new String[] { "cn=" + authentication.getName() };
             bindAuth.setUserDnPatterns(userDnPatterns);
             bindAuth.afterPropertiesSet();
         } catch (Exception ex) {
