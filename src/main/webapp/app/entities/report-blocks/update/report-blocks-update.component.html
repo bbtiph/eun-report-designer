@@ -78,6 +78,7 @@
                       }}</span>
 
                       <input
+                        [id]="'content_' + content.id + '_name'"
                         *ngIf="type === 'template' || (type === 'report' && isEdit)"
                         [formControl]="getFormControlByKey('content_' + content.id + '_name')"
                         placeholder="Enter..."
@@ -87,8 +88,9 @@
                     </th>
                   </tr>
                   <tr>
-                    <th *ngFor="let column of getColumns(content.template ?? '{}'); let columnIndex = index" class="text-center">
+                    <th *ngFor="let column of tableColumns.get(content.id).columns; let columnIndex = index" class="text-center">
                       <input
+                        [id]="'column_' + content.id + '_' + column.index"
                         [formControl]="getColumnFormControl(content, column.index)"
                         placeholder="New column"
                         class="form-control"
@@ -115,8 +117,10 @@
                 </thead>
                 <tbody *ngIf="type === 'content' || type === 'report'">
                   <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
-                    <td *ngFor="let column of getColumns(content.template ?? '{}')" class="text-center">
+                    <td *ngFor="let column of tableColumns.get(content.id).columns" class="text-center">
                       <input
+                        [id]="'row_' + content.id + '_' + content.reportBlocksContentData[rowIndex].id + '_column_' + column.index"
+                        [name]="'row_' + content.id + '_' + content.reportBlocksContentData[rowIndex].id + '_column_' + column.index"
                         *ngIf="type === 'content' || (type === 'report' && isEdit)"
                         [formControl]="getRowDataFormControl(content, rowIndex, column.index)"
                         placeholder="Data"

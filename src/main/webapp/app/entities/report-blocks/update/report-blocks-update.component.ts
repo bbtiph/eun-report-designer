@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable, switchMap, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
-import { ReportBlocksFormService, ReportBlocksFormGroup } from './report-blocks-form.service';
+import { ReportBlocksFormGroup, ReportBlocksFormService } from './report-blocks-form.service';
 import { IReportBlocks } from '../report-blocks.model';
 import { ReportBlocksService } from '../service/report-blocks.service';
 import { ICountries } from 'app/entities/countries/countries.model';
@@ -16,6 +16,7 @@ import { IReportBlocksContentData, NewReportBlocksContentData } from '../../repo
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReportBlocksContentDataService } from '../../report-blocks-content-data/service/report-blocks-content-data.service';
 import { ReportBlocksContentService } from '../../report-blocks-content/service/report-blocks-content.service';
+import { IReportBlocksContentTemplateColumn } from '../../report-blocks-content/report-blocks-content-template-column.model';
 
 @Component({
   selector: 'jhi-report-blocks-update',
@@ -28,6 +29,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
   isSaving = false;
   isEdit = false;
   type: string = '';
+  tableColumns = new Map();
   reportBlocks: IReportBlocks | null = null;
   reportBlocksContents?: IReportBlocksContent[];
   selectedCountry: ICountries | null = null;
@@ -35,6 +37,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
 
   countriesSharedCollection: ICountries[] = [];
   reportsSharedCollection: IReport[] = [];
+  columns: IReportBlocksContentTemplateColumn[] = [];
   formGroup: FormGroup;
 
   editForm: ReportBlocksFormGroup = this.reportBlocksFormService.createReportBlocksFormGroup();
@@ -81,6 +84,16 @@ export class ReportBlocksUpdateComponent implements OnInit {
       });
     }
     if (this.type != 'new') this.initializeFormControls();
+    this.getTableColumns();
+  }
+
+  getTableColumns() {
+    if (this.reportBlocks && this.reportBlocks.reportBlocksContents) {
+      const elements = this.reportBlocks.reportBlocksContents.filter(a => a.type === 'table');
+      elements.forEach(element => {
+        this.tableColumns.set(element.id, JSON.parse(element.template ?? '{}'));
+      });
+    }
   }
 
   previousState(): void {
@@ -212,6 +225,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
       },
       newContentData: false,
     };
+
     this.reportBlocksContentDataService.createWithContent(newRow, content.id).subscribe((res: HttpResponse<IReportBlocksContentData>) => {
       const newRow: IReportBlocksContentData = res.body!;
       // @ts-ignore
@@ -230,6 +244,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
     this.reportBlocksContentDataService.delete(rowId).subscribe(() => {
       console.log('deleted row ID: ', rowId);
     });
+
     content.reportBlocksContentData.splice(rowIndex, 1);
   }
 
@@ -257,6 +272,8 @@ export class ReportBlocksUpdateComponent implements OnInit {
           rowData.rows.push({ data: '', index: newColumnIndex });
           row.data = JSON.stringify(rowData);
         }
+
+        this.getTableColumns();
       }
     } catch (error) {
       console.error('Error parsing JSON:', error);
@@ -286,6 +303,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
           }
         }
         this.initializeFormControls();
+        this.getTableColumns();
       }
     } catch (error) {
       console.error('Error parsing JSON:', error);
