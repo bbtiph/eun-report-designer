@@ -414,6 +414,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
     };
     this.reportBlocks?.reportBlocksContents?.push(subBlock);
     this.initializeFormControls();
+    this.getTableColumns();
   }
 
   addTextSubBlock() {
