@@ -1,0 +1,202 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-working-group-references-heading" data-cy="WorkingGroupReferencesCreateUpdateHeading">
+        Create or edit a Working Group References
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryCode">Country Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryCode"
+            id="field_countryCode"
+            data-cy="countryCode"
+            formControlName="countryCode"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryName">Country Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryName"
+            id="field_countryName"
+            data-cy="countryName"
+            formControlName="countryName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryRepresentativeFirstName">Country Representative First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryRepresentativeFirstName"
+            id="field_countryRepresentativeFirstName"
+            data-cy="countryRepresentativeFirstName"
+            formControlName="countryRepresentativeFirstName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryRepresentativeLastName">Country Representative Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryRepresentativeLastName"
+            id="field_countryRepresentativeLastName"
+            data-cy="countryRepresentativeLastName"
+            formControlName="countryRepresentativeLastName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryRepresentativeMail">Country Representative Mail</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryRepresentativeMail"
+            id="field_countryRepresentativeMail"
+            data-cy="countryRepresentativeMail"
+            formControlName="countryRepresentativeMail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryRepresentativePosition">Country Representative Position</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryRepresentativePosition"
+            id="field_countryRepresentativePosition"
+            data-cy="countryRepresentativePosition"
+            formControlName="countryRepresentativePosition"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryRepresentativeStartDate">Country Representative Start Date</label>
+          <div class="input-group">
+            <input
+              id="field_countryRepresentativeStartDate"
+              data-cy="countryRepresentativeStartDate"
+              type="text"
+              class="form-control"
+              name="countryRepresentativeStartDate"
+              ngbDatepicker
+              #countryRepresentativeStartDateDp="ngbDatepicker"
+              formControlName="countryRepresentativeStartDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="countryRepresentativeStartDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryRepresentativeEndDate">Country Representative End Date</label>
+          <div class="input-group">
+            <input
+              id="field_countryRepresentativeEndDate"
+              data-cy="countryRepresentativeEndDate"
+              type="text"
+              class="form-control"
+              name="countryRepresentativeEndDate"
+              ngbDatepicker
+              #countryRepresentativeEndDateDp="ngbDatepicker"
+              formControlName="countryRepresentativeEndDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="countryRepresentativeEndDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryRepresentativeMinistry">Country Representative Ministry</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryRepresentativeMinistry"
+            id="field_countryRepresentativeMinistry"
+            data-cy="countryRepresentativeMinistry"
+            formControlName="countryRepresentativeMinistry"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryRepresentativeDepartment">Country Representative Department</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryRepresentativeDepartment"
+            id="field_countryRepresentativeDepartment"
+            data-cy="countryRepresentativeDepartment"
+            formControlName="countryRepresentativeDepartment"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_contactEunFirstName">Contact Eun First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="contactEunFirstName"
+            id="field_contactEunFirstName"
+            data-cy="contactEunFirstName"
+            formControlName="contactEunFirstName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_contactEunLastName">Contact Eun Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="contactEunLastName"
+            id="field_contactEunLastName"
+            data-cy="contactEunLastName"
+            formControlName="contactEunLastName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_type">Type</label>
+          <input type="text" class="form-control" name="type" id="field_type" data-cy="type" formControlName="type" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_isActive">Is Active</label>
+          <input type="checkbox" class="form-check" name="isActive" id="field_isActive" data-cy="isActive" formControlName="isActive" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

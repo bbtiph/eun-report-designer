@@ -130,6 +130,11 @@ import { RouterModule } from '@angular/router';
         loadChildren: () =>
           import('./report-blocks-content-data/report-blocks-content-data.module').then(m => m.ReportBlocksContentDataModule),
       },
+      {
+        path: 'working-group-references',
+        data: { pageTitle: 'WorkingGroupReferences' },
+        loadChildren: () => import('./working-group-references/working-group-references.module').then(m => m.WorkingGroupReferencesModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

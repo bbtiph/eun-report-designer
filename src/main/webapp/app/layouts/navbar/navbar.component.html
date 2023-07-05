@@ -325,7 +325,7 @@
                 [routerLinkActiveOptions]="{ exact: true }"
                 (click)="collapseNavbar()"
               >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <fa-icon icon="th-list" [fixedWidth]="true"></fa-icon>
                 <span>Report Blocks Content</span>
               </a>
             </li>
@@ -337,8 +337,20 @@
                 [routerLinkActiveOptions]="{ exact: true }"
                 (click)="collapseNavbar()"
               >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <fa-icon icon="th-list" [fixedWidth]="true"></fa-icon>
                 <span>Report Blocks Content Data</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="working-group-references"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="th-list" [fixedWidth]="true"></fa-icon>
+                <span>Working Group References</span>
               </a>
             </li>
             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->

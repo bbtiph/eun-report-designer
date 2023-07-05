@@ -1,0 +1,227 @@
+<div>
+  <h2 id="page-heading" data-cy="WorkingGroupReferencesHeading">
+    <span>Working Group References</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button type="button" class="btn btn-info me-2" (click)="openModal()">
+        <fa-icon icon="plus"></fa-icon>
+        <span>Upload Excel</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-working-group-references"
+        [routerLink]="['/working-group-references/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Working Group References </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="workingGroupReferences?.length === 0">
+    <span>No Working Group References found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="workingGroupReferences && workingGroupReferences.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryCode">
+            <div class="d-flex">
+              <span>Country Code</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryName">
+            <div class="d-flex">
+              <span>Country Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryRepresentativeFirstName">
+            <div class="d-flex">
+              <span>Country Representative First Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryRepresentativeLastName">
+            <div class="d-flex">
+              <span>Country Representative Last Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryRepresentativeMail">
+            <div class="d-flex">
+              <span>Country Representative Mail</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryRepresentativePosition">
+            <div class="d-flex">
+              <span>Country Representative Position</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryRepresentativeStartDate">
+            <div class="d-flex">
+              <span>Country Representative Start Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryRepresentativeEndDate">
+            <div class="d-flex">
+              <span>Country Representative End Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryRepresentativeMinistry">
+            <div class="d-flex">
+              <span>Country Representative Ministry</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryRepresentativeDepartment">
+            <div class="d-flex">
+              <span>Country Representative Department</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="contactEunFirstName">
+            <div class="d-flex">
+              <span>Contact Eun First Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="contactEunLastName">
+            <div class="d-flex">
+              <span>Contact Eun Last Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="type">
+            <div class="d-flex">
+              <span>Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isActive">
+            <div class="d-flex">
+              <span>Is Active</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let workingGroupReferences of workingGroupReferences; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/working-group-references', workingGroupReferences.id, 'view']">{{ workingGroupReferences.id }}</a>
+          </td>
+          <td>{{ workingGroupReferences.countryCode }}</td>
+          <td>{{ workingGroupReferences.countryName }}</td>
+          <td>{{ workingGroupReferences.countryRepresentativeFirstName }}</td>
+          <td>{{ workingGroupReferences.countryRepresentativeLastName }}</td>
+          <td>{{ workingGroupReferences.countryRepresentativeMail }}</td>
+          <td>{{ workingGroupReferences.countryRepresentativePosition }}</td>
+          <td>{{ workingGroupReferences.countryRepresentativeStartDate | formatMediumDate }}</td>
+          <td>{{ workingGroupReferences.countryRepresentativeEndDate | formatMediumDate }}</td>
+          <td>{{ workingGroupReferences.countryRepresentativeMinistry }}</td>
+          <td>{{ workingGroupReferences.countryRepresentativeDepartment }}</td>
+          <td>{{ workingGroupReferences.contactEunFirstName }}</td>
+          <td>{{ workingGroupReferences.contactEunLastName }}</td>
+          <td>{{ workingGroupReferences.type }}</td>
+          <td>{{ workingGroupReferences.isActive }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/working-group-references', workingGroupReferences.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/working-group-references', workingGroupReferences.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(workingGroupReferences)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="workingGroupReferences && workingGroupReferences.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" [class.show]="showModal" [class.d-block]="showModal">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload Excel File</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <br />
+      <div class="modal-body">
+        <form (ngSubmit)="uploadFile()" enctype="multipart/form-data">
+          <div class="form-group">
+            <input type="file" class="form-control-file" (change)="onFileChange($event)" />
+          </div>
+          <br />
+          <br />
+          <br />
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

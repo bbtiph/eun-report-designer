@@ -1,17 +1,23 @@
-entity ReportBlocksContent {
+entity WorkingGroupReferences {
+    countryCode String
+    countryName String
+    countryRepresentativeFirstName String
+    countryRepresentativeLastName String
+    countryRepresentativeMail String
+    countryRepresentativePosition String
+    countryRepresentativeStartDate LocalDate
+    countryRepresentativeEndDate LocalDate
+    countryRepresentativeMinistry String
+    countryRepresentativeDepartment String
+    contactEunFirstName String
+    contactEunLastName String
     type String
-    priorityNumber Long
-    template String
     isActive Boolean
 }
 
-entity ReportBlocksContentData {
-    data String
-}
 
-
-
-dto ReportBlocksContent,ReportBlocksContentData with mapstruct
-service ReportBlocksContent,ReportBlocksContentData with serviceImpl
+paginate WorkingGroupReferences with pagination
+dto WorkingGroupReferences with mapstruct
+service WorkingGroupReferences with serviceImpl
 
 

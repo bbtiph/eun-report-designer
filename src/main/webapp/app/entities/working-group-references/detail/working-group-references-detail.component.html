@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="workingGroupReferences">
+      <h2 data-cy="workingGroupReferencesDetailsHeading"><span>Working Group References</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.id }}</span>
+        </dd>
+        <dt><span>Country Code</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.countryCode }}</span>
+        </dd>
+        <dt><span>Country Name</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.countryName }}</span>
+        </dd>
+        <dt><span>Country Representative First Name</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.countryRepresentativeFirstName }}</span>
+        </dd>
+        <dt><span>Country Representative Last Name</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.countryRepresentativeLastName }}</span>
+        </dd>
+        <dt><span>Country Representative Mail</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.countryRepresentativeMail }}</span>
+        </dd>
+        <dt><span>Country Representative Position</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.countryRepresentativePosition }}</span>
+        </dd>
+        <dt><span>Country Representative Start Date</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.countryRepresentativeStartDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Country Representative End Date</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.countryRepresentativeEndDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Country Representative Ministry</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.countryRepresentativeMinistry }}</span>
+        </dd>
+        <dt><span>Country Representative Department</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.countryRepresentativeDepartment }}</span>
+        </dd>
+        <dt><span>Contact Eun First Name</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.contactEunFirstName }}</span>
+        </dd>
+        <dt><span>Contact Eun Last Name</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.contactEunLastName }}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.type }}</span>
+        </dd>
+        <dt><span>Is Active</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.isActive }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/working-group-references', workingGroupReferences.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

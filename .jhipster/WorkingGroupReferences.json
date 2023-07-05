@@ -1,0 +1,72 @@
+{
+  "applications": "*",
+  "changelogDate": "20230704120418",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "working_group_references",
+  "fields": [
+    {
+      "fieldName": "countryCode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryRepresentativeFirstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryRepresentativeLastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryRepresentativeMail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryRepresentativePosition",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryRepresentativeStartDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "countryRepresentativeEndDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "countryRepresentativeMinistry",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryRepresentativeDepartment",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "contactEunFirstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "contactEunLastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isActive",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "WorkingGroupReferences",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}
