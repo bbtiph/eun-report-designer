@@ -97,7 +97,7 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
             Workbook workbook = WorkbookFactory.create(fileInputStream);
             for (int pageNumber : new int[] { 3, 4, 5, 9 }) {
                 Sheet sheet = workbook.getSheetAt(pageNumber);
-
+                String sheetName = sheet.getSheetName();
                 int i = 0;
                 for (Row row : sheet) {
                     i++;
@@ -152,12 +152,14 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
                             );
                             workingGroupReferences.setContactEunFirstName(row.getCell(10) != null ? row.getCell(10).toString() : "");
                             workingGroupReferences.setContactEunLastName(row.getCell(11) != null ? row.getCell(11).toString() : "");
-                            MoeContacts moeContactsRes = workingGroupReferencesRepository.findByCountryCodeAndCountryRepresentativeMinistry(
+                            workingGroupReferences.setType(sheetName);
+                            WorkingGroupReferences workingGroupReferencesRes = workingGroupReferencesRepository.findByCountryCodeAndCountryRepresentativeMinistryAndType(
                                 workingGroupReferences.getCountryCode(),
-                                workingGroupReferences.getCountryRepresentativeMinistry()
+                                workingGroupReferences.getCountryRepresentativeMinistry(),
+                                workingGroupReferences.getType()
                             );
-                            if (moeContactsRes != null) {
-                                workingGroupReferences.setId(moeContactsRes.getId());
+                            if (workingGroupReferencesRes != null) {
+                                workingGroupReferences.setId(workingGroupReferencesRes.getId());
                             }
                             workingGroupReferences.setIsActive(true);
                             workingGroupReferencesRepository.save(workingGroupReferences);

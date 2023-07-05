@@ -34,6 +34,9 @@ class CountriesResourceIT {
     private static final String DEFAULT_COUNTRY_NAME = "AAAAAAAAAA";
     private static final String UPDATED_COUNTRY_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_COUNTRY_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_COUNTRY_CODE = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/countries";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -61,7 +64,7 @@ class CountriesResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Countries createEntity(EntityManager em) {
-        Countries countries = new Countries().countryName(DEFAULT_COUNTRY_NAME);
+        Countries countries = new Countries().countryName(DEFAULT_COUNTRY_NAME).countryCode(DEFAULT_COUNTRY_CODE);
         return countries;
     }
 
@@ -72,7 +75,7 @@ class CountriesResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Countries createUpdatedEntity(EntityManager em) {
-        Countries countries = new Countries().countryName(UPDATED_COUNTRY_NAME);
+        Countries countries = new Countries().countryName(UPDATED_COUNTRY_NAME).countryCode(UPDATED_COUNTRY_CODE);
         return countries;
     }
 
@@ -96,6 +99,7 @@ class CountriesResourceIT {
         assertThat(countriesList).hasSize(databaseSizeBeforeCreate + 1);
         Countries testCountries = countriesList.get(countriesList.size() - 1);
         assertThat(testCountries.getCountryName()).isEqualTo(DEFAULT_COUNTRY_NAME);
+        assertThat(testCountries.getCountryCode()).isEqualTo(DEFAULT_COUNTRY_CODE);
     }
 
     @Test
@@ -129,7 +133,8 @@ class CountriesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(countries.getId().intValue())))
-            .andExpect(jsonPath("$.[*].countryName").value(hasItem(DEFAULT_COUNTRY_NAME)));
+            .andExpect(jsonPath("$.[*].countryName").value(hasItem(DEFAULT_COUNTRY_NAME)))
+            .andExpect(jsonPath("$.[*].countryCode").value(hasItem(DEFAULT_COUNTRY_CODE)));
     }
 
     @Test
@@ -144,7 +149,8 @@ class CountriesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(countries.getId().intValue()))
-            .andExpect(jsonPath("$.countryName").value(DEFAULT_COUNTRY_NAME));
+            .andExpect(jsonPath("$.countryName").value(DEFAULT_COUNTRY_NAME))
+            .andExpect(jsonPath("$.countryCode").value(DEFAULT_COUNTRY_CODE));
     }
 
     @Test
@@ -166,7 +172,7 @@ class CountriesResourceIT {
         Countries updatedCountries = countriesRepository.findById(countries.getId()).get();
         // Disconnect from session so that the updates on updatedCountries are not directly saved in db
         em.detach(updatedCountries);
-        updatedCountries.countryName(UPDATED_COUNTRY_NAME);
+        updatedCountries.countryName(UPDATED_COUNTRY_NAME).countryCode(UPDATED_COUNTRY_CODE);
         CountriesDTO countriesDTO = countriesMapper.toDto(updatedCountries);
 
         restCountriesMockMvc
@@ -182,6 +188,7 @@ class CountriesResourceIT {
         assertThat(countriesList).hasSize(databaseSizeBeforeUpdate);
         Countries testCountries = countriesList.get(countriesList.size() - 1);
         assertThat(testCountries.getCountryName()).isEqualTo(UPDATED_COUNTRY_NAME);
+        assertThat(testCountries.getCountryCode()).isEqualTo(UPDATED_COUNTRY_CODE);
     }
 
     @Test
@@ -261,7 +268,7 @@ class CountriesResourceIT {
         Countries partialUpdatedCountries = new Countries();
         partialUpdatedCountries.setId(countries.getId());
 
-        partialUpdatedCountries.countryName(UPDATED_COUNTRY_NAME);
+        partialUpdatedCountries.countryName(UPDATED_COUNTRY_NAME).countryCode(UPDATED_COUNTRY_CODE);
 
         restCountriesMockMvc
             .perform(
@@ -276,6 +283,7 @@ class CountriesResourceIT {
         assertThat(countriesList).hasSize(databaseSizeBeforeUpdate);
         Countries testCountries = countriesList.get(countriesList.size() - 1);
         assertThat(testCountries.getCountryName()).isEqualTo(UPDATED_COUNTRY_NAME);
+        assertThat(testCountries.getCountryCode()).isEqualTo(UPDATED_COUNTRY_CODE);
     }
 
     @Test
@@ -290,7 +298,7 @@ class CountriesResourceIT {
         Countries partialUpdatedCountries = new Countries();
         partialUpdatedCountries.setId(countries.getId());
 
-        partialUpdatedCountries.countryName(UPDATED_COUNTRY_NAME);
+        partialUpdatedCountries.countryName(UPDATED_COUNTRY_NAME).countryCode(UPDATED_COUNTRY_CODE);
 
         restCountriesMockMvc
             .perform(
@@ -305,6 +313,7 @@ class CountriesResourceIT {
         assertThat(countriesList).hasSize(databaseSizeBeforeUpdate);
         Countries testCountries = countriesList.get(countriesList.size() - 1);
         assertThat(testCountries.getCountryName()).isEqualTo(UPDATED_COUNTRY_NAME);
+        assertThat(testCountries.getCountryCode()).isEqualTo(UPDATED_COUNTRY_CODE);
     }
 
     @Test

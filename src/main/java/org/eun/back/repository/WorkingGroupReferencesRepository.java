@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface WorkingGroupReferencesRepository extends JpaRepository<WorkingGroupReferences, Long> {
-    MoeContacts findByCountryCodeAndCountryRepresentativeMinistry(String countryCode, String ministryName);
+    WorkingGroupReferences findByCountryCodeAndCountryRepresentativeMinistryAndType(String countryCode, String ministryName, String type);
 
     @Modifying
     @Query("UPDATE MoeContacts e SET e.isActive = false")

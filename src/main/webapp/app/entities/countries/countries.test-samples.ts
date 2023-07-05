@@ -5,13 +5,14 @@ export const sampleWithRequiredData: ICountries = {
 };
 
 export const sampleWithPartialData: ICountries = {
-  id: 49448,
-  countryName: 'circuit auxiliary',
+  id: 34509,
+  countryName: 'Pizza',
 };
 
 export const sampleWithFullData: ICountries = {
-  id: 14554,
-  countryName: 'Platinum',
+  id: 1492,
+  countryName: 'Steel Identity withdrawal',
+  countryCode: 'SM',
 };
 
 export const sampleWithNewData: NewCountries = {

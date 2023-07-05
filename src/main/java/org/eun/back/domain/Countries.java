@@ -25,6 +25,9 @@ public class Countries implements Serializable {
     @Column(name = "country_name")
     private String countryName;
 
+    @Column(name = "country_code")
+    private String countryCode;
+
     @ManyToMany(mappedBy = "countryIds")
     @JsonIgnoreProperties(value = { "countryIds", "reportIds" }, allowSetters = true)
     private Set<ReportBlocks> reportBlockIds = new HashSet<>();
@@ -55,6 +58,19 @@ public class Countries implements Serializable {
 
     public void setCountryName(String countryName) {
         this.countryName = countryName;
+    }
+
+    public String getCountryCode() {
+        return this.countryCode;
+    }
+
+    public Countries countryCode(String countryCode) {
+        this.setCountryCode(countryCode);
+        return this;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public Set<ReportBlocks> getReportBlockIds() {
@@ -113,6 +129,7 @@ public class Countries implements Serializable {
         return "Countries{" +
             "id=" + getId() +
             ", countryName='" + getCountryName() + "'" +
+            ", countryCode='" + getCountryCode() + "'" +
             "}";
     }
 }

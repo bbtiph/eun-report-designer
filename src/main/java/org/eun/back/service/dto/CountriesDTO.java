@@ -13,6 +13,8 @@ public class CountriesDTO implements Serializable {
 
     private String countryName;
 
+    private String countryCode;
+
     public Long getId() {
         return id;
     }
@@ -27,6 +29,14 @@ public class CountriesDTO implements Serializable {
 
     public void setCountryName(String countryName) {
         this.countryName = countryName;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     @Override
@@ -56,6 +66,7 @@ public class CountriesDTO implements Serializable {
         return "CountriesDTO{" +
             "id=" + getId() +
             ", countryName='" + getCountryName() + "'" +
+            ", countryCode='" + getCountryCode() + "'" +
             "}";
     }
 }

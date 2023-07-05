@@ -128,7 +128,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
           rowData.data = formControl.value;
           row.data = JSON.stringify(rowData);
         }
-      } else {
+      } else if (content.type === 'table') {
         // @ts-ignore
         const columns = this.getColumns(content.template);
         for (const column of columns) {
