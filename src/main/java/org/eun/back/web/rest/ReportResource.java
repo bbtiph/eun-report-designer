@@ -214,9 +214,12 @@ public class ReportResource {
         String data = reportRequest.getData();
         String output = reportRequest.getOutput();
         String lang = reportRequest.getLang();
+        String country = reportRequest.getCountry();
 
-        log.info("Generating full report: " + name + "; data: " + data + "; format: " + output + "; lang: " + lang);
+        log.info(
+            "Generating full report: " + name + "; data: " + data + "; format: " + output + "; lang: " + lang + "; country: " + country
+        );
         OutputType format = OutputType.from(output);
-        birtReportService.generateMainReport(name, format, data, lang, response, request);
+        birtReportService.generateMainReport(name, format, data, lang, country, response, request);
     }
 }

@@ -3,7 +3,7 @@
     <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
     <property name="units">in</property>
     <method name="initialize"><![CDATA[
-        var op=[];
+        var wgs=[];
         var blocks=[];
         var projects=[];
         var json = eval('(' + params['docId'] + ')');
@@ -43,7 +43,21 @@
             <property name="dataType">string</property>
             <property name="distinct">true</property>
             <simple-property-list name="defaultValue">
-                <value type="constant">[{"id":3301,"name":"Last Test","priorityNumber":null,"isActive":true,"config":null,"countryIds":[{"id":1,"countryName":null},{"id":3,"countryName":null},{"id":12,"countryName":null},{"id":13,"countryName":null},{"id":15,"countryName":null},{"id":16,"countryName":null}],"reportBlocksContents":[{"id":3351,"type":"text","priorityNumber":2,"template":"{\"name\":\"11111\",\"data\":\"111111111\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3404,"data":"{\"data\":\"&lt;span>Denmark&lt;/span>\"}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null},{"id":3352,"type":"text","priorityNumber":4,"template":"{\"name\":\"123123\",\"data\":\"1232133\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3410,"data":"{\"data\":\"&lt;span>Denmark&lt;/span>\"}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null},{"id":3353,"type":"table","priorityNumber":6,"template":"{\"name\":\"34555555666666\",\"columns\":[{\"name\":\"1\",\"index\":1},{\"name\":\"3\",\"index\":2}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3419,"data":"{\"rows\":[{\"data\":\"1\",\"index\":1},{\"data\":\"2\",\"index\":2}]}","country":{"id":13,"countryName":"Denmark"},"newContentData":null},{"id":3420,"data":"{\"rows\":[{\"data\":\"2\",\"index\":1},{\"data\":\"66\",\"index\":2}]}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null},{"id":3451,"type":"table","priorityNumber":10,"template":"{\"name\":\"wer\",\"columns\":[{\"name\":\"1\",\"index\":1},{\"name\":\"22\",\"index\":2}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3504,"data":"{\"rows\":[{\"index\":1,\"data\":\"33\"},{\"index\":2,\"data\":\"2\"}]}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}},{"id":3551,"name":"LLLL","priorityNumber":null,"isActive":false,"config":null,"countryIds":[{"id":12,"countryName":null},{"id":13,"countryName":null},{"id":14,"countryName":null},{"id":15,"countryName":null}],"reportBlocksContents":[{"id":3601,"type":"text","priorityNumber":2,"template":"{\"name\":\"llllllll\",\"data\":\"LLLL\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3652,"data":"{\"data\":\"\"}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null},{"id":3602,"type":"text","priorityNumber":4,"template":"{\"name\":\":LLLLL\",\"data\":\":LLLL\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3656,"data":"{\"data\":\"\"}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null},{"id":3603,"type":"table","priorityNumber":6,"template":"{\"name\":\":::::LLLL\",\"columns\":[{\"name\":\"1\",\"index\":1},{\"name\":\"4\",\"index\":2}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3660,"data":"{\"rows\":[{\"index\":1,\"data\":\"\"},{\"index\":2,\"data\":\"\"}]}","country":{"id":13,"countryName":"Denmark"},"newContentData":null}],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}}]</value>
+                <value type="constant">[{"id":3751,"name":"Situation of Cyprus - March 2023","priorityNumber":null,"isActive":true,"config":null,"countryIds":[{"id":11,"countryName":null,"countryCode":null}],"reportBlocksContents":[{"id":3802,"type":"text","priorityNumber":4,"template":"{\"name\":\"111\",\"data\":\"\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3852,"data":"{\"data\":\"&lt;div>&lt;h1>&lt;a>&lt;span lang=\\\"EN-GB\\\">Value proposition regarding EUN membership fee&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\">&lt;/span>&lt;/h1>&lt;/div>&lt;div>&lt;u>&lt;font face=\\\"Times New Roman\\\" size=\\\"4\\\">&lt;span>&lt;br>&lt;/span>&lt;/font>&lt;/u>&lt;/div>&lt;div>&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Preamble&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\">&lt;/span>&lt;/h2>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">At the Steering Committee meeting of 3rd March 2023, some members requested further information on the value proposition offered by European Schoolnet which is the unique network of ministries of education in Europe.&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">Answering such a question is somewhat circuitous as, in fact, it is the governing body of European Schoolnet (that is the Steering Committee itself) which defines and agrees the strategic priorities and annual work programme of the organisation. Based on the respective national priorities of Steering Committee members and on the cross-European exchanges that such a network can provide, EUN elaborates an annual work programme and an activity report that each ministry of education can comment on and amend before its adoption by the network. (See annual report 2021: https://indd.adobe.com/embed/ef607fa4-fa82-4b7f-bcf4-40428ea7f7b2?startpage=1&amp;amp;allowFullscreen=true)&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">The scope of the activities proposed by the network are particularly designed to address both current and emerging K12 policy challenges in Europe. EUN projects, initiatives and working groups are also developed in such a way that each ministry should be able to identify a significant number of EUN services and networking opportunities which are of direct value in addressing national priorities.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">Currently EUN organises its activities around five main pillars:&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">1.&amp;#160;Knowledge building and policy developments.&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">2.&amp;#160;Supporting innovative teaching and learning&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">3.&amp;#160;Digital Citizenship&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">4.&amp;#160;Supporting school partnerships and networks&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">5.&amp;#160;Addressing STEM education challenges.&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">All these activities are fully described in the 2023 work programme which has been discussed and agreed by Steering Committee members along with the budget required to deliver this work programme. It can be viewed at the following link:&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;a href=\\\"https://indd.adobe.com/embed/2dc2b7b7-036e-4f31-8748-0bbe66854106?startpage=1&amp;amp;allowFullscreen=true\\\" target=\\\"_blank\\\">&lt;font face=\\\"Times New Roman\\\">https://indd.adobe.com/embed/2dc2b7b7-036e-4f31-8748-0bbe66854106?startpage=1&amp;amp;allowFullscreen=true&lt;/font>&lt;/a>&lt;br>&lt;/div>&lt;div>&lt;br>&lt;/div>&lt;div>&lt;br>&lt;/div>&lt;div>&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Benefits of being a member of the European Schoolnet network&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\">&lt;/span>&lt;/h2>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">The major benefits of education ministries being a member of European Schoolnet can be summarised as follows:&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\" size=\\\"5\\\">Policy exchange and networking opportunities&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\" size=\\\"5\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#9679;&amp;#160;All EUN members benefit from the critical knowledge building and exchange opportunities that arise from being a member of an active and growing network of 34 Ministries of Education and Educational Agencies in Europe that is focussed on K12 educational innovation and implementing digital technologies in schools.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">This is achieved in particular through the guided thematic discussions in European Schoolnet working groups: Indicators Working Group, Interactive Classroom Working Group, STEM Working Group, Digital Citizen Working Group (see current Working Groups) or via ad hoc interest groups: Small and Rural Schools Interest Group, Data Interest Group. All such groups can be created to address specific national priorities. In addition, these dialogues are continued within yearly policy events organised by European Schoolnet under the umbrella of the Future Classroom Lab or EUN&amp;#8217;s EMINENT annual conference.&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">As part of this network, EUN Steering Committee members and colleagues working at both national and regional levels have regular opportunities to develop close working relationships with policymakers in other Education ministries across Europe.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#9679;&amp;#160;All EUN members benefit from the expert knowledge of EUN in its three strands of work:&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#160; &amp;#160; &amp;#160; &amp;#160; &amp;#9679;&amp;#160;Providing usable evidence and data in the area of innovation in education to inform policy recommendations (via peer exchanges, policy experimentations, surveys and reports and via its various working groups).&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#160; &amp;#160; &amp;#160; &amp;#160; &amp;#9679;&amp;#160;Supporting schools and teachers in their teaching practices (via the animation of three European networks - eTwinning, Scientix and BIK).&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#160; &amp;#160; &amp;#160; &amp;#160; &amp;#9679;&amp;#160;Developing, encouraging and sustaining innovative teaching and learning approaches (via the activities organized around the Future Classroom Lab and the European Schoolnet Academy).&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">This includes being able to draw on and leverage the support and expertise of the EUN Office made up of 80 multilingual and multinational staff and a small number of external experts in specific areas.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#9679;&amp;#160;All EUN members are regularly updated on developments in the field of ICT Policy in Education, Interoperability/standards and school practice through a variety of channels.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">Ministries of Education can subscribe to the EUN policy newsletter, which provides information on the latest EUN reports and studies relevant for policy makers. In the framework of EUN working or interest groups, experts&amp;#8217; input on specific topics of interest is provided along with discussion documents, white papers and other mechanisms and tools for knowledge exchange that can be freely adapted and re-used at national level (frameworks, reports, recommendations and guidelines).&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\" size=\\\"4\\\">Strategic development of K12 EdTech in Europe and joint participation in EU funded projects&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\" size=\\\"4\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#9679;&amp;#160;European Schoolnet began as a political initiative of 18 Ministries of Education and since 1997 has continued to work with its members to provide an evolving vision for how EdTech can transform teaching and learning in Europe&amp;#8217;s schools. As the collective voice of education ministries, EUN has particularly worked closely with its members to help steer the direction of relevant European Commission research programmes and particularly to define pan-European research priorities related to innovation in school education that are properly aligned with the realities of classroom practice and national K12 policy priorities.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#9679;&amp;#160;More specifically, EUN continues to provide all of its members with the ability to access European Commission funds through joining large-scale projects that it designs, submits and manages, including Horizon 2020 projects and Erasmus+ Policy Experimentations.&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">All Ministries of Education benefit from the possibility of integrating issues and topics they aim to tackle at national level in the design of EUN project proposals and also have privileged access to the deliverables, information and data resulting from these projects, irrespective of whether they decide to participate as funded project partners or unfunded Associate Partners.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#9679;&amp;#160;The economic model developed by EUN is mainly based on annual fees from ministries and EC funding that is obtained via EC projects. However, it is important to recognise that the fees from ministries amount to only around 10% of the total EUN turnover and that the majority of projects which EUN develops and manages on behalf of its members are either directly addressing present K12 national challenges or emerging technologies and issues that all ministries will be required to address in the near to medium term future. Wherever possible, the vast majority of projects also include several ministries per project and as many ministries as the available EC call budget will realistically allow.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\" size=\\\"4\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\" size=\\\"4\\\">Supporting pan-European school collaboration&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\" size=\\\"4\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#9679;&amp;#160;From the beginning, education ministries supporting European Schoolnet recognised the importance, not only of building an independent policy exchange network in which they set the agenda, but also a framework within which pan-European knowledge exchange and collaboration can take place between teachers and schools that wish to innovate. All current EUN members continue to benefit from EUN&amp;#8217;s on-going work to provide new opportunities for schools in each country to communicate and cooperate at the European level, including within pan-European communities of practice, focus groups, school clusters, project meetings and summer schools.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">In particular, EUN now animates the following major European networks:&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#160; &amp;#160; &amp;#160;&amp;#9679;&amp;#160;The ESEP network, which is the continuation of the eTwinning and School Education Gateway funded by the Erasmus+ programme.&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#160; &amp;#160; &amp;#160;&amp;#9679;&amp;#160;The Scientix network, a European community for science teachers in Europe funded by Horizon 2020.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#160; &amp;#160; &amp;#160;&amp;#9679;&amp;#160;The Better Internet for Kids Network and the Digital Skills and Jobs platform funded by the Digital Europe&amp;#160; &amp;#160; &amp;#160; &amp;#160; &amp;#160; &amp;#160; &amp;#160; &amp;#160; &amp;#160; &amp;#160;programme.&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">All of these major European networks have built a specific ecosystem and are closely linked to the animation of national structures established by ministries of education in these contexts.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">&amp;#9679;&amp;#160;In addition to these EC-funded European networks, EUN has: developed the Future Classroom Lab ambassador network with its ministries of education; is working with a pan-European network of learning labs that have been inspired by the FCL concept; and has implemented an online European Schoolnet Academy, offering an annual programme of professional development opportunities for all teachers in Europe, free of charge. Any teacher in Europe can access to the FCL training Course Catalogue and to the European Schoolnet Academy course catalogue .&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\" size=\\\"4\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\" size=\\\"4\\\">Conclusion&amp;#160;&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\" size=\\\"4\\\">&lt;br>&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">To consolidate its role as the &amp;#8216;ideas lab&amp;#8217; for the school of tomorrow, European Schoolnet will continue supporting Ministries of Education with evidence-based knowledge and recommendations to transform Europe&amp;#8217;s educational systems with innovative solutions that motivate, protect and empower the next generation of students.&lt;/font>&lt;/div>&lt;div>&lt;font face=\\\"Times New Roman\\\">To do that, in 2023, the organisation will facilitate synergies between teachers, schools, policymakers, and industry partners at European and national level, to foster new teaching and learning models, develop teachers&amp;#8217; capacity building, facilitate schools&amp;#8217; partnerships, attract talent to STEM careers, and promote safe and responsible use of data, new technology, new environments, and new teaching methods.&lt;/font>&lt;/div>&lt;div>&lt;br>&lt;/div>\"}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}},{"id":3754,"name":"Participation in working groups and interest groups","priorityNumber":null,"isActive":true,"config":null,"countryIds":[{"id":19,"countryName":null,"countryCode":null},{"id":11,"countryName":null,"countryCode":null}],"reportBlocksContents":[{"id":3807,"type":"text","priorityNumber":2,"template":"{\"name\":\"Participation in working groups and interest groups\",\"data\":\"&lt;div>&amp;#10;&amp;#10;&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Participation in working groups and interest&amp;#10;groups&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\">&lt;/span>&lt;/h2>&amp;#10;&amp;#10;&lt;/div>\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3859,"data":"{\"data\":\"&lt;div>&amp;#10;&amp;#10;&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Participation in working groups and interest&amp;#10;groups&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\">&lt;/span>&lt;/h2>&amp;#10;&amp;#10;&lt;/div>\"}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null},{"id":3808,"type":"table","priorityNumber":4,"template":"{\"name\":\"Participation in working groups and interest groups\",\"columns\":[{\"name\":\"Working group name\",\"index\":1},{\"name\":\"Name of the nominated person\",\"index\":2},{\"name\":\"e-mail\",\"index\":3}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3861,"data":"{\"rows\":[{\"index\":1,\"data\":\"STEM MoE WG\"},{\"index\":2,\"data\":\"Marios Charalambous\"},{\"index\":3,\"data\":\"mcharalampous@schools.ac.cy\"}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null},{"id":3862,"data":"{\"rows\":[{\"data\":\"Indicators WG\",\"index\":1},{\"data\":\"Nikolas Kanaris\",\"index\":2},{\"data\":\"kanaris.n@cyearn.pi.ac.cy \",\"index\":3}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}},{"id":3755,"name":"Participation in EC-funded projects","priorityNumber":null,"isActive":true,"config":null,"countryIds":[{"id":11,"countryName":null,"countryCode":null}],"reportBlocksContents":[{"id":3809,"type":"text","priorityNumber":2,"template":"{\"name\":\"Participation in EC-funded projects\",\"data\":\"\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3863,"data":"{\"data\":\"&lt;div>&amp;#10;&amp;#10;&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Participation in EC-funded projects&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\">&lt;/span>&lt;/h2>&amp;#10;&amp;#10;&lt;/div>\"}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null},{"id":3810,"type":"table","priorityNumber":4,"template":"{\"name\":\"Participation in EC-funded projects\",\"columns\":[{\"name\":\"Project\",\"index\":1},{\"name\":\"Coordinator\",\"index\":2},{\"name\":\"Duration\",\"index\":3},{\"name\":\"Agreed Grant\",\"index\":4},{\"name\":\"Institution to receive funding\",\"index\":5}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3864,"data":"{\"rows\":[{\"index\":1,\"data\":\"Living Schools Lab\"},{\"index\":2,\"data\":\"EUN \"},{\"index\":3,\"data\":\"Oct 2012 - Sept 2014\"},{\"index\":4,\"data\":\"€            xxxxxxxx \"},{\"index\":5,\"data\":\"Ministry of Education and Culture\"}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null},{"id":3865,"data":"{\"rows\":[{\"data\":\"Go-LAB\",\"index\":1},{\"data\":\"Universiteit Twente\",\"index\":2},{\"data\":\"Nov 2012 - Sep 2016\",\"index\":3},{\"data\":\"€         xxxxxxxx\",\"index\":4},{\"data\":\"University of Cyprus (UCY)\",\"index\":5}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null},{"id":3866,"data":"{\"rows\":[{\"data\":\"Scientix 2\",\"index\":1},{\"data\":\"EUN \",\"index\":2},{\"data\":\"Jan 2013 - Mars 2016\",\"index\":3},{\"data\":\"€            xxxxxxxx \",\"index\":4},{\"data\":\"University of Cyprus (UCY)\",\"index\":5}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null},{"id":3867,"data":"{\"rows\":[{\"data\":\"MENTEP\",\"index\":1},{\"data\":\"EUN \",\"index\":2},{\"data\":\"Mars 2015 - May 2018\",\"index\":3},{\"data\":\"€            xxxxxxxx \",\"index\":4},{\"data\":\"Cyprus Pedagogical Institute\",\"index\":5}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null},{"id":3868,"data":"{\"rows\":[{\"data\":\"DIS-CODE\",\"index\":1},{\"data\":\"EUN \",\"index\":2},{\"data\":\"Jan 2013 - Mars 2016\",\"index\":3},{\"data\":\"€            xxxxxxxx \",\"index\":4},{\"data\":\"Ministry of Education and Culture\",\"index\":5}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}},{"id":3756,"name":"Participation in webinars, Future Classroom courses and European Schoolnet Academy ","priorityNumber":null,"isActive":true,"config":null,"countryIds":[{"id":1,"countryName":null,"countryCode":null},{"id":5,"countryName":null,"countryCode":null},{"id":6,"countryName":null,"countryCode":null},{"id":11,"countryName":null,"countryCode":null}],"reportBlocksContents":[{"id":3811,"type":"text","priorityNumber":2,"template":"{\"name\":\"Participation in webinars, Future Classroom courses and European Schoolnet Academy \",\"data\":\"&lt;div>&amp;#10;&amp;#10;&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Participation in webinars, Future&amp;#10;Classroom courses and European Schoolnet Academy&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\"> &lt;/span>&lt;/h2>&amp;#10;&amp;#10;&lt;/div>\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3872,"data":"{\"data\":\"&lt;div>&amp;#10;&amp;#10;&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Participation in webinars, Future&amp;#10;Classroom courses and European Schoolnet Academy&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\"> &lt;/span>&lt;/h2>&amp;#10;&amp;#10;&lt;/div>\"}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null},{"id":3812,"type":"table","priorityNumber":4,"template":"{\"name\":\"Future Classroom Lab\",\"columns\":[{\"name\":\"Country\",\"index\":1},{\"name\":\"Has a FCL Ambassador\",\"index\":2},{\"name\":\"Attendees to FCL Webinars 2022\",\"index\":3},{\"name\":\"Participants to FCL f2f Courses since 2018\",\"index\":4}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3887,"data":"{\"rows\":[{\"data\":\"asdf\",\"index\":1},{\"data\":\"s\",\"index\":2},{\"data\":\"4\",\"index\":3},{\"data\":\"4\",\"index\":4}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null},{"id":3813,"type":"table","priorityNumber":6,"template":"{\"name\":\"European Schoolnet Academy\",\"columns\":[{\"name\":\"Country\",\"index\":1},{\"name\":\"Participants (who completed at least one module) to Academy MOOCs since 2014\",\"index\":2},{\"name\":\"Local language editions of Europeana MOOC\",\"index\":3},{\"name\":\"Local language editions of TeachUP MOOCs\",\"index\":4}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3880,"data":"{\"rows\":[{\"index\":1,\"data\":\"Cyprus\"},{\"index\":2,\"data\":\"367\"},{\"index\":3,\"data\":\"In Greek language EL\"},{\"index\":4,\"data\":\"In Greek language MOOC 1, MOOC 2, MOOC 3, MOOC 4\"}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null},{"id":6304,"data":"{\"rows\":[{\"data\":\"1\",\"index\":1},{\"data\":\"2\",\"index\":2},{\"data\":\"3\",\"index\":3},{\"data\":\"4\",\"index\":4},{\"data\":\"\",\"index\":5}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}},{"id":3757,"name":"Participation in eTwinning ","priorityNumber":null,"isActive":false,"config":null,"countryIds":[{"id":11,"countryName":null,"countryCode":null},{"id":12,"countryName":null,"countryCode":null}],"reportBlocksContents":[{"id":3814,"type":"text","priorityNumber":2,"template":"{\"name\":\"Participation in eTwinning \",\"data\":\"&lt;div>&amp;#10;&amp;#10;&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Participation in eTwinning&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\"> &lt;/span>&lt;/h2>&amp;#10;&amp;#10;&lt;/div>\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3881,"data":"{\"data\":\"&lt;div>&amp;#10;&amp;#10;&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Participation in eTwinning&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\"> &lt;/span>&lt;/h2>&amp;#10;&amp;#10;&lt;/div>\"}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null},{"id":3815,"type":"table","priorityNumber":4,"template":"{\"name\":\"Participation in eTwinning\",\"columns\":[{\"name\":\"Total eTwinners\",\"index\":2},{\"name\":\"National Quality Labels\",\"index\":4},{\"name\":\"eTwinners in online training\",\"index\":5},{\"name\":\"5\",\"index\":7},{\"name\":\"6\",\"index\":8}]}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":6302,"data":"{\"rows\":[{\"data\":\"hjkhjk\",\"index\":2},{\"data\":\"hjkh\",\"index\":4},{\"data\":\"hjkhjk\",\"index\":5},{\"data\":\"22\",\"index\":7},{\"data\":\"333\",\"index\":8}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null},{"id":6318,"data":"{\"rows\":[{\"data\":\"cfds\",\"index\":2},{\"data\":\"cdsx\",\"index\":4},{\"data\":\"cxszc\",\"index\":5},{\"data\":\"2\",\"index\":7},{\"data\":\"3\",\"index\":8}]}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}},{"id":3758,"name":"Participation in Scientix","priorityNumber":null,"isActive":true,"config":null,"countryIds":[{"id":11,"countryName":null,"countryCode":null}],"reportBlocksContents":[{"id":3816,"type":"text","priorityNumber":2,"template":"{\"name\":\"Participation in Scientix\",\"data\":\"&lt;div>&amp;#10;&amp;#10;&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Participation in Scientix&lt;/span>&lt;/a>&lt;/h2>&amp;#10;&amp;#10;&lt;/div>\"}","isActive":true,"deleted":null,"reportBlocksContentData":[{"id":3885,"data":"{\"data\":\"&lt;div>&amp;#10;&amp;#10;&lt;h2>&lt;a>&lt;span lang=\\\"EN-GB\\\">Participation in Scientix&lt;/span>&lt;/a>&lt;span lang=\\\"EN-GB\\\">&lt;/span>&lt;/h2>&lt;div>&lt;a>&lt;span lang=\\\"EN-GB\\\">&lt;div>&amp;#9679;&lt;span>&amp;#9;&lt;/span>The Ministry of Education of Cyprus operated as Scientix NCP in 2022/2023 and received 13k funding in total.&lt;/div>&lt;div>&amp;#9679;&lt;span>&amp;#9;&lt;/span>Number of Scientix ambassadors: 6&lt;/div>&lt;/span>&lt;/a>&lt;/div>&amp;#10;&amp;#10;&lt;/div>\"}","country":{"id":11,"countryName":"Cyprus","countryCode":"CY"},"newContentData":null}],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}},{"id":6651,"name":"Working Group","priorityNumber":null,"isActive":true,"config":null,"countryIds":[{"id":19,"countryName":null,"countryCode":null},{"id":4,"countryName":null,"countryCode":null},{"id":11,"countryName":null,"countryCode":null}],"reportBlocksContents":[{"id":6405,"type":"reference","priorityNumber":1,"template":"{\"name\":\"Participation in working groups and interest groups\",\"settings\":{},\"source\":\"working_group\"}","isActive":true,"deleted":null,"reportBlocksContentData":[],"newContentData":null}],"report":{"id":1101,"reportName":null,"acronym":null,"description":null,"type":null,"isActive":null,"file":null,"fileContentType":null}}]</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="country" id="303">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">CY</value>
             </simple-property-list>
             <list-property name="selectionList"/>
             <property name="paramType">simple</property>
@@ -76,6 +90,377 @@
             <property name="odaUser">eunReportDesigner</property>
         </oda-data-source>
     </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="workingGroups" id="304">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">id</text-property>
+                    <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_code</text-property>
+                    <text-property name="heading">country_code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_name</text-property>
+                    <text-property name="heading">country_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_representative_first_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_representative_first_name</text-property>
+                    <text-property name="heading">country_representative_first_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_representative_last_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_representative_last_name</text-property>
+                    <text-property name="heading">country_representative_last_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_representative_mail</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_representative_mail</text-property>
+                    <text-property name="heading">country_representative_mail</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_representative_position</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_representative_position</text-property>
+                    <text-property name="heading">country_representative_position</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_representative_start_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_representative_start_date</text-property>
+                    <text-property name="heading">country_representative_start_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_representative_end_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_representative_end_date</text-property>
+                    <text-property name="heading">country_representative_end_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_representative_ministry</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_representative_ministry</text-property>
+                    <text-property name="heading">country_representative_ministry</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_representative_department</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_representative_department</text-property>
+                    <text-property name="heading">country_representative_department</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">contact_eun_first_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">contact_eun_first_name</text-property>
+                    <text-property name="heading">contact_eun_first_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">contact_eun_last_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">contact_eun_last_name</text-property>
+                    <text-property name="heading">contact_eun_last_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">type</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">type</text-property>
+                    <text-property name="heading">type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">is_active</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">is_active</text-property>
+                    <text-property name="heading">is_active</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">country_code</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">params["country"]</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">country_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">country_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">country_representative_first_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">country_representative_last_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">country_representative_mail</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">country_representative_position</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">country_representative_start_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">country_representative_end_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">country_representative_ministry</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">country_representative_department</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">contact_eun_first_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">contact_eun_last_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">is_active</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">id</property>
+                    <property name="nativeName">id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">country_code</property>
+                    <property name="nativeName">country_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">country_name</property>
+                    <property name="nativeName">country_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">country_representative_first_name</property>
+                    <property name="nativeName">country_representative_first_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">country_representative_last_name</property>
+                    <property name="nativeName">country_representative_last_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">country_representative_mail</property>
+                    <property name="nativeName">country_representative_mail</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">country_representative_position</property>
+                    <property name="nativeName">country_representative_position</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">country_representative_start_date</property>
+                    <property name="nativeName">country_representative_start_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">country_representative_end_date</property>
+                    <property name="nativeName">country_representative_end_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">country_representative_ministry</property>
+                    <property name="nativeName">country_representative_ministry</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">country_representative_department</property>
+                    <property name="nativeName">country_representative_department</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">contact_eun_first_name</property>
+                    <property name="nativeName">contact_eun_first_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">contact_eun_last_name</property>
+                    <property name="nativeName">contact_eun_last_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">type</property>
+                    <property name="nativeName">type</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">is_active</property>
+                    <property name="nativeName">is_active</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select *
+from public.working_group_references wg where wg.country_code = ?]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>country_name</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>country_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>country_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>country_code</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>country_code</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>country_code</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
             <property name="orientation">auto</property>
@@ -93,6 +478,46 @@
         <simple-master-page name="NewSimpleMasterPage" id="271"/>
     </page-setup>
     <body>
+        <table id="305">
+            <property name="dataSet">workingGroups</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <expression name="expression" type="javascript">1</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">wg</property>
+                    <expression name="expression" type="javascript">var obj = {};&#13;
+&#13;
+obj.mail = dataSetRow["country_representative_mail"]==null?"":dataSetRow["country_representative_mail"];&#13;
+obj.type = dataSetRow["type"]==null?"":dataSetRow["type"];&#13;
+obj.firstName = dataSetRow["country_representative_first_name"]==null?"":dataSetRow["country_representative_first_name"];&#13;
+obj.lastName = dataSetRow["country_representative_last_name"]==null?"":dataSetRow["country_representative_last_name"];&#13;
+&#13;
+wgs.push(obj);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="312"/>
+            <detail>
+                <row id="308">
+                    <cell id="309">
+                        <data id="315">
+                            <property name="resultSetColumn">wg</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
         <grid id="297">
             <column id="298"/>
             <row id="299">
@@ -100,6 +525,11 @@
                     <text-data id="301">
                         <property name="fontFamily">serif</property>
                         <expression name="valueExpr">var tableHTML = '&lt;br>';&#13;
+json.sort(function (a, b) {&#13;
+    return (a.priorityNumber || 0) - (b.priorityNumber || 0);&#13;
+});&#13;
+&#13;
+&#13;
 for (var i = 0; i &lt; json.length; i++) {&#13;
     var block = json[i];&#13;
     var blockName = block.name;&#13;
@@ -159,6 +589,28 @@ for (var i = 0; i &lt; json.length; i++) {&#13;
             } else if (contentType === 'text') {&#13;
                 var textData = JSON.parse(content.reportBlocksContentData[0].data);&#13;
                 tableHTML += textData.data + '&lt;br>';&#13;
+            } else if (contentType === 'reference') {&#13;
+                var contentTemplate = JSON.parse(content.template);&#13;
+                switch (contentTemplate.source) {&#13;
+                    case 'working_group':&#13;
+                        tableHTML += '&lt;h2>&lt;span>' + contentTemplate.name + '&lt;/span>&lt;/h2>&lt;br>&lt;br>'&#13;
+                        tableHTML += '&lt;table border="1" bordercolor="#000000" cellspacing="0" cellpadding="10" width="100%" style="font-size : 11px; font-family : Times New Roman;">';&#13;
+                        tableHTML += '&lt;tr>';&#13;
+                            tableHTML += '&lt;th>&lt;b>Working group name&lt;/b>&lt;/th>';&#13;
+                            tableHTML += '&lt;th>&lt;b>Name of the nominated person&lt;/b>&lt;/th>';&#13;
+                            tableHTML += '&lt;th>&lt;b>e-mail&lt;/b>&lt;/th>';&#13;
+                        tableHTML += '&lt;/tr>';&#13;
+&#13;
+                        for(var wg = 0; wg &lt; wgs.length; wg++) {&#13;
+                            tableHTML += '&lt;tr>';&#13;
+                                tableHTML += '&lt;td>' + (wgs[wg].type) + '&lt;/td>';&#13;
+                                tableHTML += '&lt;td>' + (wgs[wg].firstName + ' ' + wgs[wg].lastName) + '&lt;/td>';&#13;
+                                tableHTML += '&lt;td>' + (wgs[wg].mail) + '&lt;/td>';&#13;
+                            tableHTML += '&lt;/tr>';    &#13;
+                        }&#13;
+                        tableHTML += '&lt;/table>';&#13;
+                    break;&#13;
+                }&#13;
             }&#13;
         }&#13;
     }&#13;

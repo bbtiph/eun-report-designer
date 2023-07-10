@@ -113,27 +113,28 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         OutputType output,
         Object data,
         String lang,
+        String country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
         switch (output) {
             case HTML:
-                generateHTMLReport(reports.get(reportName.toLowerCase()), data, lang, response, request);
+                generateHTMLReport(reports.get(reportName.toLowerCase()), data, lang, country, response, request);
                 break;
             case PDF:
-                generatePDFReport(reports.get(reportName.toLowerCase()), data, lang, response, request);
+                generatePDFReport(reports.get(reportName.toLowerCase()), data, lang, country, response, request);
                 break;
             case DOCX:
-                generateDOCXReport(reports.get(reportName.toLowerCase()), data, lang, response, request);
+                generateDOCXReport(reports.get(reportName.toLowerCase()), data, lang, country, response, request);
                 break;
             case DOC:
-                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, response, request);
+                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, country, response, request);
                 break;
             case XLSX:
-                generateXLSXReport(reports.get(reportName.toLowerCase()), data, lang, response, request);
+                generateXLSXReport(reports.get(reportName.toLowerCase()), data, lang, country, response, request);
                 break;
             case ODT:
-                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, response, request);
+                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, country, response, request);
                 break;
             default:
                 throw new IllegalArgumentException("Output type not recognized:" + output);
@@ -148,6 +149,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         IReportRunnable report,
         Object id,
         String lang,
+        String country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
@@ -162,6 +164,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
         Map<String, Object> birtParams = new HashMap<>();
         birtParams.put("docId", id);
+        birtParams.put("country", country);
         birtParams.put("lang", lang);
 
         runAndRenderTask.setParameterValues(birtParams);
@@ -186,6 +189,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         IReportRunnable report,
         Object data,
         String lang,
+        String country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
@@ -197,6 +201,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
         Map<String, Object> birtParams = new HashMap<>();
         birtParams.put("docId", data);
+        birtParams.put("country", country);
         birtParams.put("lang", lang);
 
         runAndRenderTask.setParameterValues(birtParams);
@@ -221,6 +226,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         IReportRunnable report,
         Object id,
         String lang,
+        String country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
@@ -231,6 +237,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
         Map<String, Object> birtParams = new HashMap<>();
         birtParams.put("docId", id);
+        birtParams.put("country", country);
         birtParams.put("lang", lang);
 
         runAndRenderTask.setParameterValues(birtParams);
@@ -255,6 +262,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         IReportRunnable report,
         Object id,
         String lang,
+        String country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
@@ -265,6 +273,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
         Map<String, Object> birtParams = new HashMap<>();
         birtParams.put("docId", id);
+        birtParams.put("country", country);
         birtParams.put("lang", lang);
 
         runAndRenderTask.setParameterValues(birtParams);
@@ -290,6 +299,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         OutputType output,
         Object id,
         String lang,
+        String country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
@@ -300,6 +310,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
         Map<String, Object> birtParams = new HashMap<>();
         birtParams.put("docId", id);
+        birtParams.put("country", country);
         birtParams.put("lang", lang);
 
         runAndRenderTask.setParameterValues(birtParams);

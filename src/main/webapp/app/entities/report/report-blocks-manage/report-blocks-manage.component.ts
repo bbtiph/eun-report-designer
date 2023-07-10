@@ -67,7 +67,12 @@ export class ReportBlocksManageComponent implements OnInit {
     modalRef.componentInstance.countryName = this.selectedCountry?.countryName;
 
     modalRef.result.then(params => {
-      const body = { data: JSON.stringify(this.reportBlocks), output: params.format.name, lang: 'ru' };
+      const body = {
+        data: JSON.stringify(this.reportBlocks),
+        output: params.format.name,
+        lang: 'ru',
+        country: this.selectedCountry?.countryCode,
+      };
       this.http.post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'blob' }).subscribe(response => {
         var a = document.createElement('a');
         a.href = URL.createObjectURL(response);
