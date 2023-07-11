@@ -17,6 +17,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReportBlocksContentDataService } from '../../report-blocks-content-data/service/report-blocks-content-data.service';
 import { ReportBlocksContentService } from '../../report-blocks-content/service/report-blocks-content.service';
 import { IReportBlocksContentTemplateColumn } from '../../report-blocks-content/report-blocks-content-template-column.model';
+import { IWorkingGroupReferences } from '../../working-group-references/working-group-references.model';
 
 @Component({
   selector: 'jhi-report-blocks-update',
@@ -25,6 +26,7 @@ import { IReportBlocksContentTemplateColumn } from '../../report-blocks-content/
 })
 export class ReportBlocksUpdateComponent implements OnInit {
   @Input() block: IReportBlocks | null = null;
+  @Input() wgr: IWorkingGroupReferences[] = [];
   @Input() isFromReport: boolean | false | undefined;
   isSaving = false;
   isEdit = false;
@@ -60,6 +62,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
   compareReport = (o1: IReport | null, o2: IReport | null): boolean => this.reportService.compareReport(o1, o2);
 
   ngOnInit(): void {
+    debugger;
     if (this.isFromReport) {
       this.type = 'report';
       this.reportBlocks = this.block;
@@ -161,6 +164,12 @@ export class ReportBlocksUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.reportBlocksService.create(reportBlocks));
     }
+    if (this.type === 'report') this.isEditChange();
+  }
+
+  close(): void {
+    this.formGroup = this.formBuilder.group({});
+    this.ngOnInit();
     if (this.type === 'report') this.isEditChange();
   }
 
@@ -404,13 +413,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
       template: '{"name":"","columns":[]}',
       isActive: true,
       newContentData: true,
-      reportBlocksContentData: [
-        // {
-        //   id: 0,
-        //   data: '{"rows":[]}',
-        //   newContentData: true,
-        // },
-      ],
+      reportBlocksContentData: [],
     };
     this.reportBlocks?.reportBlocksContents?.push(subBlock);
     this.initializeFormControls();
@@ -431,13 +434,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
       template: '{"name":"","data":""}',
       isActive: true,
       newContentData: true,
-      reportBlocksContentData: [
-        // {
-        //   id: 1,
-        //   data: '{"data":""}',
-        //   newContentData: true,
-        // },
-      ],
+      reportBlocksContentData: [],
     };
     this.reportBlocks?.reportBlocksContents?.push(subBlock);
     this.initializeFormControls();

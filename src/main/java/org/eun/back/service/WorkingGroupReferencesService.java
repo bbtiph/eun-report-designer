@@ -1,6 +1,7 @@
 package org.eun.back.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import org.eun.back.service.dto.WorkingGroupReferencesDTO;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,8 @@ public interface WorkingGroupReferencesService {
      * @return the list of entities.
      */
     Page<WorkingGroupReferencesDTO> findAll(Pageable pageable);
+
+    List<WorkingGroupReferencesDTO> findAllByCountry(String countryCode);
 
     /**
      * Get the "id" workingGroupReferences.

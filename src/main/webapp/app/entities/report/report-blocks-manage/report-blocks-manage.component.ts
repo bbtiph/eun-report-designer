@@ -10,6 +10,8 @@ import { ReportBlockEdit } from './report-block-edit/report-block-edit.component
 import { DomSanitizer } from '@angular/platform-browser';
 import { CountriesService } from '../../countries/service/countries.service';
 import { ICountries } from '../../countries/countries.model';
+import { WorkingGroupReferencesService } from '../../working-group-references/service/working-group-references.service';
+import { IWorkingGroupReferences } from '../../working-group-references/working-group-references.model';
 
 @Component({
   selector: 'jhi-report-blocks-manage',
@@ -18,6 +20,7 @@ import { ICountries } from '../../countries/countries.model';
 export class ReportBlocksManageComponent implements OnInit {
   reportBlocks: IReportBlocks[] | undefined;
   report: IReport | null = null;
+  wgr: IWorkingGroupReferences[] = [];
   selectedCountry: ICountries | null = null;
 
   @ViewChild('editor', { static: false }) editorElement?: ElementRef;
@@ -27,6 +30,7 @@ export class ReportBlocksManageComponent implements OnInit {
     private modalService: NgbModal,
     protected reportBlocksService: ReportBlocksService,
     private http: HttpClient,
+    protected workingGroupReferencesService: WorkingGroupReferencesService,
     protected activatedRoute: ActivatedRoute,
     protected countriesService: CountriesService
   ) {}
@@ -39,10 +43,20 @@ export class ReportBlocksManageComponent implements OnInit {
     let countryId = this.activatedRoute.params.value.country;
     this.countriesService.findById(countryId || 1).subscribe((country: ICountries) => {
       this.selectedCountry = country;
+
       // @ts-ignore
       this.reportBlocksService.findAllByReport(this.report?.id, this.selectedCountry?.id).subscribe(blocks => {
         this.reportBlocks = blocks;
+        // @ts-ignore
+        this.reportBlocks = this.reportBlocks?.sort((a, b) => a.priorityNumber - b.priorityNumber);
       });
+
+      // @ts-ignore
+      this.workingGroupReferencesService
+        .findAll(this.selectedCountry?.countryCode)
+        .subscribe((workingGroupReference: IWorkingGroupReferences[]) => {
+          this.wgr = workingGroupReference;
+        });
     });
   }
 

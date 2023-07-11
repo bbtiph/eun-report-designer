@@ -70,6 +70,10 @@ export class WorkingGroupReferencesService {
       .pipe(map(res => this.convertResponseFromServer(res)));
   }
 
+  findAll(code?: string): Observable<IWorkingGroupReferences[]> {
+    return this.http.get<IWorkingGroupReferences[]>(this.resourceUrl + '/by-country/' + code);
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http

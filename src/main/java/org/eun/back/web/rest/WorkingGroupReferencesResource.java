@@ -175,6 +175,13 @@ public class WorkingGroupReferencesResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/working-group-references/by-country/{code}")
+    public ResponseEntity<List<WorkingGroupReferencesDTO>> getAllWorkingGroupReferences(@PathVariable String code) {
+        log.debug("REST request to get a page of WorkingGroupReferences");
+        List<WorkingGroupReferencesDTO> res = workingGroupReferencesService.findAllByCountry(code);
+        return ResponseEntity.ok().body(res);
+    }
+
     /**
      * {@code GET  /working-group-references/:id} : get the "id" workingGroupReferences.
      *

@@ -143,16 +143,43 @@
                   </tr>
                 </tbody>
               </table>
+              <table *ngIf="content.type === 'reference'" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="text-center">
+                      <h6><b>Working group name</b></h6>
+                    </th>
+                    <th class="text-center">
+                      <h6><b>Name of the nominated person</b></h6>
+                    </th>
+                    <th class="text-center">
+                      <h6><b>e-mail</b></h6>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of wgr">
+                    <td class="text-center">
+                      <h6>{{ row.type }}</h6>
+                    </td>
+                    <td class="text-center">
+                      <h6>{{ row.countryRepresentativeFirstName + ' ' + row.countryRepresentativeLastName }}</h6>
+                    </td>
+                    <td class="text-center">
+                      <h6>{{ row.countryRepresentativeMail }}</h6>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
               <div *ngIf="content.type === 'text'">
-                <span
+                <span *ngIf="type !== 'report'"
                   >Name:
-                  {{
-                    type === 'content' || (type === 'report' && !isEdit) ? getFormControlByKey('content_' + content.id + '_name').value : ''
-                  }}</span
-                >
+                  {{ type === 'content' ? getFormControlByKey('content_' + content.id + '_name').value : '' }}
+                </span>
 
                 <input
-                  *ngIf="type === 'template' || (type === 'report' && isEdit)"
+                  *ngIf="type === 'template'"
                   [formControl]="getFormControlByKey('content_' + content.id + '_name')"
                   placeholder="Enter..."
                   class="form-control"
@@ -206,17 +233,21 @@
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
       </button>
 
-      <button
-        *ngIf="type !== 'report' || isEdit"
-        type="submit"
-        (click)="save()"
-        id="save-entity"
-        data-cy="entityCreateSaveButton"
-        [disabled]="editForm.invalid || isSaving"
-        class="btn btn-primary"
-      >
-        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
-      </button>
+      <div *ngIf="type !== 'report' || isEdit" class="btn-group">
+        <button
+          type="submit"
+          (click)="save()"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+        <button *ngIf="type === 'report'" type="button" class="btn btn-secondary" (click)="close()">
+          <fa-icon icon="close"></fa-icon>&nbsp;<span>Close</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

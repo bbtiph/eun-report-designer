@@ -2,9 +2,9 @@ package org.eun.back.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Optional;
 import org.apache.poi.ss.usermodel.*;
-import org.eun.back.domain.MoeContacts;
 import org.eun.back.domain.WorkingGroupReferences;
 import org.eun.back.repository.WorkingGroupReferencesRepository;
 import org.eun.back.service.WorkingGroupReferencesService;
@@ -75,6 +75,13 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
     public Page<WorkingGroupReferencesDTO> findAll(Pageable pageable) {
         log.debug("Request to get all WorkingGroupReferences");
         return workingGroupReferencesRepository.findAllByIsActive(true, pageable).map(workingGroupReferencesMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<WorkingGroupReferencesDTO> findAllByCountry(String countryCode) {
+        log.debug("Request to get all WorkingGroupReferences by country");
+        return workingGroupReferencesMapper.toDto(workingGroupReferencesRepository.findAllByIsActiveAndCountryCode(true, countryCode));
     }
 
     @Override
