@@ -490,24 +490,24 @@
                         <installDirectory>target</installDirectory>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>properties-maven-plugin</artifactId>
-                    <version>${properties-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>initialize</phase>
-                            <goals>
-                                <goal>read-project-properties</goal>
-                            </goals>
-                            <configuration>
-                                <files>
-                                    <file>sonar-project.properties</file>
-                                </files>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
+<!--                <plugin>-->
+<!--                    <groupId>org.codehaus.mojo</groupId>-->
+<!--                    <artifactId>properties-maven-plugin</artifactId>-->
+<!--                    <version>${properties-maven-plugin.version}</version>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <phase>initialize</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>read-project-properties</goal>-->
+<!--                            </goals>-->
+<!--                            <configuration>-->
+<!--                                <files>-->
+<!--                                    <file>sonar-project.properties</file>-->
+<!--                                </files>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
                 <plugin>
                     <groupId>io.github.git-commit-id</groupId>
                     <artifactId>git-commit-id-maven-plugin</artifactId>
