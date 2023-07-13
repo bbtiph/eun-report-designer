@@ -141,6 +141,15 @@ public class CountriesResource {
         return countriesService.findAll();
     }
 
+    @GetMapping("/countries/by-report//{reportId}")
+    public List<CountriesDTO> getAllCountriesByReport(@PathVariable Long reportId) {
+        log.debug("REST request to get all Countries by report");
+        if (reportId == 0) {
+            return this.getAllCountries();
+        }
+        return countriesService.findAllByReport(reportId);
+    }
+
     /**
      * {@code GET  /countries/:id} : get the "id" countries.
      *

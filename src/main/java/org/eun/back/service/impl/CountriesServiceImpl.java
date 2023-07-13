@@ -71,6 +71,16 @@ public class CountriesServiceImpl implements CountriesService {
     }
 
     @Override
+    public List<CountriesDTO> findAllByReport(Long reportId) {
+        log.debug("Request to get all Countries by report");
+        return countriesRepository
+            .findCountriesByReportId(reportId)
+            .stream()
+            .map(countriesMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<CountriesDTO> findOne(Long id) {
         log.debug("Request to get Countries : {}", id);

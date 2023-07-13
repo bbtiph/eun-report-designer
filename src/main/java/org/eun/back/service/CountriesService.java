@@ -39,6 +39,8 @@ public interface CountriesService {
      */
     List<CountriesDTO> findAll();
 
+    List<CountriesDTO> findAllByReport(Long reportId);
+
     /**
      * Get the "id" countries.
      *

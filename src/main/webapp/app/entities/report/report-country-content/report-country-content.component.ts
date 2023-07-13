@@ -20,9 +20,7 @@ export class ReportCountryContentComponent implements OnInit {
   ngOnInit(): void {
     // @ts-ignore
     this.reportId = this.activatedRoute.params.value.id;
-    console.log('rrrr>', this.activatedRoute);
-    console.log('rrrr>', this.reportId);
-    this.countriesService.findAll().subscribe((countries: ICountry[]) => {
+    this.countriesService.findAllByReport(this.reportId ?? 0).subscribe((countries: ICountry[]) => {
       this.countriesSharedCollection = countries;
     });
   }
