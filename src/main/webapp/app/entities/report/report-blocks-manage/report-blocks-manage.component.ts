@@ -7,11 +7,9 @@ import { IReport } from '../report.model';
 import { AbstractExportModal } from '../../../shared/modal/abstract-export.modal';
 import { ActivatedRoute } from '@angular/router';
 import { ReportBlockEdit } from './report-block-edit/report-block-edit.component';
-import { DomSanitizer } from '@angular/platform-browser';
 import { CountriesService } from '../../countries/service/countries.service';
 import { ICountries } from '../../countries/countries.model';
 import { WorkingGroupReferencesService } from '../../working-group-references/service/working-group-references.service';
-import { IWorkingGroupReferences } from '../../working-group-references/working-group-references.model';
 
 @Component({
   selector: 'jhi-report-blocks-manage',
@@ -20,7 +18,6 @@ import { IWorkingGroupReferences } from '../../working-group-references/working-
 export class ReportBlocksManageComponent implements OnInit {
   reportBlocks: IReportBlocks[] | undefined;
   report: IReport | null = null;
-  wgr: IWorkingGroupReferences[] = [];
   selectedCountry: ICountries | null = null;
 
   @ViewChild('editor', { static: false }) editorElement?: ElementRef;
@@ -30,7 +27,6 @@ export class ReportBlocksManageComponent implements OnInit {
     private modalService: NgbModal,
     protected reportBlocksService: ReportBlocksService,
     private http: HttpClient,
-    protected workingGroupReferencesService: WorkingGroupReferencesService,
     protected activatedRoute: ActivatedRoute,
     protected countriesService: CountriesService
   ) {}
@@ -50,13 +46,6 @@ export class ReportBlocksManageComponent implements OnInit {
         // @ts-ignore
         this.reportBlocks = this.reportBlocks?.sort((a, b) => a.priorityNumber - b.priorityNumber);
       });
-
-      // @ts-ignore
-      this.workingGroupReferencesService
-        .findAll(this.selectedCountry?.countryCode)
-        .subscribe((workingGroupReference: IWorkingGroupReferences[]) => {
-          this.wgr = workingGroupReference;
-        });
     });
   }
 
@@ -81,6 +70,7 @@ export class ReportBlocksManageComponent implements OnInit {
     modalRef.componentInstance.countryName = this.selectedCountry?.countryName;
 
     modalRef.result.then(params => {
+      debugger;
       const body = {
         data: JSON.stringify(this.reportBlocks),
         output: params.format.name,

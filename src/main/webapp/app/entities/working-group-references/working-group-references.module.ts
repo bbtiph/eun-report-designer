@@ -14,5 +14,6 @@ import { WorkingGroupReferencesRoutingModule } from './route/working-group-refer
     WorkingGroupReferencesUpdateComponent,
     WorkingGroupReferencesDeleteDialogComponent,
   ],
+  exports: [WorkingGroupReferencesComponent],
 })
 export class WorkingGroupReferencesModule {}

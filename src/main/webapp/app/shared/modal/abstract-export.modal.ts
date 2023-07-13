@@ -23,7 +23,7 @@ import { Observable } from 'rxjs';
             <label class="col-form-label">Format:</label>
             <select class="form-control" [(ngModel)]="format" name="reportFormat" id="field_status" data-cy="status">
               <option [ngValue]="null"></option>
-              <option *ngFor="let reportFormat of reportFormats" [value]="reportFormat">{{ reportFormat.fullname }}</option>
+              <option *ngFor="let reportFormat of reportFormats" [ngValue]="reportFormat">{{ reportFormat.fullname }}</option>
             </select>
           </div>
           <div class="form-group">
@@ -51,9 +51,9 @@ export class AbstractExportModal implements OnInit {
 
   reportFormats = [
     { id: 1, name: 'PDF', fullname: 'Acrobat Reader' },
-    // { id: 2, name: 'DOCX', fullname: 'MS Word' },
+    // { id: 2, name: 'DOCX', fullname: 'MS Word DOCX' },
     // { id: 3, name: 'XLSX', fullname: 'MS Excel' },
-    // { id: 4, name: 'DOC', fullname: 'MS Word' },
+    { id: 4, name: 'DOC', fullname: 'MS Word DOC' },
   ];
 
   ngOnInit(): void {

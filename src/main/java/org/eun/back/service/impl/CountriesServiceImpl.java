@@ -1,5 +1,6 @@
 package org.eun.back.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.eun.back.domain.Countries;
 import org.eun.back.repository.CountriesRepository;
@@ -67,6 +68,11 @@ public class CountriesServiceImpl implements CountriesService {
     public Page<CountriesDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Countries");
         return countriesRepository.findAll(pageable).map(countriesMapper::toDto);
+    }
+
+    @Override
+    public List<CountriesDTO> findAll(Long reportId) {
+        return null;
     }
 
     @Override

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -17,7 +17,8 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReportBlocksContentDataService } from '../../report-blocks-content-data/service/report-blocks-content-data.service';
 import { ReportBlocksContentService } from '../../report-blocks-content/service/report-blocks-content.service';
 import { IReportBlocksContentTemplateColumn } from '../../report-blocks-content/report-blocks-content-template-column.model';
-import { IWorkingGroupReferences } from '../../working-group-references/working-group-references.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ReferenceSelectionModal } from '../../../shared/modal/reference-selection.modal';
 
 @Component({
   selector: 'jhi-report-blocks-update',
@@ -26,7 +27,7 @@ import { IWorkingGroupReferences } from '../../working-group-references/working-
 })
 export class ReportBlocksUpdateComponent implements OnInit {
   @Input() block: IReportBlocks | null = null;
-  @Input() wgr: IWorkingGroupReferences[] = [];
+  @Input() selectedCountryFromReport: ICountries | null = null;
   @Input() isFromReport: boolean | false | undefined;
   isSaving = false;
   isEdit = false;
@@ -45,6 +46,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
   editForm: ReportBlocksFormGroup = this.reportBlocksFormService.createReportBlocksFormGroup();
 
   constructor(
+    private modalService: NgbModal,
     protected reportBlocksService: ReportBlocksService,
     protected reportBlocksContentService: ReportBlocksContentService,
     protected reportBlocksFormService: ReportBlocksFormService,
@@ -62,13 +64,13 @@ export class ReportBlocksUpdateComponent implements OnInit {
   compareReport = (o1: IReport | null, o2: IReport | null): boolean => this.reportService.compareReport(o1, o2);
 
   ngOnInit(): void {
-    debugger;
     if (this.isFromReport) {
       this.type = 'report';
       this.reportBlocks = this.block;
       if (this.block) {
         this.updateForm(this.block);
       }
+      this.selectedCountry = this.selectedCountryFromReport;
     } else {
       // @ts-ignore
       this.type = this.activatedRoute.data.value.type;
@@ -92,7 +94,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
 
   getTableColumns() {
     if (this.reportBlocks && this.reportBlocks.reportBlocksContents) {
-      const elements = this.reportBlocks.reportBlocksContents.filter(a => a.type === 'table');
+      const elements = this.reportBlocks.reportBlocksContents.filter(a => a.type === 'table' || a.type === 'reference');
       elements.forEach(element => {
         this.tableColumns.set(element.id, JSON.parse(element.template ?? '{}'));
       });
@@ -303,7 +305,6 @@ export class ReportBlocksUpdateComponent implements OnInit {
           // @ts-ignore
           const rowIndex = rowData.rows.findIndex(rowRes => rowRes.index === columnIndex);
           if (rowIndex !== -1) {
-            console.log('deleted: ', rowIndex);
             rowData.rows.splice(rowIndex, 1);
             row.data = JSON.stringify(rowData);
 
@@ -420,6 +421,35 @@ export class ReportBlocksUpdateComponent implements OnInit {
     this.getTableColumns();
   }
 
+  addReferenceSubBlock() {
+    const modalRef = this.modalService.open(ReferenceSelectionModal, {
+      animation: true,
+      size: 'lg',
+    });
+    modalRef.componentInstance.param = this;
+
+    modalRef.result.then(params => {
+      const contentIndices = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.id);
+      // @ts-ignore
+      const newContentIndex = 1 + (contentIndices.length > 0 ? Math.max(...contentIndices) : 0);
+      const priorityNumbers = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.priorityNumber);
+      // @ts-ignore
+      const priorityNumber = 1 + (priorityNumbers.length > 0 ? Math.max(...priorityNumbers) : 0);
+      const subBlock: IReportBlocksContent = {
+        id: newContentIndex,
+        type: 'reference',
+        priorityNumber: priorityNumber + 1,
+        template: `{"name":"","columns":[],"source":"${params.source}"}`,
+        isActive: true,
+        newContentData: true,
+        reportBlocksContentData: [],
+      };
+      this.reportBlocks?.reportBlocksContents?.push(subBlock);
+      this.initializeFormControls();
+      this.getTableColumns();
+    });
+  }
+
   addTextSubBlock() {
     const contentIndices = this.reportBlocks?.reportBlocksContents?.map((content: IReportBlocksContent) => content.id);
     // @ts-ignore
@@ -442,5 +472,9 @@ export class ReportBlocksUpdateComponent implements OnInit {
 
   removeSubBlock(content: IReportBlocksContent) {
     content.deleted = true;
+  }
+
+  onDataChanged(content: IReportBlocksContent, template: any) {
+    content.template = JSON.stringify(template);
   }
 }

@@ -150,6 +150,14 @@ public class CountriesResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/countries/by-report")
+    public ResponseEntity<List<CountriesDTO>> getAllCountriesByReport(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Countries");
+        Page<CountriesDTO> page = countriesService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /countries/:id} : get the "id" countries.
      *

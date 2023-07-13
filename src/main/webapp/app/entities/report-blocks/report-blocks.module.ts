@@ -8,9 +8,10 @@ import { ReportBlocksRoutingModule } from './route/report-blocks-routing.module'
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ReportBlocksCountryContentComponent } from './report-blocks-country-content/report-blocks-country-content.component';
 import { SortContentByPriorityPipe } from './sort/sort-content-by-priority.pipe';
+import { WorkingGroupReferencesModule } from '../working-group-references/working-group-references.module';
 
 @NgModule({
-  imports: [SharedModule, ReportBlocksRoutingModule, AngularEditorModule],
+  imports: [SharedModule, ReportBlocksRoutingModule, AngularEditorModule, WorkingGroupReferencesModule],
   declarations: [
     ReportBlocksComponent,
     ReportBlocksDetailComponent,

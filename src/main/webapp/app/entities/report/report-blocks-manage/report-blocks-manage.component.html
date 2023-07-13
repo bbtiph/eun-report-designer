@@ -10,7 +10,11 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card mb-4" *ngFor="let blocks of reportBlocks">
-        <jhi-report-blocks-update [block]="blocks" [wgr]="wgr" [isFromReport]="true"></jhi-report-blocks-update>
+        <jhi-report-blocks-update
+          [block]="blocks"
+          [selectedCountryFromReport]="selectedCountry"
+          [isFromReport]="true"
+        ></jhi-report-blocks-update>
         <div class="card-footer">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" [(ngModel)]="blocks.isActive" (click)="changeIsActive(blocks)" />

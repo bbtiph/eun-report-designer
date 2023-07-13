@@ -64,6 +64,11 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
     @Override
     public ReportBlocksDTO save(ReportBlocksDTO reportBlocksDTO) {
         log.debug("Request to save ReportBlocks : {}", reportBlocksDTO);
+        if (reportBlocksDTO.getPriorityNumber() == null) {
+            reportBlocksDTO.setPriorityNumber(
+                reportBlocksRepository.findMaxPriorityNumberByReportId(reportBlocksDTO.getReport().getId()) + 1
+            );
+        }
         ReportBlocks reportBlocks = reportBlocksMapper.toEntity(reportBlocksDTO);
         reportBlocks = reportBlocksRepository.save(reportBlocks);
         return reportBlocksMapper.toDto(reportBlocks);

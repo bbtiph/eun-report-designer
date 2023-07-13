@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
@@ -10,12 +10,20 @@ import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/co
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
 import { EntityArrayResponseType, WorkingGroupReferencesService } from '../service/working-group-references.service';
 import { WorkingGroupReferencesDeleteDialogComponent } from '../delete/working-group-references-delete-dialog.component';
+import { ICountries } from '../../countries/countries.model';
 
 @Component({
   selector: 'jhi-working-group-references',
   templateUrl: './working-group-references.component.html',
 })
 export class WorkingGroupReferencesComponent implements OnInit {
+  @Input() template: any | null = null;
+  @Input() type: string | '' | undefined;
+  @Input() isFromReportBlock: boolean | false | undefined;
+  @Input() isEdit: boolean | false | undefined;
+  @Input() selectedCountry: ICountries | null = null;
+  @Output() templateChanged = new EventEmitter<any>();
+
   workingGroupReferences?: IWorkingGroupReferences[];
   isLoading = false;
 
@@ -41,7 +49,23 @@ export class WorkingGroupReferencesComponent implements OnInit {
     this.workingGroupReferencesService.getWorkingGroupReferencesIdentifier(item);
 
   ngOnInit(): void {
-    this.load();
+    if ((this.isFromReportBlock && this.type !== 'template') || this.isEdit) this.loadByCountry();
+    else if (!this.isFromReportBlock) this.load();
+  }
+
+  getValueTemplate(index: string): boolean {
+    return this.template.columns.find((c: { name: string; index: string }) => c.index === index) !== undefined;
+  }
+
+  setValueTemplate(index: string, name: string): void {
+    if (!this.getValueTemplate(index)) this.template.columns.push({ name: name, index: index });
+    else this.template.columns = this.template.columns.filter((c: { name: string; index: string }) => c.index !== index);
+
+    this.templateChanged.emit(this.template);
+  }
+
+  isActiveColumn(index: string): boolean {
+    return (this.getValueTemplate(index) && this.type !== 'template') || this.type === 'template';
   }
 
   delete(workingGroupReferences: IWorkingGroupReferences): void {
@@ -66,6 +90,14 @@ export class WorkingGroupReferencesComponent implements OnInit {
         this.onResponseSuccess(res);
       },
     });
+  }
+
+  loadByCountry(): void {
+    this.workingGroupReferencesService
+      .findAll(this.selectedCountry?.countryCode ?? '')
+      .subscribe((workingGroupReference: IWorkingGroupReferences[]) => {
+        this.workingGroupReferences = workingGroupReference;
+      });
   }
 
   navigateToWithComponentValues(): void {

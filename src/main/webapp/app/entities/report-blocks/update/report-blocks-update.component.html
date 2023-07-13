@@ -8,11 +8,11 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <h4 *ngIf="type === 'content' || (type === 'report' && !isEdit)">
+        <h4 *ngIf="type === 'content'">
           <b>{{ editForm.controls.name.getRawValue() }}</b>
         </h4>
         <br />
-        <div *ngIf="type === 'template' || type === 'new' || (type === 'report' && isEdit)" class="row mb-3">
+        <div *ngIf="type === 'template' || type === 'new'" class="row mb-3">
           <label class="form-label" for="field_name">Name:</label>
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
         </div>
@@ -53,6 +53,7 @@
           <li
             *ngFor="let content of reportBlocks?.reportBlocksContents | sortContentByPriority; let contentIndex = index"
             class="custom-list-li"
+            [style.border-bottom]="!isFromReport ? 'solid #5ec830' : ''"
           >
             <div *ngIf="!content.deleted" class="custom-list">
               <div style="display: flex; justify-content: space-between">
@@ -143,34 +144,17 @@
                   </tr>
                 </tbody>
               </table>
-              <table *ngIf="content.type === 'reference'" class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th class="text-center">
-                      <h6><b>Working group name</b></h6>
-                    </th>
-                    <th class="text-center">
-                      <h6><b>Name of the nominated person</b></h6>
-                    </th>
-                    <th class="text-center">
-                      <h6><b>e-mail</b></h6>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let row of wgr">
-                    <td class="text-center">
-                      <h6>{{ row.type }}</h6>
-                    </td>
-                    <td class="text-center">
-                      <h6>{{ row.countryRepresentativeFirstName + ' ' + row.countryRepresentativeLastName }}</h6>
-                    </td>
-                    <td class="text-center">
-                      <h6>{{ row.countryRepresentativeMail }}</h6>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div *ngIf="content.type === 'reference' && selectedCountry">
+                <jhi-working-group-references
+                  *ngIf="tableColumns.get(content.id).source === 'working_group'"
+                  [template]="tableColumns.get(content.id)"
+                  [isFromReportBlock]="true"
+                  [type]="type"
+                  [selectedCountry]="selectedCountry"
+                  [isEdit]="isEdit"
+                  (templateChanged)="onDataChanged(content, $event)"
+                ></jhi-working-group-references>
+              </div>
 
               <div *ngIf="content.type === 'text'">
                 <span *ngIf="type !== 'report'"
@@ -226,6 +210,10 @@
 
         <button class="btn btn btn-success" style="background-color: #0077bf" (click)="addStructuredSubBlock()">
           <i class="fas fa-plus plus-icon">+</i>Add Structured table
+        </button>
+
+        <button class="btn btn btn-success" style="background-color: #0077bf" (click)="addReferenceSubBlock()">
+          <i class="fas fa-plus plus-icon">+</i>Add Reference
         </button>
       </div>
 

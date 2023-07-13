@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!isFromReportBlock">
   <h2 id="page-heading" data-cy="WorkingGroupReferencesHeading">
     <span>Working Group References</span>
 
@@ -198,6 +198,207 @@
         (pageChange)="navigateToPage($event)"
       ></ngb-pagination>
     </div>
+  </div>
+</div>
+<div *ngIf="isFromReportBlock">
+  <div class="alert alert-warning" *ngIf="workingGroupReferences?.length === 0 && type !== 'template'">
+    <span>No Working Group References found</span>
+  </div>
+
+  <div class="table-responsive table-entities">
+    <table class="table table-bordered" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('countryCode')">
+            <div class="d-flex">
+              <span>Country Code</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('countryCode')"
+              (click)="setValueTemplate('countryCode', 'Country Code')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('countryName')">
+            <div class="d-flex">
+              <span>Country Name</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('countryName')"
+              (click)="setValueTemplate('countryName', 'Country Name')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('countryRepresentativeFirstName')">
+            <div class="d-flex">
+              <span>Country Representative First Name</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('countryRepresentativeFirstName')"
+              (click)="setValueTemplate('countryRepresentativeFirstName', 'Country Representative First Name')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('countryRepresentativeLastName')">
+            <div class="d-flex">
+              <span>Country Representative Last Name</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('countryRepresentativeLastName')"
+              (click)="setValueTemplate('countryRepresentativeLastName', 'Country Representative Last Name')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('countryRepresentativeMail')">
+            <div class="d-flex">
+              <span>Country Representative Mail</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('countryRepresentativeMail')"
+              (click)="setValueTemplate('countryRepresentativeMail', 'Country Representative Mail')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('countryRepresentativePosition')">
+            <div class="d-flex">
+              <span>Country Representative Position</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('countryRepresentativePosition')"
+              (click)="setValueTemplate('countryRepresentativePosition', 'Country Representative Position')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('countryRepresentativeStartDate')">
+            <div class="d-flex">
+              <span>Country Representative Start Date</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('countryRepresentativeStartDate')"
+              (click)="setValueTemplate('countryRepresentativeStartDate', 'Country Representative Start Date')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('countryRepresentativeEndDate')">
+            <div class="d-flex">
+              <span>Country Representative End Date</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('countryRepresentativeEndDate')"
+              (click)="setValueTemplate('countryRepresentativeEndDate', 'Country Representative End Date')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('countryRepresentativeMinistry')">
+            <div class="d-flex">
+              <span>Country Representative Ministry</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('countryRepresentativeMinistry')"
+              (click)="setValueTemplate('countryRepresentativeMinistry', 'Country Representative Ministry')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('countryRepresentativeDepartment')">
+            <div class="d-flex">
+              <span>Country Representative Department</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('countryRepresentativeDepartment')"
+              (click)="setValueTemplate('countryRepresentativeDepartment', 'Country Representative Department')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('contactEunFirstName')">
+            <div class="d-flex">
+              <span>Contact Eun First Name</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('contactEunFirstName')"
+              (click)="setValueTemplate('contactEunFirstName', 'Contact Eun First Name')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('contactEunLastName')">
+            <div class="d-flex">
+              <span>Contact Eun Last Name</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('contactEunLastName')"
+              (click)="setValueTemplate('contactEunLastName', 'Contact Eun Last Name')"
+            />
+          </th>
+          <th scope="col" *ngIf="isEdit || isActiveColumn('type')">
+            <div class="d-flex">
+              <span>Working group name</span>
+            </div>
+            <input
+              *ngIf="type === 'template' || isEdit"
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="getValueTemplate('type')"
+              (click)="setValueTemplate('type', 'Working group name')"
+            />
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let workingGroupReferences of workingGroupReferences; trackBy: trackId" data-cy="entityTable">
+          <td *ngIf="isEdit || isActiveColumn('countryCode')">{{ workingGroupReferences.countryCode }}</td>
+          <td *ngIf="isEdit || isActiveColumn('countryName')">{{ workingGroupReferences.countryName }}</td>
+          <td *ngIf="isEdit || isActiveColumn('countryRepresentativeFirstName')">
+            {{ workingGroupReferences.countryRepresentativeFirstName }}
+          </td>
+          <td *ngIf="isEdit || isActiveColumn('countryRepresentativeLastName')">
+            {{ workingGroupReferences.countryRepresentativeLastName }}
+          </td>
+          <td *ngIf="isEdit || isActiveColumn('countryRepresentativeMail')">{{ workingGroupReferences.countryRepresentativeMail }}</td>
+          <td *ngIf="isEdit || isActiveColumn('countryRepresentativePosition')">
+            {{ workingGroupReferences.countryRepresentativePosition }}
+          </td>
+          <td *ngIf="isEdit || isActiveColumn('countryRepresentativeStartDate')">
+            {{ workingGroupReferences.countryRepresentativeStartDate | formatMediumDate }}
+          </td>
+          <td *ngIf="isEdit || isActiveColumn('countryRepresentativeEndDate')">
+            {{ workingGroupReferences.countryRepresentativeEndDate | formatMediumDate }}
+          </td>
+          <td *ngIf="isEdit || isActiveColumn('countryRepresentativeMinistry')">
+            {{ workingGroupReferences.countryRepresentativeMinistry }}
+          </td>
+          <td *ngIf="isEdit || isActiveColumn('countryRepresentativeDepartment')">
+            {{ workingGroupReferences.countryRepresentativeDepartment }}
+          </td>
+          <td *ngIf="isEdit || isActiveColumn('contactEunFirstName')">{{ workingGroupReferences.contactEunFirstName }}</td>
+          <td *ngIf="isEdit || isActiveColumn('contactEunLastName')">{{ workingGroupReferences.contactEunLastName }}</td>
+          <td *ngIf="isEdit || isActiveColumn('type')">{{ workingGroupReferences.type }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

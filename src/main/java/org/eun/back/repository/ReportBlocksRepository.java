@@ -32,6 +32,9 @@ public interface ReportBlocksRepository extends ReportBlocksRepositoryWithBagRel
     )
     List<ReportBlocks> findReportBlocksByCountry(@Param("countryId") Long countryId, @Param("reportId") Long reportId);
 
+    @Query("SELECT MAX(rb.priorityNumber) FROM ReportBlocks rb WHERE rb.report.id = :reportId")
+    Long findMaxPriorityNumberByReportId(@Param("reportId") Long reportId);
+
     default List<ReportBlocks> findReportBlocksByCountryWithEmptyContent(Long countryId, Long reportId) {
         List<ReportBlocks> reportBlocksList = findReportBlocksByCountry(countryId, reportId);
 
