@@ -1,7 +1,9 @@
 package org.eun.back.service.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.eun.back.domain.Countries;
 import org.eun.back.repository.CountriesRepository;
 import org.eun.back.service.CountriesService;
@@ -9,8 +11,6 @@ import org.eun.back.service.dto.CountriesDTO;
 import org.eun.back.service.mapper.CountriesMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,14 +65,9 @@ public class CountriesServiceImpl implements CountriesService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<CountriesDTO> findAll(Pageable pageable) {
+    public List<CountriesDTO> findAll() {
         log.debug("Request to get all Countries");
-        return countriesRepository.findAll(pageable).map(countriesMapper::toDto);
-    }
-
-    @Override
-    public List<CountriesDTO> findAll(Long reportId) {
-        return null;
+        return countriesRepository.findAll().stream().map(countriesMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override

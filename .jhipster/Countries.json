@@ -17,7 +17,7 @@
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "Countries",
-  "pagination": "pagination",
+  "pagination": "no",
   "readOnly": false,
   "relationships": [
     {
