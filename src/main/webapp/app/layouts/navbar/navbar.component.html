@@ -353,6 +353,18 @@
                 <span>Working Group References</span>
               </a>
             </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="reference-table-settings"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="th-list" [fixedWidth]="true"></fa-icon>
+                <span>Reference Table Settings</span>
+              </a>
+            </li>
             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
           </ul>
         </li>

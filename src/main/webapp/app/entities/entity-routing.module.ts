@@ -135,6 +135,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'WorkingGroupReferences' },
         loadChildren: () => import('./working-group-references/working-group-references.module').then(m => m.WorkingGroupReferencesModule),
       },
+      {
+        path: 'reference-table-settings',
+        data: { pageTitle: 'ReferenceTableSettings' },
+        loadChildren: () => import('./reference-table-settings/reference-table-settings.module').then(m => m.ReferenceTableSettingsModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

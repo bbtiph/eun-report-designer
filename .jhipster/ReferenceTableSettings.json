@@ -1,0 +1,32 @@
+{
+  "applications": "*",
+  "changelogDate": "20230714042342",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "reference_table_settings",
+  "fields": [
+    {
+      "fieldName": "refTable",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "columns",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "path",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isActive",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ReferenceTableSettings",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

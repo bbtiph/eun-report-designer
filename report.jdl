@@ -1,23 +1,12 @@
-entity WorkingGroupReferences {
-    countryCode String
-    countryName String
-    countryRepresentativeFirstName String
-    countryRepresentativeLastName String
-    countryRepresentativeMail String
-    countryRepresentativePosition String
-    countryRepresentativeStartDate LocalDate
-    countryRepresentativeEndDate LocalDate
-    countryRepresentativeMinistry String
-    countryRepresentativeDepartment String
-    contactEunFirstName String
-    contactEunLastName String
-    type String
+entity ReferenceTableSettings {
+    refTable String
+    columns String
+    path String
     isActive Boolean
 }
 
 
-paginate WorkingGroupReferences with pagination
-dto WorkingGroupReferences with mapstruct
-service WorkingGroupReferences with serviceImpl
+dto ReferenceTableSettings with mapstruct
+service ReferenceTableSettings with serviceImpl
 
 
