@@ -477,4 +477,9 @@ export class ReportBlocksUpdateComponent implements OnInit {
   onDataChanged(content: IReportBlocksContent, template: any) {
     content.template = JSON.stringify(template);
   }
+
+  onCountriesChanged(event: any) {
+    console.log('trw>>', event);
+    console.log('erw>>', this.editForm.getRawValue());
+  }
 }

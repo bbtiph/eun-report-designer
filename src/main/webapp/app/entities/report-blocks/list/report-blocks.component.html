@@ -44,12 +44,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="isActive">
-            <div class="d-flex">
-              <span>Is Active</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="countryId.id">
             <div class="d-flex">
               <span>Country Id</span>
@@ -71,16 +65,15 @@
             <a [routerLink]="['/report-blocks', reportBlocks.id, 'view']">{{ reportBlocks.id }}</a>
           </td>
           <td>{{ reportBlocks.name }}</td>
-          <td>{{ reportBlocks.isActive }}</td>
           <td>
             <span *ngFor="let countryId of reportBlocks.countryIds; let last = last">
-              <a class="form-control-static" [routerLink]="['/countries', countryId.id, 'view']">{{ countryId.id }}</a
+              <a class="form-control-static" [routerLink]="['/countries', countryId.id, 'view']">{{ countryId.countryCode }}</a
               >{{ last ? '' : ', ' }}
             </span>
           </td>
           <td>
             <div *ngIf="reportBlocks.report">
-              <a [routerLink]="['/report', reportBlocks.report.id, 'view']">{{ reportBlocks.report.id }}</a>
+              <a [routerLink]="['/report', reportBlocks.report.id, 'view']">{{ reportBlocks.report.reportName }}</a>
             </div>
           </td>
           <td class="text-end">

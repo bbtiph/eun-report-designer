@@ -4,18 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
-import org.eun.back.domain.Countries;
 import org.eun.back.domain.ReportBlocks;
 import org.eun.back.repository.ReportBlocksRepository;
 import org.eun.back.service.CountriesService;
-import org.eun.back.service.ReportBlocksContentDataService;
 import org.eun.back.service.ReportBlocksContentService;
 import org.eun.back.service.ReportBlocksService;
+import org.eun.back.service.ReportService;
 import org.eun.back.service.dto.CountriesDTO;
 import org.eun.back.service.dto.ReportBlocksContentDTO;
 import org.eun.back.service.dto.ReportBlocksContentDataDTO;
@@ -39,25 +35,25 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
 
     private final ReportBlocksRepository reportBlocksRepository;
 
-    private final ReportBlocksContentDataService reportBlocksContentDataService;
-
     private final ReportBlocksContentService reportBlocksContentService;
 
     private final CountriesService countriesService;
+
+    private final ReportService reportService;
 
     private final ReportBlocksMapper reportBlocksMapper;
 
     public ReportBlocksServiceImpl(
         ReportBlocksRepository reportBlocksRepository,
-        ReportBlocksContentDataService reportBlocksContentDataService,
         ReportBlocksContentService reportBlocksContentService,
         CountriesService countriesService,
+        ReportService reportService,
         ReportBlocksMapper reportBlocksMapper
     ) {
         this.reportBlocksRepository = reportBlocksRepository;
-        this.reportBlocksContentDataService = reportBlocksContentDataService;
         this.reportBlocksContentService = reportBlocksContentService;
         this.countriesService = countriesService;
+        this.reportService = reportService;
         this.reportBlocksMapper = reportBlocksMapper;
     }
 
@@ -89,9 +85,9 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
                     reportBlocksContentDataDTONew.setCountry(countriesDTO);
                     reportBlocksContentDataDTONew.setNewContentData("true");
                     if (reportBlocksContentDTO.getType().equals("text")) {
-                        reportBlocksContentDataDTONew.setData("{\"data\":\"\"}");
+                        reportBlocksContentDataDTONew.setData(generateDefaultTextContentData());
                     } else {
-                        reportBlocksContentDataDTONew.setData(generateContentData(reportBlocksContentDTO.getTemplate()));
+                        reportBlocksContentDataDTONew.setData(generateDefaultTableContentData(reportBlocksContentDTO.getTemplate()));
                     }
                     reportBlocksContentDataDTONew.setId(null);
                     reportBlocksContentDTO.getReportBlocksContentData().add(reportBlocksContentDataDTONew);
@@ -99,12 +95,57 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
                 reportBlocksContentDTO.setId(null);
             }
         }
+
+        reportBlocksDTO = updateBlockContentDataByCountry(reportBlocksDTO);
+
         ReportBlocks reportBlocks = reportBlocksMapper.toEntity(reportBlocksDTO);
         reportBlocks = reportBlocksRepository.save(reportBlocks);
         return reportBlocksMapper.toDto(reportBlocks);
     }
 
-    private String generateContentData(String jsonTemplate) {
+    private ReportBlocksDTO updateBlockContentDataByCountry(ReportBlocksDTO reportBlocksDTO) {
+        Set<CountriesDTO> countryIds = reportBlocksDTO.getCountryIds();
+        Set<CountriesDTO> existingCountries = new HashSet<>();
+
+        for (ReportBlocksContentDTO contentDTO : reportBlocksDTO.getReportBlocksContents()) {
+            Set<ReportBlocksContentDataDTO> contentData = contentDTO.getReportBlocksContentData();
+            Set<CountriesDTO> contentDataCountries = new HashSet<>();
+
+            for (ReportBlocksContentDataDTO dataDTO : contentData) {
+                CountriesDTO country = dataDTO.getCountry();
+                contentDataCountries.add(country);
+
+                if (countryIds.contains(country)) {
+                    existingCountries.add(country);
+                }
+            }
+
+            Set<CountriesDTO> missingCountries = new HashSet<>(countryIds);
+            missingCountries.removeAll(contentDataCountries);
+
+            for (CountriesDTO missingCountry : missingCountries) {
+                ReportBlocksContentDataDTO newContentData = new ReportBlocksContentDataDTO();
+                newContentData.setCountry(missingCountry);
+                newContentData.setData(
+                    contentDTO.getType().equals("text")
+                        ? generateDefaultTextContentData()
+                        : generateDefaultTableContentData(contentDTO.getTemplate())
+                );
+                contentData.add(newContentData);
+            }
+        }
+
+        Set<CountriesDTO> missingCountries = new HashSet<>(countryIds);
+        missingCountries.removeAll(existingCountries);
+
+        return reportBlocksDTO;
+    }
+
+    private String generateDefaultTextContentData() {
+        return "{\"data\":\"\"}";
+    }
+
+    private String generateDefaultTableContentData(String jsonTemplate) {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
@@ -147,7 +188,23 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
     @Transactional(readOnly = true)
     public List<ReportBlocksDTO> findAll() {
         log.debug("Request to get all ReportBlocks");
-        return reportBlocksRepository.findAll().stream().map(reportBlocksMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        List<ReportBlocksDTO> reportBlocksDTOS = reportBlocksRepository
+            .findAll()
+            .stream()
+            .map(reportBlocksMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+        return reportBlocksDTOS
+            .stream()
+            .map(reportBlocks -> {
+                for (CountriesDTO country : reportBlocks.getCountryIds()) {
+                    CountriesDTO countriesDTO = countriesService.findOne(country.getId()).get();
+                    country.setCountryName(countriesDTO.getCountryName());
+                    country.setCountryCode(countriesDTO.getCountryCode());
+                }
+                reportBlocks.getReport().setReportName(reportService.findOne(reportBlocks.getReport().getId()).get().getReportName());
+                return reportBlocks;
+            })
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
@@ -170,7 +227,9 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
         log.debug("Request to get ReportBlocks : {}", id);
         Optional<ReportBlocksDTO> reportBlocksDTO = reportBlocksRepository.findOneWithEagerRelationships(id).map(reportBlocksMapper::toDto);
         for (CountriesDTO country : reportBlocksDTO.get().getCountryIds()) {
-            country.setCountryName(countriesService.findOne(country.getId()).get().getCountryName());
+            CountriesDTO countriesDTO = countriesService.findOne(country.getId()).get();
+            country.setCountryName(countriesDTO.getCountryName());
+            country.setCountryName(countriesDTO.getCountryCode());
         }
         return reportBlocksDTO;
     }
