@@ -159,6 +159,13 @@ public class ReferenceTableSettingsResource {
         return ResponseUtil.wrapOrNotFound(referenceTableSettingsDTO);
     }
 
+    @GetMapping("/reference-table-settings/by-ref-table/{refTable}")
+    public ResponseEntity<ReferenceTableSettingsDTO> getReferenceTableSettingsByName(@PathVariable String refTable) {
+        log.debug("REST request to get ReferenceTableSettings by name : {}", refTable);
+        Optional<ReferenceTableSettingsDTO> referenceTableSettingsDTO = referenceTableSettingsService.findOneByRefTable(refTable);
+        return ResponseUtil.wrapOrNotFound(referenceTableSettingsDTO);
+    }
+
     /**
      * {@code DELETE  /reference-table-settings/:id} : delete the "id" referenceTableSettings.
      *

@@ -19,6 +19,8 @@ import { ReportBlocksContentService } from '../../report-blocks-content/service/
 import { IReportBlocksContentTemplateColumn } from '../../report-blocks-content/report-blocks-content-template-column.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReferenceSelectionModal } from '../../../shared/modal/reference-selection.modal';
+import { IReferenceTableSettings } from '../../reference-table-settings/reference-table-settings.model';
+import { ReferenceTableSettingsService } from '../../reference-table-settings/service/reference-table-settings.service';
 
 @Component({
   selector: 'jhi-report-blocks-update',
@@ -33,6 +35,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
   isEdit = false;
   type: string = '';
   tableColumns = new Map();
+  referenceTableSettings = new Map();
   reportBlocks: IReportBlocks | null = null;
   reportBlocksContents?: IReportBlocksContent[];
   selectedCountry: ICountries | null = null;
@@ -54,7 +57,8 @@ export class ReportBlocksUpdateComponent implements OnInit {
     protected reportService: ReportService,
     protected activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    protected reportBlocksContentDataService: ReportBlocksContentDataService
+    protected reportBlocksContentDataService: ReportBlocksContentDataService,
+    protected referenceTableSettingsService: ReferenceTableSettingsService
   ) {
     this.formGroup = this.formBuilder.group({});
   }
@@ -90,6 +94,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
     }
     if (this.type != 'new') this.initializeFormControls();
     this.getTableColumns();
+    this.loadReferenceTableSettings();
   }
 
   getTableColumns() {
@@ -97,6 +102,20 @@ export class ReportBlocksUpdateComponent implements OnInit {
       const elements = this.reportBlocks.reportBlocksContents.filter(a => a.type === 'table' || a.type === 'reference');
       elements.forEach(element => {
         this.tableColumns.set(element.id, JSON.parse(element.template ?? '{}'));
+      });
+    }
+  }
+
+  loadReferenceTableSettings() {
+    if (this.reportBlocks && this.reportBlocks.reportBlocksContents) {
+      const elements = this.reportBlocks.reportBlocksContents.filter(a => a.type === 'reference');
+      elements.forEach(element => {
+        let content = JSON.parse(element.template ?? '{}');
+        if (!this.referenceTableSettings.has(content.source)) {
+          this.referenceTableSettingsService.findByRefTable(content.source).subscribe((result: IReferenceTableSettings) => {
+            this.referenceTableSettings.set(content.source, JSON.parse(result.columns ?? '[{}]'));
+          });
+        }
       });
     }
   }
@@ -447,6 +466,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
       this.reportBlocks?.reportBlocksContents?.push(subBlock);
       this.initializeFormControls();
       this.getTableColumns();
+      this.loadReferenceTableSettings();
     });
   }
 
@@ -476,10 +496,5 @@ export class ReportBlocksUpdateComponent implements OnInit {
 
   onDataChanged(content: IReportBlocksContent, template: any) {
     content.template = JSON.stringify(template);
-  }
-
-  onCountriesChanged(event: any) {
-    console.log('trw>>', event);
-    console.log('erw>>', this.editForm.getRawValue());
   }
 }

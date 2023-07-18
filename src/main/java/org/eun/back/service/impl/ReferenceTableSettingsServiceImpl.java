@@ -85,6 +85,11 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
     }
 
     @Override
+    public Optional<ReferenceTableSettingsDTO> findOneByRefTable(String refTable) {
+        return referenceTableSettingsRepository.findByRefTable(refTable).map(referenceTableSettingsMapper::toDto);
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete ReferenceTableSettings : {}", id);
         referenceTableSettingsRepository.deleteById(id);

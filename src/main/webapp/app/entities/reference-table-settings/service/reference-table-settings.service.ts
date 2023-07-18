@@ -38,6 +38,10 @@ export class ReferenceTableSettingsService {
     );
   }
 
+  findByRefTable(source: string): Observable<IReferenceTableSettings> {
+    return this.http.get<IReferenceTableSettings>(`${this.resourceUrl}/by-ref-table/${source}`);
+  }
+
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IReferenceTableSettings>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

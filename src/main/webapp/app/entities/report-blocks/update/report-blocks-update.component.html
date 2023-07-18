@@ -27,7 +27,6 @@
             name="countryIds"
             formControlName="countryIds"
             [compareWith]="compareCountries"
-            (change)="onCountriesChanged($event)"
           >
             <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">
               {{ countriesOption.countryName }}
@@ -145,6 +144,7 @@
                   </tr>
                 </tbody>
               </table>
+
               <div *ngIf="content.type === 'reference' && selectedCountry">
                 <jhi-working-group-references
                   *ngIf="tableColumns.get(content.id).source === 'working_group'"
@@ -152,25 +152,11 @@
                   [isFromReportBlock]="true"
                   [type]="type"
                   [selectedCountry]="selectedCountry"
+                  [settings]="referenceTableSettings.get(tableColumns.get(content.id).source)"
                   [isEdit]="isEdit"
                   (templateChanged)="onDataChanged(content, $event)"
                 ></jhi-working-group-references>
               </div>
-
-              <!--              <div *ngIf="content.type === 'text'">-->
-              <!--                <span *ngIf="type !== 'report'"-->
-              <!--                  >Name:-->
-              <!--                  {{ type === 'content' ? getFormControlByKey('content_' + content.id + '_name').value : '' }}-->
-              <!--                </span>-->
-
-              <!--                <input-->
-              <!--                  *ngIf="type === 'template'"-->
-              <!--                  [formControl]="getFormControlByKey('content_' + content.id + '_name')"-->
-              <!--                  placeholder="Enter..."-->
-              <!--                  class="form-control"-->
-              <!--                />-->
-              <!--                <br />-->
-              <!--              </div>-->
 
               <span *ngIf="type === 'template' && content.type === 'text'">*Default text for selected countries</span>
               <angular-editor

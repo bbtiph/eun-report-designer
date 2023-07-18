@@ -22,10 +22,12 @@ export class WorkingGroupReferencesComponent implements OnInit {
   @Input() isFromReportBlock: boolean | false | undefined;
   @Input() isEdit: boolean | false | undefined;
   @Input() selectedCountry: ICountries | null = null;
+  @Input() settings: any | null = null;
   @Output() templateChanged = new EventEmitter<any>();
 
-  workingGroupReferences?: IWorkingGroupReferences[];
+  workingGroupReferences?: IWorkingGroupReferences[] = [];
   isLoading = false;
+  columns: string | undefined;
 
   predicate = 'id';
   ascending = true;
@@ -190,5 +192,9 @@ export class WorkingGroupReferencesComponent implements OnInit {
       this.closeModal();
       this.load();
     });
+  }
+
+  getValue(obj: any, property: any): any {
+    return obj[property];
   }
 }

@@ -47,6 +47,8 @@ public interface ReferenceTableSettingsService {
      */
     Optional<ReferenceTableSettingsDTO> findOne(Long id);
 
+    Optional<ReferenceTableSettingsDTO> findOneByRefTable(String name);
+
     /**
      * Delete the "id" referenceTableSettings.
      *
