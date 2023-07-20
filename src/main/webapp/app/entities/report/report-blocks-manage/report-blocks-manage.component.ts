@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IReportBlocks } from '../../report-blocks/report-blocks.model';
 import { ReportBlocksService } from '../../report-blocks/service/report-blocks.service';
@@ -6,16 +6,16 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { IReport } from '../report.model';
 import { AbstractExportModal } from '../../../shared/modal/abstract-export.modal';
 import { ActivatedRoute } from '@angular/router';
-import { ReportBlockEdit } from './report-block-edit/report-block-edit.component';
 import { CountriesService } from '../../countries/service/countries.service';
 import { ICountries } from '../../countries/countries.model';
-import { WorkingGroupReferencesService } from '../../working-group-references/service/working-group-references.service';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'jhi-report-blocks-manage',
   templateUrl: './report-blocks-manage.component.html',
+  styleUrls: ['./report-blocks-manage.component.scss'],
 })
-export class ReportBlocksManageComponent implements OnInit {
+export class ReportBlocksManageComponent implements OnInit, OnDestroy {
   reportBlocks: IReportBlocks[] | undefined;
   report: IReport | null = null;
   selectedCountry: ICountries | null = null;
@@ -28,7 +28,8 @@ export class ReportBlocksManageComponent implements OnInit {
     protected reportBlocksService: ReportBlocksService,
     private http: HttpClient,
     protected activatedRoute: ActivatedRoute,
-    protected countriesService: CountriesService
+    protected countriesService: CountriesService,
+    private dragulaService: DragulaService
   ) {}
 
   ngOnInit() {
@@ -47,17 +48,34 @@ export class ReportBlocksManageComponent implements OnInit {
         this.reportBlocks = this.reportBlocks?.sort((a, b) => a.priorityNumber - b.priorityNumber);
       });
     });
+
+    this.dragulaService.createGroup('REPORT_BLOCKS', {
+      revertOnSpill: true,
+      copy: false,
+      moves: function (el, container, cHandle) {
+        // @ts-ignore
+        return cHandle.className === 'handle';
+      },
+    });
+    this.dragulaService.dropModel('REPORT_BLOCKS').subscribe(args => {});
+  }
+
+  drop(event: IReportBlocks[]) {
+    // @ts-ignore
+    this.reportBlocks.forEach((block, index) => {
+      block.priorityNumber = index;
+      this.reportBlocksService.update(block).subscribe();
+    });
+  }
+
+  ngOnDestroy() {
+    this.dragulaService.destroy('REPORT_BLOCKS');
   }
 
   changeIsActive(block: IReportBlocks) {
     const updatedBlock = { ...block };
     updatedBlock.isActive = !updatedBlock.isActive;
     this.reportBlocksService.update(updatedBlock).subscribe();
-  }
-
-  openEditor(block: IReportBlocks) {
-    const modalRef = this.modalService.open(ReportBlockEdit, { animation: true, size: 'xl' });
-    modalRef.componentInstance.block = block;
   }
 
   generateReport(): void {

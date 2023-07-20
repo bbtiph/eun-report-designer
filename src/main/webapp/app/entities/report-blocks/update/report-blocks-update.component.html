@@ -49,132 +49,136 @@
           </select>
         </div>
 
-        <ul *ngIf="type !== 'new'">
-          <li
-            *ngFor="let content of reportBlocks?.reportBlocksContents | sortContentByPriority; let contentIndex = index"
-            class="custom-list-li"
-            [style.border-bottom]="!isFromReport ? 'solid #5ec830' : ''"
-          >
-            <div *ngIf="!content.deleted" class="custom-list">
-              <div style="display: flex; justify-content: space-between">
-                <span *ngIf="type !== 'report'">Type: {{ content.type }}</span>
-                <span *ngIf="type === 'template' || (type === 'report' && isEdit)"></span>
-                <button
-                  *ngIf="type === 'template' || (type === 'report' && isEdit)"
-                  (click)="removeSubBlock(content)"
-                  class="btn btn-outline-danger"
-                >
-                  <fa-icon icon="times"></fa-icon>
-                </button>
-              </div>
+        <ul
+          *ngIf="type !== 'new' && reportBlocks?.reportBlocksContents"
+          dragula="{{ groupNameDragula }}"
+          [(dragulaModel)]="reportBlocksContents"
+          (dragulaModelChange)="drop($event)"
+        >
+          <ng-container *ngFor="let content of reportBlocks?.reportBlocksContents | sortContentByPriority">
+            <li class="custom-list-li" [style.border-bottom]="!isFromReport ? 'solid #5ec830' : ''">
+              <img class="handle-content" src="./content/images/arrow_up_and_down.png" />
+              <div *ngIf="!content.deleted" class="custom-list">
+                <div style="display: flex; justify-content: space-between">
+                  <span *ngIf="type !== 'report'">Type: {{ content.type }}</span>
+                  <span *ngIf="type === 'template' || (type === 'report' && isEdit)"></span>
+                  <button
+                    *ngIf="type === 'template' || (type === 'report' && isEdit)"
+                    (click)="removeSubBlock(content)"
+                    class="btn btn-outline-danger"
+                  >
+                    <fa-icon icon="times"></fa-icon>
+                  </button>
+                </div>
 
-              <table *ngIf="content.type === 'table'" class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th [attr.colspan]="getColumns(content.template ?? '{}').length + 1" class="text-center">
-                      <span>{{
-                        type === 'content' || (type === 'report' && !isEdit)
-                          ? getFormControlByKey('content_' + content.id + '_name').value
-                          : ''
-                      }}</span>
+                <table *ngIf="content.type === 'table'" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th [attr.colspan]="getColumns(content.template ?? '{}').length + 1" class="text-center">
+                        <span>{{
+                          type === 'content' || (type === 'report' && !isEdit)
+                            ? getFormControlByKey('content_' + content.id + '_name').value
+                            : ''
+                        }}</span>
 
-                      <input
-                        [id]="'content_' + content.id + '_name'"
-                        *ngIf="type === 'template' || (type === 'report' && isEdit)"
-                        [formControl]="getFormControlByKey('content_' + content.id + '_name')"
-                        placeholder="Enter..."
-                        class="form-control"
-                      />
-                      <br />
-                    </th>
-                  </tr>
-                  <tr>
-                    <th *ngFor="let column of tableColumns.get(content.id).columns; let columnIndex = index" class="text-center">
-                      <input
-                        [id]="'column_' + content.id + '_' + column.index"
-                        [formControl]="getColumnFormControl(content, column.index)"
-                        placeholder="New column"
-                        class="form-control"
-                        *ngIf="type === 'template' || (type === 'report' && isEdit)"
-                      />
-                      <h6 *ngIf="type === 'content' || (type === 'report' && !isEdit)">
-                        <b>{{ getColumnFormControl(content, column.index).value }}</b>
-                      </h6>
-                      <button
-                        *ngIf="type === 'template' || (type === 'report' && isEdit)"
-                        id="remove-column"
-                        (click)="removeColumn(content, columnIndex, column.index)"
-                        class="btn btn-outline-primary"
-                      >
-                        <b>-</b>
-                      </button>
-                    </th>
-                    <th *ngIf="type === 'template' || (type === 'report' && isEdit)" class="text-center">
-                      <button id="add-column" (click)="addColumn(content)" class="btn btn-outline-success">
-                        <b>+</b>
-                      </button>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody *ngIf="type === 'content' || type === 'report'">
-                  <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
-                    <td *ngFor="let column of tableColumns.get(content.id).columns" class="text-center">
-                      <input
-                        [id]="'row_' + content.id + '_' + content.reportBlocksContentData[rowIndex].id + '_column_' + column.index"
-                        [name]="'row_' + content.id + '_' + content.reportBlocksContentData[rowIndex].id + '_column_' + column.index"
-                        *ngIf="type === 'content' || (type === 'report' && isEdit)"
-                        [formControl]="getRowDataFormControl(content, rowIndex, column.index)"
-                        placeholder="Data"
-                        class="form-control"
-                      />
-                      <h6 *ngIf="type === 'report' && !isEdit">
-                        {{ getRowDataFormControl(content, rowIndex, column.index).value }}
-                      </h6>
-                    </td>
-                    <td *ngIf="type === 'content' || (type === 'report' && isEdit)" class="text-center">
-                      <button id="remove-row" (click)="removeRow(content, rowIndex, row.id)" class="btn btn-outline-primary">
-                        <b>-</b>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr *ngIf="type === 'content' || (type === 'report' && isEdit)">
-                    <td [attr.colspan]="getColumns(content.template ?? '{}').length + 1" class="text-center">
-                      <button id="add-row" (click)="addRow(content)" class="btn btn-outline-success"><b>+</b></button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                        <input
+                          [id]="'content_' + content.id + '_name'"
+                          *ngIf="type === 'template' || (type === 'report' && isEdit)"
+                          [formControl]="getFormControlByKey('content_' + content.id + '_name')"
+                          placeholder="Enter..."
+                          class="form-control"
+                        />
+                        <br />
+                      </th>
+                    </tr>
+                    <tr>
+                      <th *ngFor="let column of tableColumns.get(content.id).columns; let columnIndex = index" class="text-center">
+                        <input
+                          [id]="'column_' + content.id + '_' + column.index"
+                          [formControl]="getColumnFormControl(content, column.index)"
+                          placeholder="New column"
+                          class="form-control"
+                          *ngIf="type === 'template' || (type === 'report' && isEdit)"
+                        />
+                        <h6 *ngIf="type === 'content' || (type === 'report' && !isEdit)">
+                          <b>{{ getColumnFormControl(content, column.index).value }}</b>
+                        </h6>
+                        <button
+                          *ngIf="type === 'template' || (type === 'report' && isEdit)"
+                          id="remove-column"
+                          (click)="removeColumn(content, columnIndex, column.index)"
+                          class="btn btn-outline-primary"
+                        >
+                          <b>-</b>
+                        </button>
+                      </th>
+                      <th *ngIf="type === 'template' || (type === 'report' && isEdit)" class="text-center">
+                        <button id="add-column" (click)="addColumn(content)" class="btn btn-outline-success">
+                          <b>+</b>
+                        </button>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="type === 'content' || type === 'report'">
+                    <tr *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
+                      <td *ngFor="let column of tableColumns.get(content.id).columns" class="text-center">
+                        <input
+                          [id]="'row_' + content.id + '_' + content.reportBlocksContentData[rowIndex].id + '_column_' + column.index"
+                          [name]="'row_' + content.id + '_' + content.reportBlocksContentData[rowIndex].id + '_column_' + column.index"
+                          *ngIf="type === 'content' || (type === 'report' && isEdit)"
+                          [formControl]="getRowDataFormControl(content, rowIndex, column.index)"
+                          placeholder="Data"
+                          class="form-control"
+                        />
+                        <h6 *ngIf="type === 'report' && !isEdit">
+                          {{ getRowDataFormControl(content, rowIndex, column.index).value }}
+                        </h6>
+                      </td>
+                      <td *ngIf="type === 'content' || (type === 'report' && isEdit)" class="text-center">
+                        <button id="remove-row" (click)="removeRow(content, rowIndex, row.id)" class="btn btn-outline-primary">
+                          <b>-</b>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="type === 'content' || (type === 'report' && isEdit)">
+                      <td [attr.colspan]="getColumns(content.template ?? '{}').length + 1" class="text-center">
+                        <button id="add-row" (click)="addRow(content)" class="btn btn-outline-success"><b>+</b></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
-              <div *ngIf="content.type === 'reference' && selectedCountry">
-                <jhi-working-group-references
-                  *ngIf="tableColumns.get(content.id).source === 'working_group'"
-                  [template]="tableColumns.get(content.id)"
-                  [isFromReportBlock]="true"
-                  [type]="type"
-                  [selectedCountry]="selectedCountry"
-                  [settings]="referenceTableSettings.get(tableColumns.get(content.id).source)"
-                  [isEdit]="isEdit"
-                  (templateChanged)="onDataChanged(content, $event)"
-                ></jhi-working-group-references>
-              </div>
+                <div *ngIf="content.type === 'reference' && selectedCountry">
+                  <jhi-working-group-references
+                    *ngIf="tableColumns.get(content.id).source === 'working_group'"
+                    [template]="tableColumns.get(content.id)"
+                    [isFromReportBlock]="true"
+                    [type]="type"
+                    [selectedCountry]="selectedCountry"
+                    [settings]="referenceTableSettings.get(tableColumns.get(content.id).source)"
+                    [isEdit]="isEdit"
+                    (templateChanged)="onDataChanged(content, $event)"
+                  ></jhi-working-group-references>
+                </div>
 
-              <span *ngIf="type === 'template' && content.type === 'text'">*Default text for selected countries</span>
-              <angular-editor
-                *ngIf="content.type === 'text' && type === 'template'"
-                [formControl]="getFormControlByKey('content_' + content.id + '_data')"
-              ></angular-editor>
-              <div *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
+                <span *ngIf="type === 'template' && content.type === 'text'">*Default text for selected countries</span>
                 <angular-editor
-                  *ngIf="content.type === 'text' && (type === 'content' || (type === 'report' && isEdit))"
-                  [formControl]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data')"
+                  *ngIf="content.type === 'text' && type === 'template'"
+                  [formControl]="getFormControlByKey('content_' + content.id + '_data')"
                 ></angular-editor>
-                <div
-                  *ngIf="content.type === 'text' && type === 'report' && !isEdit"
-                  [innerHtml]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data').value"
-                ></div>
+                <div *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
+                  <angular-editor
+                    *ngIf="content.type === 'text' && (type === 'content' || (type === 'report' && isEdit))"
+                    [formControl]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data')"
+                  ></angular-editor>
+                  <div
+                    *ngIf="content.type === 'text' && type === 'report' && !isEdit"
+                    [innerHtml]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data').value"
+                  ></div>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+          </ng-container>
         </ul>
       </div>
     </form>

@@ -10,9 +10,10 @@ import { ReportBlockEdit } from './report-blocks-manage/report-block-edit/report
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ReportBlocksModule } from '../report-blocks/report-blocks.module';
 import { ReportCountryContentComponent } from './report-country-content/report-country-content.component';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
-  imports: [SharedModule, ReportRoutingModule, AngularEditorModule, ReportBlocksModule],
+  imports: [SharedModule, ReportRoutingModule, AngularEditorModule, ReportBlocksModule, DragulaModule],
   declarations: [
     ReportComponent,
     ReportDetailComponent,

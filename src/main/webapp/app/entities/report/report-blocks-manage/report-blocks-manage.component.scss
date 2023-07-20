@@ -1,49 +1,12 @@
-.custom-list-li {
-  list-style-type: none;
-  padding: 20px 10px;
-  //border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
-  box-sizing: border-box;
-  background: white;
-  font-size: 14px;
-}
-
-.example-list {
-  display: block;
-  background: white;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.custom-list-li-preview {
-  border: 2px dashed #5ec830;
-}
-
-.custom-list {
-  padding: 20px 20px 20px 20px;
-  margin-bottom: 20px;
-}
-
-.btn-add-sub-block {
-  background-color: #0077bf;
-}
-
-.plus-icon {
-  color: white;
-  font-size: 16px;
-  margin-right: 5px;
-}
-
 .feuille {
   padding-top: 15px;
   margin-top: 15px;
 }
-
-.handle-content,
+.handle,
 .handleF {
   cursor: grab;
-  height: 35px;
-  width: 35px;
+  height: 40px;
+  width: 40px;
   margin-left: 15px;
 }
 

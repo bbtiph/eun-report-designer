@@ -9,16 +9,19 @@
   <br />
   <div class="row">
     <div class="col-md-12">
-      <div class="card mb-4" *ngFor="let blocks of reportBlocks">
-        <jhi-report-blocks-update
-          [block]="blocks"
-          [selectedCountryFromReport]="selectedCountry"
-          [isFromReport]="true"
-        ></jhi-report-blocks-update>
-        <div class="card-footer">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" [(ngModel)]="blocks.isActive" (click)="changeIsActive(blocks)" />
-            <label class="form-check-label">Active</label>
+      <div dragula="REPORT_BLOCKS" [(dragulaModel)]="reportBlocks" (dragulaModelChange)="drop($event)">
+        <div class="card mb-4" *ngFor="let blocks of reportBlocks">
+          <img class="handle" src="./content/images/arrow_up_and_down.png" />
+          <jhi-report-blocks-update
+            [block]="blocks"
+            [selectedCountryFromReport]="selectedCountry"
+            [isFromReport]="true"
+          ></jhi-report-blocks-update>
+          <div class="card-footer">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="blocks.isActive" (click)="changeIsActive(blocks)" />
+              <label class="form-check-label">Active</label>
+            </div>
           </div>
         </div>
       </div>
@@ -36,7 +39,6 @@
   <div class="modal-body">
     <div class="form-group">
       <textarea class="form-control" rows="8"></textarea>
-      <!--            <textarea class="form-control" [(ngModel)]="block?.content" rows="8"></textarea>-->
     </div>
   </div>
   <div class="modal-footer">

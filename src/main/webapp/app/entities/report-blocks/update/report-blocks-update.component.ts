@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -21,13 +21,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReferenceSelectionModal } from '../../../shared/modal/reference-selection.modal';
 import { IReferenceTableSettings } from '../../reference-table-settings/reference-table-settings.model';
 import { ReferenceTableSettingsService } from '../../reference-table-settings/service/reference-table-settings.service';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'jhi-report-blocks-update',
   templateUrl: './report-blocks-update.component.html',
   styleUrls: ['./report-block-update.component.scss'],
 })
-export class ReportBlocksUpdateComponent implements OnInit {
+export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
   @Input() block: IReportBlocks | null = null;
   @Input() selectedCountryFromReport: ICountries | null = null;
   @Input() isFromReport: boolean | false | undefined;
@@ -40,6 +41,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
   reportBlocksContents?: IReportBlocksContent[];
   selectedCountry: ICountries | null = null;
   countryId: number | undefined;
+  groupNameDragula: string = 'CONTENT';
 
   countriesSharedCollection: ICountries[] = [];
   reportsSharedCollection: IReport[] = [];
@@ -58,7 +60,8 @@ export class ReportBlocksUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     protected reportBlocksContentDataService: ReportBlocksContentDataService,
-    protected referenceTableSettingsService: ReferenceTableSettingsService
+    protected referenceTableSettingsService: ReferenceTableSettingsService,
+    private dragulaService: DragulaService
   ) {
     this.formGroup = this.formBuilder.group({});
   }
@@ -92,9 +95,40 @@ export class ReportBlocksUpdateComponent implements OnInit {
         this.loadRelationshipsOptions();
       });
     }
+
+    if (this.isFromReport) {
+      this.groupNameDragula += this.reportBlocks?.id;
+    }
+
+    this.dragulaService.createGroup(this.groupNameDragula, {
+      revertOnSpill: true,
+      copy: false,
+      moves: function (el, container, cHandle) {
+        // @ts-ignore
+        return cHandle.className === 'handle-content';
+      },
+    });
+    this.dragulaService.dropModel(this.groupNameDragula).subscribe(args => {});
+    this.reportBlocksContents = this.reportBlocks?.reportBlocksContents ?? [];
+
     if (this.type != 'new') this.initializeFormControls();
     this.getTableColumns();
     this.loadReferenceTableSettings();
+  }
+
+  ngOnDestroy() {
+    this.dragulaService.destroy(this.groupNameDragula);
+  }
+
+  drop(contents: IReportBlocksContent[]) {
+    // @ts-ignore
+    this.reportBlocks.reportBlocksContents = contents;
+    // @ts-ignore
+    this.reportBlocks.reportBlocksContents.forEach((content, index) => {
+      content.priorityNumber = index;
+    });
+    // @ts-ignore
+    this.reportBlocksService.update(this.reportBlocks).subscribe();
   }
 
   getTableColumns() {
@@ -436,6 +470,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
       reportBlocksContentData: [],
     };
     this.reportBlocks?.reportBlocksContents?.push(subBlock);
+    this.reportBlocksContents?.push(subBlock);
     this.initializeFormControls();
     this.getTableColumns();
   }
@@ -464,6 +499,7 @@ export class ReportBlocksUpdateComponent implements OnInit {
         reportBlocksContentData: [],
       };
       this.reportBlocks?.reportBlocksContents?.push(subBlock);
+      this.reportBlocksContents?.push(subBlock);
       this.initializeFormControls();
       this.getTableColumns();
       this.loadReferenceTableSettings();
@@ -487,10 +523,17 @@ export class ReportBlocksUpdateComponent implements OnInit {
       reportBlocksContentData: [],
     };
     this.reportBlocks?.reportBlocksContents?.push(subBlock);
+    this.reportBlocksContents?.push(subBlock);
     this.initializeFormControls();
   }
 
   removeSubBlock(content: IReportBlocksContent) {
+    if (this.reportBlocksContents) {
+      const index = this.reportBlocksContents.indexOf(content);
+      if (index !== -1) {
+        this.reportBlocksContents.splice(index, 1);
+      }
+    }
     content.deleted = true;
   }
 
