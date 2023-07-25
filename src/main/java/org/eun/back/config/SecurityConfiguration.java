@@ -5,6 +5,7 @@ import org.eun.back.repository.UserRepository;
 import org.eun.back.security.*;
 import org.eun.back.security.jwt.*;
 import org.eun.back.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -27,6 +28,21 @@ import tech.jhipster.config.JHipsterProperties;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration {
+
+    @Value("${spring.ldap.url}")
+    private String url;
+
+    @Value("${spring.ldap.base}")
+    private String base;
+
+    @Value("${spring.ldap.user-dn}")
+    private String userDn;
+
+    @Value("${spring.ldap.password}")
+    private String password;
+
+    @Value("${spring.ldap.pooled}")
+    private boolean pooled;
 
     private final JHipsterProperties jHipsterProperties;
 
@@ -113,11 +129,11 @@ public class SecurityConfiguration {
 
     public LdapContextSource getContextSource() {
         LdapContextSource contextSource = new LdapContextSource();
-        contextSource.setUrl("ldap://static.eun.org:389");
-        contextSource.setBase("OU=Users,OU=Brussels,OU=EUN,DC=eun,DC=local");
-        contextSource.setUserDn("visitor");
-        contextSource.setPassword("Sch00l@EUN");
-        contextSource.setPooled(true);
+        contextSource.setUrl(url);
+        contextSource.setBase(base);
+        contextSource.setUserDn(userDn);
+        contextSource.setPassword(password);
+        contextSource.setPooled(pooled);
         contextSource.afterPropertiesSet(); //needed otherwise you will have a NullPointerException in spring
 
         return contextSource;
@@ -127,9 +143,9 @@ public class SecurityConfiguration {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .ldapAuthentication()
-            .userSearchBase("o=myO,ou=myOu") //don't add the base
+            .userSearchBase("o=myO,ou=myOu")
             .userSearchFilter("(uid={0})")
-            .groupSearchBase("ou=Groups") //don't add the base
+            .groupSearchBase("ou=Groups")
             .groupSearchFilter("member={0}")
             .contextSource(getContextSource());
     }

@@ -33,6 +33,12 @@ os:
     docker: true
 
 spring:
+  ldap:
+    url: ldap://static.eun.org:389
+    base: OU=Users,OU=Brussels,OU=EUN,DC=eun,DC=local
+    user-dn: visitor
+    password: Sch00l@EUN
+    pooled: true
   devtools:
     restart:
       enabled: true
