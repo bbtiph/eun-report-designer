@@ -1,6 +1,8 @@
 package org.eun.back.service;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -11,6 +13,8 @@ import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.engine.api.*;
 import org.eun.back.service.dto.OutputType;
 import org.eun.back.service.dto.Report;
+import org.eun.back.service.dto.ReportDTO;
+import org.eun.back.service.dto.ReportRequest;
 import org.eun.back.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +53,12 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
     private String imageFolder;
 
     private Map<String, IReportRunnable> reports = new HashMap<>();
+
+    private final ReportService reportService;
+
+    public BirtReportService(ReportService reportService) {
+        this.reportService = reportService;
+    }
 
     @SuppressWarnings("unchecked")
     @PostConstruct
@@ -108,27 +118,56 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         return Report.ParameterType.STRING;
     }
 
+    private IReportRunnable getReport(Long reportId) {
+        ReportDTO report = this.reportService.findOne(reportId).get();
+        try {
+            return birtEngine.openReportDesign(convertByteArrayToInputStream(report.getFile()));
+        } catch (EngineException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public InputStream convertByteArrayToInputStream(byte[] byteArray) throws IOException {
+        return new InputStream() {
+            private int index = 0;
+
+            @Override
+            public int read() {
+                if (index >= byteArray.length) {
+                    return -1;
+                }
+                return byteArray[index++];
+            }
+        };
+    }
+
     public void generateMainReport(
         String reportName,
-        OutputType output,
-        Object data,
-        String lang,
-        String country,
+        ReportRequest reportRequest,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
+        String data = reportRequest.getData();
+        String format = reportRequest.getOutput();
+        String lang = reportRequest.getLang();
+        String country = reportRequest.getCountry();
+        Long reportId = reportRequest.getReportId();
+        OutputType output = OutputType.from(format);
+
         switch (output) {
             case HTML:
                 generateHTMLReport(reports.get(reportName.toLowerCase()), data, lang, country, response, request);
                 break;
             case PDF:
-                generatePDFReport(reports.get(reportName.toLowerCase()), data, lang, country, response, request);
+                generatePDFReport(getReport(reportId), data, lang, country, response, request);
                 break;
             case DOCX:
-                generateDOCXReport(reports.get(reportName.toLowerCase()), data, lang, country, response, request);
+                generateDOCXReport(getReport(reportId), data, lang, country, response, request);
                 break;
             case DOC:
-                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, country, response, request);
+                generateReport(getReport(reportId), output, data, lang, country, response, request);
                 break;
             case XLSX:
                 generateXLSXReport(reports.get(reportName.toLowerCase()), data, lang, country, response, request);

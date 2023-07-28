@@ -72,7 +72,7 @@
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input type="file" id="file_file" data-cy="file" (change)="setFileData($event, 'file', true)" accept="image/*" />
+            <input type="file" id="file_file" data-cy="file" (change)="setFileData($event, 'file', true)" />
           </div>
           <input type="hidden" class="form-control" name="file" id="field_file" data-cy="file" formControlName="file" />
           <input type="hidden" class="form-control" name="fileContentType" id="field_fileContentType" formControlName="fileContentType" />

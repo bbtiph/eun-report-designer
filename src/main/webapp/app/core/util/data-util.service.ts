@@ -62,24 +62,16 @@ export class DataUtils {
       const eventTarget: HTMLInputElement | null = event.target as HTMLInputElement | null;
       if (eventTarget?.files?.[0]) {
         const file: File = eventTarget.files[0];
-        if (isImage && !file.type.startsWith('image/')) {
-          const error: FileLoadError = {
-            message: `File was expected to be an image but was found to be '${file.type}'`,
-            key: 'not.image',
-            params: { fileType: file.type },
-          };
-          observer.error(error);
-        } else {
-          const fieldContentType: string = field + 'ContentType';
-          this.toBase64(file, (base64Data: string) => {
-            editForm.patchValue({
-              [field]: base64Data,
-              [fieldContentType]: file.type,
-            });
-            observer.next();
-            observer.complete();
+
+        const fieldContentType: string = field + 'ContentType';
+        this.toBase64(file, (base64Data: string) => {
+          editForm.patchValue({
+            [field]: base64Data,
+            [fieldContentType]: file.type,
           });
-        }
+          observer.next();
+          observer.complete();
+        });
       } else {
         const error: FileLoadError = {
           message: 'Could not extract file',

@@ -52,7 +52,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/eunReportDesigner
     username: eunReportDesigner
-    password:
+    password: eunPwd
     hikari:
       poolName: Hikari
       auto-commit: false

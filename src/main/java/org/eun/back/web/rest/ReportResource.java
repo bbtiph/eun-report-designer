@@ -13,7 +13,6 @@ import org.eclipse.birt.report.engine.api.EngineException;
 import org.eun.back.repository.ReportRepository;
 import org.eun.back.service.BirtReportService;
 import org.eun.back.service.ReportService;
-import org.eun.back.service.dto.OutputType;
 import org.eun.back.service.dto.ReportDTO;
 import org.eun.back.service.dto.ReportRequest;
 import org.eun.back.web.rest.errors.BadRequestAlertException;
@@ -23,7 +22,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -211,15 +209,7 @@ public class ReportResource {
         HttpServletResponse response,
         HttpServletRequest request
     ) {
-        String data = reportRequest.getData();
-        String output = reportRequest.getOutput();
-        String lang = reportRequest.getLang();
-        String country = reportRequest.getCountry();
-
-        log.info(
-            "Generating full report: " + name + "; data: " + data + "; format: " + output + "; lang: " + lang + "; country: " + country
-        );
-        OutputType format = OutputType.from(output);
-        birtReportService.generateMainReport(name, format, data, lang, country, response, request);
+        log.info("Generating full report: " + reportRequest.toString() + ";");
+        birtReportService.generateMainReport(name, reportRequest, response, request);
     }
 }

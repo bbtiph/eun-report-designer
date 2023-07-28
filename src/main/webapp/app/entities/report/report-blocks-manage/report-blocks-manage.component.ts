@@ -94,6 +94,7 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
         output: params.format.name,
         lang: 'ru',
         country: this.selectedCountry?.countryCode,
+        reportId: this.report?.id,
       };
       this.http.post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'blob' }).subscribe(response => {
         var a = document.createElement('a');
