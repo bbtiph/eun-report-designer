@@ -7,6 +7,7 @@ import org.eun.back.domain.User;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -19,6 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneByResetKey(String resetKey);
     Optional<User> findOneByEmailIgnoreCase(String email);
     Optional<User> findOneByLogin(String login);
+
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.roles r LEFT JOIN FETCH r.privileges WHERE u.login = ?1")
+    Optional<User> findOneWithRolesAndPrivilegesByLogin(String login);
 
     @EntityGraph(attributePaths = "roles")
     Optional<User> findOneWithRolesByLogin(String login);

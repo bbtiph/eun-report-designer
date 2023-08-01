@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
+import org.eun.back.domain.Privilege;
 import org.eun.back.domain.Role;
 import org.eun.back.domain.User;
 import org.eun.back.service.UserService;
@@ -80,8 +81,10 @@ public class CustomAuthenticationManager implements AuthenticationManager {
                     Set<Role> userAuthorities = user.getRoles();
                     Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
                     for (Role a : userAuthorities) {
-                        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(a.getName());
-                        grantedAuthorities.add(grantedAuthority);
+                        grantedAuthorities.add(new SimpleGrantedAuthority(a.getName()));
+                        for (Privilege privilege : a.getPrivileges()) {
+                            grantedAuthorities.add(new SimpleGrantedAuthority(privilege.getName()));
+                        }
                     }
                     return new org.springframework.security.core.userdetails.User(username, "1", grantedAuthorities);
                 }
