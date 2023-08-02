@@ -62,6 +62,18 @@ public class WorkingGroupReferences implements Serializable {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "last_modified_by")
+    private String lastModifiedBy;
+
+    @Column(name = "created_date")
+    private LocalDate createdDate;
+
+    @Column(name = "last_modified_date")
+    private LocalDate lastModifiedDate;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -259,6 +271,58 @@ public class WorkingGroupReferences implements Serializable {
         this.isActive = isActive;
     }
 
+    public String getCreatedBy() {
+        return this.createdBy;
+    }
+
+    public WorkingGroupReferences createdBy(String createdBy) {
+        this.setCreatedBy(createdBy);
+        return this;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getLastModifiedBy() {
+        return this.lastModifiedBy;
+    }
+
+    public WorkingGroupReferences lastModifiedBy(String lastModifiedBy) {
+        this.setLastModifiedBy(lastModifiedBy);
+        return this;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public LocalDate getCreatedDate() {
+        return this.createdDate;
+    }
+
+    public WorkingGroupReferences createdDate(LocalDate createdDate) {
+        this.setCreatedDate(createdDate);
+        return this;
+    }
+
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDate getLastModifiedDate() {
+        return this.lastModifiedDate;
+    }
+
+    public WorkingGroupReferences lastModifiedDate(LocalDate lastModifiedDate) {
+        this.setLastModifiedDate(lastModifiedDate);
+        return this;
+    }
+
+    public void setLastModifiedDate(LocalDate lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -297,6 +361,10 @@ public class WorkingGroupReferences implements Serializable {
             ", contactEunLastName='" + getContactEunLastName() + "'" +
             ", type='" + getType() + "'" +
             ", isActive='" + getIsActive() + "'" +
+            ", createdBy='" + getCreatedBy() + "'" +
+            ", lastModifiedBy='" + getLastModifiedBy() + "'" +
+            ", createdDate='" + getCreatedDate() + "'" +
+            ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             "}";
     }
 }

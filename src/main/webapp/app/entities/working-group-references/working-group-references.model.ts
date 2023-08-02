@@ -16,6 +16,10 @@ export interface IWorkingGroupReferences {
   contactEunLastName?: string | null;
   type?: string | null;
   isActive?: boolean | null;
+  createdBy?: string | null;
+  lastModifiedBy?: string | null;
+  createdDate?: dayjs.Dayjs | null;
+  lastModifiedDate?: dayjs.Dayjs | null;
 }
 
 export type NewWorkingGroupReferences = Omit<IWorkingGroupReferences, 'id'> & { id: null };

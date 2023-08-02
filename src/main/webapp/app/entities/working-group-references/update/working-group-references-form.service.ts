@@ -32,6 +32,10 @@ type WorkingGroupReferencesFormGroupContent = {
   contactEunLastName: FormControl<IWorkingGroupReferences['contactEunLastName']>;
   type: FormControl<IWorkingGroupReferences['type']>;
   isActive: FormControl<IWorkingGroupReferences['isActive']>;
+  createdBy: FormControl<IWorkingGroupReferences['createdBy']>;
+  lastModifiedBy: FormControl<IWorkingGroupReferences['lastModifiedBy']>;
+  createdDate: FormControl<IWorkingGroupReferences['createdDate']>;
+  lastModifiedDate: FormControl<IWorkingGroupReferences['lastModifiedDate']>;
 };
 
 export type WorkingGroupReferencesFormGroup = FormGroup<WorkingGroupReferencesFormGroupContent>;
@@ -67,6 +71,10 @@ export class WorkingGroupReferencesFormService {
       contactEunLastName: new FormControl(workingGroupReferencesRawValue.contactEunLastName),
       type: new FormControl(workingGroupReferencesRawValue.type),
       isActive: new FormControl(workingGroupReferencesRawValue.isActive),
+      createdBy: new FormControl(workingGroupReferencesRawValue.createdBy),
+      lastModifiedBy: new FormControl(workingGroupReferencesRawValue.lastModifiedBy),
+      createdDate: new FormControl(workingGroupReferencesRawValue.createdDate),
+      lastModifiedDate: new FormControl(workingGroupReferencesRawValue.lastModifiedDate),
     });
   }
 

@@ -1,4 +1,4 @@
-<div *ngIf="!isFromReportBlock">
+<div>
   <h2 id="page-heading" data-cy="WorkingGroupReferencesHeading">
     <span>Working Group References</span>
 
@@ -127,6 +127,30 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="createdBy">
+            <div class="d-flex">
+              <span>Created By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastModifiedBy">
+            <div class="d-flex">
+              <span>Last Modified By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdDate">
+            <div class="d-flex">
+              <span>Created Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastModifiedDate">
+            <div class="d-flex">
+              <span>Last Modified Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -149,6 +173,10 @@
           <td>{{ workingGroupReferences.contactEunLastName }}</td>
           <td>{{ workingGroupReferences.type }}</td>
           <td>{{ workingGroupReferences.isActive }}</td>
+          <td>{{ workingGroupReferences.createdBy }}</td>
+          <td>{{ workingGroupReferences.lastModifiedBy }}</td>
+          <td>{{ workingGroupReferences.createdDate | formatMediumDate }}</td>
+          <td>{{ workingGroupReferences.lastModifiedDate | formatMediumDate }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button

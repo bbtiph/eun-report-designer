@@ -34,6 +34,10 @@ describe('WorkingGroupReferences Form Service', () => {
             contactEunLastName: expect.any(Object),
             type: expect.any(Object),
             isActive: expect.any(Object),
+            createdBy: expect.any(Object),
+            lastModifiedBy: expect.any(Object),
+            createdDate: expect.any(Object),
+            lastModifiedDate: expect.any(Object),
           })
         );
       });
@@ -58,6 +62,10 @@ describe('WorkingGroupReferences Form Service', () => {
             contactEunLastName: expect.any(Object),
             type: expect.any(Object),
             isActive: expect.any(Object),
+            createdBy: expect.any(Object),
+            lastModifiedBy: expect.any(Object),
+            createdDate: expect.any(Object),
+            lastModifiedDate: expect.any(Object),
           })
         );
       });

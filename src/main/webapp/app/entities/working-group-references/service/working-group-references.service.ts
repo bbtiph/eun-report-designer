@@ -14,10 +14,12 @@ export type PartialUpdateWorkingGroupReferences = Partial<IWorkingGroupReference
 
 type RestOf<T extends IWorkingGroupReferences | NewWorkingGroupReferences> = Omit<
   T,
-  'countryRepresentativeStartDate' | 'countryRepresentativeEndDate'
+  'countryRepresentativeStartDate' | 'countryRepresentativeEndDate' | 'createdDate' | 'lastModifiedDate'
 > & {
   countryRepresentativeStartDate?: string | null;
   countryRepresentativeEndDate?: string | null;
+  createdDate?: string | null;
+  lastModifiedDate?: string | null;
 };
 
 export type RestWorkingGroupReferences = RestOf<IWorkingGroupReferences>;
@@ -122,6 +124,8 @@ export class WorkingGroupReferencesService {
       ...workingGroupReferences,
       countryRepresentativeStartDate: workingGroupReferences.countryRepresentativeStartDate?.format(DATE_FORMAT) ?? null,
       countryRepresentativeEndDate: workingGroupReferences.countryRepresentativeEndDate?.format(DATE_FORMAT) ?? null,
+      createdDate: workingGroupReferences.createdDate?.format(DATE_FORMAT) ?? null,
+      lastModifiedDate: workingGroupReferences.lastModifiedDate?.format(DATE_FORMAT) ?? null,
     };
   }
 
@@ -134,6 +138,8 @@ export class WorkingGroupReferencesService {
       countryRepresentativeEndDate: restWorkingGroupReferences.countryRepresentativeEndDate
         ? dayjs(restWorkingGroupReferences.countryRepresentativeEndDate)
         : undefined,
+      createdDate: restWorkingGroupReferences.createdDate ? dayjs(restWorkingGroupReferences.createdDate) : undefined,
+      lastModifiedDate: restWorkingGroupReferences.lastModifiedDate ? dayjs(restWorkingGroupReferences.lastModifiedDate) : undefined,
     };
   }
 

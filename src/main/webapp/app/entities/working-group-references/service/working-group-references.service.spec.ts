@@ -16,6 +16,8 @@ const requireRestSample: RestWorkingGroupReferences = {
   ...sampleWithRequiredData,
   countryRepresentativeStartDate: sampleWithRequiredData.countryRepresentativeStartDate?.format(DATE_FORMAT),
   countryRepresentativeEndDate: sampleWithRequiredData.countryRepresentativeEndDate?.format(DATE_FORMAT),
+  createdDate: sampleWithRequiredData.createdDate?.format(DATE_FORMAT),
+  lastModifiedDate: sampleWithRequiredData.lastModifiedDate?.format(DATE_FORMAT),
 };
 
 describe('WorkingGroupReferences Service', () => {

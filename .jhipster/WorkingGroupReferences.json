@@ -60,6 +60,22 @@
     {
       "fieldName": "isActive",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastModifiedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "lastModifiedDate",
+      "fieldType": "LocalDate"
     }
   ],
   "fluentMethods": true,
@@ -68,5 +84,6 @@
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [],
-  "service": "serviceImpl"
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true
 }

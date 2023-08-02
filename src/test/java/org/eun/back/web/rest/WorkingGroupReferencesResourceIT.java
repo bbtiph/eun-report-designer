@@ -75,6 +75,18 @@ class WorkingGroupReferencesResourceIT {
     private static final Boolean DEFAULT_IS_ACTIVE = false;
     private static final Boolean UPDATED_IS_ACTIVE = true;
 
+    private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LAST_MODIFIED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_LAST_MODIFIED_BY = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_CREATED_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_CREATED_DATE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_LAST_MODIFIED_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_LAST_MODIFIED_DATE = LocalDate.now(ZoneId.systemDefault());
+
     private static final String ENTITY_API_URL = "/api/working-group-references";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -116,7 +128,11 @@ class WorkingGroupReferencesResourceIT {
             .contactEunFirstName(DEFAULT_CONTACT_EUN_FIRST_NAME)
             .contactEunLastName(DEFAULT_CONTACT_EUN_LAST_NAME)
             .type(DEFAULT_TYPE)
-            .isActive(DEFAULT_IS_ACTIVE);
+            .isActive(DEFAULT_IS_ACTIVE)
+            .createdBy(DEFAULT_CREATED_BY)
+            .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY)
+            .createdDate(DEFAULT_CREATED_DATE)
+            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE);
         return workingGroupReferences;
     }
 
@@ -141,7 +157,11 @@ class WorkingGroupReferencesResourceIT {
             .contactEunFirstName(UPDATED_CONTACT_EUN_FIRST_NAME)
             .contactEunLastName(UPDATED_CONTACT_EUN_LAST_NAME)
             .type(UPDATED_TYPE)
-            .isActive(UPDATED_IS_ACTIVE);
+            .isActive(UPDATED_IS_ACTIVE)
+            .createdBy(UPDATED_CREATED_BY)
+            .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
+            .createdDate(UPDATED_CREATED_DATE)
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
         return workingGroupReferences;
     }
 
@@ -182,6 +202,10 @@ class WorkingGroupReferencesResourceIT {
         assertThat(testWorkingGroupReferences.getContactEunLastName()).isEqualTo(DEFAULT_CONTACT_EUN_LAST_NAME);
         assertThat(testWorkingGroupReferences.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testWorkingGroupReferences.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
+        assertThat(testWorkingGroupReferences.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
+        assertThat(testWorkingGroupReferences.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
+        assertThat(testWorkingGroupReferences.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
+        assertThat(testWorkingGroupReferences.getLastModifiedDate()).isEqualTo(DEFAULT_LAST_MODIFIED_DATE);
     }
 
     @Test
@@ -234,7 +258,11 @@ class WorkingGroupReferencesResourceIT {
             .andExpect(jsonPath("$.[*].contactEunFirstName").value(hasItem(DEFAULT_CONTACT_EUN_FIRST_NAME)))
             .andExpect(jsonPath("$.[*].contactEunLastName").value(hasItem(DEFAULT_CONTACT_EUN_LAST_NAME)))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
-            .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())));
+            .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
+            .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY)))
+            .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
+            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())));
     }
 
     @Test
@@ -262,7 +290,11 @@ class WorkingGroupReferencesResourceIT {
             .andExpect(jsonPath("$.contactEunFirstName").value(DEFAULT_CONTACT_EUN_FIRST_NAME))
             .andExpect(jsonPath("$.contactEunLastName").value(DEFAULT_CONTACT_EUN_LAST_NAME))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
-            .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()));
+            .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()))
+            .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY))
+            .andExpect(jsonPath("$.lastModifiedBy").value(DEFAULT_LAST_MODIFIED_BY))
+            .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
+            .andExpect(jsonPath("$.lastModifiedDate").value(DEFAULT_LAST_MODIFIED_DATE.toString()));
     }
 
     @Test
@@ -300,7 +332,11 @@ class WorkingGroupReferencesResourceIT {
             .contactEunFirstName(UPDATED_CONTACT_EUN_FIRST_NAME)
             .contactEunLastName(UPDATED_CONTACT_EUN_LAST_NAME)
             .type(UPDATED_TYPE)
-            .isActive(UPDATED_IS_ACTIVE);
+            .isActive(UPDATED_IS_ACTIVE)
+            .createdBy(UPDATED_CREATED_BY)
+            .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
+            .createdDate(UPDATED_CREATED_DATE)
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
         WorkingGroupReferencesDTO workingGroupReferencesDTO = workingGroupReferencesMapper.toDto(updatedWorkingGroupReferences);
 
         restWorkingGroupReferencesMockMvc
@@ -329,6 +365,10 @@ class WorkingGroupReferencesResourceIT {
         assertThat(testWorkingGroupReferences.getContactEunLastName()).isEqualTo(UPDATED_CONTACT_EUN_LAST_NAME);
         assertThat(testWorkingGroupReferences.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testWorkingGroupReferences.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
+        assertThat(testWorkingGroupReferences.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
+        assertThat(testWorkingGroupReferences.getLastModifiedBy()).isEqualTo(UPDATED_LAST_MODIFIED_BY);
+        assertThat(testWorkingGroupReferences.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
+        assertThat(testWorkingGroupReferences.getLastModifiedDate()).isEqualTo(UPDATED_LAST_MODIFIED_DATE);
     }
 
     @Test
@@ -418,7 +458,10 @@ class WorkingGroupReferencesResourceIT {
             .countryRepresentativeMail(UPDATED_COUNTRY_REPRESENTATIVE_MAIL)
             .countryRepresentativeStartDate(UPDATED_COUNTRY_REPRESENTATIVE_START_DATE)
             .countryRepresentativeMinistry(UPDATED_COUNTRY_REPRESENTATIVE_MINISTRY)
-            .countryRepresentativeDepartment(UPDATED_COUNTRY_REPRESENTATIVE_DEPARTMENT);
+            .countryRepresentativeDepartment(UPDATED_COUNTRY_REPRESENTATIVE_DEPARTMENT)
+            .createdBy(UPDATED_CREATED_BY)
+            .createdDate(UPDATED_CREATED_DATE)
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
 
         restWorkingGroupReferencesMockMvc
             .perform(
@@ -446,6 +489,10 @@ class WorkingGroupReferencesResourceIT {
         assertThat(testWorkingGroupReferences.getContactEunLastName()).isEqualTo(DEFAULT_CONTACT_EUN_LAST_NAME);
         assertThat(testWorkingGroupReferences.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testWorkingGroupReferences.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
+        assertThat(testWorkingGroupReferences.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
+        assertThat(testWorkingGroupReferences.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
+        assertThat(testWorkingGroupReferences.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
+        assertThat(testWorkingGroupReferences.getLastModifiedDate()).isEqualTo(UPDATED_LAST_MODIFIED_DATE);
     }
 
     @Test
@@ -474,7 +521,11 @@ class WorkingGroupReferencesResourceIT {
             .contactEunFirstName(UPDATED_CONTACT_EUN_FIRST_NAME)
             .contactEunLastName(UPDATED_CONTACT_EUN_LAST_NAME)
             .type(UPDATED_TYPE)
-            .isActive(UPDATED_IS_ACTIVE);
+            .isActive(UPDATED_IS_ACTIVE)
+            .createdBy(UPDATED_CREATED_BY)
+            .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
+            .createdDate(UPDATED_CREATED_DATE)
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
 
         restWorkingGroupReferencesMockMvc
             .perform(
@@ -502,6 +553,10 @@ class WorkingGroupReferencesResourceIT {
         assertThat(testWorkingGroupReferences.getContactEunLastName()).isEqualTo(UPDATED_CONTACT_EUN_LAST_NAME);
         assertThat(testWorkingGroupReferences.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testWorkingGroupReferences.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
+        assertThat(testWorkingGroupReferences.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
+        assertThat(testWorkingGroupReferences.getLastModifiedBy()).isEqualTo(UPDATED_LAST_MODIFIED_BY);
+        assertThat(testWorkingGroupReferences.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
+        assertThat(testWorkingGroupReferences.getLastModifiedDate()).isEqualTo(UPDATED_LAST_MODIFIED_DATE);
     }
 
     @Test

@@ -70,6 +70,22 @@
         <dd>
           <span>{{ workingGroupReferences.isActive }}</span>
         </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.createdBy }}</span>
+        </dd>
+        <dt><span>Last Modified By</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.lastModifiedBy }}</span>
+        </dd>
+        <dt><span>Created Date</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.createdDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Last Modified Date</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.lastModifiedDate | formatMediumDate }}</span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

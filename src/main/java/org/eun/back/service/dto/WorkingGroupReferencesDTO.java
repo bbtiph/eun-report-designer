@@ -40,6 +40,14 @@ public class WorkingGroupReferencesDTO implements Serializable {
 
     private Boolean isActive;
 
+    private String createdBy;
+
+    private String lastModifiedBy;
+
+    private LocalDate createdDate;
+
+    private LocalDate lastModifiedDate;
+
     public Long getId() {
         return id;
     }
@@ -160,6 +168,38 @@ public class WorkingGroupReferencesDTO implements Serializable {
         this.isActive = isActive;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDate getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(LocalDate lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -200,6 +240,10 @@ public class WorkingGroupReferencesDTO implements Serializable {
             ", contactEunLastName='" + getContactEunLastName() + "'" +
             ", type='" + getType() + "'" +
             ", isActive='" + getIsActive() + "'" +
+            ", createdBy='" + getCreatedBy() + "'" +
+            ", lastModifiedBy='" + getLastModifiedBy() + "'" +
+            ", createdDate='" + getCreatedDate() + "'" +
+            ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             "}";
     }
 }
