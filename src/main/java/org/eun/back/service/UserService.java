@@ -271,7 +271,7 @@ public class UserService {
         return userRepository.findAllByIdNotNullAndActivatedIsTrue(pageable).map(UserDTO::new);
     }
 
-    @Transactional(readOnly = true)
+    //    @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneWithRolesAndPrivilegesByLogin(login);
     }

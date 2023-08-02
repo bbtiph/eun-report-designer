@@ -68,14 +68,17 @@ public class CustomAuthenticationManager implements AuthenticationManager {
                     Optional<User> isUser = userService.getUserWithAuthoritiesByLogin(username);
                     if (isUser.isEmpty()) {
                         AdminUserDTO userDTO = new AdminUserDTO();
-                        userDTO.setEmail(ctx.getObjectAttribute("mail").toString());
-                        userDTO.setFirstName(ctx.getObjectAttribute("givenname").toString());
-                        userDTO.setLastName(ctx.getObjectAttribute("sn").toString());
+                        userDTO.setEmail(ctx.getObjectAttribute("mail") != null ? ctx.getObjectAttribute("mail").toString() : "");
+                        userDTO.setFirstName(
+                            ctx.getObjectAttribute("givenname") != null ? ctx.getObjectAttribute("givenname").toString() : ""
+                        );
+                        userDTO.setLastName(ctx.getObjectAttribute("sn") != null ? ctx.getObjectAttribute("sn").toString() : "");
                         userDTO.setActivated(true);
-                        userDTO.setLogin(ctx.getObjectAttribute("samaccountname").toString());
-                        isUser = Optional.ofNullable(userService.registerUser(userDTO, authentication.getCredentials().toString()));
-
-                        System.out.println(userDTO.getEmail());
+                        userDTO.setLogin(
+                            ctx.getObjectAttribute("samaccountname") != null ? ctx.getObjectAttribute("samaccountname").toString() : ""
+                        );
+                        userService.registerUser(userDTO, authentication.getCredentials().toString());
+                        isUser = userService.getUserWithAuthoritiesByLogin(username);
                     }
                     final User user = isUser.get();
                     Set<Role> userAuthorities = user.getRoles();
