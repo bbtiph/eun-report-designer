@@ -2,11 +2,13 @@ package org.eun.back.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.apache.poi.ss.usermodel.*;
 import org.eun.back.domain.WorkingGroupReferences;
 import org.eun.back.repository.WorkingGroupReferencesRepository;
+import org.eun.back.security.SecurityUtils;
 import org.eun.back.service.WorkingGroupReferencesService;
 import org.eun.back.service.dto.WorkingGroupReferencesDTO;
 import org.eun.back.service.mapper.WorkingGroupReferencesMapper;
@@ -167,6 +169,11 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
                             );
                             if (workingGroupReferencesRes != null) {
                                 workingGroupReferences.setId(workingGroupReferencesRes.getId());
+                                workingGroupReferences.setLastModifiedBy(SecurityUtils.getCurrentUserLogin().get());
+                                workingGroupReferences.setLastModifiedDate(LocalDate.now());
+                            } else {
+                                workingGroupReferences.setCreatedBy(SecurityUtils.getCurrentUserLogin().get());
+                                workingGroupReferences.setCreatedDate(LocalDate.now());
                             }
                             workingGroupReferences.setIsActive(true);
                             workingGroupReferencesRepository.save(workingGroupReferences);
