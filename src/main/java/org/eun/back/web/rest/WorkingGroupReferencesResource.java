@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.eun.back.repository.WorkingGroupReferencesRepository;
+import org.eun.back.service.WorkingGroupReferencesQueryService;
 import org.eun.back.service.WorkingGroupReferencesService;
+import org.eun.back.service.criteria.WorkingGroupReferencesCriteria;
 import org.eun.back.service.dto.WorkingGroupReferencesDTO;
 import org.eun.back.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -42,12 +44,16 @@ public class WorkingGroupReferencesResource {
 
     private final WorkingGroupReferencesRepository workingGroupReferencesRepository;
 
+    private final WorkingGroupReferencesQueryService workingGroupReferencesQueryService;
+
     public WorkingGroupReferencesResource(
         WorkingGroupReferencesService workingGroupReferencesService,
-        WorkingGroupReferencesRepository workingGroupReferencesRepository
+        WorkingGroupReferencesRepository workingGroupReferencesRepository,
+        WorkingGroupReferencesQueryService workingGroupReferencesQueryService
     ) {
         this.workingGroupReferencesService = workingGroupReferencesService;
         this.workingGroupReferencesRepository = workingGroupReferencesRepository;
+        this.workingGroupReferencesQueryService = workingGroupReferencesQueryService;
     }
 
     /**
@@ -163,16 +169,30 @@ public class WorkingGroupReferencesResource {
      * {@code GET  /working-group-references} : get all the workingGroupReferences.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of workingGroupReferences in body.
      */
     @GetMapping("/working-group-references")
     public ResponseEntity<List<WorkingGroupReferencesDTO>> getAllWorkingGroupReferences(
+        WorkingGroupReferencesCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get a page of WorkingGroupReferences");
-        Page<WorkingGroupReferencesDTO> page = workingGroupReferencesService.findAll(pageable);
+        log.debug("REST request to get WorkingGroupReferences by criteria: {}", criteria);
+        Page<WorkingGroupReferencesDTO> page = workingGroupReferencesQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /working-group-references/count} : count all the workingGroupReferences.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/working-group-references/count")
+    public ResponseEntity<Long> countWorkingGroupReferences(WorkingGroupReferencesCriteria criteria) {
+        log.debug("REST request to count WorkingGroupReferences by criteria: {}", criteria);
+        return ResponseEntity.ok().body(workingGroupReferencesQueryService.countByCriteria(criteria));
     }
 
     @GetMapping("/working-group-references/by-country/{code}")

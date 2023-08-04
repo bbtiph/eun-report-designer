@@ -13,14 +13,25 @@ import { ItemCountComponent } from './pagination/item-count.component';
 import { FilterComponent } from './filter/filter.component';
 import { AbstractExportModal } from './modal/abstract-export.modal';
 import { ReferenceSelectionModal } from './modal/reference-selection.modal';
+import { AgGridModule } from '@ag-grid-community/angular';
+import { DateComponent } from './filter/date-component/date.component';
+import { SortableHeaderComponent } from './filter/header-component/sortable-header.component';
+import { HeaderGroupComponent } from './filter/header-group-component/header-group.component';
+import { RendererComponent } from './filter/renderer-component/renderer.component';
+import { BtnCellRenderer } from './filter/actions/actions.component';
 
 @NgModule({
-  imports: [SharedLibsModule],
+  imports: [SharedLibsModule, AgGridModule],
   declarations: [
     AlertComponent,
     AlertErrorComponent,
     HasAnyAuthorityDirective,
     DurationPipe,
+    DateComponent,
+    SortableHeaderComponent,
+    HeaderGroupComponent,
+    RendererComponent,
+    BtnCellRenderer,
     FormatMediumDatetimePipe,
     FormatMediumDatePipe,
     SortByDirective,

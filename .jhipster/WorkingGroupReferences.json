@@ -79,11 +79,10 @@
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "WorkingGroupReferences",
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [],
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true
+  "service": "serviceImpl"
 }

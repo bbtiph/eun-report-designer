@@ -13,7 +13,8 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface WorkingGroupReferencesRepository extends JpaRepository<WorkingGroupReferences, Long> {
+public interface WorkingGroupReferencesRepository
+    extends JpaRepository<WorkingGroupReferences, Long>, JpaSpecificationExecutor<WorkingGroupReferences> {
     WorkingGroupReferences findByCountryCodeAndCountryRepresentativeMinistryAndType(String countryCode, String ministryName, String type);
 
     @Modifying

@@ -470,7 +470,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
       reportBlocksContentData: [],
     };
     this.reportBlocks?.reportBlocksContents?.push(subBlock);
-    this.reportBlocksContents?.push(subBlock);
+    // this.reportBlocksContents?.push(subBlock);
     this.initializeFormControls();
     this.getTableColumns();
   }
@@ -499,7 +499,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
         reportBlocksContentData: [],
       };
       this.reportBlocks?.reportBlocksContents?.push(subBlock);
-      this.reportBlocksContents?.push(subBlock);
+      // this.reportBlocksContents?.push(subBlock);
       this.initializeFormControls();
       this.getTableColumns();
       this.loadReferenceTableSettings();
@@ -523,7 +523,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
       reportBlocksContentData: [],
     };
     this.reportBlocks?.reportBlocksContents?.push(subBlock);
-    this.reportBlocksContents?.push(subBlock);
+    // this.reportBlocksContents?.push(subBlock);
     this.initializeFormControls();
   }
 

@@ -1,12 +1,25 @@
-<div class="filter-display" *ngIf="filters.hasAnyFilterSet()">
-  <span>Following filters are set</span>
-  <fa-icon icon="times" (click)="clearAllFilters()" title="Clear all filters"></fa-icon>
-  <ul>
-    <ng-container *ngFor="let filterOption of filters.filterOptions">
-      <li *ngFor="let value of filterOption.values">
-        <span>{{ filterOption.name }}:</span> {{ value }}
-        <fa-icon icon="times" (click)="clearFilter(filterOption.name, value)" title="Clear filter"></fa-icon>
-      </li>
-    </ng-container>
-  </ul>
+<div style="width: 100%; padding: 20px">
+  <ag-grid-angular
+    style="width: 100%; padding-right: 20px; height: 650px"
+    class="ag-theme-alpine"
+    [columnDefs]="columnDefs"
+    [sideBar]="true"
+    [rowData]="rowData"
+    [defaultColDef]="defaultColDef"
+    [components]="components"
+    [modules]="modules"
+    [enableCharts]="true"
+    [enableRangeSelection]="true"
+    [suppressRowClickSelection]="true"
+    [rowSelection]="'single'"
+    [paginationAutoPageSize]="true"
+    [pagination]="true"
+    (gridReady)="onGridReady($event)"
+    (modelUpdated)="onModelUpdated()"
+    (cellClicked)="onCellClicked($event)"
+    (cellDoubleClicked)="onCellDoubleClicked($event)"
+    (cellContextMenu)="onCellContextMenu($event)"
+    (filterChanged)="onFilterChanged()"
+  >
+  </ag-grid-angular>
 </div>
