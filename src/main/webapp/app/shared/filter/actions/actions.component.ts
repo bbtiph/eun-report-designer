@@ -1,21 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ICellRendererAngularComp } from '@ag-grid-community/angular';
 import { ICellRendererParams } from '@ag-grid-community/core';
 
 @Component({
-  selector: 'btn-cell-renderer',
-  template: ` <button (click)="btnClickedHandler()">Click me!</button> `,
+  selector: 'app-button-renderer',
+  templateUrl: './actions.component.html',
 })
-export class BtnCellRenderer implements ICellRendererAngularComp {
+export class ButtonRendererComponent implements ICellRendererAngularComp, OnDestroy {
   private params: any;
+  public context: string | undefined;
+  public id: number | undefined;
 
   agInit(params: any): void {
     this.params = params;
+    this.context = this.params.column.colId;
+    this.id = this.params.data.id;
   }
 
-  btnClickedHandler() {
-    this.params.clicked(this.params.value);
+  btnClickedHandler(e: any) {
+    this.params.deleteAction(this.params.data);
   }
+
+  ngOnDestroy() {}
 
   refresh(params: ICellRendererParams<any>): boolean {
     return false;

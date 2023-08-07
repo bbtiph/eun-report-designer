@@ -1,0 +1,13 @@
+<div class="btn-group">
+  <button type="submit" class="btn btn-info btn-sm" data-cy="entityDetailsButton" [routerLink]="['/' + context, id, 'view']">
+    <fa-icon icon="eye"></fa-icon>
+  </button>
+
+  <button type="submit" class="btn btn-primary btn-sm" data-cy="entityEditButton" [routerLink]="['/' + context, id, 'edit']">
+    <fa-icon icon="pencil-alt"></fa-icon>
+  </button>
+
+  <button type="submit" (click)="btnClickedHandler($event)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+    <fa-icon icon="times"></fa-icon>
+  </button>
+</div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   CellClickedEvent,
   CellContextMenuEvent,
@@ -8,7 +8,6 @@ import {
   ColumnApi,
   GridApi,
   GridReadyEvent,
-  ICellRendererParams,
   Module,
 } from '@ag-grid-community/core';
 import { RendererComponent } from './renderer-component/renderer.component';
@@ -26,6 +25,7 @@ import { SortableHeaderComponent } from './header-component/sortable-header.comp
 import { HeaderGroupComponent } from './header-group-component/header-group.component';
 import { DateComponent } from './date-component/date.component';
 import { IWorkingGroupReferences } from '../../entities/working-group-references/working-group-references.model';
+import { ButtonRendererComponent } from './actions/actions.component';
 
 @Component({
   selector: 'jhi-filter',
@@ -74,14 +74,16 @@ export class FilterComponent {
       agDateInput: DateComponent,
       headerGroupComponent: HeaderGroupComponent,
       rendererComponent: RendererComponent,
+      btnCellRenderer: ButtonRendererComponent,
     };
   }
 
   onFilterChanged(): void {
-    const filters = this.api?.getFilterModel();
-    const filterData = { filters };
+    const filters = this.api?.getFilterModel().toString();
+    console.log('filter: ', filters.toString());
 
-    console.log('filter: ', filterData);
+    const filterData = { filters };
+    console.log('filter: ', filterData.toString());
   }
 
   private calculateRowCount() {

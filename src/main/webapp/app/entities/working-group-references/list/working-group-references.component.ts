@@ -14,8 +14,6 @@ import { ICountries } from '../../countries/countries.model';
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
 import { ColDef, ColGroupDef, ICellRendererParams } from '@ag-grid-community/core';
 import { RendererComponent } from '../../../shared/filter/renderer-component/renderer.component';
-import { SkillFilter } from '../../../shared/filter/filters/skill.component.filter';
-import { ProficiencyFilter } from '../../../shared/filter/filters/proficiency.component.filter';
 
 @Component({
   selector: 'jhi-working-group-references',
@@ -60,9 +58,16 @@ export class WorkingGroupReferencesComponent implements OnInit {
   ngOnInit(): void {
     this.columnDefs = [
       {
-        headerName: '#',
-        width: 40,
-        checkboxSelection: true,
+        headerName: 'Actions',
+        field: 'working-group-references',
+        cellRenderer: 'btnCellRenderer',
+        cellRendererParams: {
+          deleteAction: function (workingGroupReferences: IWorkingGroupReferences) {
+            // @ts-ignore
+            this.delete(workingGroupReferences);
+          }.bind(this),
+        },
+
         filter: false,
         sortable: false,
         suppressMenu: true,

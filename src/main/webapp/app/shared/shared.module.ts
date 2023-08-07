@@ -18,10 +18,11 @@ import { DateComponent } from './filter/date-component/date.component';
 import { SortableHeaderComponent } from './filter/header-component/sortable-header.component';
 import { HeaderGroupComponent } from './filter/header-group-component/header-group.component';
 import { RendererComponent } from './filter/renderer-component/renderer.component';
-import { BtnCellRenderer } from './filter/actions/actions.component';
+import { ButtonRendererComponent } from './filter/actions/actions.component';
+import { RouterLink } from '@angular/router';
 
 @NgModule({
-  imports: [SharedLibsModule, AgGridModule],
+  imports: [SharedLibsModule, AgGridModule, RouterLink],
   declarations: [
     AlertComponent,
     AlertErrorComponent,
@@ -31,7 +32,7 @@ import { BtnCellRenderer } from './filter/actions/actions.component';
     SortableHeaderComponent,
     HeaderGroupComponent,
     RendererComponent,
-    BtnCellRenderer,
+    ButtonRendererComponent,
     FormatMediumDatetimePipe,
     FormatMediumDatePipe,
     SortByDirective,
