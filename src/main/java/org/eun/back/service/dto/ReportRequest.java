@@ -6,9 +6,9 @@ public class ReportRequest {
 
     private String output;
 
-    private String lang;
+    private String lang = "en";
 
-    private String country;
+    private Long countryId;
 
     private Long reportId;
 
@@ -18,14 +18,6 @@ public class ReportRequest {
 
     public void setReportId(Long reportId) {
         this.reportId = reportId;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getData() {
@@ -52,6 +44,14 @@ public class ReportRequest {
         this.lang = lang;
     }
 
+    public Long getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(Long countryId) {
+        this.countryId = countryId;
+    }
+
     @Override
     public String toString() {
         return (
@@ -65,9 +65,8 @@ public class ReportRequest {
             ", lang='" +
             lang +
             '\'' +
-            ", country='" +
-            country +
-            '\'' +
+            ", countryId=" +
+            countryId +
             ", reportId=" +
             reportId +
             '}'

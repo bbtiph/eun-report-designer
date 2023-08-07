@@ -88,12 +88,11 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.countryName = this.selectedCountry?.countryName;
 
     modalRef.result.then(params => {
-      debugger;
       const body = {
-        data: JSON.stringify(this.reportBlocks),
+        // data: JSON.stringify(this.reportBlocks),
         output: params.format.name,
-        lang: 'ru',
-        country: this.selectedCountry?.countryCode,
+        // lang: 'ru',
+        countryId: this.selectedCountry?.id,
         reportId: this.report?.id,
       };
       this.http.post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'blob' }).subscribe(response => {

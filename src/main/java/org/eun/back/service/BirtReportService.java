@@ -1,5 +1,7 @@
 package org.eun.back.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +49,9 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
     @Autowired
     private ServletContext servletContext;
+
+    @Autowired
+    private ReportBlocksService reportBlocksService;
 
     private IReportEngine birtEngine;
     private ApplicationContext context;
@@ -149,31 +154,37 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         HttpServletResponse response,
         HttpServletRequest request
     ) {
-        String data = reportRequest.getData();
         String format = reportRequest.getOutput();
         String lang = reportRequest.getLang();
-        String country = reportRequest.getCountry();
+        Long countryId = reportRequest.getCountryId();
         Long reportId = reportRequest.getReportId();
         OutputType output = OutputType.from(format);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            reportRequest.setData(objectMapper.writeValueAsString(reportBlocksService.findAllByReport(reportId, countryId)));
+        } catch (JsonProcessingException e) {
+            reportRequest.setData("");
+        }
+        String data = reportRequest.getData();
 
         switch (output) {
             case HTML:
-                generateHTMLReport(reports.get(reportName.toLowerCase()), data, lang, country, response, request);
+                generateHTMLReport(reports.get(reportName.toLowerCase()), data, lang, countryId, response, request);
                 break;
             case PDF:
-                generatePDFReport(getReport(reportId), data, lang, country, response, request);
+                generatePDFReport(getReport(reportId), data, lang, countryId, response, request);
                 break;
             case DOCX:
-                generateDOCXReport(getReport(reportId), data, lang, country, response, request);
+                generateDOCXReport(getReport(reportId), data, lang, countryId, response, request);
                 break;
             case DOC:
-                generateReport(getReport(reportId), output, data, lang, country, response, request);
+                generateReport(getReport(reportId), output, data, lang, countryId, response, request);
                 break;
             case XLSX:
-                generateXLSXReport(reports.get(reportName.toLowerCase()), data, lang, country, response, request);
+                generateXLSXReport(reports.get(reportName.toLowerCase()), data, lang, countryId, response, request);
                 break;
             case ODT:
-                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, country, response, request);
+                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, countryId, response, request);
                 break;
             default:
                 throw new IllegalArgumentException("Output type not recognized:" + output);
@@ -188,7 +199,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         IReportRunnable report,
         Object id,
         String lang,
-        String country,
+        Long country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
@@ -228,7 +239,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         IReportRunnable report,
         Object data,
         String lang,
-        String country,
+        Long country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
@@ -265,7 +276,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         IReportRunnable report,
         Object id,
         String lang,
-        String country,
+        Long country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
@@ -301,7 +312,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         IReportRunnable report,
         Object id,
         String lang,
-        String country,
+        Long country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
@@ -338,7 +349,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         OutputType output,
         Object id,
         String lang,
-        String country,
+        Long country,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
