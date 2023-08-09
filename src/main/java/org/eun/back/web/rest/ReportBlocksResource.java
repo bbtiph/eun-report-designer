@@ -70,10 +70,11 @@ public class ReportBlocksResource {
      * or with status {@code 500 (Internal Server Error)} if the reportBlocksDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/report-blocks/{id}")
+    @PutMapping("/report-blocks/{id}/{type}")
     public ResponseEntity<ReportBlocksDTO> updateReportBlocks(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody ReportBlocksDTO reportBlocksDTO
+        @RequestBody ReportBlocksDTO reportBlocksDTO,
+        @PathVariable String type
     ) throws URISyntaxException {
         log.debug("REST request to update ReportBlocks : {}, {}", id, reportBlocksDTO);
         if (reportBlocksDTO.getId() == null) {
@@ -87,7 +88,7 @@ public class ReportBlocksResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ReportBlocksDTO result = reportBlocksService.update(reportBlocksDTO);
+        ReportBlocksDTO result = reportBlocksService.update(reportBlocksDTO, type);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, reportBlocksDTO.getId().toString()))

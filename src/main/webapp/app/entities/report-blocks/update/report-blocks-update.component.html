@@ -56,9 +56,9 @@
           (dragulaModelChange)="drop($event)"
         >
           <ng-container *ngFor="let content of reportBlocks?.reportBlocksContents | sortContentByPriority">
-            <li class="custom-list-li" [style.border-bottom]="!isFromReport ? 'solid #5ec830' : ''">
+            <li *ngIf="!content.deleted" class="custom-list-li" [style.border-bottom]="!isFromReport ? 'solid #5ec830' : ''">
               <img class="handle-content" src="./content/images/arrow_up_and_down.png" />
-              <div *ngIf="!content.deleted" class="custom-list">
+              <div class="custom-list">
                 <div style="display: flex; justify-content: space-between">
                   <span *ngIf="type !== 'report'">Type: {{ content.type }}</span>
                   <span *ngIf="type === 'template' || (type === 'report' && isEdit)"></span>

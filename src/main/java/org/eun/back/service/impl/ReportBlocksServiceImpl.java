@@ -62,7 +62,11 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
         log.debug("Request to save ReportBlocks : {}", reportBlocksDTO);
         if (reportBlocksDTO.getPriorityNumber() == null) {
             reportBlocksDTO.setPriorityNumber(
-                reportBlocksRepository.findMaxPriorityNumberByReportId(reportBlocksDTO.getReport().getId()) + 1
+                (
+                    reportBlocksRepository.findMaxPriorityNumberByReportId(reportBlocksDTO.getReport().getId()) != null
+                        ? reportBlocksRepository.findMaxPriorityNumberByReportId(reportBlocksDTO.getReport().getId()) + 1
+                        : 0
+                )
             );
         }
         ReportBlocks reportBlocks = reportBlocksMapper.toEntity(reportBlocksDTO);
@@ -71,7 +75,7 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
     }
 
     @Override
-    public ReportBlocksDTO update(ReportBlocksDTO reportBlocksDTO) {
+    public ReportBlocksDTO update(ReportBlocksDTO reportBlocksDTO, String type) {
         log.debug("Request to update ReportBlocks : {}", reportBlocksDTO);
         Iterator<ReportBlocksContentDTO> iterator = reportBlocksDTO.getReportBlocksContents().iterator();
         while (iterator.hasNext()) {
@@ -96,7 +100,7 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
             }
         }
 
-        reportBlocksDTO = updateBlockContentDataByCountry(reportBlocksDTO);
+        if (type.equals("template")) reportBlocksDTO = updateBlockContentDataByCountry(reportBlocksDTO);
 
         ReportBlocks reportBlocks = reportBlocksMapper.toEntity(reportBlocksDTO);
         reportBlocks = reportBlocksRepository.save(reportBlocks);

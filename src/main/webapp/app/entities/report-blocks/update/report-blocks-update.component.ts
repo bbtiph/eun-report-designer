@@ -128,7 +128,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
       content.priorityNumber = index;
     });
     // @ts-ignore
-    this.reportBlocksService.update(this.reportBlocks).subscribe();
+    this.reportBlocksService.update(this.reportBlocks, this.type).subscribe();
   }
 
   getTableColumns() {
@@ -215,7 +215,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
     }
 
     if (reportBlocks.id !== null) {
-      this.subscribeToSaveResponse(this.reportBlocksService.update(reportBlocks));
+      this.subscribeToSaveResponse(this.reportBlocksService.update(reportBlocks, this.type));
     } else {
       this.subscribeToSaveResponse(this.reportBlocksService.create(reportBlocks));
     }
@@ -528,12 +528,12 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
   }
 
   removeSubBlock(content: IReportBlocksContent) {
-    if (this.reportBlocksContents) {
-      const index = this.reportBlocksContents.indexOf(content);
-      if (index !== -1) {
-        this.reportBlocksContents.splice(index, 1);
-      }
-    }
+    // if (this.reportBlocksContents) {
+    //   const index = this.reportBlocksContents.indexOf(content);
+    //   if (index !== -1) {
+    //     this.reportBlocksContents.splice(index, 1);
+    //   }
+    // }
     content.deleted = true;
   }
 
