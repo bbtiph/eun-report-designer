@@ -29,23 +29,19 @@
   </div>
 
   <div class="row">
-    <div class="col-md-4 mb-4" *ngFor="let report of reports; trackBy: trackId">
+    <div class="col-md-3 mb-4" *ngFor="let report of reports; trackBy: trackId">
       <div class="card">
         <div class="card-header">
           <h5 class="card-title">{{ report.reportName }}</h5>
-          <h6 class="card-subtitle text-muted">{{ report.acronym }}</h6>
         </div>
-        <div class="card-body">
-          <p class="card-text"><strong>Description:</strong> {{ report.description }}</p>
-          <p class="card-text"><strong>Type:</strong> {{ report.type }}</p>
-          <p class="card-text"><strong>Is Active:</strong> {{ report.isActive }}</p>
-          <p class="card-text">
-            <strong>File:</strong>
-            <ng-container *ngIf="report.file">
-              <a (click)="openFile(report.file, report.fileContentType)">Open</a>
-              <span>{{ report.fileContentType }}, {{ byteSize(report.file) }}</span>
-            </ng-container>
-          </p>
+        <div class="card-body d-flex justify-content-between">
+          <div>
+            <p class="card-text"><strong>Description:</strong> {{ report.description }}</p>
+          </div>
+          <div class="text-end">
+            <!-- Добавляем изображение справа -->
+            <img src="./content/images/report_logo.png" alt="Report Image" style="max-width: 150px" />
+          </div>
         </div>
         <div class="card-footer text-end">
           <div class="btn-group">
