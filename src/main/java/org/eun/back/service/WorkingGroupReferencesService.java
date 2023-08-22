@@ -3,6 +3,7 @@ package org.eun.back.service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import org.eun.back.service.dto.Indicator;
 import org.eun.back.service.dto.WorkingGroupReferencesDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,4 +63,6 @@ public interface WorkingGroupReferencesService {
     void delete(Long id);
 
     void upload(MultipartFile file) throws IOException;
+
+    Indicator<?> getIndicator(Long countryId, Long reportId);
 }

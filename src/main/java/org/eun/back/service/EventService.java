@@ -2,6 +2,7 @@ package org.eun.back.service;
 
 import java.util.Optional;
 import org.eun.back.service.dto.EventDTO;
+import org.eun.back.service.dto.Indicator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -55,4 +56,6 @@ public interface EventService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Indicator<?> getIndicator(Long countryId, Long reportId);
 }

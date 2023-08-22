@@ -12,10 +12,8 @@ import org.eun.back.service.CountriesService;
 import org.eun.back.service.ReportBlocksContentService;
 import org.eun.back.service.ReportBlocksService;
 import org.eun.back.service.ReportService;
-import org.eun.back.service.dto.CountriesDTO;
-import org.eun.back.service.dto.ReportBlocksContentDTO;
-import org.eun.back.service.dto.ReportBlocksContentDataDTO;
-import org.eun.back.service.dto.ReportBlocksDTO;
+import org.eun.back.service.dto.*;
+import org.eun.back.service.mapper.ReportBlocksIndicatorMapper;
 import org.eun.back.service.mapper.ReportBlocksMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,18 +41,33 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
 
     private final ReportBlocksMapper reportBlocksMapper;
 
+    private final ReportBlocksIndicatorMapper reportBlocksIndicatorMapper;
+
     public ReportBlocksServiceImpl(
         ReportBlocksRepository reportBlocksRepository,
         ReportBlocksContentService reportBlocksContentService,
         CountriesService countriesService,
         ReportService reportService,
-        ReportBlocksMapper reportBlocksMapper
+        ReportBlocksMapper reportBlocksMapper,
+        ReportBlocksIndicatorMapper reportBlocksIndicatorMapper
     ) {
         this.reportBlocksRepository = reportBlocksRepository;
         this.reportBlocksContentService = reportBlocksContentService;
         this.countriesService = countriesService;
         this.reportService = reportService;
         this.reportBlocksMapper = reportBlocksMapper;
+        this.reportBlocksIndicatorMapper = reportBlocksIndicatorMapper;
+    }
+
+    @Override
+    public Indicator<?> getIndicator(Long countryId, Long reportId) {
+        List<ReportBlocks> data = reportBlocksRepository.findParticipationInXReportBlocksByCountryAndReport(countryId, reportId);
+        Indicator<ReportBlocksIndicatorDTO> indicator = new Indicator<>();
+        indicator.setData(reportBlocksIndicatorMapper.toDto(data));
+        indicator.setCode("participation_in_x");
+        indicator.setLabel("Participation in X");
+        indicator.setValue(String.valueOf(data.size()));
+        return indicator;
     }
 
     @Override

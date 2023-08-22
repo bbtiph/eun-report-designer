@@ -1,10 +1,16 @@
 package org.eun.back.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.eun.back.domain.Project;
+import org.eun.back.domain.WorkingGroupReferences;
 import org.eun.back.repository.ProjectRepository;
 import org.eun.back.service.ProjectService;
+import org.eun.back.service.dto.Indicator;
 import org.eun.back.service.dto.ProjectDTO;
+import org.eun.back.service.dto.ProjectIndicatorDTO;
+import org.eun.back.service.dto.WorkingGroupReferencesIndicatorDTO;
+import org.eun.back.service.mapper.ProjectIndicatorMapper;
 import org.eun.back.service.mapper.ProjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +32,31 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectMapper projectMapper;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectMapper projectMapper) {
+    private final ProjectIndicatorMapper projectIndicatorMapper;
+
+    public ProjectServiceImpl(
+        ProjectRepository projectRepository,
+        ProjectMapper projectMapper,
+        ProjectIndicatorMapper projectIndicatorMapper
+    ) {
         this.projectRepository = projectRepository;
         this.projectMapper = projectMapper;
+        this.projectIndicatorMapper = projectIndicatorMapper;
+    }
+
+    @Override
+    public Indicator<?> getIndicator(Long countryId, Long reportId) {
+        List<Project> data = this.projectRepository.findAll();
+        Indicator<ProjectIndicatorDTO> indicator = new Indicator<>();
+        Long value = 0L;
+        for (Project project : data) {
+            value += project.getTotalBudget() != null ? project.getTotalBudget() : 0L;
+        }
+        indicator.setData(projectIndicatorMapper.toDto(data));
+        indicator.setCode("EC_funded_budget");
+        indicator.setLabel("EC Funded projects budget");
+        indicator.setValue(value.toString());
+        return indicator;
     }
 
     @Override

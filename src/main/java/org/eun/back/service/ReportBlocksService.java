@@ -2,6 +2,7 @@ package org.eun.back.service;
 
 import java.util.List;
 import java.util.Optional;
+import org.eun.back.service.dto.Indicator;
 import org.eun.back.service.dto.ReportBlocksDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,4 +68,6 @@ public interface ReportBlocksService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Indicator<?> getIndicator(Long countryId, Long reportId);
 }

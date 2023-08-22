@@ -1,10 +1,16 @@
 package org.eun.back.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.eun.back.domain.Event;
+import org.eun.back.domain.WorkingGroupReferences;
 import org.eun.back.repository.EventRepository;
 import org.eun.back.service.EventService;
 import org.eun.back.service.dto.EventDTO;
+import org.eun.back.service.dto.EventIndicatorDTO;
+import org.eun.back.service.dto.Indicator;
+import org.eun.back.service.dto.WorkingGroupReferencesIndicatorDTO;
+import org.eun.back.service.mapper.EventIndicatorMapper;
 import org.eun.back.service.mapper.EventMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +32,23 @@ public class EventServiceImpl implements EventService {
 
     private final EventMapper eventMapper;
 
-    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper) {
+    private final EventIndicatorMapper eventIndicatorMapper;
+
+    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EventIndicatorMapper eventIndicatorMapper) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
+        this.eventIndicatorMapper = eventIndicatorMapper;
+    }
+
+    @Override
+    public Indicator<?> getIndicator(Long countryId, Long reportId) {
+        List<Event> data = this.eventRepository.findAll();
+        Indicator<EventIndicatorDTO> indicator = new Indicator<>();
+        indicator.setData(eventIndicatorMapper.toDto(data));
+        indicator.setCode("events");
+        indicator.setLabel("Events");
+        indicator.setValue(String.valueOf(data.size()));
+        return indicator;
     }
 
     @Override

@@ -30,13 +30,24 @@ public interface ReportBlocksRepository extends ReportBlocksRepositoryWithBagRel
         "WHERE rb.report.id = :reportId AND (rbcd.country.id IS NULL OR rbcd.country.id = :countryId) " +
         "AND (:countryId MEMBER OF rb.countryIds)"
     )
-    List<ReportBlocks> findReportBlocksByCountry(@Param("countryId") Long countryId, @Param("reportId") Long reportId);
+    List<ReportBlocks> findReportBlocksByCountryAndReport(@Param("countryId") Long countryId, @Param("reportId") Long reportId);
+
+    @Query(
+        "SELECT DISTINCT rb FROM ReportBlocks rb LEFT JOIN FETCH rb.reportBlocksContents rbc " +
+        "LEFT JOIN FETCH rbc.reportBlocksContentData rbcd " +
+        "WHERE rb.report.id = :reportId AND (rbcd.country.id IS NULL OR rbcd.country.id = :countryId) " +
+        "AND (:countryId MEMBER OF rb.countryIds) AND rb.name like 'Participation in%'"
+    )
+    List<ReportBlocks> findParticipationInXReportBlocksByCountryAndReport(
+        @Param("countryId") Long countryId,
+        @Param("reportId") Long reportId
+    );
 
     @Query("SELECT MAX(rb.priorityNumber) FROM ReportBlocks rb WHERE rb.report.id = :reportId")
     Long findMaxPriorityNumberByReportId(@Param("reportId") Long reportId);
 
     default List<ReportBlocks> findReportBlocksByCountryWithEmptyContent(Long countryId, Long reportId) {
-        List<ReportBlocks> reportBlocksList = findReportBlocksByCountry(countryId, reportId);
+        List<ReportBlocks> reportBlocksList = findReportBlocksByCountryAndReport(countryId, reportId);
 
         for (ReportBlocks reportBlocks : reportBlocksList) {
             if (reportBlocks.getReportBlocksContents() == null || reportBlocks.getReportBlocksContents().isEmpty()) {

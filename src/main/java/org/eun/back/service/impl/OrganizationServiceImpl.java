@@ -1,10 +1,14 @@
 package org.eun.back.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.eun.back.domain.Organization;
 import org.eun.back.repository.OrganizationRepository;
 import org.eun.back.service.OrganizationService;
+import org.eun.back.service.dto.Indicator;
 import org.eun.back.service.dto.OrganizationDTO;
+import org.eun.back.service.dto.OrganizationIndicatorDTO;
+import org.eun.back.service.mapper.OrganizationIndicatorMapper;
 import org.eun.back.service.mapper.OrganizationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +30,27 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     private final OrganizationMapper organizationMapper;
 
-    public OrganizationServiceImpl(OrganizationRepository organizationRepository, OrganizationMapper organizationMapper) {
+    private final OrganizationIndicatorMapper organizationIndicatorMapper;
+
+    public OrganizationServiceImpl(
+        OrganizationRepository organizationRepository,
+        OrganizationMapper organizationMapper,
+        OrganizationIndicatorMapper organizationIndicatorMapper
+    ) {
         this.organizationRepository = organizationRepository;
         this.organizationMapper = organizationMapper;
+        this.organizationIndicatorMapper = organizationIndicatorMapper;
+    }
+
+    @Override
+    public Indicator<?> getIndicator(Long countryId, Long reportId) {
+        List<Organization> data = this.organizationRepository.findAll();
+        Indicator<OrganizationIndicatorDTO> indicator = new Indicator<>();
+        indicator.setData(organizationIndicatorMapper.toDto(data));
+        indicator.setCode("organization");
+        indicator.setLabel("Organizations");
+        indicator.setValue(String.valueOf(data.size()));
+        return indicator;
     }
 
     @Override

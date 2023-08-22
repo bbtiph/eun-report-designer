@@ -9,8 +9,13 @@ import org.apache.poi.ss.usermodel.*;
 import org.eun.back.domain.WorkingGroupReferences;
 import org.eun.back.repository.WorkingGroupReferencesRepository;
 import org.eun.back.security.SecurityUtils;
+import org.eun.back.service.CountriesService;
 import org.eun.back.service.WorkingGroupReferencesService;
+import org.eun.back.service.dto.CountriesDTO;
+import org.eun.back.service.dto.Indicator;
 import org.eun.back.service.dto.WorkingGroupReferencesDTO;
+import org.eun.back.service.dto.WorkingGroupReferencesIndicatorDTO;
+import org.eun.back.service.mapper.WorkingGroupReferencesIndicatorMapper;
 import org.eun.back.service.mapper.WorkingGroupReferencesMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,12 +38,34 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
 
     private final WorkingGroupReferencesMapper workingGroupReferencesMapper;
 
+    private final WorkingGroupReferencesIndicatorMapper workingGroupReferencesIndicatorMapper;
+
+    private final CountriesService countriesService;
+
     public WorkingGroupReferencesServiceImpl(
         WorkingGroupReferencesRepository workingGroupReferencesRepository,
-        WorkingGroupReferencesMapper workingGroupReferencesMapper
+        WorkingGroupReferencesMapper workingGroupReferencesMapper,
+        WorkingGroupReferencesIndicatorMapper workingGroupReferencesIndicatorMapper,
+        CountriesService countriesService
     ) {
         this.workingGroupReferencesRepository = workingGroupReferencesRepository;
         this.workingGroupReferencesMapper = workingGroupReferencesMapper;
+        this.workingGroupReferencesIndicatorMapper = workingGroupReferencesIndicatorMapper;
+        this.countriesService = countriesService;
+    }
+
+    @Override
+    public Indicator<?> getIndicator(Long countryId, Long reportId) {
+        String countryCode = this.countriesService.findOne(countryId).map(CountriesDTO::getCountryCode).orElse(null);
+        Indicator<WorkingGroupReferencesIndicatorDTO> indicator = new Indicator<>();
+        if (countryCode != null) {
+            List<WorkingGroupReferences> data = this.workingGroupReferencesRepository.findAllByIsActiveAndCountryCode(true, countryCode);
+            indicator.setData(workingGroupReferencesIndicatorMapper.toDto(data));
+            indicator.setValue(String.valueOf(data.size()));
+        }
+        indicator.setCode("working_group");
+        indicator.setLabel("Working Group");
+        return indicator;
     }
 
     @Override
