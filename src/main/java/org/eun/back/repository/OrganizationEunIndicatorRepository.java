@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface OrganizationEunIndicatorRepository extends JpaRepository<OrganizationEunIndicator, Long> {}
+public interface OrganizationEunIndicatorRepository extends JpaRepository<OrganizationEunIndicator, Long> {
+    OrganizationEunIndicator findByCountryIdAndProjectIdAndReportsProjectId(Long countryId, Long projectId, Long reportsProjectId);
+}

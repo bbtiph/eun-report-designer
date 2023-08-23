@@ -32,6 +32,10 @@ os:
   linux:
     docker: true
 
+eun:
+  dwh:
+    url: http://eundb-test.eun.org:11005/eundwh/
+
 spring:
   ldap:
     url: ldap://static.eun.org:389
