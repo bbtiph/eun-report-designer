@@ -1,7 +1,6 @@
 package org.eun.back.service.impl;
 
 import com.google.gson.Gson;
-import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -11,7 +10,6 @@ import java.util.stream.Collectors;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.eun.back.domain.OrganizationEunIndicator;
-import org.eun.back.domain.PersonEunIndicator;
 import org.eun.back.repository.OrganizationEunIndicatorRepository;
 import org.eun.back.service.OrganizationEunIndicatorService;
 import org.eun.back.service.dto.ApiResponseItemDto;

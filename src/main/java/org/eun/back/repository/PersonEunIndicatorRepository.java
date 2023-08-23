@@ -1,6 +1,5 @@
 package org.eun.back.repository;
 
-import org.eun.back.domain.OrganizationEunIndicator;
 import org.eun.back.domain.PersonEunIndicator;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
