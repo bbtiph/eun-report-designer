@@ -17,8 +17,6 @@ public class DashboardServiceImpl implements DashboardService {
 
     private final Logger log = LoggerFactory.getLogger(DashboardServiceImpl.class);
 
-    private final CountriesService countriesService;
-
     private final WorkingGroupReferencesService workingGroupReferencesService;
 
     private final ProjectService projectService;
@@ -31,22 +29,28 @@ public class DashboardServiceImpl implements DashboardService {
 
     private final ReportBlocksService reportBlocksService;
 
+    private final OrganizationEunIndicatorService organizationEunIndicatorService;
+
+    private final PersonEunIndicatorService personEunIndicatorService;
+
     public DashboardServiceImpl(
-        CountriesService countriesService,
         WorkingGroupReferencesService workingGroupReferencesService,
         ProjectService projectService,
         EventService eventService,
         OrganizationService organizationService,
         PersonService personService,
-        ReportBlocksService reportBlocksService
+        ReportBlocksService reportBlocksService,
+        OrganizationEunIndicatorService organizationEunIndicatorService,
+        PersonEunIndicatorService personEunIndicatorService
     ) {
-        this.countriesService = countriesService;
         this.workingGroupReferencesService = workingGroupReferencesService;
         this.projectService = projectService;
         this.eventService = eventService;
         this.organizationService = organizationService;
         this.personService = personService;
         this.reportBlocksService = reportBlocksService;
+        this.organizationEunIndicatorService = organizationEunIndicatorService;
+        this.personEunIndicatorService = personEunIndicatorService;
     }
 
     @Override
@@ -59,6 +63,8 @@ public class DashboardServiceImpl implements DashboardService {
         indicators.getIndicators().add(organizationService.getIndicator(countryId, reportId));
         indicators.getIndicators().add(personService.getIndicator(countryId, reportId));
         indicators.getIndicators().add(reportBlocksService.getIndicator(countryId, reportId));
+        indicators.getIndicators().add(organizationEunIndicatorService.getIndicator(countryId, reportId));
+        indicators.getIndicators().add(personEunIndicatorService.getIndicator(countryId, reportId));
         return indicators;
     }
 }

@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.eun.back.domain.OrganizationEunIndicator;
+import org.eun.back.domain.PersonEunIndicator;
 import org.eun.back.repository.OrganizationEunIndicatorRepository;
 import org.eun.back.service.OrganizationEunIndicatorService;
+import org.eun.back.service.dto.Indicator;
 import org.eun.back.service.dto.OrganizationEunIndicatorDTO;
+import org.eun.back.service.dto.PersonEunIndicatorDTO;
 import org.eun.back.service.mapper.OrganizationEunIndicatorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,17 @@ public class OrganizationEunIndicatorServiceImpl implements OrganizationEunIndic
     ) {
         this.organizationEunIndicatorRepository = organizationEunIndicatorRepository;
         this.organizationEunIndicatorMapper = organizationEunIndicatorMapper;
+    }
+
+    @Override
+    public Indicator<?> getIndicator(Long countryId, Long reportId) {
+        List<OrganizationEunIndicator> data = this.organizationEunIndicatorRepository.findAll();
+        Indicator<OrganizationEunIndicatorDTO> indicator = new Indicator<>();
+        indicator.setData(organizationEunIndicatorMapper.toDto(data));
+        indicator.setCode("organization_eun");
+        indicator.setLabel("Organization EUN");
+        indicator.setValue(String.valueOf(data.size()));
+        return indicator;
     }
 
     @Override
