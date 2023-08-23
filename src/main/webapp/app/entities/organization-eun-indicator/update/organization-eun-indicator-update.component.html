@@ -1,0 +1,152 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-organization-eun-indicator-heading" data-cy="OrganizationEunIndicatorCreateUpdateHeading">
+        Create or edit a Organization Eun Indicator
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_nCount">N Count</label>
+          <input type="number" class="form-control" name="nCount" id="field_nCount" data-cy="nCount" formControlName="nCount" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryId">Country Id</label>
+          <input type="number" class="form-control" name="countryId" id="field_countryId" data-cy="countryId" formControlName="countryId" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_projectId">Project Id</label>
+          <input type="number" class="form-control" name="projectId" id="field_projectId" data-cy="projectId" formControlName="projectId" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_projectUrl">Project Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="projectUrl"
+            id="field_projectUrl"
+            data-cy="projectUrl"
+            formControlName="projectUrl"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryName">Country Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryName"
+            id="field_countryName"
+            data-cy="countryName"
+            formControlName="countryName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_projectName">Project Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="projectName"
+            id="field_projectName"
+            data-cy="projectName"
+            formControlName="projectName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_reportsProjectId">Reports Project Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="reportsProjectId"
+            id="field_reportsProjectId"
+            data-cy="reportsProjectId"
+            formControlName="reportsProjectId"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_createdBy">Created By</label>
+          <input type="text" class="form-control" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_lastModifiedBy">Last Modified By</label>
+          <input
+            type="text"
+            class="form-control"
+            name="lastModifiedBy"
+            id="field_lastModifiedBy"
+            data-cy="lastModifiedBy"
+            formControlName="lastModifiedBy"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_createdDate">Created Date</label>
+          <div class="input-group">
+            <input
+              id="field_createdDate"
+              data-cy="createdDate"
+              type="text"
+              class="form-control"
+              name="createdDate"
+              ngbDatepicker
+              #createdDateDp="ngbDatepicker"
+              formControlName="createdDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="createdDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_lastModifiedDate">Last Modified Date</label>
+          <div class="input-group">
+            <input
+              id="field_lastModifiedDate"
+              data-cy="lastModifiedDate"
+              type="text"
+              class="form-control"
+              name="lastModifiedDate"
+              ngbDatepicker
+              #lastModifiedDateDp="ngbDatepicker"
+              formControlName="lastModifiedDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="lastModifiedDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

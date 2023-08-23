@@ -1,12 +1,33 @@
-entity ReferenceTableSettings {
-    refTable String
-    columns String
-    path String
-    isActive Boolean
+entity OrganizationEunIndicator {
+    nCount Long
+    countryId Long
+    projectId Long
+    projectUrl String
+    countryName String
+    projectName String
+    reportsProjectId Long
+    createdBy String
+    lastModifiedBy String
+    createdDate LocalDate
+    lastModifiedDate LocalDate
+}
+
+entity PersonEunIndicator {
+    nCount Long
+    countryId Long
+    projectId Long
+    projectUrl String
+    countryName String
+    projectName String
+    reportsProjectId Long
+    createdBy String
+    lastModifiedBy String
+    createdDate LocalDate
+    lastModifiedDate LocalDate
 }
 
 
-dto ReferenceTableSettings with mapstruct
-service ReferenceTableSettings with serviceImpl
+dto PersonEunIndicator, OrganizationEunIndicator with mapstruct
+service PersonEunIndicator, OrganizationEunIndicator with serviceImpl
 
 

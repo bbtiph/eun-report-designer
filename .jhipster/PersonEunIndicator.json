@@ -1,0 +1,60 @@
+{
+  "applications": "*",
+  "changelogDate": "20230822093102",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "person_eun_indicator",
+  "fields": [
+    {
+      "fieldName": "nCount",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "countryId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "projectId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "projectUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "projectName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "reportsProjectId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastModifiedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "lastModifiedDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PersonEunIndicator",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

@@ -140,6 +140,17 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'ReferenceTableSettings' },
         loadChildren: () => import('./reference-table-settings/reference-table-settings.module').then(m => m.ReferenceTableSettingsModule),
       },
+      {
+        path: 'organization-eun-indicator',
+        data: { pageTitle: 'OrganizationEunIndicators' },
+        loadChildren: () =>
+          import('./organization-eun-indicator/organization-eun-indicator.module').then(m => m.OrganizationEunIndicatorModule),
+      },
+      {
+        path: 'person-eun-indicator',
+        data: { pageTitle: 'PersonEunIndicators' },
+        loadChildren: () => import('./person-eun-indicator/person-eun-indicator.module').then(m => m.PersonEunIndicatorModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

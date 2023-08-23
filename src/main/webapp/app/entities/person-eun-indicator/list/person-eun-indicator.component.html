@@ -1,0 +1,158 @@
+<div>
+  <h2 id="page-heading" data-cy="PersonEunIndicatorHeading">
+    <span>Person Eun Indicators</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-person-eun-indicator"
+        [routerLink]="['/person-eun-indicator/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Person Eun Indicator </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="personEunIndicators?.length === 0">
+    <span>No Person Eun Indicators found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="personEunIndicators && personEunIndicators.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nCount">
+            <div class="d-flex">
+              <span>N Count</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryId">
+            <div class="d-flex">
+              <span>Country Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="projectId">
+            <div class="d-flex">
+              <span>Project Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="projectUrl">
+            <div class="d-flex">
+              <span>Project Url</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryName">
+            <div class="d-flex">
+              <span>Country Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="projectName">
+            <div class="d-flex">
+              <span>Project Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="reportsProjectId">
+            <div class="d-flex">
+              <span>Reports Project Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy">
+            <div class="d-flex">
+              <span>Created By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastModifiedBy">
+            <div class="d-flex">
+              <span>Last Modified By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdDate">
+            <div class="d-flex">
+              <span>Created Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastModifiedDate">
+            <div class="d-flex">
+              <span>Last Modified Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let personEunIndicator of personEunIndicators; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/person-eun-indicator', personEunIndicator.id, 'view']">{{ personEunIndicator.id }}</a>
+          </td>
+          <td>{{ personEunIndicator.nCount }}</td>
+          <td>{{ personEunIndicator.countryId }}</td>
+          <td>{{ personEunIndicator.projectId }}</td>
+          <td>{{ personEunIndicator.projectUrl }}</td>
+          <td>{{ personEunIndicator.countryName }}</td>
+          <td>{{ personEunIndicator.projectName }}</td>
+          <td>{{ personEunIndicator.reportsProjectId }}</td>
+          <td>{{ personEunIndicator.createdBy }}</td>
+          <td>{{ personEunIndicator.lastModifiedBy }}</td>
+          <td>{{ personEunIndicator.createdDate | formatMediumDate }}</td>
+          <td>{{ personEunIndicator.lastModifiedDate | formatMediumDate }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/person-eun-indicator', personEunIndicator.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/person-eun-indicator', personEunIndicator.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(personEunIndicator)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

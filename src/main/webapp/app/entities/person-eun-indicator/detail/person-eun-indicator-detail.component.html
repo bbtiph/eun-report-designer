@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="personEunIndicator">
+      <h2 data-cy="personEunIndicatorDetailsHeading"><span>Person Eun Indicator</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.id }}</span>
+        </dd>
+        <dt><span>N Count</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.nCount }}</span>
+        </dd>
+        <dt><span>Country Id</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.countryId }}</span>
+        </dd>
+        <dt><span>Project Id</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.projectId }}</span>
+        </dd>
+        <dt><span>Project Url</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.projectUrl }}</span>
+        </dd>
+        <dt><span>Country Name</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.countryName }}</span>
+        </dd>
+        <dt><span>Project Name</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.projectName }}</span>
+        </dd>
+        <dt><span>Reports Project Id</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.reportsProjectId }}</span>
+        </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.createdBy }}</span>
+        </dd>
+        <dt><span>Last Modified By</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.lastModifiedBy }}</span>
+        </dd>
+        <dt><span>Created Date</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.createdDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Last Modified Date</span></dt>
+        <dd>
+          <span>{{ personEunIndicator.lastModifiedDate | formatMediumDate }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/person-eun-indicator', personEunIndicator.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

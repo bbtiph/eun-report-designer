@@ -38,6 +38,8 @@
     <include file="config/liquibase/changelog/20230530095340_added_entity_ReportBlocksContentData.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230704120418_added_entity_WorkingGroupReferences.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230714042342_added_entity_ReferenceTableSettings.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230822093101_added_entity_OrganizationEunIndicator.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230822093102_added_entity_PersonEunIndicator.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 <!--    <include file="config/liquibase/changelog/20230427100940_added_entity_constraints_Project.xml" relativeToChangelogFile="false"/>-->
 <!--    <include file="config/liquibase/changelog/20230427114022_added_entity_constraints_EunTeam.xml" relativeToChangelogFile="false"/>-->
