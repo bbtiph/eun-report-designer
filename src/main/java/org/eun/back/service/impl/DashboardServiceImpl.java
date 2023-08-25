@@ -23,10 +23,6 @@ public class DashboardServiceImpl implements DashboardService {
 
     private final EventService eventService;
 
-    private final OrganizationService organizationService;
-
-    private final PersonService personService;
-
     private final ReportBlocksService reportBlocksService;
 
     private final OrganizationEunIndicatorService organizationEunIndicatorService;
@@ -37,8 +33,6 @@ public class DashboardServiceImpl implements DashboardService {
         WorkingGroupReferencesService workingGroupReferencesService,
         ProjectService projectService,
         EventService eventService,
-        OrganizationService organizationService,
-        PersonService personService,
         ReportBlocksService reportBlocksService,
         OrganizationEunIndicatorService organizationEunIndicatorService,
         PersonEunIndicatorService personEunIndicatorService
@@ -46,8 +40,6 @@ public class DashboardServiceImpl implements DashboardService {
         this.workingGroupReferencesService = workingGroupReferencesService;
         this.projectService = projectService;
         this.eventService = eventService;
-        this.organizationService = organizationService;
-        this.personService = personService;
         this.reportBlocksService = reportBlocksService;
         this.organizationEunIndicatorService = organizationEunIndicatorService;
         this.personEunIndicatorService = personEunIndicatorService;
@@ -60,8 +52,6 @@ public class DashboardServiceImpl implements DashboardService {
         indicators.getIndicators().add(workingGroupReferencesService.getIndicator(countryId, reportId));
         indicators.getIndicators().add(projectService.getIndicator(countryId, reportId));
         indicators.getIndicators().add(eventService.getIndicator(countryId, reportId));
-        indicators.getIndicators().add(organizationService.getIndicator(countryId, reportId));
-        indicators.getIndicators().add(personService.getIndicator(countryId, reportId));
         indicators.getIndicators().add(reportBlocksService.getIndicator(countryId, reportId));
         indicators.getIndicators().add(organizationEunIndicatorService.getIndicator(countryId, reportId));
         indicators.getIndicators().add(personEunIndicatorService.getIndicator(countryId, reportId));

@@ -11,15 +11,13 @@ import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.eun.back.domain.OrganizationEunIndicator;
 import org.eun.back.repository.OrganizationEunIndicatorRepository;
+import org.eun.back.service.CountriesService;
 import org.eun.back.service.OrganizationEunIndicatorService;
-import org.eun.back.service.dto.ApiResponseItemDto;
-import org.eun.back.service.dto.Indicator;
-import org.eun.back.service.dto.OrganizationEunIndicatorDTO;
+import org.eun.back.service.dto.*;
 import org.eun.back.service.mapper.OrganizationEunIndicatorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -43,15 +41,19 @@ public class OrganizationEunIndicatorServiceImpl implements OrganizationEunIndic
 
     private final OrganizationEunIndicatorMapper organizationEunIndicatorMapper;
 
+    private final CountriesService countriesService;
+
     public OrganizationEunIndicatorServiceImpl(
         OrganizationEunIndicatorRepository organizationEunIndicatorRepository,
-        OrganizationEunIndicatorMapper organizationEunIndicatorMapper
+        OrganizationEunIndicatorMapper organizationEunIndicatorMapper,
+        CountriesService countriesService
     ) {
         this.organizationEunIndicatorRepository = organizationEunIndicatorRepository;
         this.organizationEunIndicatorMapper = organizationEunIndicatorMapper;
+        this.countriesService = countriesService;
     }
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(cron = "0 0 * * * *")
     public void fetchDataFromEun() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -100,13 +102,16 @@ public class OrganizationEunIndicatorServiceImpl implements OrganizationEunIndic
 
     @Override
     public Indicator<?> getIndicator(Long countryId, Long reportId) {
-        List<OrganizationEunIndicator> data = this.organizationEunIndicatorRepository.findAll();
-        long sum = data.stream().mapToLong(OrganizationEunIndicator::getnCount).sum();
+        String countryName = this.countriesService.findOne(countryId).map(CountriesDTO::getCountryName).orElse(null);
         Indicator<OrganizationEunIndicatorDTO> indicator = new Indicator<>();
-        indicator.setData(organizationEunIndicatorMapper.toDto(data));
+        if (countryName != null) {
+            List<OrganizationEunIndicator> data = this.organizationEunIndicatorRepository.findAllByCountryNameEquals(countryName);
+            long sum = data.stream().mapToLong(OrganizationEunIndicator::getnCount).sum();
+            indicator.setData(organizationEunIndicatorMapper.toDto(data));
+            indicator.setValue(String.valueOf(sum));
+        }
         indicator.setCode("organization_eun");
         indicator.setLabel("Organization EUN");
-        indicator.setValue(String.valueOf(sum));
         return indicator;
     }
 

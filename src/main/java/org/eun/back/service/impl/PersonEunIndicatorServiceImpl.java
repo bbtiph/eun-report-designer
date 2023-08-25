@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.eun.back.domain.PersonEunIndicator;
 import org.eun.back.repository.PersonEunIndicatorRepository;
+import org.eun.back.service.CountriesService;
 import org.eun.back.service.PersonEunIndicatorService;
 import org.eun.back.service.dto.*;
 import org.eun.back.service.mapper.PersonEunIndicatorMapper;
@@ -40,15 +41,19 @@ public class PersonEunIndicatorServiceImpl implements PersonEunIndicatorService 
 
     private final PersonEunIndicatorMapper personEunIndicatorMapper;
 
+    private final CountriesService countriesService;
+
     public PersonEunIndicatorServiceImpl(
         PersonEunIndicatorRepository personEunIndicatorRepository,
-        PersonEunIndicatorMapper personEunIndicatorMapper
+        PersonEunIndicatorMapper personEunIndicatorMapper,
+        CountriesService countriesService
     ) {
         this.personEunIndicatorRepository = personEunIndicatorRepository;
         this.personEunIndicatorMapper = personEunIndicatorMapper;
+        this.countriesService = countriesService;
     }
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(cron = "0 0 * * * *")
     public void fetchDataFromEun() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -98,13 +103,16 @@ public class PersonEunIndicatorServiceImpl implements PersonEunIndicatorService 
 
     @Override
     public Indicator<?> getIndicator(Long countryId, Long reportId) {
-        List<PersonEunIndicator> data = this.personEunIndicatorRepository.findAll();
+        String countryName = this.countriesService.findOne(countryId).map(CountriesDTO::getCountryName).orElse(null);
         Indicator<PersonEunIndicatorDTO> indicator = new Indicator<>();
-        long sum = data.stream().mapToLong(PersonEunIndicator::getnCount).sum();
-        indicator.setData(personEunIndicatorMapper.toDto(data));
+        if (countryName != null) {
+            List<PersonEunIndicator> data = this.personEunIndicatorRepository.findAllByCountryNameEquals(countryName);
+            long sum = data.stream().mapToLong(PersonEunIndicator::getnCount).sum();
+            indicator.setData(personEunIndicatorMapper.toDto(data));
+            indicator.setValue(String.valueOf(sum));
+        }
         indicator.setCode("person_eun");
         indicator.setLabel("Persons EUN");
-        indicator.setValue(String.valueOf(sum));
         return indicator;
     }
 

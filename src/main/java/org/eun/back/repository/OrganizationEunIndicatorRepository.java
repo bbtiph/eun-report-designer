@@ -1,5 +1,6 @@
 package org.eun.back.repository;
 
+import java.util.List;
 import org.eun.back.domain.OrganizationEunIndicator;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrganizationEunIndicatorRepository extends JpaRepository<OrganizationEunIndicator, Long> {
     OrganizationEunIndicator findByCountryIdAndProjectIdAndReportsProjectId(Long countryId, Long projectId, Long reportsProjectId);
+
+    List<OrganizationEunIndicator> findAllByCountryNameEquals(String countryName);
 }

@@ -39,14 +39,11 @@ public class DashboardResource {
     public ResponseEntity<IndicatorsDto> getAllWorkingGroupReferences(
         @PathVariable Long reportId,
         @RequestParam Map<String, String> params
-    ) throws URISyntaxException {
+    ) {
         String countryId = params.get("country_id");
 
         IndicatorsDto result = dashboardService.getIndicators(Long.parseLong(countryId), reportId);
 
-        return ResponseEntity
-            .created(new URI("/api/dashboard/"))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, reportId.toString()))
-            .body(result);
+        return ResponseEntity.ok().body(result);
     }
 }
