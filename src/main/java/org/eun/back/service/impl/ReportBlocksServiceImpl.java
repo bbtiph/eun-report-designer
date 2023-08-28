@@ -246,7 +246,7 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
         for (CountriesDTO country : reportBlocksDTO.get().getCountryIds()) {
             CountriesDTO countriesDTO = countriesService.findOne(country.getId()).get();
             country.setCountryName(countriesDTO.getCountryName());
-            country.setCountryName(countriesDTO.getCountryCode());
+            country.setCountryCode(countriesDTO.getCountryCode());
         }
         return reportBlocksDTO;
     }

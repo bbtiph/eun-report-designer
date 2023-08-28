@@ -71,30 +71,30 @@ public class PersonEunIndicatorServiceImpl implements PersonEunIndicatorService 
             ApiResponseItemDto[] res = gson.fromJson(response.getBody(), ApiResponseItemDto[].class);
             for (ApiResponseItemDto apiResponseItemDto : res) {
                 System.out.println(apiResponseItemDto);
-                PersonEunIndicatorDTO personEunIndicatorDTO = new PersonEunIndicatorDTO();
-                personEunIndicatorDTO.setnCount(apiResponseItemDto.getN_count());
-                personEunIndicatorDTO.setCountryId(apiResponseItemDto.getCountry_id());
-                personEunIndicatorDTO.setProjectId(apiResponseItemDto.getProject_id());
-                personEunIndicatorDTO.setProjectUrl(apiResponseItemDto.getProject_url());
-                personEunIndicatorDTO.setCountryName(apiResponseItemDto.getCountry_name());
-                personEunIndicatorDTO.setProjectName(apiResponseItemDto.getProject_name());
-                personEunIndicatorDTO.setReportsProjectId(apiResponseItemDto.getReports_project_id());
+                PersonEunIndicator personEunIndicator = new PersonEunIndicator();
+                personEunIndicator.setnCount(apiResponseItemDto.getN_count());
+                personEunIndicator.setCountryId(apiResponseItemDto.getCountry_id());
+                personEunIndicator.setProjectId(apiResponseItemDto.getProject_id());
+                personEunIndicator.setProjectUrl(apiResponseItemDto.getProject_url());
+                personEunIndicator.setCountryName(apiResponseItemDto.getCountry_name());
+                personEunIndicator.setProjectName(apiResponseItemDto.getProject_name());
+                personEunIndicator.setReportsProjectId(apiResponseItemDto.getReports_project_id());
 
-                PersonEunIndicator personEunIndicator = personEunIndicatorRepository.findByCountryIdAndProjectIdAndReportsProjectId(
-                    personEunIndicatorDTO.getCountryId(),
-                    personEunIndicatorDTO.getProjectId(),
-                    personEunIndicatorDTO.getReportsProjectId()
+                PersonEunIndicator personEunIndicatorRes = personEunIndicatorRepository.findByCountryIdAndProjectIdAndReportsProjectId(
+                    personEunIndicator.getCountryId(),
+                    personEunIndicator.getProjectId(),
+                    personEunIndicator.getReportsProjectId()
                 );
 
-                if (personEunIndicator != null) {
-                    personEunIndicatorDTO.setId(personEunIndicator.getId());
-                    personEunIndicatorDTO.setLastModifiedBy("system");
-                    personEunIndicatorDTO.setLastModifiedDate(LocalDate.now());
+                if (personEunIndicatorRes != null) {
+                    personEunIndicator.setId(personEunIndicatorRes.getId());
+                    personEunIndicator.setLastModifiedBy("system");
+                    personEunIndicator.setLastModifiedDate(LocalDate.now());
                 } else {
-                    personEunIndicatorDTO.setCreatedBy("system");
-                    personEunIndicatorDTO.setCreatedDate(LocalDate.now());
+                    personEunIndicator.setCreatedBy("system");
+                    personEunIndicator.setCreatedDate(LocalDate.now());
                 }
-                this.save(personEunIndicatorDTO);
+                this.save(personEunIndicator);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,6 +120,13 @@ public class PersonEunIndicatorServiceImpl implements PersonEunIndicatorService 
     public PersonEunIndicatorDTO save(PersonEunIndicatorDTO personEunIndicatorDTO) {
         log.debug("Request to save PersonEunIndicator : {}", personEunIndicatorDTO);
         PersonEunIndicator personEunIndicator = personEunIndicatorMapper.toEntity(personEunIndicatorDTO);
+        personEunIndicator = personEunIndicatorRepository.save(personEunIndicator);
+        return personEunIndicatorMapper.toDto(personEunIndicator);
+    }
+
+    @Override
+    public PersonEunIndicatorDTO save(PersonEunIndicator personEunIndicator) {
+        log.debug("Request to save PersonEunIndicator : {}", personEunIndicator);
         personEunIndicator = personEunIndicatorRepository.save(personEunIndicator);
         return personEunIndicatorMapper.toDto(personEunIndicator);
     }

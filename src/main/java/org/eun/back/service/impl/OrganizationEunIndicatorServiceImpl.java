@@ -70,30 +70,30 @@ public class OrganizationEunIndicatorServiceImpl implements OrganizationEunIndic
             ApiResponseItemDto[] res = gson.fromJson(response.getBody(), ApiResponseItemDto[].class);
             for (ApiResponseItemDto apiResponseItemDto : res) {
                 System.out.println(apiResponseItemDto);
-                OrganizationEunIndicatorDTO organizationEunIndicatorDTO = new OrganizationEunIndicatorDTO();
-                organizationEunIndicatorDTO.setnCount(apiResponseItemDto.getN_count());
-                organizationEunIndicatorDTO.setCountryId(apiResponseItemDto.getCountry_id());
-                organizationEunIndicatorDTO.setProjectId(apiResponseItemDto.getProject_id());
-                organizationEunIndicatorDTO.setProjectUrl(apiResponseItemDto.getProject_url());
-                organizationEunIndicatorDTO.setCountryName(apiResponseItemDto.getCountry_name());
-                organizationEunIndicatorDTO.setProjectName(apiResponseItemDto.getProject_name());
-                organizationEunIndicatorDTO.setReportsProjectId(apiResponseItemDto.getReports_project_id());
+                OrganizationEunIndicator organizationEunIndicator = new OrganizationEunIndicator();
+                organizationEunIndicator.setnCount(apiResponseItemDto.getN_count());
+                organizationEunIndicator.setCountryId(apiResponseItemDto.getCountry_id());
+                organizationEunIndicator.setProjectId(apiResponseItemDto.getProject_id());
+                organizationEunIndicator.setProjectUrl(apiResponseItemDto.getProject_url());
+                organizationEunIndicator.setCountryName(apiResponseItemDto.getCountry_name());
+                organizationEunIndicator.setProjectName(apiResponseItemDto.getProject_name());
+                organizationEunIndicator.setReportsProjectId(apiResponseItemDto.getReports_project_id());
 
-                OrganizationEunIndicator organizationEunIndicator = organizationEunIndicatorRepository.findByCountryIdAndProjectIdAndReportsProjectId(
-                    organizationEunIndicatorDTO.getCountryId(),
-                    organizationEunIndicatorDTO.getProjectId(),
-                    organizationEunIndicatorDTO.getReportsProjectId()
+                OrganizationEunIndicator organizationEunIndicatorRes = organizationEunIndicatorRepository.findByCountryIdAndProjectIdAndReportsProjectId(
+                    organizationEunIndicator.getCountryId(),
+                    organizationEunIndicator.getProjectId(),
+                    organizationEunIndicator.getReportsProjectId()
                 );
 
-                if (organizationEunIndicator != null) {
-                    organizationEunIndicatorDTO.setId(organizationEunIndicator.getId());
-                    organizationEunIndicatorDTO.setLastModifiedBy("system");
-                    organizationEunIndicatorDTO.setLastModifiedDate(LocalDate.now());
+                if (organizationEunIndicatorRes != null) {
+                    organizationEunIndicator.setId(organizationEunIndicatorRes.getId());
+                    organizationEunIndicator.setLastModifiedBy("system");
+                    organizationEunIndicator.setLastModifiedDate(LocalDate.now());
                 } else {
-                    organizationEunIndicatorDTO.setCreatedBy("system");
-                    organizationEunIndicatorDTO.setCreatedDate(LocalDate.now());
+                    organizationEunIndicator.setCreatedBy("system");
+                    organizationEunIndicator.setCreatedDate(LocalDate.now());
                 }
-                this.save(organizationEunIndicatorDTO);
+                this.save(organizationEunIndicator);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,6 +119,13 @@ public class OrganizationEunIndicatorServiceImpl implements OrganizationEunIndic
     public OrganizationEunIndicatorDTO save(OrganizationEunIndicatorDTO organizationEunIndicatorDTO) {
         log.debug("Request to save OrganizationEunIndicator : {}", organizationEunIndicatorDTO);
         OrganizationEunIndicator organizationEunIndicator = organizationEunIndicatorMapper.toEntity(organizationEunIndicatorDTO);
+        organizationEunIndicator = organizationEunIndicatorRepository.save(organizationEunIndicator);
+        return organizationEunIndicatorMapper.toDto(organizationEunIndicator);
+    }
+
+    @Override
+    public OrganizationEunIndicatorDTO save(OrganizationEunIndicator organizationEunIndicator) {
+        log.debug("Request to save OrganizationEunIndicator : {}", organizationEunIndicator);
         organizationEunIndicator = organizationEunIndicatorRepository.save(organizationEunIndicator);
         return organizationEunIndicatorMapper.toDto(organizationEunIndicator);
     }

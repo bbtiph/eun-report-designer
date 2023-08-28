@@ -26,14 +26,6 @@ public class OrganizationEunIndicatorDTO implements Serializable {
 
     private Long reportsProjectId;
 
-    private String createdBy;
-
-    private String lastModifiedBy;
-
-    private LocalDate createdDate;
-
-    private LocalDate lastModifiedDate;
-
     public Long getId() {
         return id;
     }
@@ -98,38 +90,6 @@ public class OrganizationEunIndicatorDTO implements Serializable {
         this.reportsProjectId = reportsProjectId;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocalDate getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(LocalDate lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -151,22 +111,30 @@ public class OrganizationEunIndicatorDTO implements Serializable {
         return Objects.hash(this.id);
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "OrganizationEunIndicatorDTO{" +
-            "id=" + getId() +
-            ", nCount=" + getnCount() +
-            ", countryId=" + getCountryId() +
-            ", projectId=" + getProjectId() +
-            ", projectUrl='" + getProjectUrl() + "'" +
-            ", countryName='" + getCountryName() + "'" +
-            ", projectName='" + getProjectName() + "'" +
-            ", reportsProjectId=" + getReportsProjectId() +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", lastModifiedBy='" + getLastModifiedBy() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            "}";
+        return (
+            "OrganizationEunIndicatorDTO{" +
+            "id=" +
+            id +
+            ", nCount=" +
+            nCount +
+            ", countryId=" +
+            countryId +
+            ", projectId=" +
+            projectId +
+            ", projectUrl='" +
+            projectUrl +
+            '\'' +
+            ", countryName='" +
+            countryName +
+            '\'' +
+            ", projectName='" +
+            projectName +
+            '\'' +
+            ", reportsProjectId=" +
+            reportsProjectId +
+            '}'
+        );
     }
 }

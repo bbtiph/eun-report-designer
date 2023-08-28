@@ -2,6 +2,7 @@ package org.eun.back.service;
 
 import java.util.List;
 import java.util.Optional;
+import org.eun.back.domain.PersonEunIndicator;
 import org.eun.back.service.dto.Indicator;
 import org.eun.back.service.dto.PersonEunIndicatorDTO;
 
@@ -16,6 +17,8 @@ public interface PersonEunIndicatorService {
      * @return the persisted entity.
      */
     PersonEunIndicatorDTO save(PersonEunIndicatorDTO personEunIndicatorDTO);
+
+    PersonEunIndicatorDTO save(PersonEunIndicator personEunIndicator);
 
     /**
      * Updates a personEunIndicator.

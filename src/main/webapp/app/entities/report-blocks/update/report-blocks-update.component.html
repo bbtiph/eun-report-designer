@@ -173,7 +173,11 @@
                   ></angular-editor>
                   <div
                     *ngIf="content.type === 'text' && type === 'report' && !isEdit"
-                    [innerHtml]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data').value"
+                    [innerHtml]="
+                      getFormControlByKey('content_' + content.id + '_' + row.id + '_data').value.length > 0
+                        ? getFormControlByKey('content_' + content.id + '_' + row.id + '_data').value
+                        : getFormControlByKey('content_' + content.id + '_data').value
+                    "
                   ></div>
                 </div>
               </div>

@@ -670,7 +670,7 @@ for (var i = 0; i &lt; json.length; i++) {&#13;
         tableHTML += '&lt;/tbody>&lt;/table>&lt;br>&lt;br>';&#13;
       } else if (contentType === 'text') {&#13;
         var textData = JSON.parse(content.reportBlocksContentData[0].data);&#13;
-        tableHTML += textData.data + '&lt;br>';&#13;
+        tableHTML += (textData.data.length > 0 ? textData.data : JSON.parse(content.template).data) + '&lt;br>';&#13;
       } else if (contentType === 'reference') {&#13;
         var contentTemplate = JSON.parse(content.template);&#13;
         switch (contentTemplate.source) {&#13;
