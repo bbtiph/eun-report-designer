@@ -72,6 +72,7 @@ public class PersonEunIndicatorServiceImpl implements PersonEunIndicatorService 
             for (ApiResponseItemDto apiResponseItemDto : res) {
                 System.out.println(apiResponseItemDto);
                 PersonEunIndicator personEunIndicator = new PersonEunIndicator();
+                personEunIndicator.setPeriod(apiResponseItemDto.getPeriod());
                 personEunIndicator.setnCount(apiResponseItemDto.getN_count());
                 personEunIndicator.setCountryId(apiResponseItemDto.getCountry_id());
                 personEunIndicator.setProjectId(apiResponseItemDto.getProject_id());

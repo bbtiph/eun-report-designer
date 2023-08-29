@@ -29,13 +29,16 @@ public class DashboardServiceImpl implements DashboardService {
 
     private final PersonEunIndicatorService personEunIndicatorService;
 
+    private final ParticipantsEunIndicatorService participantsEunIndicatorService;
+
     public DashboardServiceImpl(
         WorkingGroupReferencesService workingGroupReferencesService,
         ProjectService projectService,
         EventService eventService,
         ReportBlocksService reportBlocksService,
         OrganizationEunIndicatorService organizationEunIndicatorService,
-        PersonEunIndicatorService personEunIndicatorService
+        PersonEunIndicatorService personEunIndicatorService,
+        ParticipantsEunIndicatorService participantsEunIndicatorService
     ) {
         this.workingGroupReferencesService = workingGroupReferencesService;
         this.projectService = projectService;
@@ -43,6 +46,7 @@ public class DashboardServiceImpl implements DashboardService {
         this.reportBlocksService = reportBlocksService;
         this.organizationEunIndicatorService = organizationEunIndicatorService;
         this.personEunIndicatorService = personEunIndicatorService;
+        this.participantsEunIndicatorService = participantsEunIndicatorService;
     }
 
     @Override
@@ -55,6 +59,7 @@ public class DashboardServiceImpl implements DashboardService {
         indicators.getIndicators().add(reportBlocksService.getIndicator(countryId, reportId));
         indicators.getIndicators().add(organizationEunIndicatorService.getIndicator(countryId, reportId));
         indicators.getIndicators().add(personEunIndicatorService.getIndicator(countryId, reportId));
+        indicators.getIndicators().add(participantsEunIndicatorService.getIndicator(countryId, reportId));
         return indicators;
     }
 }

@@ -72,6 +72,7 @@ public class OrganizationEunIndicatorServiceImpl implements OrganizationEunIndic
                 System.out.println(apiResponseItemDto);
                 OrganizationEunIndicator organizationEunIndicator = new OrganizationEunIndicator();
                 organizationEunIndicator.setnCount(apiResponseItemDto.getN_count());
+                organizationEunIndicator.setPeriod(apiResponseItemDto.getPeriod());
                 organizationEunIndicator.setCountryId(apiResponseItemDto.getCountry_id());
                 organizationEunIndicator.setProjectId(apiResponseItemDto.getProject_id());
                 organizationEunIndicator.setProjectUrl(apiResponseItemDto.getProject_url());

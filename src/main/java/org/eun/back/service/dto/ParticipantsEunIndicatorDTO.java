@@ -22,14 +22,6 @@ public class ParticipantsEunIndicatorDTO implements Serializable {
 
     private String countryCode;
 
-    private String createdBy;
-
-    private String lastModifiedBy;
-
-    private LocalDate createdDate;
-
-    private LocalDate lastModifiedDate;
-
     public Long getId() {
         return id;
     }
@@ -78,38 +70,6 @@ public class ParticipantsEunIndicatorDTO implements Serializable {
         this.countryCode = countryCode;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocalDate getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(LocalDate lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -132,19 +92,16 @@ public class ParticipantsEunIndicatorDTO implements Serializable {
     }
 
     // prettier-ignore
+
     @Override
     public String toString() {
         return "ParticipantsEunIndicatorDTO{" +
-            "id=" + getId() +
-            ", period=" + getPeriod() +
-            ", nCount=" + getnCount() +
-            ", courseId='" + getCourseId() + "'" +
-            ", courseName='" + getCourseName() + "'" +
-            ", countryCode='" + getCountryCode() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", lastModifiedBy='" + getLastModifiedBy() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            "}";
+            "id=" + id +
+            ", period=" + period +
+            ", nCount=" + nCount +
+            ", courseId='" + courseId + '\'' +
+            ", courseName='" + courseName + '\'' +
+            ", countryCode='" + countryCode + '\'' +
+            '}';
     }
 }

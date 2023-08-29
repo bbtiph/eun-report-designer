@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class ApiResponseItemDto {
 
+    private Long period;
     private Long n_count;
     private Long country_id;
     private Long project_id;
@@ -39,5 +40,9 @@ public class ApiResponseItemDto {
 
     public Long getReports_project_id() {
         return reports_project_id;
+    }
+
+    public Long getPeriod() {
+        return period;
     }
 }

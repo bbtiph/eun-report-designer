@@ -2,6 +2,8 @@ package org.eun.back.service;
 
 import java.util.List;
 import java.util.Optional;
+import org.eun.back.domain.ParticipantsEunIndicator;
+import org.eun.back.service.dto.Indicator;
 import org.eun.back.service.dto.ParticipantsEunIndicatorDTO;
 
 /**
@@ -15,6 +17,8 @@ public interface ParticipantsEunIndicatorService {
      * @return the persisted entity.
      */
     ParticipantsEunIndicatorDTO save(ParticipantsEunIndicatorDTO participantsEunIndicatorDTO);
+
+    ParticipantsEunIndicatorDTO save(ParticipantsEunIndicator participantsEunIndicator);
 
     /**
      * Updates a participantsEunIndicator.
@@ -53,4 +57,6 @@ public interface ParticipantsEunIndicatorService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Indicator<?> getIndicator(Long countryId, Long reportId);
 }

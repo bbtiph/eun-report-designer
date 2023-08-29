@@ -6,7 +6,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.eun.back.domain.ParticipantsEunIndicator;
 import org.eun.back.repository.ParticipantsEunIndicatorRepository;
+import org.eun.back.service.CountriesService;
 import org.eun.back.service.ParticipantsEunIndicatorService;
+import org.eun.back.service.dto.CountriesDTO;
+import org.eun.back.service.dto.Indicator;
 import org.eun.back.service.dto.ParticipantsEunIndicatorDTO;
 import org.eun.back.service.mapper.ParticipantsEunIndicatorMapper;
 import org.slf4j.Logger;
@@ -27,18 +30,45 @@ public class ParticipantsEunIndicatorServiceImpl implements ParticipantsEunIndic
 
     private final ParticipantsEunIndicatorMapper participantsEunIndicatorMapper;
 
+    private final CountriesService countriesService;
+
     public ParticipantsEunIndicatorServiceImpl(
         ParticipantsEunIndicatorRepository participantsEunIndicatorRepository,
-        ParticipantsEunIndicatorMapper participantsEunIndicatorMapper
+        ParticipantsEunIndicatorMapper participantsEunIndicatorMapper,
+        CountriesService countriesService
     ) {
         this.participantsEunIndicatorRepository = participantsEunIndicatorRepository;
         this.participantsEunIndicatorMapper = participantsEunIndicatorMapper;
+        this.countriesService = countriesService;
+    }
+
+    @Override
+    public Indicator<?> getIndicator(Long countryId, Long reportId) {
+        String countryCode = this.countriesService.findOne(countryId).map(CountriesDTO::getCountryCode).orElse(null);
+        Indicator<ParticipantsEunIndicatorDTO> indicator = new Indicator<>();
+        if (countryCode != null) {
+            //            List<ParticipantsEunIndicator> data = this.participantsEunIndicatorRepository.findAllByCountryCodeEquals(countryCode);
+            List<ParticipantsEunIndicator> data = this.participantsEunIndicatorRepository.findAll();
+            long sum = data.stream().mapToLong(ParticipantsEunIndicator::getnCount).sum();
+            indicator.setData(participantsEunIndicatorMapper.toDto(data));
+            indicator.setValue(String.valueOf(sum));
+        }
+        indicator.setCode("participants_eun");
+        indicator.setLabel("Participants EUN");
+        return indicator;
     }
 
     @Override
     public ParticipantsEunIndicatorDTO save(ParticipantsEunIndicatorDTO participantsEunIndicatorDTO) {
         log.debug("Request to save ParticipantsEunIndicator : {}", participantsEunIndicatorDTO);
         ParticipantsEunIndicator participantsEunIndicator = participantsEunIndicatorMapper.toEntity(participantsEunIndicatorDTO);
+        participantsEunIndicator = participantsEunIndicatorRepository.save(participantsEunIndicator);
+        return participantsEunIndicatorMapper.toDto(participantsEunIndicator);
+    }
+
+    @Override
+    public ParticipantsEunIndicatorDTO save(ParticipantsEunIndicator participantsEunIndicator) {
+        log.debug("Request to save ParticipantsEunIndicator : {}", participantsEunIndicator);
         participantsEunIndicator = participantsEunIndicatorRepository.save(participantsEunIndicator);
         return participantsEunIndicatorMapper.toDto(participantsEunIndicator);
     }
