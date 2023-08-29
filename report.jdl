@@ -1,25 +1,9 @@
-entity OrganizationEunIndicator {
+entity ParticipantsEunIndicator {
+    period Long
     nCount Long
-    countryId Long
-    projectId Long
-    projectUrl String
-    countryName String
-    projectName String
-    reportsProjectId Long
-    createdBy String
-    lastModifiedBy String
-    createdDate LocalDate
-    lastModifiedDate LocalDate
-}
-
-entity PersonEunIndicator {
-    nCount Long
-    countryId Long
-    projectId Long
-    projectUrl String
-    countryName String
-    projectName String
-    reportsProjectId Long
+    courseId String
+    courseName String
+    countryCode String
     createdBy String
     lastModifiedBy String
     createdDate LocalDate
@@ -27,7 +11,7 @@ entity PersonEunIndicator {
 }
 
 
-dto PersonEunIndicator, OrganizationEunIndicator with mapstruct
-service PersonEunIndicator, OrganizationEunIndicator with serviceImpl
+dto ParticipantsEunIndicator with mapstruct
+service ParticipantsEunIndicator with serviceImpl
 
 

@@ -1,0 +1,52 @@
+{
+  "applications": "*",
+  "changelogDate": "20230829060411",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "participants_eun_indicator",
+  "fields": [
+    {
+      "fieldName": "period",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "nCount",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "courseId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "courseName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryCode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastModifiedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "lastModifiedDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ParticipantsEunIndicator",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

@@ -151,6 +151,12 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'PersonEunIndicators' },
         loadChildren: () => import('./person-eun-indicator/person-eun-indicator.module').then(m => m.PersonEunIndicatorModule),
       },
+      {
+        path: 'participants-eun-indicator',
+        data: { pageTitle: 'ParticipantsEunIndicators' },
+        loadChildren: () =>
+          import('./participants-eun-indicator/participants-eun-indicator.module').then(m => m.ParticipantsEunIndicatorModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="participantsEunIndicator">
+      <h2 data-cy="participantsEunIndicatorDetailsHeading"><span>Participants Eun Indicator</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ participantsEunIndicator.id }}</span>
+        </dd>
+        <dt><span>Period</span></dt>
+        <dd>
+          <span>{{ participantsEunIndicator.period }}</span>
+        </dd>
+        <dt><span>N Count</span></dt>
+        <dd>
+          <span>{{ participantsEunIndicator.nCount }}</span>
+        </dd>
+        <dt><span>Course Id</span></dt>
+        <dd>
+          <span>{{ participantsEunIndicator.courseId }}</span>
+        </dd>
+        <dt><span>Course Name</span></dt>
+        <dd>
+          <span>{{ participantsEunIndicator.courseName }}</span>
+        </dd>
+        <dt><span>Country Code</span></dt>
+        <dd>
+          <span>{{ participantsEunIndicator.countryCode }}</span>
+        </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+          <span>{{ participantsEunIndicator.createdBy }}</span>
+        </dd>
+        <dt><span>Last Modified By</span></dt>
+        <dd>
+          <span>{{ participantsEunIndicator.lastModifiedBy }}</span>
+        </dd>
+        <dt><span>Created Date</span></dt>
+        <dd>
+          <span>{{ participantsEunIndicator.createdDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Last Modified Date</span></dt>
+        <dd>
+          <span>{{ participantsEunIndicator.lastModifiedDate | formatMediumDate }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/participants-eun-indicator', participantsEunIndicator.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
