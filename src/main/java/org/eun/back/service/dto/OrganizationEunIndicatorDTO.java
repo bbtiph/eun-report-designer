@@ -12,6 +12,8 @@ public class OrganizationEunIndicatorDTO implements Serializable {
 
     private Long id;
 
+    private Long period;
+
     private Long nCount;
 
     private Long countryId;
@@ -32,6 +34,14 @@ public class OrganizationEunIndicatorDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Long period) {
+        this.period = period;
     }
 
     public Long getnCount() {
@@ -111,30 +121,19 @@ public class OrganizationEunIndicatorDTO implements Serializable {
         return Objects.hash(this.id);
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
-        return (
-            "OrganizationEunIndicatorDTO{" +
-            "id=" +
-            id +
-            ", nCount=" +
-            nCount +
-            ", countryId=" +
-            countryId +
-            ", projectId=" +
-            projectId +
-            ", projectUrl='" +
-            projectUrl +
-            '\'' +
-            ", countryName='" +
-            countryName +
-            '\'' +
-            ", projectName='" +
-            projectName +
-            '\'' +
-            ", reportsProjectId=" +
-            reportsProjectId +
-            '}'
-        );
+        return "OrganizationEunIndicatorDTO{" +
+            "id=" + id +
+            ", period=" + period +
+            ", nCount=" + nCount +
+            ", countryId=" + countryId +
+            ", projectId=" + projectId +
+            ", projectUrl='" + projectUrl + '\'' +
+            ", countryName='" + countryName + '\'' +
+            ", projectName='" + projectName + '\'' +
+            ", reportsProjectId=" + reportsProjectId +
+            '}';
     }
 }

@@ -6,6 +6,10 @@
   "entityTableName": "organization_eun_indicator",
   "fields": [
     {
+      "fieldName": "period",
+      "fieldType": "Long"
+    },
+    {
       "fieldName": "nCount",
       "fieldType": "Long"
     },

@@ -33,6 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class OrganizationEunIndicatorResourceIT {
 
+    private static final Long DEFAULT_PERIOD = 1L;
+    private static final Long UPDATED_PERIOD = 2L;
+
     private static final Long DEFAULT_N_COUNT = 1L;
     private static final Long UPDATED_N_COUNT = 2L;
 
@@ -94,6 +97,7 @@ class OrganizationEunIndicatorResourceIT {
      */
     public static OrganizationEunIndicator createEntity(EntityManager em) {
         OrganizationEunIndicator organizationEunIndicator = new OrganizationEunIndicator()
+            .period(DEFAULT_PERIOD)
             .nCount(DEFAULT_N_COUNT)
             .countryId(DEFAULT_COUNTRY_ID)
             .projectId(DEFAULT_PROJECT_ID)
@@ -116,6 +120,7 @@ class OrganizationEunIndicatorResourceIT {
      */
     public static OrganizationEunIndicator createUpdatedEntity(EntityManager em) {
         OrganizationEunIndicator organizationEunIndicator = new OrganizationEunIndicator()
+            .period(UPDATED_PERIOD)
             .nCount(UPDATED_N_COUNT)
             .countryId(UPDATED_COUNTRY_ID)
             .projectId(UPDATED_PROJECT_ID)
@@ -153,6 +158,7 @@ class OrganizationEunIndicatorResourceIT {
         List<OrganizationEunIndicator> organizationEunIndicatorList = organizationEunIndicatorRepository.findAll();
         assertThat(organizationEunIndicatorList).hasSize(databaseSizeBeforeCreate + 1);
         OrganizationEunIndicator testOrganizationEunIndicator = organizationEunIndicatorList.get(organizationEunIndicatorList.size() - 1);
+        assertThat(testOrganizationEunIndicator.getPeriod()).isEqualTo(DEFAULT_PERIOD);
         assertThat(testOrganizationEunIndicator.getnCount()).isEqualTo(DEFAULT_N_COUNT);
         assertThat(testOrganizationEunIndicator.getCountryId()).isEqualTo(DEFAULT_COUNTRY_ID);
         assertThat(testOrganizationEunIndicator.getProjectId()).isEqualTo(DEFAULT_PROJECT_ID);
@@ -201,6 +207,7 @@ class OrganizationEunIndicatorResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(organizationEunIndicator.getId().intValue())))
+            .andExpect(jsonPath("$.[*].period").value(hasItem(DEFAULT_PERIOD.intValue())))
             .andExpect(jsonPath("$.[*].nCount").value(hasItem(DEFAULT_N_COUNT.intValue())))
             .andExpect(jsonPath("$.[*].countryId").value(hasItem(DEFAULT_COUNTRY_ID.intValue())))
             .andExpect(jsonPath("$.[*].projectId").value(hasItem(DEFAULT_PROJECT_ID.intValue())))
@@ -226,6 +233,7 @@ class OrganizationEunIndicatorResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(organizationEunIndicator.getId().intValue()))
+            .andExpect(jsonPath("$.period").value(DEFAULT_PERIOD.intValue()))
             .andExpect(jsonPath("$.nCount").value(DEFAULT_N_COUNT.intValue()))
             .andExpect(jsonPath("$.countryId").value(DEFAULT_COUNTRY_ID.intValue()))
             .andExpect(jsonPath("$.projectId").value(DEFAULT_PROJECT_ID.intValue()))
@@ -261,6 +269,7 @@ class OrganizationEunIndicatorResourceIT {
         // Disconnect from session so that the updates on updatedOrganizationEunIndicator are not directly saved in db
         em.detach(updatedOrganizationEunIndicator);
         updatedOrganizationEunIndicator
+            .period(UPDATED_PERIOD)
             .nCount(UPDATED_N_COUNT)
             .countryId(UPDATED_COUNTRY_ID)
             .projectId(UPDATED_PROJECT_ID)
@@ -286,6 +295,7 @@ class OrganizationEunIndicatorResourceIT {
         List<OrganizationEunIndicator> organizationEunIndicatorList = organizationEunIndicatorRepository.findAll();
         assertThat(organizationEunIndicatorList).hasSize(databaseSizeBeforeUpdate);
         OrganizationEunIndicator testOrganizationEunIndicator = organizationEunIndicatorList.get(organizationEunIndicatorList.size() - 1);
+        assertThat(testOrganizationEunIndicator.getPeriod()).isEqualTo(UPDATED_PERIOD);
         assertThat(testOrganizationEunIndicator.getnCount()).isEqualTo(UPDATED_N_COUNT);
         assertThat(testOrganizationEunIndicator.getCountryId()).isEqualTo(UPDATED_COUNTRY_ID);
         assertThat(testOrganizationEunIndicator.getProjectId()).isEqualTo(UPDATED_PROJECT_ID);
@@ -381,12 +391,12 @@ class OrganizationEunIndicatorResourceIT {
         partialUpdatedOrganizationEunIndicator.setId(organizationEunIndicator.getId());
 
         partialUpdatedOrganizationEunIndicator
+            .period(UPDATED_PERIOD)
             .nCount(UPDATED_N_COUNT)
-            .countryId(UPDATED_COUNTRY_ID)
+            .projectUrl(UPDATED_PROJECT_URL)
             .countryName(UPDATED_COUNTRY_NAME)
-            .projectName(UPDATED_PROJECT_NAME)
-            .createdBy(UPDATED_CREATED_BY)
-            .lastModifiedBy(UPDATED_LAST_MODIFIED_BY);
+            .reportsProjectId(UPDATED_REPORTS_PROJECT_ID)
+            .createdBy(UPDATED_CREATED_BY);
 
         restOrganizationEunIndicatorMockMvc
             .perform(
@@ -400,15 +410,16 @@ class OrganizationEunIndicatorResourceIT {
         List<OrganizationEunIndicator> organizationEunIndicatorList = organizationEunIndicatorRepository.findAll();
         assertThat(organizationEunIndicatorList).hasSize(databaseSizeBeforeUpdate);
         OrganizationEunIndicator testOrganizationEunIndicator = organizationEunIndicatorList.get(organizationEunIndicatorList.size() - 1);
+        assertThat(testOrganizationEunIndicator.getPeriod()).isEqualTo(UPDATED_PERIOD);
         assertThat(testOrganizationEunIndicator.getnCount()).isEqualTo(UPDATED_N_COUNT);
-        assertThat(testOrganizationEunIndicator.getCountryId()).isEqualTo(UPDATED_COUNTRY_ID);
+        assertThat(testOrganizationEunIndicator.getCountryId()).isEqualTo(DEFAULT_COUNTRY_ID);
         assertThat(testOrganizationEunIndicator.getProjectId()).isEqualTo(DEFAULT_PROJECT_ID);
-        assertThat(testOrganizationEunIndicator.getProjectUrl()).isEqualTo(DEFAULT_PROJECT_URL);
+        assertThat(testOrganizationEunIndicator.getProjectUrl()).isEqualTo(UPDATED_PROJECT_URL);
         assertThat(testOrganizationEunIndicator.getCountryName()).isEqualTo(UPDATED_COUNTRY_NAME);
-        assertThat(testOrganizationEunIndicator.getProjectName()).isEqualTo(UPDATED_PROJECT_NAME);
-        assertThat(testOrganizationEunIndicator.getReportsProjectId()).isEqualTo(DEFAULT_REPORTS_PROJECT_ID);
+        assertThat(testOrganizationEunIndicator.getProjectName()).isEqualTo(DEFAULT_PROJECT_NAME);
+        assertThat(testOrganizationEunIndicator.getReportsProjectId()).isEqualTo(UPDATED_REPORTS_PROJECT_ID);
         assertThat(testOrganizationEunIndicator.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
-        assertThat(testOrganizationEunIndicator.getLastModifiedBy()).isEqualTo(UPDATED_LAST_MODIFIED_BY);
+        assertThat(testOrganizationEunIndicator.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
         assertThat(testOrganizationEunIndicator.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
         assertThat(testOrganizationEunIndicator.getLastModifiedDate()).isEqualTo(DEFAULT_LAST_MODIFIED_DATE);
     }
@@ -426,6 +437,7 @@ class OrganizationEunIndicatorResourceIT {
         partialUpdatedOrganizationEunIndicator.setId(organizationEunIndicator.getId());
 
         partialUpdatedOrganizationEunIndicator
+            .period(UPDATED_PERIOD)
             .nCount(UPDATED_N_COUNT)
             .countryId(UPDATED_COUNTRY_ID)
             .projectId(UPDATED_PROJECT_ID)
@@ -450,6 +462,7 @@ class OrganizationEunIndicatorResourceIT {
         List<OrganizationEunIndicator> organizationEunIndicatorList = organizationEunIndicatorRepository.findAll();
         assertThat(organizationEunIndicatorList).hasSize(databaseSizeBeforeUpdate);
         OrganizationEunIndicator testOrganizationEunIndicator = organizationEunIndicatorList.get(organizationEunIndicatorList.size() - 1);
+        assertThat(testOrganizationEunIndicator.getPeriod()).isEqualTo(UPDATED_PERIOD);
         assertThat(testOrganizationEunIndicator.getnCount()).isEqualTo(UPDATED_N_COUNT);
         assertThat(testOrganizationEunIndicator.getCountryId()).isEqualTo(UPDATED_COUNTRY_ID);
         assertThat(testOrganizationEunIndicator.getProjectId()).isEqualTo(UPDATED_PROJECT_ID);

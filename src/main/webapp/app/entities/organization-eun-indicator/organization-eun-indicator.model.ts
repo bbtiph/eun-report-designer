@@ -2,6 +2,7 @@ import dayjs from 'dayjs/esm';
 
 export interface IOrganizationEunIndicator {
   id: number;
+  period?: number | null;
   nCount?: number | null;
   countryId?: number | null;
   projectId?: number | null;

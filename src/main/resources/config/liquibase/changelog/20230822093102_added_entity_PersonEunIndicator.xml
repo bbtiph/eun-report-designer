@@ -14,6 +14,9 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="period" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="n_count" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -68,6 +71,7 @@
                   tableName="person_eun_indicator"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
+            <column name="period" type="numeric"/>
             <column name="n_count" type="numeric"/>
             <column name="country_id" type="numeric"/>
             <column name="project_id" type="numeric"/>

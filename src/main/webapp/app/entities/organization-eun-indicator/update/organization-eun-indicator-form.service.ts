@@ -18,6 +18,7 @@ type OrganizationEunIndicatorFormDefaults = Pick<NewOrganizationEunIndicator, 'i
 
 type OrganizationEunIndicatorFormGroupContent = {
   id: FormControl<IOrganizationEunIndicator['id'] | NewOrganizationEunIndicator['id']>;
+  period: FormControl<IOrganizationEunIndicator['period']>;
   nCount: FormControl<IOrganizationEunIndicator['nCount']>;
   countryId: FormControl<IOrganizationEunIndicator['countryId']>;
   projectId: FormControl<IOrganizationEunIndicator['projectId']>;
@@ -50,6 +51,7 @@ export class OrganizationEunIndicatorFormService {
           validators: [Validators.required],
         }
       ),
+      period: new FormControl(organizationEunIndicatorRawValue.period),
       nCount: new FormControl(organizationEunIndicatorRawValue.nCount),
       countryId: new FormControl(organizationEunIndicatorRawValue.countryId),
       projectId: new FormControl(organizationEunIndicatorRawValue.projectId),

@@ -18,6 +18,7 @@ type PersonEunIndicatorFormDefaults = Pick<NewPersonEunIndicator, 'id'>;
 
 type PersonEunIndicatorFormGroupContent = {
   id: FormControl<IPersonEunIndicator['id'] | NewPersonEunIndicator['id']>;
+  period: FormControl<IPersonEunIndicator['period']>;
   nCount: FormControl<IPersonEunIndicator['nCount']>;
   countryId: FormControl<IPersonEunIndicator['countryId']>;
   projectId: FormControl<IPersonEunIndicator['projectId']>;
@@ -48,6 +49,7 @@ export class PersonEunIndicatorFormService {
           validators: [Validators.required],
         }
       ),
+      period: new FormControl(personEunIndicatorRawValue.period),
       nCount: new FormControl(personEunIndicatorRawValue.nCount),
       countryId: new FormControl(personEunIndicatorRawValue.countryId),
       projectId: new FormControl(personEunIndicatorRawValue.projectId),

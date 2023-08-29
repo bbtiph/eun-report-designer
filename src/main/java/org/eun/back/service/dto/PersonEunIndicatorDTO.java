@@ -12,6 +12,8 @@ public class PersonEunIndicatorDTO implements Serializable {
 
     private Long id;
 
+    private Long period;
+
     private Long nCount;
 
     private Long countryId;
@@ -32,6 +34,14 @@ public class PersonEunIndicatorDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Long period) {
+        this.period = period;
     }
 
     public Long getnCount() {
@@ -117,6 +127,8 @@ public class PersonEunIndicatorDTO implements Serializable {
             "PersonEunIndicatorDTO{" +
             "id=" +
             id +
+            ", period=" +
+            period +
             ", nCount=" +
             nCount +
             ", countryId=" +

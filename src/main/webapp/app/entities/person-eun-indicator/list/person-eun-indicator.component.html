@@ -38,6 +38,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="period">
+            <div class="d-flex">
+              <span>Period</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="nCount">
             <div class="d-flex">
               <span>N Count</span>
@@ -112,6 +118,7 @@
           <td>
             <a [routerLink]="['/person-eun-indicator', personEunIndicator.id, 'view']">{{ personEunIndicator.id }}</a>
           </td>
+          <td>{{ personEunIndicator.period }}</td>
           <td>{{ personEunIndicator.nCount }}</td>
           <td>{{ personEunIndicator.countryId }}</td>
           <td>{{ personEunIndicator.projectId }}</td>

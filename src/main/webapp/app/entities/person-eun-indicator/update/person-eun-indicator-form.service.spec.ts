@@ -20,6 +20,7 @@ describe('PersonEunIndicator Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            period: expect.any(Object),
             nCount: expect.any(Object),
             countryId: expect.any(Object),
             projectId: expect.any(Object),
@@ -41,6 +42,7 @@ describe('PersonEunIndicator Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            period: expect.any(Object),
             nCount: expect.any(Object),
             countryId: expect.any(Object),
             projectId: expect.any(Object),

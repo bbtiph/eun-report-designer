@@ -20,6 +20,9 @@ public class PersonEunIndicator implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "period")
+    private Long period;
+
     @Column(name = "n_count")
     private Long nCount;
 
@@ -66,6 +69,19 @@ public class PersonEunIndicator implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getPeriod() {
+        return this.period;
+    }
+
+    public PersonEunIndicator period(Long period) {
+        this.setPeriod(period);
+        return this;
+    }
+
+    public void setPeriod(Long period) {
+        this.period = period;
     }
 
     public Long getnCount() {
@@ -235,6 +251,7 @@ public class PersonEunIndicator implements Serializable {
     public String toString() {
         return "PersonEunIndicator{" +
             "id=" + getId() +
+            ", period=" + getPeriod() +
             ", nCount=" + getnCount() +
             ", countryId=" + getCountryId() +
             ", projectId=" + getProjectId() +
