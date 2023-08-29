@@ -3,7 +3,7 @@ package org.eun.back.service.dto;
 import lombok.Data;
 
 @Data
-public class ApiResponseItemDto {
+public class ApiResponseOrganizationAndPersonDto {
 
     private Long period;
     private Long n_count;

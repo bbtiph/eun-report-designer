@@ -1,21 +1,26 @@
 package org.eun.back.service.impl;
 
+import com.google.gson.Gson;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.eun.back.domain.OrganizationEunIndicator;
 import org.eun.back.domain.ParticipantsEunIndicator;
 import org.eun.back.repository.ParticipantsEunIndicatorRepository;
 import org.eun.back.service.CountriesService;
 import org.eun.back.service.ParticipantsEunIndicatorService;
-import org.eun.back.service.dto.CountriesDTO;
-import org.eun.back.service.dto.Indicator;
-import org.eun.back.service.dto.ParticipantsEunIndicatorDTO;
+import org.eun.back.service.dto.*;
 import org.eun.back.service.mapper.ParticipantsEunIndicatorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Service Implementation for managing {@link ParticipantsEunIndicator}.
@@ -23,6 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ParticipantsEunIndicatorServiceImpl implements ParticipantsEunIndicatorService {
+
+    @Value("${eun.reports-etl.url}")
+    private String url;
 
     private final Logger log = LoggerFactory.getLogger(ParticipantsEunIndicatorServiceImpl.class);
 
@@ -56,6 +64,52 @@ public class ParticipantsEunIndicatorServiceImpl implements ParticipantsEunIndic
         indicator.setCode("participants_eun");
         indicator.setLabel("Participants EUN");
         return indicator;
+    }
+
+    //    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(fixedDelay = 60000)
+    public void fetchDataFromEun() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                url + "bycountry/bycourse/participants",
+                HttpMethod.GET,
+                new HttpEntity<>("{}", headers),
+                String.class
+            );
+            Gson gson = new Gson();
+            ApiResponseParticipantDto[] res = gson.fromJson(response.getBody(), ApiResponseParticipantDto[].class);
+            for (ApiResponseParticipantDto apiResponseParticipantDto : res) {
+                ParticipantsEunIndicator participantsEunIndicator = new ParticipantsEunIndicator();
+                participantsEunIndicator.setnCount(apiResponseParticipantDto.getN_count());
+                participantsEunIndicator.setPeriod(apiResponseParticipantDto.getPeriod());
+                participantsEunIndicator.setCountryCode(apiResponseParticipantDto.getCountry_code());
+                participantsEunIndicator.setCourseName(apiResponseParticipantDto.getCourse_name());
+                participantsEunIndicator.setCourseId(apiResponseParticipantDto.getCourse_id());
+
+                ParticipantsEunIndicator participantsEunIndicatorRes = participantsEunIndicatorRepository.findByCountryCodeAndCourseId(
+                    participantsEunIndicator.getCountryCode(),
+                    participantsEunIndicator.getCourseId()
+                );
+
+                if (participantsEunIndicatorRes != null) {
+                    participantsEunIndicator.setId(participantsEunIndicatorRes.getId());
+                    participantsEunIndicator.setLastModifiedBy("system");
+                    participantsEunIndicator.setLastModifiedDate(LocalDate.now());
+                    participantsEunIndicator.setCreatedBy(participantsEunIndicatorRes.getCreatedBy());
+                    participantsEunIndicator.setCreatedDate(participantsEunIndicatorRes.getCreatedDate());
+                } else {
+                    participantsEunIndicator.setCreatedBy("system");
+                    participantsEunIndicator.setCreatedDate(LocalDate.now());
+                }
+                this.save(participantsEunIndicator);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

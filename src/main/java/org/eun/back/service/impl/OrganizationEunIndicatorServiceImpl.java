@@ -67,18 +67,17 @@ public class OrganizationEunIndicatorServiceImpl implements OrganizationEunIndic
                 String.class
             );
             Gson gson = new Gson();
-            ApiResponseItemDto[] res = gson.fromJson(response.getBody(), ApiResponseItemDto[].class);
-            for (ApiResponseItemDto apiResponseItemDto : res) {
-                System.out.println(apiResponseItemDto);
+            ApiResponseOrganizationAndPersonDto[] res = gson.fromJson(response.getBody(), ApiResponseOrganizationAndPersonDto[].class);
+            for (ApiResponseOrganizationAndPersonDto apiResponseOrganizationAndPersonDto : res) {
                 OrganizationEunIndicator organizationEunIndicator = new OrganizationEunIndicator();
-                organizationEunIndicator.setnCount(apiResponseItemDto.getN_count());
-                organizationEunIndicator.setPeriod(apiResponseItemDto.getPeriod());
-                organizationEunIndicator.setCountryId(apiResponseItemDto.getCountry_id());
-                organizationEunIndicator.setProjectId(apiResponseItemDto.getProject_id());
-                organizationEunIndicator.setProjectUrl(apiResponseItemDto.getProject_url());
-                organizationEunIndicator.setCountryName(apiResponseItemDto.getCountry_name());
-                organizationEunIndicator.setProjectName(apiResponseItemDto.getProject_name());
-                organizationEunIndicator.setReportsProjectId(apiResponseItemDto.getReports_project_id());
+                organizationEunIndicator.setnCount(apiResponseOrganizationAndPersonDto.getN_count());
+                organizationEunIndicator.setPeriod(apiResponseOrganizationAndPersonDto.getPeriod());
+                organizationEunIndicator.setCountryId(apiResponseOrganizationAndPersonDto.getCountry_id());
+                organizationEunIndicator.setProjectId(apiResponseOrganizationAndPersonDto.getProject_id());
+                organizationEunIndicator.setProjectUrl(apiResponseOrganizationAndPersonDto.getProject_url());
+                organizationEunIndicator.setCountryName(apiResponseOrganizationAndPersonDto.getCountry_name());
+                organizationEunIndicator.setProjectName(apiResponseOrganizationAndPersonDto.getProject_name());
+                organizationEunIndicator.setReportsProjectId(apiResponseOrganizationAndPersonDto.getReports_project_id());
 
                 OrganizationEunIndicator organizationEunIndicatorRes = organizationEunIndicatorRepository.findByCountryIdAndProjectIdAndReportsProjectId(
                     organizationEunIndicator.getCountryId(),
@@ -90,6 +89,8 @@ public class OrganizationEunIndicatorServiceImpl implements OrganizationEunIndic
                     organizationEunIndicator.setId(organizationEunIndicatorRes.getId());
                     organizationEunIndicator.setLastModifiedBy("system");
                     organizationEunIndicator.setLastModifiedDate(LocalDate.now());
+                    organizationEunIndicator.setCreatedBy(organizationEunIndicatorRes.getCreatedBy());
+                    organizationEunIndicator.setCreatedDate(organizationEunIndicatorRes.getCreatedDate());
                 } else {
                     organizationEunIndicator.setCreatedBy("system");
                     organizationEunIndicator.setCreatedDate(LocalDate.now());
