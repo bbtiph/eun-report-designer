@@ -5,6 +5,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -104,11 +105,15 @@ public class PersonEunIndicatorServiceImpl implements PersonEunIndicatorService 
     }
 
     @Override
-    public Indicator<?> getIndicator(Long countryId, Long reportId) {
+    public Indicator<?> getIndicator(Map<String, String> params, Long reportId) {
+        Long countryId = params.get("country_id") != null ? Long.parseLong(params.get("country_id")) : null;
+        Long startDate = params.get("start_year") != null ? Long.parseLong(params.get("start_year")) : null;
+        Long endDate = params.get("end_year") != null ? Long.parseLong(params.get("end_year")) : null;
         String countryName = this.countriesService.findOne(countryId).map(CountriesDTO::getCountryName).orElse(null);
         Indicator<PersonEunIndicatorDTO> indicator = new Indicator<>();
         if (countryName != null) {
             List<PersonEunIndicator> data = this.personEunIndicatorRepository.findAllByCountryNameEquals(countryName);
+            data.removeIf(item -> (startDate != null && item.getPeriod() < startDate) || (endDate != null && item.getPeriod() > endDate));
             long sum = data.stream().mapToLong(PersonEunIndicator::getnCount).sum();
             indicator.setData(personEunIndicatorMapper.toDto(data));
             indicator.setValue(String.valueOf(sum));

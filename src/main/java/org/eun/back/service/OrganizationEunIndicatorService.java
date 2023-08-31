@@ -1,6 +1,7 @@
 package org.eun.back.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.eun.back.domain.OrganizationEunIndicator;
 import org.eun.back.service.dto.Indicator;
@@ -58,5 +59,5 @@ public interface OrganizationEunIndicatorService {
      */
     void delete(Long id);
 
-    Indicator<?> getIndicator(Long countryId, Long reportId);
+    Indicator<?> getIndicator(Map<String, String> params, Long reportId);
 }

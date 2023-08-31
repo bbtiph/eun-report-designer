@@ -40,10 +40,7 @@ public class DashboardResource {
         @PathVariable Long reportId,
         @RequestParam Map<String, String> params
     ) {
-        String countryId = params.get("country_id");
-
-        IndicatorsDto result = dashboardService.getIndicators(Long.parseLong(countryId), reportId);
-
+        IndicatorsDto result = dashboardService.getIndicators(params, reportId);
         return ResponseEntity.ok().body(result);
     }
 }

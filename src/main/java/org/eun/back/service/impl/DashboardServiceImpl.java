@@ -1,5 +1,6 @@
 package org.eun.back.service.impl;
 
+import java.util.Map;
 import org.eun.back.domain.WorkingGroupReferences;
 import org.eun.back.service.*;
 import org.eun.back.service.dto.IndicatorsDto;
@@ -51,15 +52,16 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     @Transactional(readOnly = true)
-    public IndicatorsDto getIndicators(Long countryId, Long reportId) {
+    public IndicatorsDto getIndicators(Map<String, String> params, Long reportId) {
+        String countryId = params.get("country_id");
         IndicatorsDto indicators = new IndicatorsDto();
-        indicators.getIndicators().add(workingGroupReferencesService.getIndicator(countryId, reportId));
-        indicators.getIndicators().add(projectService.getIndicator(countryId, reportId));
-        indicators.getIndicators().add(eventService.getIndicator(countryId, reportId));
-        indicators.getIndicators().add(reportBlocksService.getIndicator(countryId, reportId));
-        indicators.getIndicators().add(organizationEunIndicatorService.getIndicator(countryId, reportId));
-        indicators.getIndicators().add(personEunIndicatorService.getIndicator(countryId, reportId));
-        indicators.getIndicators().add(participantsEunIndicatorService.getIndicator(countryId, reportId));
+        indicators.getIndicators().add(workingGroupReferencesService.getIndicator(Long.parseLong(countryId), reportId));
+        indicators.getIndicators().add(projectService.getIndicator(Long.parseLong(countryId), reportId));
+        indicators.getIndicators().add(eventService.getIndicator(Long.parseLong(countryId), reportId));
+        indicators.getIndicators().add(reportBlocksService.getIndicator(Long.parseLong(countryId), reportId));
+        indicators.getIndicators().add(organizationEunIndicatorService.getIndicator(params, reportId));
+        indicators.getIndicators().add(personEunIndicatorService.getIndicator(params, reportId));
+        indicators.getIndicators().add(participantsEunIndicatorService.getIndicator(params, reportId));
         return indicators;
     }
 }

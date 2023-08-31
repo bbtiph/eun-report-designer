@@ -26,8 +26,6 @@ public class PersonEunIndicatorDTO implements Serializable {
 
     private String projectName;
 
-    private Long reportsProjectId;
-
     public Long getId() {
         return id;
     }
@@ -92,14 +90,6 @@ public class PersonEunIndicatorDTO implements Serializable {
         this.projectName = projectName;
     }
 
-    public Long getReportsProjectId() {
-        return reportsProjectId;
-    }
-
-    public void setReportsProjectId(Long reportsProjectId) {
-        this.reportsProjectId = reportsProjectId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -144,8 +134,6 @@ public class PersonEunIndicatorDTO implements Serializable {
             ", projectName='" +
             projectName +
             '\'' +
-            ", reportsProjectId=" +
-            reportsProjectId +
             '}'
         );
     }

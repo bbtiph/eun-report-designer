@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.eun.back.domain.OrganizationEunIndicator;
@@ -51,23 +52,25 @@ public class ParticipantsEunIndicatorServiceImpl implements ParticipantsEunIndic
     }
 
     @Override
-    public Indicator<?> getIndicator(Long countryId, Long reportId) {
+    public Indicator<?> getIndicator(Map<String, String> params, Long reportId) {
+        Long countryId = params.get("country_id") != null ? Long.parseLong(params.get("country_id")) : null;
+        Long startDate = params.get("start_year") != null ? Long.parseLong(params.get("start_year")) : null;
+        Long endDate = params.get("end_year") != null ? Long.parseLong(params.get("end_year")) : null;
         String countryCode = this.countriesService.findOne(countryId).map(CountriesDTO::getCountryCode).orElse(null);
         Indicator<ParticipantsEunIndicatorDTO> indicator = new Indicator<>();
         if (countryCode != null) {
-            //            List<ParticipantsEunIndicator> data = this.participantsEunIndicatorRepository.findAllByCountryCodeEquals(countryCode);
-            List<ParticipantsEunIndicator> data = this.participantsEunIndicatorRepository.findAll();
+            List<ParticipantsEunIndicator> data = this.participantsEunIndicatorRepository.findAllByCountryCodeEquals(countryCode);
+            data.removeIf(item -> (startDate != null && item.getPeriod() < startDate) || (endDate != null && item.getPeriod() > endDate));
             long sum = data.stream().mapToLong(ParticipantsEunIndicator::getnCount).sum();
             indicator.setData(participantsEunIndicatorMapper.toDto(data));
             indicator.setValue(String.valueOf(sum));
         }
-        indicator.setCode("participants_eun");
-        indicator.setLabel("Participants EUN");
+        indicator.setCode("course_participants_eun");
+        indicator.setLabel("Course Participants EUN");
         return indicator;
     }
 
-    //    @Scheduled(cron = "0 0 * * * *")
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(cron = "0 0 * * * *")
     public void fetchDataFromEun() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
