@@ -37,8 +37,16 @@
         <dt><span>File</span></dt>
         <dd>
           <div *ngIf="report.file">
-            <a (click)="openFile(report.file, report.fileContentType)">Open</a>
+            <a (click)="openFile(report.file, report.fileContentType)">
+              <img [src]="'data:' + report.fileContentType + ';base64,' + report.file" style="max-width: 100%" alt="report image" />
+            </a>
             {{ report.fileContentType }}, {{ byteSize(report.file) }}
+          </div>
+        </dd>
+        <dt><span>Report Template</span></dt>
+        <dd>
+          <div *ngIf="report.reportTemplate">
+            <a [routerLink]="['/report-template', report.reportTemplate.id, 'view']">{{ report.reportTemplate.id }}</a>
           </div>
         </dd>
       </dl>

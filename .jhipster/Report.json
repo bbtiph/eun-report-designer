@@ -43,6 +43,13 @@
       "otherEntityRelationshipName": "report",
       "relationshipName": "reportBlocks",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "reportTemplate",
+      "otherEntityRelationshipName": "report",
+      "relationshipName": "reportTemplate",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

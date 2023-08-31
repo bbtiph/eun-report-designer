@@ -126,7 +126,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
     private IReportRunnable getReport(Long reportId) {
         ReportDTO report = this.reportService.findOne(reportId).get();
         try {
-            return birtEngine.openReportDesign(convertByteArrayToInputStream(report.getFile()));
+            return birtEngine.openReportDesign(convertByteArrayToInputStream(report.getReportTemplate().getFile()));
         } catch (EngineException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

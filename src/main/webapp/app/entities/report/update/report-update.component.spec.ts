@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { ReportFormService } from './report-form.service';
 import { ReportService } from '../service/report.service';
 import { IReport } from '../report.model';
+import { IReportTemplate } from 'app/entities/report-template/report-template.model';
+import { ReportTemplateService } from 'app/entities/report-template/service/report-template.service';
 
 import { ReportUpdateComponent } from './report-update.component';
 
@@ -18,6 +20,7 @@ describe('Report Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let reportFormService: ReportFormService;
   let reportService: ReportService;
+  let reportTemplateService: ReportTemplateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +43,43 @@ describe('Report Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     reportFormService = TestBed.inject(ReportFormService);
     reportService = TestBed.inject(ReportService);
+    reportTemplateService = TestBed.inject(ReportTemplateService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call ReportTemplate query and add missing value', () => {
       const report: IReport = { id: 456 };
+      const reportTemplate: IReportTemplate = { id: 97365 };
+      report.reportTemplate = reportTemplate;
+
+      const reportTemplateCollection: IReportTemplate[] = [{ id: 45874 }];
+      jest.spyOn(reportTemplateService, 'query').mockReturnValue(of(new HttpResponse({ body: reportTemplateCollection })));
+      const additionalReportTemplates = [reportTemplate];
+      const expectedCollection: IReportTemplate[] = [...additionalReportTemplates, ...reportTemplateCollection];
+      jest.spyOn(reportTemplateService, 'addReportTemplateToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ report });
       comp.ngOnInit();
 
+      expect(reportTemplateService.query).toHaveBeenCalled();
+      expect(reportTemplateService.addReportTemplateToCollectionIfMissing).toHaveBeenCalledWith(
+        reportTemplateCollection,
+        ...additionalReportTemplates.map(expect.objectContaining)
+      );
+      expect(comp.reportTemplatesSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const report: IReport = { id: 456 };
+      const reportTemplate: IReportTemplate = { id: 45135 };
+      report.reportTemplate = reportTemplate;
+
+      activatedRoute.data = of({ report });
+      comp.ngOnInit();
+
+      expect(comp.reportTemplatesSharedCollection).toContain(reportTemplate);
       expect(comp.report).toEqual(report);
     });
   });
@@ -120,6 +149,18 @@ describe('Report Management Update Component', () => {
       expect(reportService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareReportTemplate', () => {
+      it('Should forward to reportTemplateService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(reportTemplateService, 'compareReportTemplate');
+        comp.compareReportTemplate(entity, entity2);
+        expect(reportTemplateService.compareReportTemplate).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

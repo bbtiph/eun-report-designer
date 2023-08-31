@@ -28,6 +28,7 @@ public class ReportDTO implements Serializable {
     private byte[] file;
 
     private String fileContentType;
+    private ReportTemplateDTO reportTemplate;
 
     public Long getId() {
         return id;
@@ -93,6 +94,14 @@ public class ReportDTO implements Serializable {
         this.fileContentType = fileContentType;
     }
 
+    public ReportTemplateDTO getReportTemplate() {
+        return reportTemplate;
+    }
+
+    public void setReportTemplate(ReportTemplateDTO reportTemplate) {
+        this.reportTemplate = reportTemplate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -125,6 +134,7 @@ public class ReportDTO implements Serializable {
             ", type='" + getType() + "'" +
             ", isActive='" + getIsActive() + "'" +
             ", file='" + getFile() + "'" +
+            ", reportTemplate=" + getReportTemplate() +
             "}";
     }
 }

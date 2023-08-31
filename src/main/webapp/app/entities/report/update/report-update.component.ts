@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { ReportFormService, ReportFormGroup } from './report-form.service';
 import { IReport } from '../report.model';
@@ -10,6 +10,8 @@ import { ReportService } from '../service/report.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { IReportTemplate } from 'app/entities/report-template/report-template.model';
+import { ReportTemplateService } from 'app/entities/report-template/service/report-template.service';
 
 @Component({
   selector: 'jhi-report-update',
@@ -19,6 +21,8 @@ export class ReportUpdateComponent implements OnInit {
   isSaving = false;
   report: IReport | null = null;
 
+  reportTemplatesSharedCollection: IReportTemplate[] = [];
+
   editForm: ReportFormGroup = this.reportFormService.createReportFormGroup();
 
   constructor(
@@ -26,9 +30,13 @@ export class ReportUpdateComponent implements OnInit {
     protected eventManager: EventManager,
     protected reportService: ReportService,
     protected reportFormService: ReportFormService,
+    protected reportTemplateService: ReportTemplateService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute
   ) {}
+
+  compareReportTemplate = (o1: IReportTemplate | null, o2: IReportTemplate | null): boolean =>
+    this.reportTemplateService.compareReportTemplate(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ report }) => {
@@ -36,6 +44,8 @@ export class ReportUpdateComponent implements OnInit {
       if (report) {
         this.updateForm(report);
       }
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -100,5 +110,22 @@ export class ReportUpdateComponent implements OnInit {
   protected updateForm(report: IReport): void {
     this.report = report;
     this.reportFormService.resetForm(this.editForm, report);
+
+    this.reportTemplatesSharedCollection = this.reportTemplateService.addReportTemplateToCollectionIfMissing<IReportTemplate>(
+      this.reportTemplatesSharedCollection,
+      report.reportTemplate
+    );
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.reportTemplateService
+      .query()
+      .pipe(map((res: HttpResponse<IReportTemplate[]>) => res.body ?? []))
+      .pipe(
+        map((reportTemplates: IReportTemplate[]) =>
+          this.reportTemplateService.addReportTemplateToCollectionIfMissing<IReportTemplate>(reportTemplates, this.report?.reportTemplate)
+        )
+      )
+      .subscribe((reportTemplates: IReportTemplate[]) => (this.reportTemplatesSharedCollection = reportTemplates));
   }
 }

@@ -50,6 +50,9 @@ public class Report implements Serializable {
     @JsonIgnoreProperties(value = { "countryIds", "report", "reportBlocksContents" }, allowSetters = true)
     private Set<ReportBlocks> reportBlocks = new HashSet<>();
 
+    @ManyToOne
+    private ReportTemplate reportTemplate;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -184,6 +187,19 @@ public class Report implements Serializable {
     public Report removeReportBlocks(ReportBlocks reportBlocks) {
         this.reportBlocks.remove(reportBlocks);
         reportBlocks.setReport(null);
+        return this;
+    }
+
+    public ReportTemplate getReportTemplate() {
+        return this.reportTemplate;
+    }
+
+    public void setReportTemplate(ReportTemplate reportTemplate) {
+        this.reportTemplate = reportTemplate;
+    }
+
+    public Report reportTemplate(ReportTemplate reportTemplate) {
+        this.setReportTemplate(reportTemplate);
         return this;
     }
 

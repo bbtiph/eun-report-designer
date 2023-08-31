@@ -57,61 +57,6 @@
           <input type="hidden" class="form-control" name="file" id="field_file" data-cy="file" formControlName="file" />
           <input type="hidden" class="form-control" name="fileContentType" id="field_fileContentType" formControlName="fileContentType" />
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_createdBy">Created By</label>
-          <input type="text" class="form-control" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_lastModifiedBy">Last Modified By</label>
-          <input
-            type="text"
-            class="form-control"
-            name="lastModifiedBy"
-            id="field_lastModifiedBy"
-            data-cy="lastModifiedBy"
-            formControlName="lastModifiedBy"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_createdDate">Created Date</label>
-          <div class="input-group">
-            <input
-              id="field_createdDate"
-              data-cy="createdDate"
-              type="text"
-              class="form-control"
-              name="createdDate"
-              ngbDatepicker
-              #createdDateDp="ngbDatepicker"
-              formControlName="createdDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="createdDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_lastModifiedDate">Last Modified Date</label>
-          <div class="input-group">
-            <input
-              id="field_lastModifiedDate"
-              data-cy="lastModifiedDate"
-              type="text"
-              class="form-control"
-              name="lastModifiedDate"
-              ngbDatepicker
-              #lastModifiedDateDp="ngbDatepicker"
-              formControlName="lastModifiedDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="lastModifiedDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
-          </div>
-        </div>
       </div>
 
       <div>

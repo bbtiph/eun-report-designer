@@ -25,6 +25,7 @@ type ReportFormGroupContent = {
   isActive: FormControl<IReport['isActive']>;
   file: FormControl<IReport['file']>;
   fileContentType: FormControl<IReport['fileContentType']>;
+  reportTemplate: FormControl<IReport['reportTemplate']>;
 };
 
 export type ReportFormGroup = FormGroup<ReportFormGroupContent>;
@@ -53,6 +54,7 @@ export class ReportFormService {
       isActive: new FormControl(reportRawValue.isActive),
       file: new FormControl(reportRawValue.file),
       fileContentType: new FormControl(reportRawValue.fileContentType),
+      reportTemplate: new FormControl(reportRawValue.reportTemplate),
     });
   }
 

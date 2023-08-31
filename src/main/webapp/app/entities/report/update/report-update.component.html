@@ -43,39 +43,21 @@
           />
         </div>
 
-        <!--        <div class="row mb-3">-->
-        <!--          <label class="form-label" for="field_type">Type</label>-->
-        <!--          <input type="text" class="form-control" name="type" id="field_type" data-cy="type" formControlName="type" />-->
-        <!--        </div>-->
-
-        <!--        <div class="row mb-3">-->
-        <!--          <label class="form-label" for="field_isActive">Is Active</label>-->
-        <!--          <input type="text" class="form-control" name="isActive" id="field_isActive" data-cy="isActive" formControlName="isActive" />-->
-        <!--        </div>-->
-
         <div class="row mb-3">
-          <label class="form-label" for="field_file">Template of BIRT report designer</label>
-          <div>
-            <img
-              [src]="'data:' + editForm.get('fileContentType')!.value + ';base64,' + editForm.get('file')!.value"
-              style="max-height: 100px"
-              *ngIf="editForm.get('file')!.value"
-              alt="report image"
-            />
-            <div *ngIf="editForm.get('file')!.value" class="form-text text-danger clearfix">
-              <span class="pull-start">{{ editForm.get('fileContentType')!.value }}, {{ byteSize(editForm.get('file')!.value!) }}</span>
-              <button
-                type="button"
-                (click)="clearInputImage('file', 'fileContentType', 'file_file')"
-                class="btn btn-secondary btn-xs pull-end"
-              >
-                <fa-icon icon="times"></fa-icon>
-              </button>
-            </div>
-            <input type="file" id="file_file" data-cy="file" (change)="setFileData($event, 'file', true)" />
-          </div>
-          <input type="hidden" class="form-control" name="file" id="field_file" data-cy="file" formControlName="file" />
-          <input type="hidden" class="form-control" name="fileContentType" id="field_fileContentType" formControlName="fileContentType" />
+          <label class="form-label" for="field_reportTemplate">Template of BIRT report designer</label>
+          <select
+            class="form-control"
+            id="field_reportTemplate"
+            data-cy="reportTemplate"
+            name="reportTemplate"
+            formControlName="reportTemplate"
+            [compareWith]="compareReportTemplate"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="reportTemplateOption" *ngFor="let reportTemplateOption of reportTemplatesSharedCollection">
+              {{ reportTemplateOption.name }} ({{ reportTemplateOption.description }})
+            </option>
+          </select>
         </div>
       </div>
 

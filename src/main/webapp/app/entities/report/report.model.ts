@@ -1,4 +1,4 @@
-import { IReportBlocks } from '../report-blocks/report-blocks.model';
+import { IReportTemplate } from 'app/entities/report-template/report-template.model';
 
 export interface IReport {
   id: number;
@@ -9,7 +9,7 @@ export interface IReport {
   isActive?: string | null;
   file?: string | null;
   fileContentType?: string | null;
-  reportBlocks: IReportBlocks[] | null;
+  reportTemplate?: Pick<IReportTemplate, 'id'> | null;
 }
 
 export type NewReport = Omit<IReport, 'id'> & { id: null };
