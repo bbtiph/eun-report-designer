@@ -35,6 +35,8 @@ os:
 eun:
   dwh:
     url: http://eundb-test.eun.org:11005/eundwh/
+  reports-etl:
+    url: https://reports-etl-test.eun.org/
 
 spring:
   ldap:
