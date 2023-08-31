@@ -1,9 +1,9 @@
-entity ParticipantsEunIndicator {
-    period Long
-    nCount Long
-    courseId String
-    courseName String
-    countryCode String
+entity ReportTemplate {
+    name String
+    description String
+    type String
+    isActive Boolean
+    file Blob
     createdBy String
     lastModifiedBy String
     createdDate LocalDate
@@ -11,7 +11,7 @@ entity ParticipantsEunIndicator {
 }
 
 
-dto ParticipantsEunIndicator with mapstruct
-service ParticipantsEunIndicator with serviceImpl
+dto ReportTemplate with mapstruct
+service ReportTemplate with serviceImpl
 
 

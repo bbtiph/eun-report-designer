@@ -157,6 +157,11 @@ import { RouterModule } from '@angular/router';
         loadChildren: () =>
           import('./participants-eun-indicator/participants-eun-indicator.module').then(m => m.ParticipantsEunIndicatorModule),
       },
+      {
+        path: 'report-template',
+        data: { pageTitle: 'ReportTemplates' },
+        loadChildren: () => import('./report-template/report-template.module').then(m => m.ReportTemplateModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
