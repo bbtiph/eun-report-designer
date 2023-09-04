@@ -5,9 +5,11 @@ import { ReportTemplateDetailComponent } from './detail/report-template-detail.c
 import { ReportTemplateUpdateComponent } from './update/report-template-update.component';
 import { ReportTemplateDeleteDialogComponent } from './delete/report-template-delete-dialog.component';
 import { ReportTemplateRoutingModule } from './route/report-template-routing.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  imports: [SharedModule, ReportTemplateRoutingModule],
+  imports: [SharedModule, ReportTemplateRoutingModule, MatSnackBarModule, MatDialogModule],
   declarations: [
     ReportTemplateComponent,
     ReportTemplateDetailComponent,

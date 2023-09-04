@@ -20,6 +20,8 @@ import { HeaderGroupComponent } from './filter/header-group-component/header-gro
 import { RendererComponent } from './filter/renderer-component/renderer.component';
 import { ButtonRendererComponent } from './filter/actions/actions.component';
 import { RouterLink } from '@angular/router';
+import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
+import { FileDragNDropDirective } from './file-drag-n-drop/file-drag-n-drop.directive';
 
 @NgModule({
   imports: [SharedLibsModule, AgGridModule, RouterLink],
@@ -41,6 +43,8 @@ import { RouterLink } from '@angular/router';
     FilterComponent,
     AbstractExportModal,
     ReferenceSelectionModal,
+    DialogConfirmComponent,
+    FileDragNDropDirective,
   ],
   exports: [
     SharedLibsModule,
@@ -54,6 +58,7 @@ import { RouterLink } from '@angular/router';
     SortDirective,
     ItemCountComponent,
     FilterComponent,
+    FileDragNDropDirective,
   ],
 })
 export class SharedModule {}

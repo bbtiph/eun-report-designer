@@ -13,6 +13,7 @@ import { SortService } from 'app/shared/sort/sort.service';
 @Component({
   selector: 'jhi-report-template',
   templateUrl: './report-template.component.html',
+  styleUrls: ['./report-template.component.scss'],
 })
 export class ReportTemplateComponent implements OnInit {
   reportTemplates?: IReportTemplate[];

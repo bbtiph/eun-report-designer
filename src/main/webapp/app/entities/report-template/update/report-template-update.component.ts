@@ -10,14 +10,19 @@ import { ReportTemplateService } from '../service/report-template.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from '../../../shared/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'jhi-report-template-update',
   templateUrl: './report-template-update.component.html',
+  styleUrls: ['./report-template-update.component.scss'],
 })
 export class ReportTemplateUpdateComponent implements OnInit {
   isSaving = false;
   reportTemplate: IReportTemplate | null = null;
+  public files: any[] = [];
 
   editForm: ReportTemplateFormGroup = this.reportTemplateFormService.createReportTemplateFormGroup();
 
@@ -26,7 +31,9 @@ export class ReportTemplateUpdateComponent implements OnInit {
     protected eventManager: EventManager,
     protected reportTemplateService: ReportTemplateService,
     protected reportTemplateFormService: ReportTemplateFormService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -89,5 +96,30 @@ export class ReportTemplateUpdateComponent implements OnInit {
   protected updateForm(reportTemplate: IReportTemplate): void {
     this.reportTemplate = reportTemplate;
     this.reportTemplateFormService.resetForm(this.editForm, reportTemplate);
+  }
+
+  onFileChange(event: any): void {
+    this.setFileData(event, 'file', false);
+  }
+
+  // @ts-ignore
+  openConfirmDialog(pIndex): void {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      panelClass: 'modal-xs',
+    });
+    dialogRef.componentInstance.fName = this.files[pIndex].name;
+    dialogRef.componentInstance.fIndex = pIndex;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.deleteFromArray(result);
+      }
+    });
+  }
+
+  // @ts-ignore
+  deleteFromArray(index) {
+    console.log(this.files);
+    this.files.splice(index, 1);
   }
 }

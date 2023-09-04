@@ -103,10 +103,13 @@
           <td>{{ reportTemplate.name }}</td>
           <td>{{ reportTemplate.description }}</td>
           <td>{{ reportTemplate.type }}</td>
-          <td>{{ reportTemplate.isActive }}</td>
+          <td>
+            <span *ngIf="reportTemplate.isActive" class="green-dot"></span>
+            <span *ngIf="!reportTemplate.isActive" class="red-dot"></span>
+          </td>
           <td>
             <a *ngIf="reportTemplate.file" (click)="openFile(reportTemplate.file, reportTemplate.fileContentType)">Open</a>
-            <span *ngIf="reportTemplate.file">{{ reportTemplate.fileContentType }}, {{ byteSize(reportTemplate.file) }}</span>
+            <span *ngIf="reportTemplate.file">{{ reportTemplate.fileContentType }} , {{ byteSize(reportTemplate.file) }}</span>
           </td>
           <td>{{ reportTemplate.createdBy }}</td>
           <td>{{ reportTemplate.lastModifiedBy }}</td>
