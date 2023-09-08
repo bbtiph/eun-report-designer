@@ -2,15 +2,34 @@
   <div class="row">
     <div class="col-md-11">
       <div class="form-group">
-        <label class="col-form-label">Country:</label>
-        <select class="form-control" [(ngModel)]="country" name="reportCountry" id="field_status" data-cy="status">
+        <select
+          class="form-control"
+          [(ngModel)]="country"
+          name="reportCountry"
+          id="field_status"
+          data-cy="status"
+          [(ngModel)]="selectedCountryId"
+        >
           <option [ngValue]="null"></option>
           <option *ngFor="let cntry of countriesSharedCollection" [ngValue]="cntry">{{ cntry.countryName }}</option>
         </select>
       </div>
       <br />
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" [routerLink]="['/report', reportId, country?.id, 'blocks']">Next</button>
+      <div class="btn-group">
+        <button type="submit" routerLink="../../" class="btn btn-info">
+          <i class="fa fa-arrow-left"></i>
+          <span>Cancel</span>
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-success"
+          [routerLink]="['/report', reportId, country?.id, 'blocks']"
+          [disabled]="selectedCountryId === null"
+        >
+          <span>Next</span>
+          <i class="fa fa-arrow-right"></i>
+        </button>
       </div>
     </div>
   </div>

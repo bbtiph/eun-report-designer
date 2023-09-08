@@ -3,10 +3,10 @@
     <span>Report Templates</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Refresh list</span>
-      </button>
+      <!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
+      <!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
+      <!--        <span>Refresh list</span>-->
+      <!--      </button>-->
 
       <button
         id="jh-create-entity"
@@ -108,8 +108,12 @@
             <span *ngIf="!reportTemplate.isActive" class="red-dot"></span>
           </td>
           <td>
-            <a *ngIf="reportTemplate.file" (click)="openFile(reportTemplate.file, reportTemplate.fileContentType)">Open</a>
-            <span *ngIf="reportTemplate.file">{{ reportTemplate.fileContentType }} , {{ byteSize(reportTemplate.file) }}</span>
+            <span class="download-link">
+              <a *ngIf="reportTemplate.file" (click)="openFile(reportTemplate.file, reportTemplate.fileContentType)" style="color: red">
+                <i class="fas fa-download"></i> <span style="color: red">Download</span>
+              </a>
+              <a style="color: red"></a>
+            </span>
           </td>
           <td>{{ reportTemplate.createdBy }}</td>
           <td>{{ reportTemplate.lastModifiedBy }}</td>

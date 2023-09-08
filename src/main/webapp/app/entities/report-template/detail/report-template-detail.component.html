@@ -33,8 +33,12 @@
         <dt><span>File</span></dt>
         <dd>
           <div *ngIf="reportTemplate.file">
-            <a (click)="openFile(reportTemplate.file, reportTemplate.fileContentType)">Open</a>
-            {{ reportTemplate.fileContentType }}, {{ byteSize(reportTemplate.file) }}
+            <span class="download-link">
+              <a (click)="openFile(reportTemplate.file, reportTemplate.fileContentType)" style="color: red">
+                <i class="fas fa-download"></i> <span style="color: red">Download</span>
+              </a>
+            </span>
+            <span class="file-info"> {{ reportTemplate.fileContentType }}, {{ byteSize(reportTemplate.file) }} </span>
           </div>
         </dd>
         <dt><span>Created By</span></dt>

@@ -26,6 +26,17 @@ export class ReportTemplateUpdateComponent implements OnInit {
 
   editForm: ReportTemplateFormGroup = this.reportTemplateFormService.createReportTemplateFormGroup();
 
+  errorMessages = {
+    name: [
+      { type: 'required', message: 'Name is required' },
+      // Add more validation error messages as needed
+    ],
+    description: [
+      { type: 'required', message: 'Description is required' },
+      // Add more validation error messages as needed
+    ],
+  };
+
   constructor(
     protected dataUtils: DataUtils,
     protected eventManager: EventManager,
@@ -58,6 +69,7 @@ export class ReportTemplateUpdateComponent implements OnInit {
       error: (err: FileLoadError) =>
         this.eventManager.broadcast(new EventWithContent<AlertError>('eunReportDesignerApp.error', { message: err.message })),
     });
+    console.log('rrr> ', this.editForm);
   }
 
   previousState(): void {
@@ -99,6 +111,7 @@ export class ReportTemplateUpdateComponent implements OnInit {
   }
 
   onFileChange(event: any): void {
+    this.files = event.target.files ?? Object.keys(event.target.files).map(key => event.target.files[key]);
     this.setFileData(event, 'file', false);
   }
 

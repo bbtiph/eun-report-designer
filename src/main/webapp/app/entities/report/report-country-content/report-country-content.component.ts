@@ -12,6 +12,7 @@ export class ReportCountryContentComponent implements OnInit {
   isSaving = false;
   public country: ICountry | undefined;
   reportId: number | undefined;
+  selectedCountryId: number | null = null;
 
   countriesSharedCollection: ICountries[] = [];
 

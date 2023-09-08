@@ -57,7 +57,13 @@ public class ReportTemplateResource {
         ReportTemplateDTO result = reportTemplateService.save(reportTemplateDTO);
         return ResponseEntity
             .created(new URI("/api/report-templates/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The Report template \"" + result.getName() + " \" has been created",
+                    result.getId().toString()
+                )
+            )
             .body(result);
     }
 
@@ -91,7 +97,13 @@ public class ReportTemplateResource {
         ReportTemplateDTO result = reportTemplateService.update(reportTemplateDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, reportTemplateDTO.getId().toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The Report template \"" + result.getName() + " \"has been updated",
+                    reportTemplateDTO.getId().toString()
+                )
+            )
             .body(result);
     }
 
@@ -164,10 +176,17 @@ public class ReportTemplateResource {
     @DeleteMapping("/report-templates/{id}")
     public ResponseEntity<Void> deleteReportTemplate(@PathVariable Long id) {
         log.debug("REST request to delete ReportTemplate : {}", id);
+        ReportTemplateDTO result = reportTemplateService.findOne(id).get();
         reportTemplateService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The Report template \"" + result.getName() + " \" has been deleted.",
+                    id.toString()
+                )
+            )
             .build();
     }
 }

@@ -1,5 +1,8 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+
     <div *ngIf="user">
       <h2>
         <span>User</span> [<strong>{{ user.login }}</strong
@@ -46,6 +49,10 @@
       </dl>
 
       <button type="submit" routerLink="../../" class="btn btn-info"><fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span></button>
+
+      <button type="button" [routerLink]="['./../../', user.login, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
     </div>
   </div>
 </div>

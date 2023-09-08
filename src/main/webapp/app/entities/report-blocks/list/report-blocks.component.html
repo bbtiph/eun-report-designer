@@ -3,10 +3,10 @@
     <span>Report Blocks</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Refresh list</span>
-      </button>
+      <!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
+      <!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
+      <!--        <span>Refresh list</span>-->
+      <!--      </button>-->
 
       <button
         id="jh-create-entity"
@@ -15,7 +15,7 @@
         [routerLink]="['/report-blocks/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Report Blocks </span>
+        <span> Create a new Report Block </span>
       </button>
     </div>
   </h2>
@@ -32,12 +32,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          <!--          <th scope="col" jhiSortBy="id">-->
+          <!--            <div class="d-flex">-->
+          <!--              <span>ID</span>-->
+          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+          <!--            </div>-->
+          <!--          </th>-->
           <th scope="col" jhiSortBy="name">
             <div class="d-flex">
               <span>Name</span>
@@ -61,9 +61,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let reportBlocks of reportBlocks; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/report-blocks', reportBlocks.id, 'view']">{{ reportBlocks.id }}</a>
-          </td>
+          <!--          <td>-->
+          <!--            <a [routerLink]="['/report-blocks', reportBlocks.id, 'view']">{{ reportBlocks.id }}</a>-->
+          <!--          </td>-->
           <td>{{ reportBlocks.name }}</td>
           <td>
             <span *ngFor="let countryId of reportBlocks.countryIds; let last = last">
@@ -78,15 +78,15 @@
           </td>
           <td class="text-end">
             <div>
-              <button
-                type="submit"
-                [routerLink]="['/report-blocks', reportBlocks.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline">View</span>
-              </button>
+              <!--              <button-->
+              <!--                type="submit"-->
+              <!--                [routerLink]="['/report-blocks', reportBlocks.id, 'view']"-->
+              <!--                class="btn btn-info btn-sm"-->
+              <!--                data-cy="entityDetailsButton"-->
+              <!--              >-->
+              <!--                <fa-icon icon="eye"></fa-icon>-->
+              <!--                <span class="d-none d-md-inline">View</span>-->
+              <!--              </button>-->
               <div class="btn-group">
                 <button
                   type="submit"

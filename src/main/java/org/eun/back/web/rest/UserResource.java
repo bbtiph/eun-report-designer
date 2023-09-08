@@ -124,7 +124,11 @@ public class UserResource {
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(
-                    HeaderUtil.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin(), newUser.getLogin())
+                    HeaderUtil.createAlert(
+                        applicationName,
+                        "The user information for \"" + userDTO.getLastName() + " " + userDTO.getFirstName() + "\" has been created",
+                        newUser.getLogin()
+                    )
                 )
                 .body(newUser);
         }
@@ -154,7 +158,11 @@ public class UserResource {
 
         return ResponseUtil.wrapOrNotFound(
             updatedUser,
-            HeaderUtil.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin())
+            HeaderUtil.createAlert(
+                applicationName,
+                "The user information for \"" + userDTO.getLastName() + " " + userDTO.getFirstName() + "\" has been updated",
+                userDTO.getLogin()
+            )
         );
     }
 

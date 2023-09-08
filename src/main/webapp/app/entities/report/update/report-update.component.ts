@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -16,8 +16,9 @@ import { ReportTemplateService } from 'app/entities/report-template/service/repo
 @Component({
   selector: 'jhi-report-update',
   templateUrl: './report-update.component.html',
+  styleUrls: ['./report-update.component.scss'],
 })
-export class ReportUpdateComponent implements OnInit {
+export class ReportUpdateComponent implements OnInit, OnChanges {
   isSaving = false;
   report: IReport | null = null;
 
@@ -32,7 +33,8 @@ export class ReportUpdateComponent implements OnInit {
     protected reportFormService: ReportFormService,
     protected reportTemplateService: ReportTemplateService,
     protected elementRef: ElementRef,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   compareReportTemplate = (o1: IReportTemplate | null, o2: IReportTemplate | null): boolean =>
@@ -47,7 +49,16 @@ export class ReportUpdateComponent implements OnInit {
 
       this.loadRelationshipsOptions();
     });
+    this.editForm.get('reportTemplate')?.valueChanges.subscribe(newValue => {
+      // @ts-ignore
+      const acronym = newValue?.name?.toLowerCase().replace(/\s+/g, '_');
+      this.editForm.get('acronym')?.setValue(acronym);
+      // @ts-ignore
+      this.editForm.get('type')?.setValue(newValue?.type);
+    });
   }
+
+  ngOnChanges(changes: SimpleChanges): void {}
 
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
@@ -75,7 +86,7 @@ export class ReportUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    this.router.navigateByUrl('/report');
   }
 
   save(): void {

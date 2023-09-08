@@ -22,9 +22,9 @@ export class ReportBlocksService {
     return this.http.post<IReportBlocks>(this.resourceUrl, reportBlocks, { observe: 'response' });
   }
 
-  update(reportBlocks: IReportBlocks, type?: string): Observable<EntityResponseType> {
+  update(reportBlocks: IReportBlocks, type?: string, countryId?: number): Observable<EntityResponseType> {
     return this.http.put<IReportBlocks>(
-      `${this.resourceUrl}/${this.getReportBlocksIdentifier(reportBlocks)}/${type ? type : 'content'}`,
+      `${this.resourceUrl}/${this.getReportBlocksIdentifier(reportBlocks)}/${type ? type : 'content'}/${countryId ? countryId : 0}`,
       reportBlocks,
       {
         observe: 'response',

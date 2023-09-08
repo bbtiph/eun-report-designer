@@ -110,6 +110,7 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
                     reportBlocksContentDTO.getReportBlocksContentData().add(reportBlocksContentDataDTONew);
                 }
                 reportBlocksContentDTO.setId(null);
+                reportBlocksContentDTO.setNewContentData(null);
             }
         }
 

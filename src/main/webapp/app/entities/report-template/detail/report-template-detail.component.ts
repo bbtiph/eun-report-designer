@@ -20,7 +20,7 @@ export class ReportTemplateDetailComponent implements OnInit {
   }
 
   byteSize(base64String: string): string {
-    return this.dataUtils.byteSize(base64String);
+    return this.dataUtils.byteSizeInMbOrKb(base64String);
   }
 
   openFile(base64String: string, contentType: string | null | undefined): void {

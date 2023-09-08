@@ -2,12 +2,15 @@
   <div class="modal-header">
     <h4 class="modal-title" data-cy="reportBlocksDeleteDialogHeading">Confirm delete operation</h4>
 
-    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()"></button>
   </div>
 
   <div class="modal-body">
     <jhi-alert-error></jhi-alert-error>
-    <p id="jhi-delete-reportBlocks-heading">Are you sure you want to delete Report Blocks {{ reportBlocks.id }}?</p>
+    <p id="jhi-delete-reportBlocks-heading">
+      Are you sure you want to delete Report Block <b [style.font-weight]="'bold'">{{ reportBlocks.name }}</b
+      >?
+    </p>
   </div>
 
   <div class="modal-footer">

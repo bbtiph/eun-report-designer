@@ -6,10 +6,10 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
+        <!--        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">-->
+        <!--          <label class="form-label" for="field_id">ID</label>-->
+        <!--          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />-->
+        <!--        </div>-->
 
         <div class="row mb-3">
           <label class="form-label" for="field_reportName">Report Name</label>
@@ -28,7 +28,30 @@
 
         <div class="row mb-3">
           <label class="form-label" for="field_acronym">Acronym</label>
-          <input type="text" class="form-control" name="acronym" id="field_acronym" data-cy="acronym" formControlName="acronym" />
+          <input
+            type="text"
+            class="form-control"
+            name="acronym"
+            id="field_acronym"
+            data-cy="acronym"
+            formControlName="acronym"
+            [readonly]="true"
+            [class.disabled]="true"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_type">Type</label>
+          <input
+            type="text"
+            class="form-control"
+            name="type"
+            id="field_type"
+            data-cy="type"
+            formControlName="type"
+            [readonly]="true"
+            [class.disabled]="true"
+          />
         </div>
 
         <div class="row mb-3">

@@ -18,6 +18,15 @@ export class CountriesUpdateComponent implements OnInit {
 
   editForm: CountriesFormGroup = this.countriesFormService.createCountriesFormGroup();
 
+  errorMessages = {
+    countryName: [{ type: 'required', message: 'Country name is required' }],
+    countryCode: [
+      { type: 'required', message: 'Country code is required' },
+      { type: 'maxLength', message: 'The maximum length is 2' },
+      { type: 'minLength', message: 'The minimum length is 2' },
+    ],
+  };
+
   constructor(
     protected countriesService: CountriesService,
     protected countriesFormService: CountriesFormService,

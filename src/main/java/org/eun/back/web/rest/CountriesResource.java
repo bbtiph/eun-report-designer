@@ -56,7 +56,13 @@ public class CountriesResource {
         CountriesDTO result = countriesService.save(countriesDTO);
         return ResponseEntity
             .created(new URI("/api/countries/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The country \"" + result.getCountryName() + "\" has been added.",
+                    result.getId().toString()
+                )
+            )
             .body(result);
     }
 
@@ -74,7 +80,7 @@ public class CountriesResource {
     public ResponseEntity<CountriesDTO> updateCountries(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody CountriesDTO countriesDTO
-    ) throws URISyntaxException {
+    ) {
         log.debug("REST request to update Countries : {}, {}", id, countriesDTO);
         if (countriesDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -90,7 +96,13 @@ public class CountriesResource {
         CountriesDTO result = countriesService.update(countriesDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, countriesDTO.getId().toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The country \"" + result.getCountryName() + "\" has been updated.",
+                    countriesDTO.getId().toString()
+                )
+            )
             .body(result);
     }
 

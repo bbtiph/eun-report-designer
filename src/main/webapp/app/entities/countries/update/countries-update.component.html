@@ -12,7 +12,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_countryName">Country Name</label>
+          <label class="form-label" for="field_countryName">Country Name <a style="color: red">*</a></label>
           <input
             type="text"
             class="form-control"
@@ -21,10 +21,15 @@
             data-cy="countryName"
             formControlName="countryName"
           />
+          <div *ngIf="editForm.get('countryName')?.invalid && (editForm.get('countryName')?.dirty || editForm.get('countryName')?.touched)">
+            <div *ngFor="let error of errorMessages.countryName" class="text-danger">
+              <div *ngIf="editForm.get('countryName')?.hasError(error.type)">{{ error.message }}</div>
+            </div>
+          </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_countryCode">Country Code</label>
+          <label class="form-label" for="field_countryCode">Country Code <a style="color: red">*</a></label>
           <input
             type="text"
             class="form-control"
@@ -33,6 +38,11 @@
             data-cy="countryCode"
             formControlName="countryCode"
           />
+          <div *ngIf="editForm.get('countryCode')?.invalid && (editForm.get('countryCode')?.dirty || editForm.get('countryCode')?.touched)">
+            <div *ngFor="let error of errorMessages.countryCode" class="text-danger">
+              <div *ngIf="editForm.get('countryCode')?.hasError(error.type)">{{ error.message }}</div>
+            </div>
+          </div>
         </div>
       </div>
 

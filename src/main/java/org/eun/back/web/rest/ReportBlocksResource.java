@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.eun.back.repository.ReportBlocksRepository;
+import org.eun.back.service.CountriesService;
 import org.eun.back.service.ReportBlocksService;
+import org.eun.back.service.dto.CountriesDTO;
 import org.eun.back.service.dto.ReportBlocksDTO;
 import org.eun.back.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -35,9 +37,16 @@ public class ReportBlocksResource {
 
     private final ReportBlocksRepository reportBlocksRepository;
 
-    public ReportBlocksResource(ReportBlocksService reportBlocksService, ReportBlocksRepository reportBlocksRepository) {
+    private final CountriesService countriesService;
+
+    public ReportBlocksResource(
+        ReportBlocksService reportBlocksService,
+        ReportBlocksRepository reportBlocksRepository,
+        CountriesService countriesService
+    ) {
         this.reportBlocksService = reportBlocksService;
         this.reportBlocksRepository = reportBlocksRepository;
+        this.countriesService = countriesService;
     }
 
     /**
@@ -56,7 +65,13 @@ public class ReportBlocksResource {
         ReportBlocksDTO result = reportBlocksService.save(reportBlocksDTO);
         return ResponseEntity
             .created(new URI("/api/report-blocks/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The report block  <b [style.font-weight]=\"'bold'\">\"" + result.getName() + "\"</b> has been created.",
+                    result.getId().toString()
+                )
+            )
             .body(result);
     }
 
@@ -70,12 +85,13 @@ public class ReportBlocksResource {
      * or with status {@code 500 (Internal Server Error)} if the reportBlocksDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/report-blocks/{id}/{type}")
+    @PutMapping("/report-blocks/{id}/{type}/{countryId}")
     public ResponseEntity<ReportBlocksDTO> updateReportBlocks(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody ReportBlocksDTO reportBlocksDTO,
-        @PathVariable String type
-    ) throws URISyntaxException {
+        @PathVariable String type,
+        @PathVariable(value = "countryId", required = false) final Long countryId
+    ) {
         log.debug("REST request to update ReportBlocks : {}, {}", id, reportBlocksDTO);
         if (reportBlocksDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -89,9 +105,20 @@ public class ReportBlocksResource {
         }
 
         ReportBlocksDTO result = reportBlocksService.update(reportBlocksDTO, type);
+        CountriesDTO countryDTO = countriesService.findOne(countryId).get();
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, reportBlocksDTO.getId().toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    type.equals("content")
+                        ? "The information for <b [style.font-weight]=\"'bold'\">\"" +
+                        countryDTO.getCountryName() +
+                        "\" </b>has been updated."
+                        : "The report block <b [style.font-weight]=\"'bold'\">\"" + result.getName() + "\"</b> has been updated.",
+                    reportBlocksDTO.getId().toString()
+                )
+            )
             .body(result);
     }
 
@@ -127,7 +154,11 @@ public class ReportBlocksResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, reportBlocksDTO.getId().toString())
+            HeaderUtil.createAlert(
+                applicationName,
+                "The report block  <b [style.font-weight]=\"'bold'\">\"" + result.get().getName() + "\"</b> has been updated.",
+                reportBlocksDTO.getId().toString()
+            )
         );
     }
 
@@ -188,10 +219,17 @@ public class ReportBlocksResource {
     @DeleteMapping("/report-blocks/{id}")
     public ResponseEntity<Void> deleteReportBlocks(@PathVariable Long id) {
         log.debug("REST request to delete ReportBlocks : {}", id);
+        ReportBlocksDTO result = reportBlocksService.findOne(id).get();
         reportBlocksService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The report block  <b [style.font-weight]=\"'bold'\">\"" + result.getName() + "\"</b> has been deleted.",
+                    id.toString()
+                )
+            )
             .build();
     }
 }

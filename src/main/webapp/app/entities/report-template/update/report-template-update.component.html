@@ -12,12 +12,17 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_name">Name</label>
+          <label class="form-label" for="field_name">Name <a style="color: red">*</a></label>
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')?.invalid && (editForm.get('name')?.dirty || editForm.get('name')?.touched)">
+            <div *ngFor="let error of errorMessages.name" class="text-danger">
+              <div *ngIf="editForm.get('name')?.hasError(error.type)">{{ error.message }}</div>
+            </div>
+          </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_description">Description</label>
+          <label class="form-label" for="field_description">Description <a style="color: red">*</a></label>
           <input
             type="text"
             class="form-control"
@@ -26,18 +31,24 @@
             data-cy="description"
             formControlName="description"
           />
+          <div *ngIf="editForm.get('description')?.invalid && (editForm.get('description')?.dirty || editForm.get('description')?.touched)">
+            <div *ngFor="let error of errorMessages.description" class="text-danger">
+              <div *ngIf="editForm.get('description')?.hasError(error.type)">{{ error.message }}</div>
+            </div>
+          </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" for="field_type">Type</label>
-          <input type="text" class="form-control" name="type" id="field_type" data-cy="type" formControlName="type" />
-        </div>
+        <!--        <div class="row mb-3">-->
+        <!--          <label class="form-label" for="field_type">Type</label>-->
+        <!--          <input type="text" class="form-control" name="type" id="field_type" data-cy="type" formControlName="type" />-->
+        <!--        </div>-->
 
         <div class="row mb-3">
           <label class="form-label" for="field_isActive">Is Active</label>
           <input type="checkbox" class="form-check" name="isActive" id="field_isActive" data-cy="isActive" formControlName="isActive" />
         </div>
-        <div style="padding: 15px">
+        <div class="row mb-3">
+          <label class="form-label" for="field_isActive">Template</label>
           <div>
             <div class="dropzone" fileDragDrop (filesChangeEmiter)="onFileChange($event)">
               <div class="text-wrapper">
@@ -49,7 +60,7 @@
             </div>
           </div>
           <hr />
-          <h3 mat-subheader>Files</h3>
+          <h6 mat-subheader><b>Files</b></h6>
           <div class="row fileItem" *ngFor="let f of files; let ind = index">
             <div class="col-sm-12 fileItemIconDiv" (click)="openConfirmDialog(ind)">
               <i class="fa-6x fileItemIcon"></i>

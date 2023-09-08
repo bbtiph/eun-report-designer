@@ -71,7 +71,13 @@ public class ReportResource {
         ReportDTO result = reportService.save(reportDTO);
         return ResponseEntity
             .created(new URI("/api/reports/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The report <b [style.font-weight]=\"'bold'\">\"" + result.getReportName() + "\"</b> has been created.",
+                    result.getId().toString()
+                )
+            )
             .body(result);
     }
 
@@ -105,7 +111,13 @@ public class ReportResource {
         ReportDTO result = reportService.update(reportDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, reportDTO.getId().toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The report <b [style.font-weight]=\"'bold'\">\"" + result.getReportName() + "\"</b> has been updated.",
+                    reportDTO.getId().toString()
+                )
+            )
             .body(result);
     }
 
@@ -181,10 +193,17 @@ public class ReportResource {
     @DeleteMapping("/reports/{id}")
     public ResponseEntity<Void> deleteReport(@PathVariable Long id) {
         log.debug("REST request to delete Report : {}", id);
+        ReportDTO result = reportService.findOne(id).get();
         reportService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The report <b style=\"font-weight: bold;\">\"" + result.getReportName() + "\"</b> has been deleted.",
+                    id.toString()
+                )
+            )
             .build();
     }
 

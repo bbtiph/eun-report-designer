@@ -47,11 +47,17 @@ export class ReportTemplateFormService {
           validators: [Validators.required],
         }
       ),
-      name: new FormControl(reportTemplateRawValue.name),
-      description: new FormControl(reportTemplateRawValue.description),
+      name: new FormControl(reportTemplateRawValue.name, {
+        validators: [Validators.required],
+      }),
+      description: new FormControl(reportTemplateRawValue.description, {
+        validators: [Validators.required],
+      }),
       type: new FormControl(reportTemplateRawValue.type),
       isActive: new FormControl(reportTemplateRawValue.isActive),
-      file: new FormControl(reportTemplateRawValue.file),
+      file: new FormControl(reportTemplateRawValue.file, {
+        validators: [Validators.required],
+      }),
       fileContentType: new FormControl(reportTemplateRawValue.fileContentType),
       createdBy: new FormControl(reportTemplateRawValue.createdBy),
       lastModifiedBy: new FormControl(reportTemplateRawValue.lastModifiedBy),

@@ -128,7 +128,14 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
       content.priorityNumber = index;
     });
     // @ts-ignore
-    this.reportBlocksService.update(this.reportBlocks, this.type).subscribe();
+    this.reportBlocksService.update(this.reportBlocks, this.type).subscribe(res => {
+      this.reportBlocks = res.body;
+      if (this.reportBlocks) {
+        this.updateForm(this.reportBlocks);
+      }
+      this.loadRelationshipsOptions();
+      this.initializeFormControls();
+    });
   }
 
   getTableColumns() {
@@ -215,7 +222,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
     }
 
     if (reportBlocks.id !== null) {
-      this.subscribeToSaveResponse(this.reportBlocksService.update(reportBlocks, this.type));
+      this.subscribeToSaveResponse(this.reportBlocksService.update(reportBlocks, this.type, this.selectedCountry?.id));
     } else {
       this.subscribeToSaveResponse(this.reportBlocksService.create(reportBlocks));
     }
@@ -517,7 +524,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
       id: newContentIndex,
       type: 'text',
       priorityNumber: priorityNumber + 1,
-      template: '{"name":"","data":""}',
+      template: '{"name":"","data":"Static text for all selected countries..."}',
       isActive: true,
       newContentData: true,
       reportBlocksContentData: [],

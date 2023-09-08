@@ -15,6 +15,7 @@ const newUser: IUser = {
 @Component({
   selector: 'jhi-user-mgmt-update',
   templateUrl: './user-management-update.component.html',
+  styleUrls: ['./user-management-update.component.scss'],
 })
 export class UserManagementUpdateComponent implements OnInit {
   roles: IRole[] = [];
@@ -37,7 +38,10 @@ export class UserManagementUpdateComponent implements OnInit {
       nonNullable: true,
       validators: [Validators.minLength(5), Validators.maxLength(254), Validators.email],
     }),
-    activated: new FormControl(userTemplate.activated, { nonNullable: true }),
+    activated: new FormControl(userTemplate.activated, {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
     roles: new FormControl(userTemplate.roles, { nonNullable: true }),
   });
 

@@ -5,6 +5,7 @@
 
       <div>
         <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
 
         <div class="row mb-3">
           <label>Country: </label>
@@ -23,17 +24,20 @@
         </div>
       </div>
     </form>
+    <div class="btn-group">
+      <button type="submit" routerLink="../../" class="btn btn-info">
+        <i class="fa fa-arrow-left"></i>
+        <span>Cancel</span>
+      </button>
 
-    <div>
       <button
-        type="submit"
+        type="button"
+        class="btn btn-success"
         [routerLink]="['/report-blocks', reportBlocks?.id, selectedCountryId, 'edit-content']"
-        id="save-entity"
-        data-cy="entityCreateSaveButton"
         [disabled]="selectedCountryId === null"
-        class="btn btn-primary"
       >
         <span>Next</span>
+        <i class="fa fa-arrow-right"></i>
       </button>
     </div>
   </div>

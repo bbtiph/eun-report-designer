@@ -24,6 +24,10 @@ export class DataUtils {
     return this.formatAsBytes(this.size(base64String));
   }
 
+  byteSizeInMbOrKb(base64String: string): string {
+    return this.formatFileSize(this.size(base64String));
+  }
+
   /**
    * Method to open file
    */
@@ -117,5 +121,16 @@ export class DataUtils {
 
   private formatAsBytes(size: number): string {
     return size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' bytes'; // NOSONAR
+  }
+
+  private formatFileSize(size: number): string {
+    if (size < 1024) {
+      return size + ' B';
+    } else if (size < 1048576) {
+      // 1024 * 1024
+      return (size / 1024).toFixed(2) + ' KB';
+    } else {
+      return (size / 1048576).toFixed(2) + ' MB';
+    }
   }
 }

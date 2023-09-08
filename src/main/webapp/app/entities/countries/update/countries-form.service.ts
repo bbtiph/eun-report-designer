@@ -40,8 +40,12 @@ export class CountriesFormService {
           validators: [Validators.required],
         }
       ),
-      countryName: new FormControl(countriesRawValue.countryName),
-      countryCode: new FormControl(countriesRawValue.countryCode),
+      countryName: new FormControl(countriesRawValue.countryName, {
+        validators: [Validators.required],
+      }),
+      countryCode: new FormControl(countriesRawValue.countryCode, {
+        validators: [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
+      }),
       reportBlockIds: new FormControl(countriesRawValue.reportBlockIds ?? []),
     });
   }

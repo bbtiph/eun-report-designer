@@ -12,6 +12,14 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface CountriesRepository extends JpaRepository<Countries, Long> {
-    @Query("SELECT DISTINCT c FROM Countries c " + "JOIN c.reportBlockIds rb " + "WHERE rb.report.id = :reportId")
+    @Query(
+        "SELECT DISTINCT c FROM Countries c " +
+        "JOIN c.reportBlockIds rb " +
+        "WHERE rb.report.id = :reportId " +
+        "ORDER BY c.countryName ASC"
+    )
     List<Countries> findCountriesByReportId(@Param("reportId") Long reportId);
+
+    @Query("SELECT DISTINCT c FROM Countries c ORDER BY c.countryName ASC")
+    List<Countries> findAll();
 }
