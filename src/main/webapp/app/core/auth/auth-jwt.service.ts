@@ -42,12 +42,9 @@ export class AuthServerProvider {
 
   private authenticateSuccess(response: JwtToken, rememberMe: boolean): void {
     const jwt = response.id_token;
+    this.localStorageService.store('authenticationToken', jwt);
     if (rememberMe) {
-      this.localStorageService.store('authenticationToken', jwt);
-      this.sessionStorageService.clear('authenticationToken');
-    } else {
-      this.sessionStorageService.store('authenticationToken', jwt);
-      this.localStorageService.clear('authenticationToken');
+      //  TODO: remember me logic
     }
   }
 }
