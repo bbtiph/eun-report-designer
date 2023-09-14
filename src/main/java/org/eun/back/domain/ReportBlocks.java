@@ -1,11 +1,13 @@
 package org.eun.back.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A ReportBlocks.
@@ -13,6 +15,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "report_blocks")
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ReportBlocks implements Serializable {
 
     private static final long serialVersionUID = 1L;

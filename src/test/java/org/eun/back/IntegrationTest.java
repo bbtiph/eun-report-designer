@@ -6,7 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.eun.back.EunReportDesignerApp;
 import org.eun.back.config.AsyncSyncConfiguration;
+import org.eun.back.config.EmbeddedRedis;
 import org.eun.back.config.EmbeddedSQL;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -16,6 +18,7 @@ import org.springframework.test.annotation.DirtiesContext;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @SpringBootTest(classes = { EunReportDesignerApp.class, AsyncSyncConfiguration.class })
+@EmbeddedRedis
 @EmbeddedSQL
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public @interface IntegrationTest {

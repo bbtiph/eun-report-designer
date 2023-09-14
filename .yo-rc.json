@@ -5,7 +5,7 @@
     "baseName": "eunReportDesigner",
     "blueprints": [],
     "buildTool": "maven",
-    "cacheProvider": "no",
+    "cacheProvider": "redis",
     "clientFramework": "angularX",
     "clientPackageManager": "npm",
     "clientTheme": "simplex",
@@ -16,7 +16,7 @@
     "devServerPort": 4200,
     "dtoSuffix": "DTO",
     "enableGradleEnterprise": false,
-    "enableHibernateCache": false,
+    "enableHibernateCache": true,
     "enableSwaggerCodegen": false,
     "enableTranslation": false,
     "entities": [

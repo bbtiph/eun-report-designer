@@ -6,13 +6,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.time.Instant;
+import java.util.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.eun.back.IntegrationTest;
+import org.eun.back.config.Constants;
 import org.eun.back.domain.User;
 import org.eun.back.repository.AuthorityRepository;
 import org.eun.back.repository.UserRepository;
+import org.eun.back.security.AuthoritiesConstants;
 import org.eun.back.service.UserService;
+import org.eun.back.service.dto.AdminUserDTO;
 import org.eun.back.service.dto.PasswordChangeDTO;
+import org.eun.back.service.dto.UserDTO;
 import org.eun.back.web.rest.vm.KeyAndPasswordVM;
 import org.eun.back.web.rest.vm.ManagedUserVM;
 import org.junit.jupiter.api.Test;

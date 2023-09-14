@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Role.
@@ -13,6 +15,7 @@ import javax.validation.constraints.*;
 @Entity
 @Table(name = "role")
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,13 +31,14 @@ public class Role implements Serializable {
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "rel_role_privilege",
         joinColumns = @JoinColumn(name = "role_id"),
         inverseJoinColumns = @JoinColumn(name = "privilege_id")
     )
     @JsonIgnoreProperties(value = { "roles" }, allowSetters = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Privilege> privileges = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

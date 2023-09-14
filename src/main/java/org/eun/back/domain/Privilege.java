@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Privilege.
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "privilege")
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Privilege implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,7 +27,7 @@ public class Privilege implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "privileges")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "privileges")
     @JsonIgnoreProperties(value = { "privileges" }, allowSetters = true)
     private Set<Role> roles = new HashSet<>();
 

@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Report.
@@ -13,6 +16,7 @@ import javax.validation.constraints.*;
 @Entity
 @Table(name = "report")
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Report implements Serializable {
 
     private static final long serialVersionUID = 1L;
