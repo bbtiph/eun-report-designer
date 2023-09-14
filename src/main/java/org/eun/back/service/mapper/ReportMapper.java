@@ -18,4 +18,9 @@ public interface ReportMapper extends EntityMapper<ReportDTO, Report> {
     //    @BeanMapping(ignoreByDefault = true)
     //    @Mapping(target = "id", source = "id")
     //    ReportTemplateDTO toDtoReportTemplateId(ReportTemplate reportTemplate);
+
+    @Named("toDto")
+    @Mapping(target = "file", ignore = true)
+    @Mapping(target = "reportTemplate", ignore = true)
+    ReportDTO toDtoToShowInHomePage(Report report);
 }

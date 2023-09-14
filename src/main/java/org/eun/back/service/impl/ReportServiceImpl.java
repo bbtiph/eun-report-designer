@@ -66,7 +66,7 @@ public class ReportServiceImpl implements ReportService {
     @Transactional(readOnly = true)
     public Page<ReportDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Reports");
-        return reportRepository.findAll(pageable).map(reportMapper::toDto);
+        return reportRepository.findAll(pageable).map(reportMapper::toDtoToShowInHomePage);
     }
 
     @Override

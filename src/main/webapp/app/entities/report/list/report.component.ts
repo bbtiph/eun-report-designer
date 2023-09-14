@@ -11,10 +11,12 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, ReportService } from '../service/report.service';
 import { ReportDeleteDialogComponent } from '../delete/report-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
+import { LoaderService } from '../../../shared/loader/loader-service.service';
 
 @Component({
   selector: 'jhi-report',
   templateUrl: './report.component.html',
+  styleUrls: ['./report.component.scss'],
 })
 export class ReportComponent implements OnInit {
   reports?: IReport[];
@@ -32,6 +34,7 @@ export class ReportComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected dataUtils: DataUtils,
+    public loader: LoaderService,
     protected modalService: NgbModal
   ) {}
 

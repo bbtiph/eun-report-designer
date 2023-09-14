@@ -71,7 +71,12 @@
             <a [routerLink]="['/reference-table-settings', referenceTableSettings.id, 'view']">{{ referenceTableSettings.id }}</a>
           </td>
           <td>{{ referenceTableSettings.refTable }}</td>
-          <td>{{ referenceTableSettings.columns }}</td>
+          <td>
+            {{ referenceTableSettings.columns }}
+            <span *ngIf="referenceTableSettings.columns && referenceTableSettings.columns.length > 200" style="color: #10abce">
+              <a [routerLink]="['/reference-table-settings', referenceTableSettings.id, 'view']">show more</a>
+            </span>
+          </td>
           <!--          <td>{{ referenceTableSettings.path }}</td>-->
           <!--          <td>{{ referenceTableSettings.isActive }}</td>-->
           <td class="text-end">

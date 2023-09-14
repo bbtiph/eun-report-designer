@@ -89,7 +89,7 @@ public class ReportBlocksContentDataServiceImpl implements ReportBlocksContentDa
         return reportBlocksContentDataRepository
             .findAll()
             .stream()
-            .map(reportBlocksContentDataMapper::toDto)
+            .map(reportBlocksContentDataMapper::toDtoToShowInHomePage)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 

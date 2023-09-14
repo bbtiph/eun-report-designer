@@ -78,7 +78,12 @@
           </td>
           <td>{{ reportBlocksContent.type }}</td>
           <td>{{ reportBlocksContent.priorityNumber }}</td>
-          <td>{{ reportBlocksContent.template }}</td>
+          <td>
+            {{ reportBlocksContent.template }}
+            <span *ngIf="reportBlocksContent.template && reportBlocksContent.template.length > 200" style="color: #10abce">
+              <a [routerLink]="['/report-blocks-content', reportBlocksContent.id, 'view']">show more</a>
+            </span>
+          </td>
           <td>{{ reportBlocksContent.isActive }}</td>
           <td>
             <div *ngIf="reportBlocksContent.reportBlocks">

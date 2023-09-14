@@ -14,8 +14,21 @@ public interface ReportBlocksContentMapper extends EntityMapper<ReportBlocksCont
     //    @Mapping(target = "reportBlocks", source = "reportBlocks", qualifiedByName = "reportBlocksId")
     ReportBlocksContentDTO toDto(ReportBlocksContent s);
 
+    @Named("toDto")
+    @Mapping(target = "reportBlocksContentData", ignore = true)
+    @Mapping(target = "template", source = "template", qualifiedByName = "truncateTemplate")
+    ReportBlocksContentDTO toDtoToShowInHomePage(ReportBlocksContent s);
+
     @Named("reportBlocksId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     ReportBlocksDTO toDtoReportBlocksId(ReportBlocks reportBlocks);
+
+    @Named("truncateTemplate")
+    default String truncateTemplate(String template) {
+        if (template != null && template.length() > 200) {
+            return template.substring(0, 200) + "...";
+        }
+        return template;
+    }
 }

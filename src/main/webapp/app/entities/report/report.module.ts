@@ -11,9 +11,10 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ReportBlocksModule } from '../report-blocks/report-blocks.module';
 import { ReportCountryContentComponent } from './report-country-content/report-country-content.component';
 import { DragulaModule } from 'ng2-dragula';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  imports: [SharedModule, ReportRoutingModule, AngularEditorModule, ReportBlocksModule, DragulaModule],
+  imports: [SharedModule, ReportRoutingModule, AngularEditorModule, ReportBlocksModule, DragulaModule, MatProgressSpinnerModule],
   declarations: [
     ReportComponent,
     ReportDetailComponent,

@@ -19,6 +19,11 @@ public interface ReportBlocksMapper extends EntityMapper<ReportBlocksDTO, Report
     @Mapping(target = "report", source = "report", qualifiedByName = "reportId")
     ReportBlocksDTO toDto(ReportBlocks s);
 
+    @Named("toDto")
+    @Mapping(target = "reportBlocksContents", ignore = true)
+    @Mapping(target = "report", source = "report", qualifiedByName = "reportId")
+    ReportBlocksDTO toDtoToShowInHomePage(ReportBlocks s);
+
     @Mapping(target = "removeCountryId", ignore = true)
     ReportBlocks toEntity(ReportBlocksDTO reportBlocksDTO);
 
@@ -35,5 +40,6 @@ public interface ReportBlocksMapper extends EntityMapper<ReportBlocksDTO, Report
     @Named("reportId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "reportName", source = "reportName")
     ReportDTO toDtoReportId(Report report);
 }

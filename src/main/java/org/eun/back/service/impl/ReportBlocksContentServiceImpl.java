@@ -73,7 +73,7 @@ public class ReportBlocksContentServiceImpl implements ReportBlocksContentServic
         return reportBlocksContentRepository
             .findAll()
             .stream()
-            .map(reportBlocksContentMapper::toDto)
+            .map(reportBlocksContentMapper::toDtoToShowInHomePage)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 

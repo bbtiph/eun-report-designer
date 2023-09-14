@@ -17,6 +17,11 @@ public interface ReportBlocksContentDataMapper extends EntityMapper<ReportBlocks
     @Mapping(target = "country", source = "country", qualifiedByName = "countriesId")
     ReportBlocksContentDataDTO toDto(ReportBlocksContentData s);
 
+    @Named("toDto")
+    @Mapping(target = "country", source = "country", qualifiedByName = "countriesId")
+    @Mapping(target = "data", source = "data", qualifiedByName = "truncateTemplate")
+    ReportBlocksContentDataDTO toDtoToShowInHomePage(ReportBlocksContentData s);
+
     @Named("reportBlocksContentId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
@@ -26,4 +31,12 @@ public interface ReportBlocksContentDataMapper extends EntityMapper<ReportBlocks
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     CountriesDTO toDtoCountriesId(Countries countries);
+
+    @Named("truncateTemplate")
+    default String truncateTemplate(String template) {
+        if (template != null && template.length() > 200) {
+            return template.substring(0, 200) + "...";
+        }
+        return template;
+    }
 }

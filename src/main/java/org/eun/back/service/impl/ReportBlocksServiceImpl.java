@@ -209,20 +209,9 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
         List<ReportBlocksDTO> reportBlocksDTOS = reportBlocksRepository
             .findAll()
             .stream()
-            .map(reportBlocksMapper::toDto)
+            .map(reportBlocksMapper::toDtoToShowInHomePage)
             .collect(Collectors.toCollection(LinkedList::new));
-        return reportBlocksDTOS
-            .stream()
-            .map(reportBlocks -> {
-                for (CountriesDTO country : reportBlocks.getCountryIds()) {
-                    CountriesDTO countriesDTO = countriesService.findOne(country.getId()).get();
-                    country.setCountryName(countriesDTO.getCountryName());
-                    country.setCountryCode(countriesDTO.getCountryCode());
-                }
-                reportBlocks.getReport().setReportName(reportService.findOne(reportBlocks.getReport().getId()).get().getReportName());
-                return reportBlocks;
-            })
-            .collect(Collectors.toCollection(LinkedList::new));
+        return reportBlocksDTOS;
     }
 
     @Override

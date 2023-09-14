@@ -73,7 +73,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         return referenceTableSettingsRepository
             .findAll()
             .stream()
-            .map(referenceTableSettingsMapper::toDto)
+            .map(referenceTableSettingsMapper::toDtoToShowInHomePage)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 

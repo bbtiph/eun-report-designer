@@ -64,7 +64,12 @@
           <td>
             <a [routerLink]="['/report-blocks-content-data', reportBlocksContentData.id, 'view']">{{ reportBlocksContentData.id }}</a>
           </td>
-          <td>{{ reportBlocksContentData.data }}</td>
+          <td>
+            {{ reportBlocksContentData.data }}
+            <span *ngIf="reportBlocksContentData.data && reportBlocksContentData.data.length > 200" style="color: #10abce">
+              <a [routerLink]="['/report-blocks-content-data', reportBlocksContentData.id, 'view']">show more</a>
+            </span>
+          </td>
           <td>
             <div *ngIf="reportBlocksContentData.reportBlocksContent">
               <a [routerLink]="['/report-blocks-content', reportBlocksContentData.reportBlocksContent.id, 'view']">{{

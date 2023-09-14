@@ -22,9 +22,10 @@ import { ButtonRendererComponent } from './filter/actions/actions.component';
 import { RouterLink } from '@angular/router';
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
 import { FileDragNDropDirective } from './file-drag-n-drop/file-drag-n-drop.directive';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  imports: [SharedLibsModule, AgGridModule, RouterLink],
+  imports: [SharedLibsModule, AgGridModule, RouterLink, MatProgressSpinnerModule],
   declarations: [
     AlertComponent,
     AlertErrorComponent,
