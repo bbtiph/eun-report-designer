@@ -7,5 +7,6 @@ import org.eun.back.service.dto.IndicatorsDto;
  * Service Interface for managing {@link org.eun.back.domain.WorkingGroupReferences}.
  */
 public interface DashboardService {
-    IndicatorsDto getIndicators(Map<String, String> params, Long reportId);
+    IndicatorsDto getIndicatorsByReport(Map<String, String> params, Long reportId);
+    IndicatorsDto getIndicators(Map<String, String> params);
 }

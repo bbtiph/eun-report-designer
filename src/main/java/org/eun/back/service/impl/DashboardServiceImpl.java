@@ -52,7 +52,7 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     @Transactional(readOnly = true)
-    public IndicatorsDto getIndicators(Map<String, String> params, Long reportId) {
+    public IndicatorsDto getIndicatorsByReport(Map<String, String> params, Long reportId) {
         String countryId = params.get("country_id");
         IndicatorsDto indicators = new IndicatorsDto();
         indicators.getIndicators().add(workingGroupReferencesService.getIndicator(Long.parseLong(countryId), reportId));
@@ -62,6 +62,19 @@ public class DashboardServiceImpl implements DashboardService {
         indicators.getIndicators().add(organizationEunIndicatorService.getIndicator(params, reportId));
         indicators.getIndicators().add(personEunIndicatorService.getIndicator(params, reportId));
         indicators.getIndicators().add(participantsEunIndicatorService.getIndicator(params, reportId));
+        return indicators;
+    }
+
+    @Override
+    public IndicatorsDto getIndicators(Map<String, String> params) {
+        String countryId = params.get("country_id");
+        IndicatorsDto indicators = new IndicatorsDto();
+        indicators.getIndicators().add(workingGroupReferencesService.getIndicator(Long.parseLong(countryId), null));
+        indicators.getIndicators().add(projectService.getIndicator(Long.parseLong(countryId), null));
+        indicators.getIndicators().add(eventService.getIndicator(Long.parseLong(countryId), null));
+        indicators.getIndicators().add(organizationEunIndicatorService.getIndicator(params, null));
+        indicators.getIndicators().add(personEunIndicatorService.getIndicator(params, null));
+        indicators.getIndicators().add(participantsEunIndicatorService.getIndicator(params, null));
         return indicators;
     }
 }

@@ -113,6 +113,6 @@ public class CacheConfiguration {
 
     @Bean
     public KeyGenerator keyGenerator() {
-        return new PrefixedKeyGenerator(this.gitProperties, this.buildProperties);
+        return new CustomKeyGenerator();
     }
 }
