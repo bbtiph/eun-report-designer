@@ -187,7 +187,13 @@ public class ReportBlocksResource {
         @RequestParam(required = false, defaultValue = "false") boolean eagerload
     ) {
         log.debug("REST request to get all ReportBlocks");
-        return reportBlocksService.findAllByReport(reportId, countryId);
+        return reportBlocksService.findAllByReportAndCountry(reportId, countryId);
+    }
+
+    @GetMapping("/report-blocks/external/{reportId}/{countryId}")
+    public List<ReportBlocksDTO> getAllReportBlocksByReportForExternalServices(@PathVariable Long reportId, @PathVariable Long countryId) {
+        log.debug("REST request to get all ReportBlocks");
+        return reportBlocksService.findAllByReportAndCountryForExternalServices(reportId, countryId);
     }
 
     /**

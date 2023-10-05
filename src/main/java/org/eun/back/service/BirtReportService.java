@@ -13,10 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.birt.core.exception.BirtException;
 import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.engine.api.*;
-import org.eun.back.service.dto.OutputType;
-import org.eun.back.service.dto.Report;
-import org.eun.back.service.dto.ReportDTO;
-import org.eun.back.service.dto.ReportRequest;
+import org.eun.back.service.dto.*;
 import org.eun.back.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +83,6 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
     /**
      * Load report files to memory
-     *
      */
     public void loadReports() throws EngineException {
         reportsPath = Utils.getOsPath(isDocker) + reportsPath;
@@ -161,7 +157,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         OutputType output = OutputType.from(format);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            reportRequest.setData(objectMapper.writeValueAsString(reportBlocksService.findAllByReport(reportId, countryId)));
+            reportRequest.setData(objectMapper.writeValueAsString(reportBlocksService.findAllByReportAndCountry(reportId, countryId)));
         } catch (JsonProcessingException e) {
             reportRequest.setData("");
         }
@@ -185,6 +181,56 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
                 break;
             case ODT:
                 generateReport(reports.get(reportName.toLowerCase()), output, data, lang, countryId, response, request);
+                break;
+            default:
+                throw new IllegalArgumentException("Output type not recognized:" + output);
+        }
+    }
+
+    public void generateExternalReport(
+        ReportExternalRequest reportExternalRequest,
+        HttpServletResponse response,
+        HttpServletRequest request
+    ) {
+        String format = reportExternalRequest.getFormat();
+        String lang = reportExternalRequest.getLang();
+        Long countryId = reportExternalRequest.getCountryId();
+        Long reportId = reportExternalRequest.getReportId();
+        OutputType output = OutputType.from(format);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            reportExternalRequest.setData(
+                objectMapper.writeValueAsString(
+                    reportBlocksService.findAllByReportBlockIdsAndReportAndCountry(
+                        reportId,
+                        countryId,
+                        reportExternalRequest.getReportBlockIds()
+                    )
+                )
+            );
+        } catch (JsonProcessingException e) {
+            reportExternalRequest.setData("");
+        }
+        String data = reportExternalRequest.getData();
+
+        switch (output) {
+            case HTML:
+                generateHTMLReport(getReport(reportId), data, lang, countryId, response, request);
+                break;
+            case PDF:
+                generatePDFReport(getReport(reportId), data, lang, countryId, response, request);
+                break;
+            case DOCX:
+                generateDOCXReport(getReport(reportId), data, lang, countryId, response, request);
+                break;
+            case DOC:
+                generateReport(getReport(reportId), output, data, lang, countryId, response, request);
+                break;
+            case XLSX:
+                generateXLSXReport(getReport(reportId), data, lang, countryId, response, request);
+                break;
+            case ODT:
+                generateReport(getReport(reportId), output, data, lang, countryId, response, request);
                 break;
             default:
                 throw new IllegalArgumentException("Output type not recognized:" + output);

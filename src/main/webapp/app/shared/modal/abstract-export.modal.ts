@@ -50,10 +50,11 @@ export class AbstractExportModal implements OnInit {
   constructor(public modal: NgbActiveModal, public countryService: CountryService) {}
 
   reportFormats = [
-    { id: 1, name: 'PDF', fullname: 'Acrobat Reader' },
+    { id: 1, name: 'PDF', fullname: 'PDF(Acrobat Reader)' },
     // { id: 2, name: 'DOCX', fullname: 'MS Word DOCX' },
     // { id: 3, name: 'XLSX', fullname: 'MS Excel' },
-    { id: 4, name: 'DOC', fullname: 'MS Word DOC' },
+    { id: 4, name: 'DOC', fullname: 'DOC(MS Word DOC)' },
+    { id: 5, name: 'HTML', fullname: 'HTML(HyperText Markup Language)' },
   ];
 
   ngOnInit(): void {

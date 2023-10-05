@@ -2,9 +2,7 @@ package org.eun.back.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -13,8 +11,7 @@ import org.eclipse.birt.report.engine.api.EngineException;
 import org.eun.back.repository.ReportRepository;
 import org.eun.back.service.BirtReportService;
 import org.eun.back.service.ReportService;
-import org.eun.back.service.dto.ReportDTO;
-import org.eun.back.service.dto.ReportRequest;
+import org.eun.back.service.dto.*;
 import org.eun.back.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -184,6 +181,19 @@ public class ReportResource {
         return ResponseUtil.wrapOrNotFound(reportDTO);
     }
 
+    @GetMapping("/reports/format")
+    public List<ReportFormatDTO> getReportFormats() {
+        log.debug("REST request to get Report Formats");
+        List<ReportFormatDTO> formatsList = new ArrayList<>();
+        for (ReportFormat format : Arrays.asList(ReportFormat.values())) {
+            ReportFormatDTO reportFormatDTO = new ReportFormatDTO();
+            reportFormatDTO.setFormat(format.toString());
+            reportFormatDTO.setDesc(format.getDescription());
+            formatsList.add(reportFormatDTO);
+        }
+        return formatsList;
+    }
+
     /**
      * {@code DELETE  /reports/:id} : delete the "id" report.
      *
@@ -230,5 +240,16 @@ public class ReportResource {
     ) {
         log.info("Generating full report: " + reportRequest.toString() + ";");
         birtReportService.generateMainReport(name, reportRequest, response, request);
+    }
+
+    @PostMapping("/reports/generate")
+    @CrossOrigin
+    public void externalGenerateFullReport(
+        @RequestBody ReportExternalRequest reportExternalRequest,
+        HttpServletResponse response,
+        HttpServletRequest request
+    ) {
+        log.info("Generating full report: " + reportExternalRequest.toString() + ";");
+        birtReportService.generateExternalReport(reportExternalRequest, response, request);
     }
 }

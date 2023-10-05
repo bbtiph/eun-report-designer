@@ -24,6 +24,12 @@ public interface ReportBlocksMapper extends EntityMapper<ReportBlocksDTO, Report
     @Mapping(target = "report", source = "report", qualifiedByName = "reportId")
     ReportBlocksDTO toDtoToShowInHomePage(ReportBlocks s);
 
+    @Named("toDto")
+    @Mapping(target = "reportBlocksContents", ignore = true)
+    @Mapping(target = "report", ignore = true)
+    @Mapping(target = "countryIds", ignore = true)
+    ReportBlocksDTO toDtoToExternalServices(ReportBlocks s);
+
     @Mapping(target = "removeCountryId", ignore = true)
     ReportBlocks toEntity(ReportBlocksDTO reportBlocksDTO);
 

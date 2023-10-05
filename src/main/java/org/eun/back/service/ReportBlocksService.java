@@ -3,6 +3,7 @@ package org.eun.back.service;
 import java.util.List;
 import java.util.Optional;
 import org.eun.back.service.dto.Indicator;
+import org.eun.back.service.dto.ReportBlockId;
 import org.eun.back.service.dto.ReportBlocksDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +43,11 @@ public interface ReportBlocksService {
      */
     List<ReportBlocksDTO> findAll();
 
-    List<ReportBlocksDTO> findAllByReport(Long reportId, Long countryId);
+    List<ReportBlocksDTO> findAllByReportAndCountry(Long reportId, Long countryId);
+
+    List<ReportBlocksDTO> findAllByReportAndCountryForExternalServices(Long reportId, Long countryId);
+
+    List<ReportBlocksDTO> findAllByReportBlockIdsAndReportAndCountry(Long reportId, Long countryId, List<ReportBlockId> reportBlockIds);
 
     /**
      * Get all the reportBlocks with eager load of many-to-many relationships.

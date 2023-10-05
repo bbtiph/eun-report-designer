@@ -215,10 +215,38 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
     }
 
     @Override
-    public List<ReportBlocksDTO> findAllByReport(Long reportId, Long countryId) {
+    public List<ReportBlocksDTO> findAllByReportAndCountry(Long reportId, Long countryId) {
         log.debug("Request to get all ReportBlocks");
         return reportBlocksRepository
             .findAllWithEagerRelationshipsByReport(reportId, countryId)
+            .stream()
+            .map(reportBlocksMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public List<ReportBlocksDTO> findAllByReportAndCountryForExternalServices(Long reportId, Long countryId) {
+        log.debug("Request to get all ReportBlocks");
+        return reportBlocksRepository
+            .findAllWithEagerRelationshipsByReport(reportId, countryId)
+            .stream()
+            .map(reportBlocksMapper::toDtoToExternalServices)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public List<ReportBlocksDTO> findAllByReportBlockIdsAndReportAndCountry(
+        Long reportId,
+        Long countryId,
+        List<ReportBlockId> reportBlockIds
+    ) {
+        log.debug("Request to get all ReportBlocks");
+        Set<Long> reportBlockIdsSet = reportBlockIds.stream().map(ReportBlockId::getId).collect(Collectors.toSet());
+        return reportBlocksRepository
+            .findAllWithEagerRelationshipsByReport(reportId, countryId)
+            .stream()
+            .filter(reportBlock -> reportBlockIdsSet.contains(reportBlock.getId()))
+            .collect(Collectors.toList())
             .stream()
             .map(reportBlocksMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
