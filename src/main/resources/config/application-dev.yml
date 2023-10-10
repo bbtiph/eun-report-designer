@@ -56,7 +56,7 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5436/eunReportDesigner
+    url: jdbc:postgresql://localhost:5432/eunReportDesigner
     username: eunReportDesigner
     password: eunPwd
     hikari:
