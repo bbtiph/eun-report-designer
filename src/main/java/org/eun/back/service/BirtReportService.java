@@ -165,7 +165,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
         switch (output) {
             case HTML:
-                generateHTMLReport(reports.get(reportName.toLowerCase()), data, lang, countryId, response, request);
+                generateHTMLReport(getReport(reportId), data, lang, countryId, response, request);
                 break;
             case PDF:
                 generatePDFReport(getReport(reportId), data, lang, countryId, response, request);

@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CountriesService } from '../../countries/service/countries.service';
 import { ICountries } from '../../countries/countries.model';
 import { DragulaService } from 'ng2-dragula';
+import { PopupWindowHtmlModal } from '../../../shared/modal/popup-window-html.modal';
 
 @Component({
   selector: 'jhi-report-blocks-manage',
@@ -101,6 +102,12 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
         // @ts-ignore
         a.download = this.report?.reportName;
         a.click();
+        // const modalRef = this.modalService.open(PopupWindowHtmlModal, {
+        //   animation: true,
+        //   windowClass: 'modal-xl'
+        // });
+        // modalRef.componentInstance.param = this;
+        // modalRef.componentInstance.reportHtml = response;
       });
     });
   }

@@ -23,6 +23,7 @@ import { RouterLink } from '@angular/router';
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
 import { FileDragNDropDirective } from './file-drag-n-drop/file-drag-n-drop.directive';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PopupWindowHtmlModal } from './modal/popup-window-html.modal';
 
 @NgModule({
   imports: [SharedLibsModule, AgGridModule, RouterLink, MatProgressSpinnerModule],
@@ -43,6 +44,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ItemCountComponent,
     FilterComponent,
     AbstractExportModal,
+    PopupWindowHtmlModal,
     ReferenceSelectionModal,
     DialogConfirmComponent,
     FileDragNDropDirective,
