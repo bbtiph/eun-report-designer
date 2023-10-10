@@ -105,13 +105,13 @@ public class ReportBlocksResource {
         }
 
         ReportBlocksDTO result = reportBlocksService.update(reportBlocksDTO, type);
-        CountriesDTO countryDTO = countriesService.findOne(countryId).get();
+        CountriesDTO countryDTO = countryId != 0 ? countriesService.findOne(countryId).get() : new CountriesDTO();
         return ResponseEntity
             .ok()
             .headers(
                 HeaderUtil.createAlert(
                     applicationName,
-                    type.equals("content")
+                    type.equals("content") && countryDTO != null
                         ? "The information for <b [style.font-weight]=\"'bold'\">\"" +
                         countryDTO.getCountryName() +
                         "\" </b>has been updated."
