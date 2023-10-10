@@ -35,8 +35,9 @@
         </div>
 
         <div class="row mb-3" *ngIf="type !== 'report'">
-          <label class="form-label" for="field_report">Report:</label>
+          <label class="form-label" for="field_report">Report: {{ type === 'content' ? reportBlocks?.report?.reportName : '' }}</label>
           <select
+            *ngIf="type === 'template'"
             class="form-control"
             id="field_report"
             data-cy="report"
