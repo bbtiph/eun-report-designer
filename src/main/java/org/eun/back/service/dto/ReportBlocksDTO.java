@@ -25,7 +25,7 @@ public class ReportBlocksDTO implements Serializable {
 
     private Set<ReportBlocksContentDTO> reportBlocksContents = new HashSet<>();
 
-    private ReportDTO report;
+    private Set<ReportDTO> reportIds = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -83,12 +83,12 @@ public class ReportBlocksDTO implements Serializable {
         this.countryIds = countryIds;
     }
 
-    public ReportDTO getReport() {
-        return report;
+    public Set<ReportDTO> getReportIds() {
+        return reportIds;
     }
 
-    public void setReport(ReportDTO report) {
-        this.report = report;
+    public void setReportIds(Set<ReportDTO> reportIds) {
+        this.reportIds = reportIds;
     }
 
     @Override
@@ -122,7 +122,7 @@ public class ReportBlocksDTO implements Serializable {
             ", isActive='" + getIsActive() + "'" +
             ", config='" + getConfig() + "'" +
             ", countryIds=" + getCountryIds() +
-            ", report=" + getReport() +
+            ", reportIds=" + getReportIds() +
             "}";
     }
 }

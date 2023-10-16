@@ -34,7 +34,9 @@ import { Observable } from 'rxjs';
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">Close</button>
-      <button type="button" class="btn btn-success" (click)="modal.close({ lang: lang, format: format })">Download</button>
+      <button type="button" class="btn btn-success" (click)="modal.close({ lang: lang, format: format })">
+        {{ format.name !== 'HTML' ? 'Download' : 'View  ' }}
+      </button>
     </div>`,
 })
 export class AbstractExportModal implements OnInit {

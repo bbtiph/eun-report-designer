@@ -15,7 +15,8 @@ public interface CountriesRepository extends JpaRepository<Countries, Long> {
     @Query(
         "SELECT DISTINCT c FROM Countries c " +
         "JOIN c.reportBlockIds rb " +
-        "WHERE rb.report.id = :reportId " +
+        "JOIN rb.reportIds r " +
+        "WHERE :reportId = r.id " +
         "ORDER BY c.countryName ASC"
     )
     List<Countries> findCountriesByReportId(@Param("reportId") Long reportId);

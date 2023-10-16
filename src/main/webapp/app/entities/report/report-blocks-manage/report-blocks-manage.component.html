@@ -1,3 +1,6 @@
+<div *ngIf="loader.isLoading$ | async" class="loading-container flex-content-center">
+  <mat-progress-spinner color="primary" mode="indeterminate"> </mat-progress-spinner>
+</div>
 <div class="container">
   <h2 id="jhi-report-blocks-heading" data-cy="ReportBlocksCreateUpdateHeading">{{ report?.reportName }}</h2>
   <div class="d-flex justify-content-end">

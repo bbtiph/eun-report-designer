@@ -26,4 +26,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="report"/>
     </changeSet>
+    <changeSet id="20230517131900-3" author="jhipster">
+        <addForeignKeyConstraint baseColumnNames="report_blocks_id"
+                                 baseTableName="rel_report_blocks_report"
+                                 constraintName="fk_rel_report_blocks_report_id_report_blocks_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="report_blocks"/>
+
+        <addForeignKeyConstraint baseColumnNames="report_id"
+                                 baseTableName="rel_report_blocks_report"
+                                 constraintName="fk_rel_report_blocks_report_id_report_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="report"/>
+    </changeSet>
 </databaseChangeLog>

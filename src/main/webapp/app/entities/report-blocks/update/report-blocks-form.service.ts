@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type ReportBlocksFormGroupInput = IReportBlocks | PartialWithRequiredKeyOf<NewReportBlocks>;
 
-type ReportBlocksFormDefaults = Pick<NewReportBlocks, 'id' | 'isActive' | 'countryIds'>;
+type ReportBlocksFormDefaults = Pick<NewReportBlocks, 'id' | 'isActive' | 'countryIds' | 'reportIds'>;
 
 type ReportBlocksFormGroupContent = {
   id: FormControl<IReportBlocks['id'] | NewReportBlocks['id']>;
@@ -23,7 +23,7 @@ type ReportBlocksFormGroupContent = {
   isActive: FormControl<IReportBlocks['isActive']>;
   config: FormControl<IReportBlocks['config']>;
   countryIds: FormControl<IReportBlocks['countryIds']>;
-  report: FormControl<IReportBlocks['report']>;
+  reportIds: FormControl<IReportBlocks['reportIds']>;
   reportBlocksContents: FormControl<IReportBlocks['reportBlocksContents']>;
 };
 
@@ -44,12 +44,12 @@ export class ReportBlocksFormService {
           validators: [Validators.required],
         }
       ),
-      name: new FormControl(reportBlocksRawValue?.name),
+      name: new FormControl(reportBlocksRawValue.name),
       priorityNumber: new FormControl(reportBlocksRawValue.priorityNumber),
       isActive: new FormControl(reportBlocksRawValue.isActive),
       config: new FormControl(reportBlocksRawValue.config),
       countryIds: new FormControl(reportBlocksRawValue.countryIds ?? []),
-      report: new FormControl(reportBlocksRawValue.report),
+      reportIds: new FormControl(reportBlocksRawValue.reportIds ?? []),
       reportBlocksContents: new FormControl(reportBlocksRawValue.reportBlocksContents ?? []),
     });
   }
@@ -73,6 +73,7 @@ export class ReportBlocksFormService {
       id: null,
       isActive: false,
       countryIds: [],
+      reportIds: [],
     };
   }
 }

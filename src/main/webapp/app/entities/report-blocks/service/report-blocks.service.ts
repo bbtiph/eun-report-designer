@@ -22,11 +22,19 @@ export class ReportBlocksService {
     return this.http.post<IReportBlocks>(this.resourceUrl, reportBlocks, { observe: 'response' });
   }
 
-  update(reportBlocks: IReportBlocks, type?: string, countryId?: number): Observable<EntityResponseType> {
+  update(reportBlocks: IReportBlocks, type?: string, countryId?: number, reportId?: number): Observable<EntityResponseType> {
+    const queryParams: { [key: string]: any } = {};
+    if (reportId) {
+      queryParams['reportId'] = reportId;
+    }
+    if (countryId) {
+      queryParams['countryId'] = countryId;
+    }
     return this.http.put<IReportBlocks>(
-      `${this.resourceUrl}/${this.getReportBlocksIdentifier(reportBlocks)}/${type ? type : 'content'}/${countryId ? countryId : 0}`,
+      `${this.resourceUrl}/${this.getReportBlocksIdentifier(reportBlocks)}/${type ? type : 'content'}`,
       reportBlocks,
       {
+        params: queryParams,
         observe: 'response',
       }
     );

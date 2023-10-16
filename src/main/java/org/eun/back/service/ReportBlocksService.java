@@ -26,7 +26,7 @@ public interface ReportBlocksService {
      * @param reportBlocksDTO the entity to update.
      * @return the persisted entity.
      */
-    ReportBlocksDTO update(ReportBlocksDTO reportBlocksDTO, String type);
+    ReportBlocksDTO update(ReportBlocksDTO reportBlocksDTO, String type, Long reportId);
 
     /**
      * Partially updates a reportBlocks.

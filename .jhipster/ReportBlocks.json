@@ -36,11 +36,11 @@
       "relationshipType": "many-to-many"
     },
     {
-      "otherEntityField": "id",
       "otherEntityName": "report",
-      "otherEntityRelationshipName": "reportBlocks",
-      "relationshipName": "report",
-      "relationshipType": "many-to-one"
+      "otherEntityRelationshipName": "reportBlockId",
+      "ownerSide": true,
+      "relationshipName": "reportId",
+      "relationshipType": "many-to-many"
     },
     {
       "otherEntityName": "reportBlocksContent",

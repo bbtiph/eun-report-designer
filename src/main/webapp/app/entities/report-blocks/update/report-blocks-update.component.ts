@@ -264,7 +264,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
     );
     this.reportsSharedCollection = this.reportService.addReportToCollectionIfMissing<IReport>(
       this.reportsSharedCollection,
-      reportBlocks.report
+      ...(reportBlocks.reportIds ?? [])
     );
   }
 
@@ -282,7 +282,11 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
     this.reportService
       .query()
       .pipe(map((res: HttpResponse<IReport[]>) => res.body ?? []))
-      .pipe(map((reports: IReport[]) => this.reportService.addReportToCollectionIfMissing<IReport>(reports, this.reportBlocks?.report)))
+      .pipe(
+        map((reports: IReport[]) =>
+          this.reportService.addReportToCollectionIfMissing<IReport>(reports, ...(this.reportBlocks?.reportIds ?? []))
+        )
+      )
       .subscribe((reports: IReport[]) => (this.reportsSharedCollection = reports));
   }
 

@@ -47,6 +47,22 @@
         <addPrimaryKey columnNames="report_blocks_id, country_id" tableName="rel_report_blocks_country"/>
     </changeSet>
 
+    <changeSet id="20230517131900-2-relations" author="jhipster">
+        <createTable tableName="rel_report_blocks_report">
+            <column name="report_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="report_blocks_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority_number" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="report_blocks_id, report_id" tableName="rel_report_blocks_report"/>
+    </changeSet>
+
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

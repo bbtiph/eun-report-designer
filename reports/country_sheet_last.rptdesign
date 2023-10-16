@@ -540,12 +540,11 @@ from public.working_group_references wg where wg.country_code = (select country_
             <property name="topMargin">0.05in</property>
             <property name="bottomMargin">0.05in</property>
             <page-header>
-                <image id="302">
-                    <property name="height">0.43in</property>
-                    <property name="width">7.8in</property>
-                    <property name="source">embed</property>
-                    <property name="imageName">img_2.png</property>
-                </image>
+                <text-data id="317">
+                    <expression name="valueExpr">var onconsole = '';&#13;
+onconsole += '&lt;img style="width:760px;height:50px;" src="https://reports-test.eun.org/content/images/img_2.png"/>';</expression>
+                    <property name="contentType">html</property>
+                </text-data>
             </page-header>
         </simple-master-page>
         <simple-master-page name="NewSimpleMasterPage" id="271"/>

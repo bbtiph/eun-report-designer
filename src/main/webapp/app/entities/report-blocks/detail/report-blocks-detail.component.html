@@ -39,9 +39,10 @@
         </dd>
         <dt><span>Report</span></dt>
         <dd>
-          <div *ngIf="reportBlocks.report">
-            <a [routerLink]="['/report', reportBlocks.report.id, 'view']">{{ reportBlocks.report.id }}</a>
-          </div>
+          <span *ngFor="let reportId of reportBlocks.reportIds; let last = last">
+            <a [routerLink]="['/report', reportId.id, 'view']">{{ reportId.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
         </dd>
       </dl>
 

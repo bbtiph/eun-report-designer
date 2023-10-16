@@ -50,9 +50,9 @@ public class Report implements Serializable {
     @Column(name = "file_content_type")
     private String fileContentType;
 
-    @OneToMany(mappedBy = "report")
-    @JsonIgnoreProperties(value = { "countryIds", "report", "reportBlocksContents" }, allowSetters = true)
-    private Set<ReportBlocks> reportBlocks = new HashSet<>();
+    @ManyToMany(mappedBy = "reportIds")
+    @JsonIgnoreProperties(value = { "countryIds", "reportIds", "reportBlocksContents" }, allowSetters = true)
+    private Set<ReportBlocks> reportBlockIds = new HashSet<>();
 
     @ManyToOne
     private ReportTemplate reportTemplate;
@@ -163,34 +163,34 @@ public class Report implements Serializable {
         this.fileContentType = fileContentType;
     }
 
-    public Set<ReportBlocks> getReportBlocks() {
-        return this.reportBlocks;
+    public Set<ReportBlocks> getReportBlockIds() {
+        return this.reportBlockIds;
     }
 
-    public void setReportBlocks(Set<ReportBlocks> reportBlocks) {
-        if (this.reportBlocks != null) {
-            this.reportBlocks.forEach(i -> i.setReport(null));
+    public void setReportBlockIds(Set<ReportBlocks> reportBlocks) {
+        if (this.reportBlockIds != null) {
+            this.reportBlockIds.forEach(i -> i.removeReportId(this));
         }
         if (reportBlocks != null) {
-            reportBlocks.forEach(i -> i.setReport(this));
+            reportBlocks.forEach(i -> i.addReportId(this));
         }
-        this.reportBlocks = reportBlocks;
+        this.reportBlockIds = reportBlocks;
     }
 
-    public Report reportBlocks(Set<ReportBlocks> reportBlocks) {
-        this.setReportBlocks(reportBlocks);
+    public Report reportBlockIds(Set<ReportBlocks> reportBlocks) {
+        this.setReportBlockIds(reportBlocks);
         return this;
     }
 
-    public Report addReportBlocks(ReportBlocks reportBlocks) {
-        this.reportBlocks.add(reportBlocks);
-        reportBlocks.setReport(this);
+    public Report addReportBlockId(ReportBlocks reportBlocks) {
+        this.reportBlockIds.add(reportBlocks);
+        reportBlocks.getReportIds().add(this);
         return this;
     }
 
-    public Report removeReportBlocks(ReportBlocks reportBlocks) {
-        this.reportBlocks.remove(reportBlocks);
-        reportBlocks.setReport(null);
+    public Report removeReportBlockId(ReportBlocks reportBlocks) {
+        this.reportBlockIds.remove(reportBlocks);
+        reportBlocks.getReportIds().remove(this);
         return this;
     }
 

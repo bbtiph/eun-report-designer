@@ -22,7 +22,7 @@ public class ReportBlocksRepositoryWithBagRelationshipsImpl implements ReportBlo
 
     @Override
     public Optional<ReportBlocks> fetchBagRelationships(Optional<ReportBlocks> reportBlocks) {
-        return reportBlocks.map(this::fetchCountryIds);
+        return reportBlocks.map(this::fetchCountryIds).map(this::fetchReportIds);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ReportBlocksRepositoryWithBagRelationshipsImpl implements ReportBlo
 
     @Override
     public List<ReportBlocks> fetchBagRelationships(List<ReportBlocks> reportBlocks) {
-        return Optional.of(reportBlocks).map(this::fetchCountryIds).orElse(Collections.emptyList());
+        return Optional.of(reportBlocks).map(this::fetchCountryIds).map(this::fetchReportIds).orElse(Collections.emptyList());
     }
 
     ReportBlocks fetchCountryIds(ReportBlocks result) {
@@ -56,6 +56,32 @@ public class ReportBlocksRepositoryWithBagRelationshipsImpl implements ReportBlo
         List<ReportBlocks> result = entityManager
             .createQuery(
                 "select distinct reportBlocks from ReportBlocks reportBlocks left join fetch reportBlocks.countryIds where reportBlocks in :reportBlocks",
+                ReportBlocks.class
+            )
+            .setParameter("reportBlocks", reportBlocks)
+            .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
+            .getResultList();
+        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));
+        return result;
+    }
+
+    ReportBlocks fetchReportIds(ReportBlocks result) {
+        return entityManager
+            .createQuery(
+                "select reportBlocks from ReportBlocks reportBlocks left join fetch reportBlocks.reportIds where reportBlocks is :reportBlocks",
+                ReportBlocks.class
+            )
+            .setParameter("reportBlocks", result)
+            .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
+            .getSingleResult();
+    }
+
+    List<ReportBlocks> fetchReportIds(List<ReportBlocks> reportBlocks) {
+        HashMap<Object, Integer> order = new HashMap<>();
+        IntStream.range(0, reportBlocks.size()).forEach(index -> order.put(reportBlocks.get(index).getId(), index));
+        List<ReportBlocks> result = entityManager
+            .createQuery(
+                "select distinct reportBlocks from ReportBlocks reportBlocks left join fetch reportBlocks.reportIds where reportBlocks in :reportBlocks",
                 ReportBlocks.class
             )
             .setParameter("reportBlocks", reportBlocks)

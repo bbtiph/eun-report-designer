@@ -6,12 +6,11 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.eun.back.domain.RelReportBlocksReport;
+import org.eun.back.domain.Report;
 import org.eun.back.domain.ReportBlocks;
 import org.eun.back.repository.ReportBlocksRepository;
-import org.eun.back.service.CountriesService;
-import org.eun.back.service.ReportBlocksContentService;
-import org.eun.back.service.ReportBlocksService;
-import org.eun.back.service.ReportService;
+import org.eun.back.service.*;
 import org.eun.back.service.dto.*;
 import org.eun.back.service.mapper.ReportBlocksIndicatorMapper;
 import org.eun.back.service.mapper.ReportBlocksMapper;
@@ -39,6 +38,8 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
 
     private final ReportService reportService;
 
+    private final RelReportBlocksReportService relReportBlocksReportService;
+
     private final ReportBlocksMapper reportBlocksMapper;
 
     private final ReportBlocksIndicatorMapper reportBlocksIndicatorMapper;
@@ -48,6 +49,7 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
         ReportBlocksContentService reportBlocksContentService,
         CountriesService countriesService,
         ReportService reportService,
+        RelReportBlocksReportService relReportBlocksReportService,
         ReportBlocksMapper reportBlocksMapper,
         ReportBlocksIndicatorMapper reportBlocksIndicatorMapper
     ) {
@@ -55,6 +57,7 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
         this.reportBlocksContentService = reportBlocksContentService;
         this.countriesService = countriesService;
         this.reportService = reportService;
+        this.relReportBlocksReportService = relReportBlocksReportService;
         this.reportBlocksMapper = reportBlocksMapper;
         this.reportBlocksIndicatorMapper = reportBlocksIndicatorMapper;
     }
@@ -73,22 +76,30 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
     @Override
     public ReportBlocksDTO save(ReportBlocksDTO reportBlocksDTO) {
         log.debug("Request to save ReportBlocks : {}", reportBlocksDTO);
-        if (reportBlocksDTO.getPriorityNumber() == null) {
-            reportBlocksDTO.setPriorityNumber(
-                (
-                    reportBlocksRepository.findMaxPriorityNumberByReportId(reportBlocksDTO.getReport().getId()) != null
-                        ? reportBlocksRepository.findMaxPriorityNumberByReportId(reportBlocksDTO.getReport().getId()) + 1
-                        : 0
-                )
-            );
-        }
+        //        if (reportBlocksDTO.getPriorityNumber() == null) {
+        //            reportBlocksDTO.setPriorityNumber(
+        //                (
+        //                    reportBlocksRepository.findMaxPriorityNumberByReportId(reportBlocksDTO.getReportIds().getId()) != null
+        //                        ? reportBlocksRepository.findMaxPriorityNumberByReportId(reportBlocksDTO.getReport().getId()) + 1
+        //                        : 0
+        //                )
+        //            );
+        //        }
         ReportBlocks reportBlocks = reportBlocksMapper.toEntity(reportBlocksDTO);
         reportBlocks = reportBlocksRepository.save(reportBlocks);
+        for (Report report : reportBlocks.getReportIds()) {
+            Long maxPriorityNumber = relReportBlocksReportService.findMaxPriorityNumberByReportId(report.getId());
+            relReportBlocksReportService.updatePriorityNumber(
+                maxPriorityNumber != null ? maxPriorityNumber : 0,
+                report.getId(),
+                reportBlocks.getId()
+            );
+        }
         return reportBlocksMapper.toDto(reportBlocks);
     }
 
     @Override
-    public ReportBlocksDTO update(ReportBlocksDTO reportBlocksDTO, String type) {
+    public ReportBlocksDTO update(ReportBlocksDTO reportBlocksDTO, String type, Long reportId) {
         log.debug("Request to update ReportBlocks : {}", reportBlocksDTO);
         Iterator<ReportBlocksContentDTO> iterator = reportBlocksDTO.getReportBlocksContents().iterator();
         while (iterator.hasNext()) {
@@ -115,7 +126,9 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
         }
 
         if (type.equals("template")) reportBlocksDTO = updateBlockContentDataByCountry(reportBlocksDTO);
-
+        if (reportId != null) {
+            relReportBlocksReportService.updatePriorityNumber(reportBlocksDTO.getPriorityNumber(), reportId, reportBlocksDTO.getId());
+        }
         ReportBlocks reportBlocks = reportBlocksMapper.toEntity(reportBlocksDTO);
         reportBlocks = reportBlocksRepository.save(reportBlocks);
         return reportBlocksMapper.toDto(reportBlocks);
@@ -217,11 +230,28 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
     @Override
     public List<ReportBlocksDTO> findAllByReportAndCountry(Long reportId, Long countryId) {
         log.debug("Request to get all ReportBlocks");
-        return reportBlocksRepository
+        List<RelReportBlocksReport> relReportBlocksReports = relReportBlocksReportService.findAllByReport(reportId);
+        for (RelReportBlocksReport reportBlocksDTOS : relReportBlocksReports) {
+            if (reportBlocksDTOS.getPriorityNumber() == null) {
+                Long nextPriorityNumber = relReportBlocksReportService.findMaxPriorityNumberByReportId(reportId) == null
+                    ? 0
+                    : relReportBlocksReportService.findMaxPriorityNumberByReportId(reportId);
+                relReportBlocksReportService.updatePriorityNumber(nextPriorityNumber, reportId, reportBlocksDTOS.getReportBlocksId());
+                reportBlocksDTOS.setPriorityNumber(nextPriorityNumber);
+            }
+        }
+        List<ReportBlocksDTO> reportBlocksDTOS = reportBlocksRepository
             .findAllWithEagerRelationshipsByReport(reportId, countryId)
             .stream()
             .map(reportBlocksMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+
+        Map<Long, Long> priorityNumberMap = relReportBlocksReports
+            .stream()
+            .collect(Collectors.toMap(RelReportBlocksReport::getReportBlocksId, RelReportBlocksReport::getPriorityNumber));
+
+        reportBlocksDTOS.forEach(dto -> dto.setPriorityNumber(priorityNumberMap.get(dto.getId())));
+        return reportBlocksDTOS;
     }
 
     @Override

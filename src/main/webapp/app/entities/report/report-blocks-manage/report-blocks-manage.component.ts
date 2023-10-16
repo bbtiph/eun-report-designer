@@ -10,6 +10,7 @@ import { CountriesService } from '../../countries/service/countries.service';
 import { ICountries } from '../../countries/countries.model';
 import { DragulaService } from 'ng2-dragula';
 import { PopupWindowHtmlModal } from '../../../shared/modal/popup-window-html.modal';
+import { LoaderService } from '../../../shared/loader/loader-service.service';
 
 @Component({
   selector: 'jhi-report-blocks-manage',
@@ -30,7 +31,8 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     protected activatedRoute: ActivatedRoute,
     protected countriesService: CountriesService,
-    private dragulaService: DragulaService
+    private dragulaService: DragulaService,
+    public loader: LoaderService
   ) {}
 
   ngOnInit() {
@@ -65,7 +67,7 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
     // @ts-ignore
     this.reportBlocks.forEach((block, index) => {
       block.priorityNumber = index;
-      this.reportBlocksService.update(block).subscribe();
+      this.reportBlocksService.update(block, undefined, undefined, this.report?.id).subscribe();
     });
   }
 
@@ -96,19 +98,24 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
         countryId: this.selectedCountry?.id,
         reportId: this.report?.id,
       };
-      this.http.post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'blob' }).subscribe(response => {
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(response);
-        // @ts-ignore
-        a.download = this.report?.reportName;
-        a.click();
-        // const modalRef = this.modalService.open(PopupWindowHtmlModal, {
-        //   animation: true,
-        //   windowClass: 'modal-xl'
-        // });
-        // modalRef.componentInstance.param = this;
-        // modalRef.componentInstance.reportHtml = response;
-      });
+      if (params.format.name === 'HTML') {
+        this.http.post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'text' }).subscribe(response => {
+          const modalRef = this.modalService.open(PopupWindowHtmlModal, {
+            animation: true,
+            size: 'xl',
+          });
+          modalRef.componentInstance.param = this;
+          modalRef.componentInstance.reportHtml = response;
+        });
+      } else {
+        this.http.post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'blob' }).subscribe(response => {
+          var a = document.createElement('a');
+          a.href = URL.createObjectURL(response);
+          // @ts-ignore
+          a.download = this.report?.reportName;
+          a.click();
+        });
+      }
     });
   }
 }

@@ -47,9 +47,14 @@ public class ReportBlocks implements Serializable {
     @JsonIgnoreProperties(value = { "reportBlockIds" }, allowSetters = true)
     private Set<Countries> countryIds = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "reportBlocks" }, allowSetters = true)
-    private Report report;
+    @ManyToMany
+    @JoinTable(
+        name = "rel_report_blocks_report",
+        joinColumns = @JoinColumn(name = "report_blocks_id"),
+        inverseJoinColumns = @JoinColumn(name = "report_id")
+    )
+    @JsonIgnoreProperties(value = { "reportBlockIds", "reportTemplate" }, allowSetters = true)
+    private Set<Report> reportIds = new HashSet<>();
 
     @OneToMany(mappedBy = "reportBlocks", cascade = CascadeType.ALL)
     //    @JsonBackReference
@@ -148,16 +153,28 @@ public class ReportBlocks implements Serializable {
         return this;
     }
 
-    public Report getReport() {
-        return this.report;
+    public Set<Report> getReportIds() {
+        return this.reportIds;
     }
 
-    public void setReport(Report report) {
-        this.report = report;
+    public void setReportIds(Set<Report> reports) {
+        this.reportIds = reports;
     }
 
-    public ReportBlocks report(Report report) {
-        this.setReport(report);
+    public ReportBlocks reportIds(Set<Report> reports) {
+        this.setReportIds(reports);
+        return this;
+    }
+
+    public ReportBlocks addReportId(Report report) {
+        this.reportIds.add(report);
+        report.getReportBlockIds().add(this);
+        return this;
+    }
+
+    public ReportBlocks removeReportId(Report report) {
+        this.reportIds.remove(report);
+        report.getReportBlockIds().remove(this);
         return this;
     }
 

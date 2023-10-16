@@ -16,21 +16,22 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface ReportBlocksMapper extends EntityMapper<ReportBlocksDTO, ReportBlocks> {
     @Mapping(target = "countryIds", source = "countryIds", qualifiedByName = "countriesIdSet")
-    @Mapping(target = "report", source = "report", qualifiedByName = "reportId")
+    @Mapping(target = "reportIds", source = "reportIds", qualifiedByName = "reportIdSet")
     ReportBlocksDTO toDto(ReportBlocks s);
 
     @Named("toDto")
     @Mapping(target = "reportBlocksContents", ignore = true)
-    @Mapping(target = "report", source = "report", qualifiedByName = "reportId")
+    @Mapping(target = "reportIds", source = "reportIds", qualifiedByName = "reportId")
     ReportBlocksDTO toDtoToShowInHomePage(ReportBlocks s);
 
     @Named("toDto")
     @Mapping(target = "reportBlocksContents", ignore = true)
-    @Mapping(target = "report", ignore = true)
+    @Mapping(target = "reportIds", ignore = true)
     @Mapping(target = "countryIds", ignore = true)
     ReportBlocksDTO toDtoToExternalServices(ReportBlocks s);
 
     @Mapping(target = "removeCountryId", ignore = true)
+    @Mapping(target = "removeReportId", ignore = true)
     ReportBlocks toEntity(ReportBlocksDTO reportBlocksDTO);
 
     @Named("countriesId")
@@ -48,4 +49,9 @@ public interface ReportBlocksMapper extends EntityMapper<ReportBlocksDTO, Report
     @Mapping(target = "id", source = "id")
     @Mapping(target = "reportName", source = "reportName")
     ReportDTO toDtoReportId(Report report);
+
+    @Named("reportIdSet")
+    default Set<ReportDTO> toDtoReportIdSet(Set<Report> report) {
+        return report.stream().map(this::toDtoReportId).collect(Collectors.toSet());
+    }
 }

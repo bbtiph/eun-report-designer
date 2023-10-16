@@ -27,7 +27,8 @@ public interface ReportBlocksRepository extends ReportBlocksRepositoryWithBagRel
     @Query(
         "SELECT DISTINCT rb FROM ReportBlocks rb LEFT JOIN FETCH rb.reportBlocksContents rbc " +
         "LEFT JOIN FETCH rbc.reportBlocksContentData rbcd " +
-        "WHERE rb.report.id = :reportId AND (rbcd.country.id IS NULL OR rbcd.country.id = :countryId) " +
+        "LEFT JOIN FETCH rb.reportIds r " +
+        "WHERE  :reportId = r.id AND (rbcd.country.id IS NULL OR rbcd.country.id = :countryId) " +
         "AND (:countryId MEMBER OF rb.countryIds)"
     )
     List<ReportBlocks> findReportBlocksByCountryAndReport(@Param("countryId") Long countryId, @Param("reportId") Long reportId);
@@ -35,7 +36,8 @@ public interface ReportBlocksRepository extends ReportBlocksRepositoryWithBagRel
     @Query(
         "SELECT DISTINCT rb FROM ReportBlocks rb LEFT JOIN FETCH rb.reportBlocksContents rbc " +
         "LEFT JOIN FETCH rbc.reportBlocksContentData rbcd " +
-        "WHERE rb.report.id = :reportId AND (rbcd.country.id IS NULL OR rbcd.country.id = :countryId) " +
+        "LEFT JOIN FETCH rb.reportIds r " +
+        "WHERE :reportId = r.id AND (rbcd.country.id IS NULL OR rbcd.country.id = :countryId) " +
         "AND (:countryId MEMBER OF rb.countryIds) AND rb.name like 'Participation in%'"
     )
     List<ReportBlocks> findParticipationInXReportBlocksByCountryAndReport(
@@ -43,8 +45,8 @@ public interface ReportBlocksRepository extends ReportBlocksRepositoryWithBagRel
         @Param("reportId") Long reportId
     );
 
-    @Query("SELECT MAX(rb.priorityNumber) FROM ReportBlocks rb WHERE rb.report.id = :reportId")
-    Long findMaxPriorityNumberByReportId(@Param("reportId") Long reportId);
+    //    @Query("SELECT MAX(rb.priorityNumber) FROM ReportBlocks rb WHERE rb.reportIds.id = :reportId")
+    //    Long findMaxPriorityNumberByReportId(@Param("reportId") Long reportId);
 
     default List<ReportBlocks> findReportBlocksByCountryWithEmptyContent(Long countryId, Long reportId) {
         List<ReportBlocks> reportBlocksList = findReportBlocksByCountryAndReport(countryId, reportId);
@@ -60,17 +62,17 @@ public interface ReportBlocksRepository extends ReportBlocksRepositoryWithBagRel
         return reportBlocksList;
     }
 
-    List<ReportBlocks> findAllByReportIdAndCountryIds_IdAndReportBlocksContents_ReportBlocksContentData_Country_Id(
-        Long reportId,
-        Long reportBlockCountryId,
-        Long reportBlockContentDataCountryId
-    );
+    //    List<ReportBlocks> findAllByReportIdAndCountryIds_IdAndReportBlocksContents_ReportBlocksContentData_Country_Id(
+    //        Long reportId,
+    //        Long reportBlockCountryId,
+    //        Long reportBlockContentDataCountryId
+    //    );
 
-    List<ReportBlocks> findAllByReportId(Long reportId);
+    //    List<ReportBlocks> findAllByReportId(Long reportId);
 
-    default List<ReportBlocks> findAllWithEagerRelationships() {
-        return this.fetchBagRelationships(this.findAll());
-    }
+    //    default List<ReportBlocks> findAllWithEagerRelationships() {
+    //        return this.fetchBagRelationships(this.findAll());
+    //    }
 
     default List<ReportBlocks> findAllWithEagerRelationshipsByReport(Long reportId, Long countryId) {
         return this.fetchBagRelationships(this.findReportBlocksByCountryWithEmptyContent(countryId, reportId));

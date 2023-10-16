@@ -1,3 +1,4 @@
+import { IReportBlocks } from 'app/entities/report-blocks/report-blocks.model';
 import { IReportTemplate } from 'app/entities/report-template/report-template.model';
 
 export interface IReport {
@@ -9,6 +10,7 @@ export interface IReport {
   isActive?: string | null;
   file?: string | null;
   fileContentType?: string | null;
+  reportBlockIds?: Pick<IReportBlocks, 'id'>[] | null;
   reportTemplate?: Pick<IReportTemplate, 'id'> | null;
 }
 

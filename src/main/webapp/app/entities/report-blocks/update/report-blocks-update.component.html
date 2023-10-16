@@ -34,15 +34,15 @@
           </select>
         </div>
 
-        <div class="row mb-3" *ngIf="type !== 'report'">
-          <label class="form-label" for="field_report">Report: {{ type === 'content' ? reportBlocks?.report?.reportName : '' }}</label>
+        <div class="row mb-3" *ngIf="type !== 'report' && type !== 'content'">
+          <label for="field_reportIds">Report: </label>
           <select
-            *ngIf="type === 'template'"
             class="form-control"
-            id="field_report"
-            data-cy="report"
-            name="report"
-            formControlName="report"
+            id="field_reportIds"
+            data-cy="reportId"
+            multiple
+            name="reportIds"
+            formControlName="reportIds"
             [compareWith]="compareReport"
           >
             <option [ngValue]="null"></option>
