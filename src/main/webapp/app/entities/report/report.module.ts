@@ -24,5 +24,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReportBlockEdit,
     ReportCountryContentComponent,
   ],
+  exports: [ReportUpdateComponent],
 })
 export class ReportModule {}

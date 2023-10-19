@@ -44,8 +44,14 @@ class ReportResourceIT {
     private static final String DEFAULT_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_TYPE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_IS_ACTIVE = "AAAAAAAAAA";
-    private static final String UPDATED_IS_ACTIVE = "BBBBBBBBBB";
+    private static final Boolean DEFAULT_IS_ACTIVE = false;
+    private static final Boolean UPDATED_IS_ACTIVE = true;
+
+    private static final Boolean DEFAULT_IS_MINISTRY = false;
+    private static final Boolean UPDATED_IS_MINISTRY = true;
+
+    private static final Long DEFAULT_PARENT_ID = 1L;
+    private static final Long UPDATED_PARENT_ID = 2L;
 
     private static final byte[] DEFAULT_FILE = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_FILE = TestUtil.createByteArray(1, "1");
@@ -85,6 +91,8 @@ class ReportResourceIT {
             .description(DEFAULT_DESCRIPTION)
             .type(DEFAULT_TYPE)
             .isActive(DEFAULT_IS_ACTIVE)
+            .isMinistry(DEFAULT_IS_MINISTRY)
+            .parentId(DEFAULT_PARENT_ID)
             .file(DEFAULT_FILE)
             .fileContentType(DEFAULT_FILE_CONTENT_TYPE);
         return report;
@@ -103,6 +111,8 @@ class ReportResourceIT {
             .description(UPDATED_DESCRIPTION)
             .type(UPDATED_TYPE)
             .isActive(UPDATED_IS_ACTIVE)
+            .isMinistry(UPDATED_IS_MINISTRY)
+            .parentId(UPDATED_PARENT_ID)
             .file(UPDATED_FILE)
             .fileContentType(UPDATED_FILE_CONTENT_TYPE);
         return report;
@@ -132,6 +142,8 @@ class ReportResourceIT {
         assertThat(testReport.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testReport.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testReport.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
+        assertThat(testReport.getIsMinistry()).isEqualTo(DEFAULT_IS_MINISTRY);
+        assertThat(testReport.getParentId()).isEqualTo(DEFAULT_PARENT_ID);
         assertThat(testReport.getFile()).isEqualTo(DEFAULT_FILE);
         assertThat(testReport.getFileContentType()).isEqualTo(DEFAULT_FILE_CONTENT_TYPE);
     }
@@ -189,7 +201,9 @@ class ReportResourceIT {
             .andExpect(jsonPath("$.[*].acronym").value(hasItem(DEFAULT_ACRONYM)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
-            .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE)))
+            .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())))
+            .andExpect(jsonPath("$.[*].isMinistry").value(hasItem(DEFAULT_IS_MINISTRY.booleanValue())))
+            .andExpect(jsonPath("$.[*].parentId").value(hasItem(DEFAULT_PARENT_ID.intValue())))
             .andExpect(jsonPath("$.[*].fileContentType").value(hasItem(DEFAULT_FILE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].file").value(hasItem(Base64Utils.encodeToString(DEFAULT_FILE))));
     }
@@ -210,7 +224,9 @@ class ReportResourceIT {
             .andExpect(jsonPath("$.acronym").value(DEFAULT_ACRONYM))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
-            .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE))
+            .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()))
+            .andExpect(jsonPath("$.isMinistry").value(DEFAULT_IS_MINISTRY.booleanValue()))
+            .andExpect(jsonPath("$.parentId").value(DEFAULT_PARENT_ID.intValue()))
             .andExpect(jsonPath("$.fileContentType").value(DEFAULT_FILE_CONTENT_TYPE))
             .andExpect(jsonPath("$.file").value(Base64Utils.encodeToString(DEFAULT_FILE)));
     }
@@ -240,6 +256,8 @@ class ReportResourceIT {
             .description(UPDATED_DESCRIPTION)
             .type(UPDATED_TYPE)
             .isActive(UPDATED_IS_ACTIVE)
+            .isMinistry(UPDATED_IS_MINISTRY)
+            .parentId(UPDATED_PARENT_ID)
             .file(UPDATED_FILE)
             .fileContentType(UPDATED_FILE_CONTENT_TYPE);
         ReportDTO reportDTO = reportMapper.toDto(updatedReport);
@@ -261,6 +279,8 @@ class ReportResourceIT {
         assertThat(testReport.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testReport.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testReport.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
+        assertThat(testReport.getIsMinistry()).isEqualTo(UPDATED_IS_MINISTRY);
+        assertThat(testReport.getParentId()).isEqualTo(UPDATED_PARENT_ID);
         assertThat(testReport.getFile()).isEqualTo(UPDATED_FILE);
         assertThat(testReport.getFileContentType()).isEqualTo(UPDATED_FILE_CONTENT_TYPE);
     }
@@ -342,7 +362,13 @@ class ReportResourceIT {
         Report partialUpdatedReport = new Report();
         partialUpdatedReport.setId(report.getId());
 
-        partialUpdatedReport.acronym(UPDATED_ACRONYM).description(UPDATED_DESCRIPTION).type(UPDATED_TYPE);
+        partialUpdatedReport
+            .acronym(UPDATED_ACRONYM)
+            .description(UPDATED_DESCRIPTION)
+            .type(UPDATED_TYPE)
+            .parentId(UPDATED_PARENT_ID)
+            .file(UPDATED_FILE)
+            .fileContentType(UPDATED_FILE_CONTENT_TYPE);
 
         restReportMockMvc
             .perform(
@@ -361,8 +387,10 @@ class ReportResourceIT {
         assertThat(testReport.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testReport.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testReport.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
-        assertThat(testReport.getFile()).isEqualTo(DEFAULT_FILE);
-        assertThat(testReport.getFileContentType()).isEqualTo(DEFAULT_FILE_CONTENT_TYPE);
+        assertThat(testReport.getIsMinistry()).isEqualTo(DEFAULT_IS_MINISTRY);
+        assertThat(testReport.getParentId()).isEqualTo(UPDATED_PARENT_ID);
+        assertThat(testReport.getFile()).isEqualTo(UPDATED_FILE);
+        assertThat(testReport.getFileContentType()).isEqualTo(UPDATED_FILE_CONTENT_TYPE);
     }
 
     @Test
@@ -383,6 +411,8 @@ class ReportResourceIT {
             .description(UPDATED_DESCRIPTION)
             .type(UPDATED_TYPE)
             .isActive(UPDATED_IS_ACTIVE)
+            .isMinistry(UPDATED_IS_MINISTRY)
+            .parentId(UPDATED_PARENT_ID)
             .file(UPDATED_FILE)
             .fileContentType(UPDATED_FILE_CONTENT_TYPE);
 
@@ -403,6 +433,8 @@ class ReportResourceIT {
         assertThat(testReport.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testReport.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testReport.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
+        assertThat(testReport.getIsMinistry()).isEqualTo(UPDATED_IS_MINISTRY);
+        assertThat(testReport.getParentId()).isEqualTo(UPDATED_PARENT_ID);
         assertThat(testReport.getFile()).isEqualTo(UPDATED_FILE);
         assertThat(testReport.getFileContentType()).isEqualTo(UPDATED_FILE_CONTENT_TYPE);
     }

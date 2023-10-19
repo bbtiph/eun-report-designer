@@ -24,6 +24,8 @@ import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.componen
 import { FileDragNDropDirective } from './file-drag-n-drop/file-drag-n-drop.directive';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PopupWindowHtmlModal } from './modal/popup-window-html.modal';
+import { AbstractCloneReportModal } from './modal/abstract-clone-report.modal';
+import { ReportUpdateComponent } from '../entities/report/update/report-update.component';
 
 @NgModule({
   imports: [SharedLibsModule, AgGridModule, RouterLink, MatProgressSpinnerModule],
@@ -45,6 +47,7 @@ import { PopupWindowHtmlModal } from './modal/popup-window-html.modal';
     FilterComponent,
     AbstractExportModal,
     PopupWindowHtmlModal,
+    AbstractCloneReportModal,
     ReferenceSelectionModal,
     DialogConfirmComponent,
     FileDragNDropDirective,

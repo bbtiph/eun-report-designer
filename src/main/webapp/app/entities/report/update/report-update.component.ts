@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ElementRef, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -21,6 +21,8 @@ import { ReportTemplateService } from 'app/entities/report-template/service/repo
 export class ReportUpdateComponent implements OnInit, OnChanges {
   isSaving = false;
   report: IReport | null = null;
+  @Input() reportToClone: IReport | null = null;
+  @Input() isToClone: boolean | false | undefined;
 
   reportTemplatesSharedCollection: IReportTemplate[] = [];
 

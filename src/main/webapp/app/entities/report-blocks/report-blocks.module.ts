@@ -10,9 +10,10 @@ import { ReportBlocksCountryContentComponent } from './report-blocks-country-con
 import { SortContentByPriorityPipe } from './sort/sort-content-by-priority.pipe';
 import { WorkingGroupReferencesModule } from '../working-group-references/working-group-references.module';
 import { DragulaModule } from 'ng2-dragula';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-  imports: [SharedModule, ReportBlocksRoutingModule, AngularEditorModule, WorkingGroupReferencesModule, DragulaModule],
+  imports: [SharedModule, ReportBlocksRoutingModule, AngularEditorModule, WorkingGroupReferencesModule, DragulaModule, NgSelectModule],
   declarations: [
     ReportBlocksComponent,
     ReportBlocksDetailComponent,

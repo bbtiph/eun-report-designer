@@ -78,6 +78,38 @@ public class ReportResource {
             .body(result);
     }
 
+    @PostMapping("/reports/clone")
+    public ResponseEntity<ReportDTO> cloneReport(@Valid @RequestBody ReportDTO reportDTO) throws URISyntaxException {
+        log.debug("REST request to clone Report : {}", reportDTO);
+        ReportDTO result = reportService.clone(reportDTO);
+        return ResponseEntity
+            .created(new URI("/api/reports/clone" + result.getId()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The report <b [style.font-weight]=\"'bold'\">\"" + result.getReportName() + "\"</b> has been cloned.",
+                    result.getId().toString()
+                )
+            )
+            .body(result);
+    }
+
+    @PostMapping("/reports/clone-report-blocks")
+    public ResponseEntity<ReportDTO> cloneReportBlocks(@Valid @RequestBody ReportDTO reportDTO) throws URISyntaxException {
+        log.debug("REST request to clone Report Blocks: {}", reportDTO);
+        ReportDTO result = reportService.cloneReportBlocks(reportDTO);
+        return ResponseEntity
+            .created(new URI("/api/reports/clone-report-blocks" + result.getId()))
+            .headers(
+                HeaderUtil.createAlert(
+                    applicationName,
+                    "The report <b [style.font-weight]=\"'bold'\">\"" + result.getReportName() + "\"</b> has been cloned.",
+                    result.getId().toString()
+                )
+            )
+            .body(result);
+    }
+
     /**
      * {@code PUT  /reports/:id} : Updates an existing report.
      *
@@ -161,9 +193,12 @@ public class ReportResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of reports in body.
      */
     @GetMapping("/reports")
-    public ResponseEntity<List<ReportDTO>> getAllReports(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<ReportDTO>> getAllReports(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false, defaultValue = "false") boolean forMinistries
+    ) {
         log.debug("REST request to get a page of Reports");
-        Page<ReportDTO> page = reportService.findAll(pageable);
+        Page<ReportDTO> page = reportService.findAll(pageable, forMinistries);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

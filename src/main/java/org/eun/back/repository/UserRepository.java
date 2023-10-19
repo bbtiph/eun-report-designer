@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     String USERS_BY_LOGIN_CACHE = "usersByLogin";
+    String USERS_BY_LOGIN_CACHE_WITH_PRIV = "usersByLoginWithPrivelege";
 
     String USERS_BY_EMAIL_CACHE = "usersByEmail";
     Optional<User> findOneByActivationKey(String activationKey);
@@ -26,7 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneByLogin(String login);
 
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.roles r LEFT JOIN FETCH r.privileges WHERE u.login = ?1")
-    @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
+    @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE_WITH_PRIV)
     Optional<User> findOneWithRolesAndPrivilegesByLogin(String login);
 
     @EntityGraph(attributePaths = "roles")

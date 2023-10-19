@@ -14,13 +14,13 @@ public interface ReportMapper extends EntityMapper<ReportDTO, Report> {
     //    @Mapping(target = "reportTemplate", source = "reportTemplate", qualifiedByName = "reportTemplateId")
     //    ReportDTO toDto(Report s);
     //
-    //    @Named("reportTemplateId")
-    //    @BeanMapping(ignoreByDefault = true)
-    //    @Mapping(target = "id", source = "id")
-    //    ReportTemplateDTO toDtoReportTemplateId(ReportTemplate reportTemplate);
+    @Named("reportTemplateId")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    ReportTemplateDTO toDtoReportTemplateId(ReportTemplate reportTemplate);
 
     @Named("toDto")
     @Mapping(target = "file", ignore = true)
-    @Mapping(target = "reportTemplate", ignore = true)
+    @Mapping(target = "reportTemplate", source = "reportTemplate", qualifiedByName = "reportTemplateId")
     ReportDTO toDtoToShowInHomePage(Report report);
 }

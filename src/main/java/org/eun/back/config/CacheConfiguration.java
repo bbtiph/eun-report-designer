@@ -76,6 +76,7 @@ public class CacheConfiguration {
     public JCacheManagerCustomizer cacheManagerCustomizer(javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration) {
         return cm -> {
             createCache(cm, org.eun.back.repository.UserRepository.USERS_BY_LOGIN_CACHE, jcacheConfiguration);
+            createCache(cm, org.eun.back.repository.UserRepository.USERS_BY_LOGIN_CACHE_WITH_PRIV, jcacheConfiguration);
             createCache(cm, org.eun.back.repository.UserRepository.USERS_BY_EMAIL_CACHE, jcacheConfiguration);
             createCache(cm, org.eun.back.domain.User.class.getName(), jcacheConfiguration);
             createCache(cm, org.eun.back.domain.Role.class.getName(), jcacheConfiguration);

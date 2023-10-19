@@ -40,4 +40,9 @@ public class RelReportBlocksReportServiceImpl implements RelReportBlocksReportSe
     public Long findMaxPriorityNumberByReportId(Long reportId) {
         return relReportBlocksReportRepository.findMaxPriorityNumberByReportId(reportId);
     }
+
+    @Override
+    public RelReportBlocksReport save(RelReportBlocksReport relReportBlocksReport) {
+        return relReportBlocksReportRepository.save(relReportBlocksReport);
+    }
 }

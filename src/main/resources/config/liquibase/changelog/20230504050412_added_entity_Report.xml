@@ -69,4 +69,20 @@
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
+
+    <changeSet id="20231018100000-2" author="jhipster">
+        <modifyDataType tableName="report" columnName="is_active" newDataType="boolean"/>
+    </changeSet>
+
+    <changeSet id="20231018110000-3" author="jhipster">
+        <addColumn tableName="report">
+            <column name="is_ministry" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="parent_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

@@ -23,6 +23,8 @@ type ReportFormGroupContent = {
   description: FormControl<IReport['description']>;
   type: FormControl<IReport['type']>;
   isActive: FormControl<IReport['isActive']>;
+  isMinistry: FormControl<IReport['isMinistry']>;
+  parentId: FormControl<IReport['parentId']>;
   file: FormControl<IReport['file']>;
   fileContentType: FormControl<IReport['fileContentType']>;
   reportBlockIds: FormControl<IReport['reportBlockIds']>;
@@ -53,6 +55,8 @@ export class ReportFormService {
       description: new FormControl(reportRawValue.description),
       type: new FormControl(reportRawValue.type),
       isActive: new FormControl(reportRawValue.isActive),
+      isMinistry: new FormControl(reportRawValue.isMinistry),
+      parentId: new FormControl(reportRawValue.parentId),
       file: new FormControl(reportRawValue.file),
       fileContentType: new FormControl(reportRawValue.fileContentType),
       reportBlockIds: new FormControl(reportRawValue.reportBlockIds ?? []),

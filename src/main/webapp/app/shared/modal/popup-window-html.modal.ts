@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
       <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">Close</button>
     </div>
   </div>`,
-  styleUrls: ['./popup-window-html.modal.scss'],
+  styleUrls: ['./abstract.modal.scss'],
 })
 export class PopupWindowHtmlModal implements OnInit {
   @Input() public reportHtml?: string;

@@ -26,6 +26,14 @@ export class ReportService {
     return this.http.put<IReport>(`${this.resourceUrl}/${this.getReportIdentifier(report)}`, report, { observe: 'response' });
   }
 
+  clone(report: IReport): Observable<EntityResponseType> {
+    return this.http.post<IReport>(`${this.resourceUrl}/clone`, report, { observe: 'response' });
+  }
+
+  cloneReportBlocks(report: IReport): Observable<EntityResponseType> {
+    return this.http.post<IReport>(`${this.resourceUrl}/clone-report-blocks`, report, { observe: 'response' });
+  }
+
   partialUpdate(report: PartialUpdateReport): Observable<EntityResponseType> {
     return this.http.patch<IReport>(`${this.resourceUrl}/${this.getReportIdentifier(report)}`, report, { observe: 'response' });
   }

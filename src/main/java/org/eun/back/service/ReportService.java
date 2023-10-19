@@ -17,6 +17,10 @@ public interface ReportService {
      */
     ReportDTO save(ReportDTO reportDTO);
 
+    ReportDTO clone(ReportDTO reportDTO);
+
+    ReportDTO cloneReportBlocks(ReportDTO reportDTO);
+
     /**
      * Updates a report.
      *
@@ -39,7 +43,7 @@ public interface ReportService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<ReportDTO> findAll(Pageable pageable);
+    Page<ReportDTO> findAll(Pageable pageable, boolean forMinistries);
 
     /**
      * Get the "id" report.

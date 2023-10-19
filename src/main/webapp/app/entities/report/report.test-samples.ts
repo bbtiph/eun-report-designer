@@ -6,27 +6,29 @@ export const sampleWithRequiredData: IReport = {
 };
 
 export const sampleWithPartialData: IReport = {
-  id: 78426,
-  reportName: 'compressing Refined',
-  acronym: 'e-business Account extensible',
-  description: 'help-desk orange SMS',
-  file: '../fake-data/blob/hipster.png',
-  fileContentType: 'unknown',
+  id: 82970,
+  reportName: 'Account',
+  acronym: 'array',
+  description: 'Account extensible',
+  isMinistry: true,
+  parentId: 1,
 };
 
 export const sampleWithFullData: IReport = {
-  id: 32053,
-  reportName: 'Mouse',
-  acronym: 'Accounts invoice',
-  description: 'New program viral',
-  type: 'Canada Licensed services',
-  isActive: 'Enhanced',
+  id: 44138,
+  reportName: 'orange SMS adapter',
+  acronym: 'bleeding-edge',
+  description: 'Branding defect Account',
+  type: 'Pants Rand Pants',
+  isActive: true,
+  isMinistry: true,
+  parentId: 1,
   file: '../fake-data/blob/hipster.png',
   fileContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewReport = {
-  reportName: 'Representative Account',
+  reportName: 'copy Ergonomic Representative',
   id: null,
 };
 

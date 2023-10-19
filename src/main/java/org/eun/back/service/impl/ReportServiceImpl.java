@@ -1,8 +1,11 @@
 package org.eun.back.service.impl;
 
+import java.util.List;
 import java.util.Optional;
+import org.eun.back.domain.RelReportBlocksReport;
 import org.eun.back.domain.Report;
 import org.eun.back.repository.ReportRepository;
+import org.eun.back.service.RelReportBlocksReportService;
 import org.eun.back.service.ReportService;
 import org.eun.back.service.dto.ReportDTO;
 import org.eun.back.service.mapper.ReportMapper;
@@ -26,9 +29,16 @@ public class ReportServiceImpl implements ReportService {
 
     private final ReportMapper reportMapper;
 
-    public ReportServiceImpl(ReportRepository reportRepository, ReportMapper reportMapper) {
+    private final RelReportBlocksReportService relReportBlocksReportService;
+
+    public ReportServiceImpl(
+        ReportRepository reportRepository,
+        ReportMapper reportMapper,
+        RelReportBlocksReportService relReportBlocksReportService
+    ) {
         this.reportRepository = reportRepository;
         this.reportMapper = reportMapper;
+        this.relReportBlocksReportService = relReportBlocksReportService;
     }
 
     @Override
@@ -37,6 +47,33 @@ public class ReportServiceImpl implements ReportService {
         Report report = reportMapper.toEntity(reportDTO);
         report = reportRepository.save(report);
         return reportMapper.toDto(report);
+    }
+
+    @Override
+    public ReportDTO clone(ReportDTO reportDTO) {
+        log.debug("Request to clone Report : {}", reportDTO);
+        Report reportToClone = reportRepository.findById(reportDTO.getId()).get();
+        reportDTO.setId(null);
+
+        Report newReport = reportMapper.toEntity(reportDTO);
+        newReport.setReportTemplate(reportToClone.getReportTemplate());
+        newReport.setParentId(reportToClone.getId());
+        newReport = reportRepository.save(newReport);
+        return reportMapper.toDto(newReport);
+    }
+
+    @Override
+    public ReportDTO cloneReportBlocks(ReportDTO reportDTO) {
+        List<RelReportBlocksReport> relReportBlocksReports = relReportBlocksReportService.findAllByReport(reportDTO.getId());
+        for (RelReportBlocksReport relReportBlocksReport : relReportBlocksReports) {
+            RelReportBlocksReport newRelReportBlocksReport = new RelReportBlocksReport();
+            newRelReportBlocksReport.setReportId(reportDTO.getId());
+            newRelReportBlocksReport.setReportBlocksId(relReportBlocksReport.getReportBlocksId());
+            newRelReportBlocksReport.setPriorityNumber(relReportBlocksReport.getPriorityNumber());
+
+            relReportBlocksReportService.save(newRelReportBlocksReport);
+        }
+        return reportDTO;
     }
 
     @Override
@@ -64,9 +101,12 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ReportDTO> findAll(Pageable pageable) {
+    public Page<ReportDTO> findAll(Pageable pageable, boolean forMinistries) {
         log.debug("Request to get all Reports");
-        return reportRepository.findAll(pageable).map(reportMapper::toDtoToShowInHomePage);
+        if (forMinistries) {
+            return reportRepository.findAllByIsMinistry(true, pageable).map(reportMapper::toDtoToShowInHomePage);
+        }
+        return reportRepository.findAllByIsActive(true, pageable).map(reportMapper::toDtoToShowInHomePage);
     }
 
     @Override
@@ -79,6 +119,6 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Report : {}", id);
-        reportRepository.deleteById(id);
+        reportRepository.deleteByChangeIsActive(id);
     }
 }

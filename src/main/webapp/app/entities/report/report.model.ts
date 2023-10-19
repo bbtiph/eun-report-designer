@@ -7,7 +7,9 @@ export interface IReport {
   acronym?: string | null;
   description?: string | null;
   type?: string | null;
-  isActive?: string | null;
+  isActive?: boolean | null;
+  isMinistry?: boolean | null;
+  parentId?: number | null;
   file?: string | null;
   fileContentType?: string | null;
   reportBlockIds?: Pick<IReportBlocks, 'id'>[] | null;

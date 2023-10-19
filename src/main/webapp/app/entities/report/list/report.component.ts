@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -7,11 +7,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IReport } from '../report.model';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
-import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
+import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA, ITEM_CLONED } from 'app/config/navigation.constants';
 import { EntityArrayResponseType, ReportService } from '../service/report.service';
 import { ReportDeleteDialogComponent } from '../delete/report-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
 import { LoaderService } from '../../../shared/loader/loader-service.service';
+import { ReportFormGroup, ReportFormService } from '../update/report-form.service';
+import { finalize } from 'rxjs/operators';
+import { AbstractCloneReportModal } from '../../../shared/modal/abstract-clone-report.modal';
 
 @Component({
   selector: 'jhi-report',
@@ -19,6 +22,7 @@ import { LoaderService } from '../../../shared/loader/loader-service.service';
   styleUrls: ['./report.component.scss'],
 })
 export class ReportComponent implements OnInit {
+  isSaving = false;
   reports?: IReport[];
   isLoading = false;
 
@@ -29,10 +33,13 @@ export class ReportComponent implements OnInit {
   totalItems = 0;
   page = 1;
 
+  editForm: ReportFormGroup = this.reportFormService.createReportFormGroup();
+
   constructor(
     protected reportService: ReportService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
+    protected reportFormService: ReportFormService,
     protected dataUtils: DataUtils,
     public loader: LoaderService,
     protected modalService: NgbModal
@@ -144,5 +151,46 @@ export class ReportComponent implements OnInit {
     } else {
       return [predicate + ',' + ascendingQueryParam];
     }
+  }
+
+  cloneReport(report: IReport): void {
+    console.log('trpr: ', report);
+    const modalRef = this.modalService.open(AbstractCloneReportModal, {
+      animation: true,
+      size: 'xl',
+    });
+    modalRef.componentInstance.param = this;
+    modalRef.componentInstance.reportToClone = report;
+
+    modalRef.closed
+      .pipe(
+        filter(reason => reason === ITEM_CLONED),
+        switchMap(() => this.loadFromBackendWithRouteInformations())
+      )
+      .subscribe({
+        next: (res: EntityArrayResponseType) => {
+          this.onResponseSuccess(res);
+        },
+      });
+  }
+
+  changeIsMinistry(changedReport: IReport): void {
+    this.isSaving = true;
+    this.subscribeToSaveResponse(this.reportService.update(changedReport));
+  }
+
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IReport>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
+      next: () => this.onSaveSuccess(),
+      error: () => this.onSaveError(),
+    });
+  }
+
+  protected onSaveSuccess(): void {}
+
+  protected onSaveError(): void {}
+
+  protected onSaveFinalize(): void {
+    this.isSaving = false;
   }
 }

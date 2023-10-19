@@ -12,4 +12,6 @@ public interface RelReportBlocksReportService {
     void updatePriorityNumber(Long priorityNumber, Long reportId, Long reportBlocksId);
 
     Long findMaxPriorityNumberByReportId(Long reportId);
+
+    RelReportBlocksReport save(RelReportBlocksReport relReportBlocksReport);
 }

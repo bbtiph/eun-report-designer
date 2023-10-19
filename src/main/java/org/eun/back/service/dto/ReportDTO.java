@@ -22,7 +22,11 @@ public class ReportDTO implements Serializable {
 
     private String type;
 
-    private String isActive;
+    private Boolean isActive;
+
+    private Boolean isMinistry;
+
+    private Long parentId;
 
     @Lob
     private byte[] file;
@@ -70,12 +74,28 @@ public class ReportDTO implements Serializable {
         this.type = type;
     }
 
-    public String getIsActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(String isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public Boolean getIsMinistry() {
+        return isMinistry;
+    }
+
+    public void setIsMinistry(Boolean isMinistry) {
+        this.isMinistry = isMinistry;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
     public byte[] getFile() {
@@ -133,6 +153,8 @@ public class ReportDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", type='" + getType() + "'" +
             ", isActive='" + getIsActive() + "'" +
+            ", isMinistry='" + getIsMinistry() + "'" +
+            ", parentId='" + getParentId() + "'" +
             ", file='" + getFile() + "'" +
             ", reportTemplate=" + getReportTemplate() +
             "}";

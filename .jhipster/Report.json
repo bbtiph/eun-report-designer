@@ -24,7 +24,15 @@
     },
     {
       "fieldName": "isActive",
-      "fieldType": "String"
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isMinistry",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "parentId",
+      "fieldType": "Long"
     },
     {
       "fieldName": "file",

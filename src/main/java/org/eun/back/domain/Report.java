@@ -41,7 +41,13 @@ public class Report implements Serializable {
     private String type;
 
     @Column(name = "is_active")
-    private String isActive;
+    private Boolean isActive;
+
+    @Column(name = "is_ministry")
+    private Boolean isMinistry;
+
+    @Column(name = "parent_id")
+    private Long parentId;
 
     @Lob
     @Column(name = "file")
@@ -124,17 +130,43 @@ public class Report implements Serializable {
         this.type = type;
     }
 
-    public String getIsActive() {
+    public Boolean getIsActive() {
         return this.isActive;
     }
 
-    public Report isActive(String isActive) {
+    public Report isActive(Boolean isActive) {
         this.setIsActive(isActive);
         return this;
     }
 
-    public void setIsActive(String isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public Boolean getIsMinistry() {
+        return this.isMinistry;
+    }
+
+    public Report isMinistry(Boolean isMinistry) {
+        this.setIsMinistry(isMinistry);
+        return this;
+    }
+
+    public void setIsMinistry(Boolean isMinistry) {
+        this.isMinistry = isMinistry;
+    }
+
+    public Long getParentId() {
+        return this.parentId;
+    }
+
+    public Report parentId(Long parentId) {
+        this.setParentId(parentId);
+        return this;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
     public byte[] getFile() {
@@ -236,6 +268,8 @@ public class Report implements Serializable {
             ", description='" + getDescription() + "'" +
             ", type='" + getType() + "'" +
             ", isActive='" + getIsActive() + "'" +
+            ", isMinistry='" + getIsMinistry() + "'" +
+            ", parentId='" + getParentId() + "'" +
             ", file='" + getFile() + "'" +
             ", fileContentType='" + getFileContentType() + "'" +
             "}";

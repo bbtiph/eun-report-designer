@@ -18,36 +18,50 @@
         </div>
         <div class="row mb-3" *ngIf="type !== 'report'">
           <label>Country: {{ type === 'content' ? selectedCountry?.countryName : '' }}</label>
-          <select
+          <ng-select
             *ngIf="type === 'template' || type === 'new'"
-            class="form-control"
-            id="field_countryIds"
-            data-cy="countryId"
-            multiple
-            name="countryIds"
-            formControlName="countryIds"
+            [items]="countriesSharedCollection"
+            bindLabel="countryName"
+            [multiple]="true"
+            placeholder="Select countries"
             [compareWith]="compareCountries"
+            formControlName="countryIds"
           >
-            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">
-              {{ countriesOption.countryName }}
-            </option>
-          </select>
+            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+              <div class="ng-value" *ngFor="let item of items ? items : []">
+                <span class="ng-value-label">{{ item?.countryName }}</span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+              </div>
+              <div class="ng-value" *ngIf="items.length > 10">
+                <!-- <span class="ng-value-label">{{items.length - 2}} more...</span> -->
+                <span class="ng-value-label">. . .</span>
+              </div>
+            </ng-template>
+          </ng-select>
         </div>
 
         <div class="row mb-3" *ngIf="type !== 'report' && type !== 'content'">
           <label for="field_reportIds">Report: </label>
-          <select
-            class="form-control"
+          <ng-select
+            [items]="reportsSharedCollection"
             id="field_reportIds"
-            data-cy="reportId"
-            multiple
-            name="reportIds"
-            formControlName="reportIds"
+            bindLabel="reportName"
+            [multiple]="true"
+            placeholder="Select reports"
             [compareWith]="compareReport"
+            formControlName="reportIds"
           >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="reportOption" *ngFor="let reportOption of reportsSharedCollection">{{ reportOption.reportName }}</option>
-          </select>
+            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+              <div class="ng-value" *ngFor="let item of items ? items : []">
+                <span class="ng-value-label">{{ item?.reportName }}</span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+              </div>
+              <div class="ng-value" *ngIf="items.length > 10">
+                <!-- <span class="ng-value-label">{{items.length - 2}} more...</span> -->
+                <span class="ng-value-label">. . .</span>
+              </div>
+            </ng-template>
+          </ng-select>
         </div>
 
         <ul
