@@ -64,5 +64,7 @@ public interface WorkingGroupReferencesService {
 
     void upload(MultipartFile file) throws IOException;
 
+    byte[] download() throws IOException;
+
     Indicator<?> getIndicator(Long countryId, Long reportId);
 }

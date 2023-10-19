@@ -1,5 +1,6 @@
 package org.eun.back.web.rest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -93,6 +95,16 @@ public class WorkingGroupReferencesResource {
             .noContent()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, file.getName()))
             .build();
+    }
+
+    @PostMapping("/working-group-references/download")
+    public ResponseEntity<byte[]> generateExcel() throws IOException {
+        byte[] generatedExcel = workingGroupReferencesService.download();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=working_group_references.xlsx");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM).body(generatedExcel);
     }
 
     /**

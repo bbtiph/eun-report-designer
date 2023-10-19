@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -49,7 +49,8 @@ export class WorkingGroupReferencesComponent implements OnInit {
     protected workingGroupReferencesService: WorkingGroupReferencesService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private http: HttpClient
   ) {}
 
   trackId = (_index: number, item: IWorkingGroupReferences): number =>
@@ -375,6 +376,19 @@ export class WorkingGroupReferencesComponent implements OnInit {
 
   openModal() {
     this.showModal = true;
+  }
+
+  downloadExcel() {
+    this.http.post('api/working-group-references/download', null, { responseType: 'blob' as 'json' }).subscribe(response => {
+      // @ts-ignore
+      const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'your_file_name.xlsx'; // Укажите желаемое имя файла
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
   }
 
   closeModal() {

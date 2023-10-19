@@ -30,6 +30,13 @@
         <dd>
           <span>{{ referenceTableSettings.isActive }}</span>
         </dd>
+        <dt><span>File</span></dt>
+        <dd>
+          <div *ngIf="referenceTableSettings.file">
+            <a (click)="openFile(referenceTableSettings.file, referenceTableSettings.fileContentType)">Open</a>
+            {{ referenceTableSettings.fileContentType }}, {{ byteSize(referenceTableSettings.file) }}
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

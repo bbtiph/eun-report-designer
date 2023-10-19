@@ -31,6 +31,13 @@ public class ReferenceTableSettings implements Serializable {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Lob
+    @Column(name = "file")
+    private byte[] file;
+
+    @Column(name = "file_content_type")
+    private String fileContentType;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -98,6 +105,32 @@ public class ReferenceTableSettings implements Serializable {
         this.isActive = isActive;
     }
 
+    public byte[] getFile() {
+        return this.file;
+    }
+
+    public ReferenceTableSettings file(byte[] file) {
+        this.setFile(file);
+        return this;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    public String getFileContentType() {
+        return this.fileContentType;
+    }
+
+    public ReferenceTableSettings fileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
+        return this;
+    }
+
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -126,6 +159,8 @@ public class ReferenceTableSettings implements Serializable {
             ", columns='" + getColumns() + "'" +
             ", path='" + getPath() + "'" +
             ", isActive='" + getIsActive() + "'" +
+            ", file='" + getFile() + "'" +
+            ", fileContentType='" + getFileContentType() + "'" +
             "}";
     }
 }

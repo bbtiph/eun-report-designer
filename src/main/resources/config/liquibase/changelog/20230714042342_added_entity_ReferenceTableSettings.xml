@@ -54,4 +54,15 @@
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
+
+    <changeSet id="20230714042342-2" author="jhipster">
+        <addColumn tableName="reference_table_settings">
+            <column name="file" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="file_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

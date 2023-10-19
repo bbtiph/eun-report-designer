@@ -5,18 +5,22 @@ export const sampleWithRequiredData: IReferenceTableSettings = {
 };
 
 export const sampleWithPartialData: IReferenceTableSettings = {
-  id: 60665,
-  refTable: 'Maine disintermediate Namibia',
-  path: 'Electronics synergies Expressway',
-  isActive: true,
+  id: 78659,
+  refTable: 'scale reintermediate',
+  path: 'generate salmon Music',
+  isActive: false,
+  file: '../fake-data/blob/hipster.png',
+  fileContentType: 'unknown',
 };
 
 export const sampleWithFullData: IReferenceTableSettings = {
-  id: 66265,
-  refTable: 'multi-byte Fantastic Quality',
-  columns: 'maroon',
-  path: 'circuit',
-  isActive: true,
+  id: 66163,
+  refTable: 'payment Colorado target',
+  columns: 'Savings utilize circuit',
+  path: 'sensor Computer',
+  isActive: false,
+  file: '../fake-data/blob/hipster.png',
+  fileContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewReferenceTableSettings = {

@@ -2,6 +2,7 @@ package org.eun.back.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Lob;
 
 /**
  * A DTO for the {@link org.eun.back.domain.ReferenceTableSettings} entity.
@@ -18,6 +19,11 @@ public class ReferenceTableSettingsDTO implements Serializable {
     private String path;
 
     private Boolean isActive;
+
+    @Lob
+    private byte[] file;
+
+    private String fileContentType;
 
     public Long getId() {
         return id;
@@ -59,6 +65,22 @@ public class ReferenceTableSettingsDTO implements Serializable {
         this.isActive = isActive;
     }
 
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    public String getFileContentType() {
+        return fileContentType;
+    }
+
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -89,6 +111,7 @@ public class ReferenceTableSettingsDTO implements Serializable {
             ", columns='" + getColumns() + "'" +
             ", path='" + getPath() + "'" +
             ", isActive='" + getIsActive() + "'" +
+            ", file='" + getFile() + "'" +
             "}";
     }
 }

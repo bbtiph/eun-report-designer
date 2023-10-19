@@ -20,6 +20,11 @@
     {
       "fieldName": "isActive",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "file",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
     }
   ],
   "fluentMethods": true,

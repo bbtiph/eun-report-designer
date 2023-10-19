@@ -1,20 +1,22 @@
 package org.eun.back.service.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.eun.back.domain.ReferenceTableSettings;
 import org.eun.back.domain.WorkingGroupReferences;
 import org.eun.back.repository.WorkingGroupReferencesRepository;
 import org.eun.back.security.SecurityUtils;
 import org.eun.back.service.CountriesService;
+import org.eun.back.service.ReferenceTableSettingsService;
 import org.eun.back.service.WorkingGroupReferencesService;
-import org.eun.back.service.dto.CountriesDTO;
-import org.eun.back.service.dto.Indicator;
-import org.eun.back.service.dto.WorkingGroupReferencesDTO;
-import org.eun.back.service.dto.WorkingGroupReferencesIndicatorDTO;
+import org.eun.back.service.dto.*;
 import org.eun.back.service.mapper.WorkingGroupReferencesIndicatorMapper;
 import org.eun.back.service.mapper.WorkingGroupReferencesMapper;
 import org.slf4j.Logger;
@@ -40,17 +42,21 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
 
     private final WorkingGroupReferencesIndicatorMapper workingGroupReferencesIndicatorMapper;
 
+    private final ReferenceTableSettingsService referenceTableSettingsService;
+
     private final CountriesService countriesService;
 
     public WorkingGroupReferencesServiceImpl(
         WorkingGroupReferencesRepository workingGroupReferencesRepository,
         WorkingGroupReferencesMapper workingGroupReferencesMapper,
         WorkingGroupReferencesIndicatorMapper workingGroupReferencesIndicatorMapper,
+        ReferenceTableSettingsService referenceTableSettingsService,
         CountriesService countriesService
     ) {
         this.workingGroupReferencesRepository = workingGroupReferencesRepository;
         this.workingGroupReferencesMapper = workingGroupReferencesMapper;
         this.workingGroupReferencesIndicatorMapper = workingGroupReferencesIndicatorMapper;
+        this.referenceTableSettingsService = referenceTableSettingsService;
         this.countriesService = countriesService;
     }
 
@@ -213,5 +219,43 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
         } catch (IOException e) {
             log.error("Error ", e);
         }
+    }
+
+    @Override
+    public byte[] download() throws IOException {
+        List<WorkingGroupReferences> workingGroupReferences = workingGroupReferencesRepository.findAll();
+        ReferenceTableSettingsDTO referenceTableSettings = referenceTableSettingsService.findOneByRefTable("working_group").get();
+        try (
+            ByteArrayInputStream templateStream = new ByteArrayInputStream(referenceTableSettings.getFile());
+            Workbook workbook = new XSSFWorkbook(templateStream)
+        ) {
+            Sheet sheet = workbook.getSheetAt(3);
+
+            int rowNum = 2;
+            for (WorkingGroupReferences wg : workingGroupReferences) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(wg.getCountryCode());
+                row.createCell(1).setCellValue(wg.getCountryName());
+                row.createCell(2).setCellValue(wg.getCountryRepresentativeFirstName());
+                row.createCell(3).setCellValue(wg.getCountryRepresentativeLastName());
+                row.createCell(4).setCellValue(wg.getCountryRepresentativeMail());
+                row.createCell(5).setCellValue(wg.getCountryRepresentativePosition());
+                row.createCell(6).setCellValue(wg.getCountryRepresentativeStartDate());
+                row.createCell(7).setCellValue(wg.getCountryRepresentativeEndDate());
+                row.createCell(8).setCellValue(wg.getCountryRepresentativeMinistry());
+                row.createCell(9).setCellValue(wg.getCountryRepresentativeDepartment());
+                row.createCell(10).setCellValue(wg.getContactEunFirstName());
+                row.createCell(11).setCellValue(wg.getContactEunLastName());
+            }
+
+            try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+                workbook.write(outputStream);
+                return outputStream.toByteArray();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Обработайте ошибку по вашему усмотрению
+        }
+        return new byte[0];
     }
 }

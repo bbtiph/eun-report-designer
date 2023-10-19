@@ -24,6 +24,7 @@ describe('ReferenceTableSettings Form Service', () => {
             columns: expect.any(Object),
             path: expect.any(Object),
             isActive: expect.any(Object),
+            file: expect.any(Object),
           })
         );
       });
@@ -38,6 +39,7 @@ describe('ReferenceTableSettings Form Service', () => {
             columns: expect.any(Object),
             path: expect.any(Object),
             isActive: expect.any(Object),
+            file: expect.any(Object),
           })
         );
       });
