@@ -59,6 +59,8 @@ public class WorkingGroupReferencesCriteria implements Serializable, Criteria {
 
     private LocalDateFilter lastModifiedDate;
 
+    private LongFilter sheetNum;
+
     private Boolean distinct;
 
     public WorkingGroupReferencesCriteria() {}
@@ -89,6 +91,7 @@ public class WorkingGroupReferencesCriteria implements Serializable, Criteria {
         this.lastModifiedBy = other.lastModifiedBy == null ? null : other.lastModifiedBy.copy();
         this.createdDate = other.createdDate == null ? null : other.createdDate.copy();
         this.lastModifiedDate = other.lastModifiedDate == null ? null : other.lastModifiedDate.copy();
+        this.sheetNum = other.sheetNum == null ? null : other.sheetNum.copy();
         this.distinct = other.distinct;
     }
 
@@ -382,6 +385,21 @@ public class WorkingGroupReferencesCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public LongFilter getSheetNum() {
+        return sheetNum;
+    }
+
+    public LongFilter sheetNum() {
+        if (sheetNum == null) {
+            sheetNum = new LongFilter();
+        }
+        return sheetNum;
+    }
+
+    public void setSheetNum(LongFilter sheetNum) {
+        this.sheetNum = sheetNum;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -419,6 +437,7 @@ public class WorkingGroupReferencesCriteria implements Serializable, Criteria {
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
+            Objects.equals(sheetNum, that.sheetNum) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -445,6 +464,7 @@ public class WorkingGroupReferencesCriteria implements Serializable, Criteria {
             lastModifiedBy,
             createdDate,
             lastModifiedDate,
+            sheetNum,
             distinct
         );
     }
@@ -472,6 +492,7 @@ public class WorkingGroupReferencesCriteria implements Serializable, Criteria {
             (lastModifiedBy != null ? "lastModifiedBy=" + lastModifiedBy + ", " : "") +
             (createdDate != null ? "createdDate=" + createdDate + ", " : "") +
             (lastModifiedDate != null ? "lastModifiedDate=" + lastModifiedDate + ", " : "") +
+            (sheetNum != null ? "sheetNum=" + sheetNum + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

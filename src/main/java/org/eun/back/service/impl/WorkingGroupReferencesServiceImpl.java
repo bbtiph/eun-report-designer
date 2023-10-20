@@ -5,8 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.eun.back.domain.ReferenceTableSettings;
@@ -195,6 +194,7 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
                             workingGroupReferences.setContactEunFirstName(row.getCell(10) != null ? row.getCell(10).toString() : "");
                             workingGroupReferences.setContactEunLastName(row.getCell(11) != null ? row.getCell(11).toString() : "");
                             workingGroupReferences.setType(sheetName);
+                            workingGroupReferences.setSheetNum((long) pageNumber);
                             WorkingGroupReferences workingGroupReferencesRes = workingGroupReferencesRepository.findByCountryCodeAndCountryRepresentativeMinistryAndType(
                                 workingGroupReferences.getCountryCode(),
                                 workingGroupReferences.getCountryRepresentativeMinistry(),
@@ -225,27 +225,39 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
     public byte[] download() throws IOException {
         List<WorkingGroupReferences> workingGroupReferences = workingGroupReferencesRepository.findAll();
         ReferenceTableSettingsDTO referenceTableSettings = referenceTableSettingsService.findOneByRefTable("working_group").get();
+
         try (
             ByteArrayInputStream templateStream = new ByteArrayInputStream(referenceTableSettings.getFile());
             Workbook workbook = new XSSFWorkbook(templateStream)
         ) {
-            Sheet sheet = workbook.getSheetAt(3);
-
-            int rowNum = 2;
+            Map<Long, List<WorkingGroupReferences>> dataBySheetNum = new HashMap<>();
             for (WorkingGroupReferences wg : workingGroupReferences) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(wg.getCountryCode());
-                row.createCell(1).setCellValue(wg.getCountryName());
-                row.createCell(2).setCellValue(wg.getCountryRepresentativeFirstName());
-                row.createCell(3).setCellValue(wg.getCountryRepresentativeLastName());
-                row.createCell(4).setCellValue(wg.getCountryRepresentativeMail());
-                row.createCell(5).setCellValue(wg.getCountryRepresentativePosition());
-                row.createCell(6).setCellValue(wg.getCountryRepresentativeStartDate());
-                row.createCell(7).setCellValue(wg.getCountryRepresentativeEndDate());
-                row.createCell(8).setCellValue(wg.getCountryRepresentativeMinistry());
-                row.createCell(9).setCellValue(wg.getCountryRepresentativeDepartment());
-                row.createCell(10).setCellValue(wg.getContactEunFirstName());
-                row.createCell(11).setCellValue(wg.getContactEunLastName());
+                Long sheetNum = wg.getSheetNum();
+                dataBySheetNum.computeIfAbsent(sheetNum, k -> new ArrayList<>()).add(wg);
+            }
+
+            for (Map.Entry<Long, List<WorkingGroupReferences>> entry : dataBySheetNum.entrySet()) {
+                Long sheetNum = entry.getKey();
+                List<WorkingGroupReferences> dataForSheet = entry.getValue();
+
+                Sheet sheet = workbook.getSheetAt(Math.toIntExact(sheetNum));
+
+                int rowNum = 2;
+                for (WorkingGroupReferences wg : dataForSheet) {
+                    Row row = sheet.createRow(rowNum++);
+                    row.createCell(0).setCellValue(wg.getCountryCode());
+                    row.createCell(1).setCellValue(wg.getCountryName());
+                    row.createCell(2).setCellValue(wg.getCountryRepresentativeFirstName());
+                    row.createCell(3).setCellValue(wg.getCountryRepresentativeLastName());
+                    row.createCell(4).setCellValue(wg.getCountryRepresentativeMail());
+                    row.createCell(5).setCellValue(wg.getCountryRepresentativePosition());
+                    row.createCell(6).setCellValue(wg.getCountryRepresentativeStartDate());
+                    row.createCell(7).setCellValue(wg.getCountryRepresentativeEndDate());
+                    row.createCell(8).setCellValue(wg.getCountryRepresentativeMinistry());
+                    row.createCell(9).setCellValue(wg.getCountryRepresentativeDepartment());
+                    row.createCell(10).setCellValue(wg.getContactEunFirstName());
+                    row.createCell(11).setCellValue(wg.getContactEunLastName());
+                }
             }
 
             try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
@@ -254,7 +266,6 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
             }
         } catch (IOException e) {
             e.printStackTrace();
-            // Обработайте ошибку по вашему усмотрению
         }
         return new byte[0];
     }

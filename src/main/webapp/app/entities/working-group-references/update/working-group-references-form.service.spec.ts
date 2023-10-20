@@ -38,6 +38,7 @@ describe('WorkingGroupReferences Form Service', () => {
             lastModifiedBy: expect.any(Object),
             createdDate: expect.any(Object),
             lastModifiedDate: expect.any(Object),
+            sheetNum: expect.any(Object),
           })
         );
       });
@@ -66,6 +67,7 @@ describe('WorkingGroupReferences Form Service', () => {
             lastModifiedBy: expect.any(Object),
             createdDate: expect.any(Object),
             lastModifiedDate: expect.any(Object),
+            sheetNum: expect.any(Object),
           })
         );
       });

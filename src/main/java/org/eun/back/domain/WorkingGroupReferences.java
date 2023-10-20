@@ -74,6 +74,9 @@ public class WorkingGroupReferences implements Serializable {
     @Column(name = "last_modified_date")
     private LocalDate lastModifiedDate;
 
+    @Column(name = "sheet_num")
+    private Long sheetNum;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -323,6 +326,19 @@ public class WorkingGroupReferences implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public Long getSheetNum() {
+        return this.sheetNum;
+    }
+
+    public WorkingGroupReferences sheetNum(Long sheetNum) {
+        this.setSheetNum(sheetNum);
+        return this;
+    }
+
+    public void setSheetNum(Long sheetNum) {
+        this.sheetNum = sheetNum;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -365,6 +381,7 @@ public class WorkingGroupReferences implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
+            ", sheetNum=" + getSheetNum() +
             "}";
     }
 }

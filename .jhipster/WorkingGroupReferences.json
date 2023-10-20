@@ -76,6 +76,10 @@
     {
       "fieldName": "lastModifiedDate",
       "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "sheetNum",
+      "fieldType": "Long"
     }
   ],
   "fluentMethods": true,

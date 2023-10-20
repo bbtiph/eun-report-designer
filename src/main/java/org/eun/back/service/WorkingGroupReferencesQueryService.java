@@ -200,6 +200,9 @@ public class WorkingGroupReferencesQueryService extends QueryService<WorkingGrou
                 specification =
                     specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), WorkingGroupReferences_.lastModifiedDate));
             }
+            if (criteria.getSheetNum() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getSheetNum(), WorkingGroupReferences_.sheetNum));
+            }
         }
         return specification;
     }

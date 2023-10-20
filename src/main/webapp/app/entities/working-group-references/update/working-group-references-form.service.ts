@@ -36,6 +36,7 @@ type WorkingGroupReferencesFormGroupContent = {
   lastModifiedBy: FormControl<IWorkingGroupReferences['lastModifiedBy']>;
   createdDate: FormControl<IWorkingGroupReferences['createdDate']>;
   lastModifiedDate: FormControl<IWorkingGroupReferences['lastModifiedDate']>;
+  sheetNum: FormControl<IWorkingGroupReferences['sheetNum']>;
 };
 
 export type WorkingGroupReferencesFormGroup = FormGroup<WorkingGroupReferencesFormGroupContent>;
@@ -75,6 +76,7 @@ export class WorkingGroupReferencesFormService {
       lastModifiedBy: new FormControl(workingGroupReferencesRawValue.lastModifiedBy),
       createdDate: new FormControl(workingGroupReferencesRawValue.createdDate),
       lastModifiedDate: new FormControl(workingGroupReferencesRawValue.lastModifiedDate),
+      sheetNum: new FormControl(workingGroupReferencesRawValue.sheetNum),
     });
   }
 

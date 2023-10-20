@@ -385,7 +385,7 @@ export class WorkingGroupReferencesComponent implements OnInit {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'your_file_name.xlsx'; // Укажите желаемое имя файла
+      a.download = 'sample_moe_contacts.xlsx'; // Укажите желаемое имя файла
       a.click();
       window.URL.revokeObjectURL(url);
     });

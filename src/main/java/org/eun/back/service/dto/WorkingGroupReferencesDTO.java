@@ -48,6 +48,8 @@ public class WorkingGroupReferencesDTO implements Serializable {
 
     private LocalDate lastModifiedDate;
 
+    private Long sheetNum;
+
     public Long getId() {
         return id;
     }
@@ -200,6 +202,14 @@ public class WorkingGroupReferencesDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public Long getSheetNum() {
+        return sheetNum;
+    }
+
+    public void setSheetNum(Long sheetNum) {
+        this.sheetNum = sheetNum;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -244,6 +254,7 @@ public class WorkingGroupReferencesDTO implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
+            ", sheetNum=" + getSheetNum() +
             "}";
     }
 }

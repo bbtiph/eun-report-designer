@@ -20,6 +20,7 @@ export interface IWorkingGroupReferences {
   lastModifiedBy?: string | null;
   createdDate?: dayjs.Dayjs | null;
   lastModifiedDate?: dayjs.Dayjs | null;
+  sheetNum?: number | null;
 }
 
 export type NewWorkingGroupReferences = Omit<IWorkingGroupReferences, 'id'> & { id: null };

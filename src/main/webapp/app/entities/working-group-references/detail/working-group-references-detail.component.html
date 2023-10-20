@@ -86,6 +86,10 @@
         <dd>
           <span>{{ workingGroupReferences.lastModifiedDate | formatMediumDate }}</span>
         </dd>
+        <dt><span>Sheet Num</span></dt>
+        <dd>
+          <span>{{ workingGroupReferences.sheetNum }}</span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

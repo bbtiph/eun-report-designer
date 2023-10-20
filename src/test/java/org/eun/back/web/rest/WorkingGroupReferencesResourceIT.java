@@ -92,6 +92,10 @@ class WorkingGroupReferencesResourceIT {
     private static final LocalDate UPDATED_LAST_MODIFIED_DATE = LocalDate.now(ZoneId.systemDefault());
     private static final LocalDate SMALLER_LAST_MODIFIED_DATE = LocalDate.ofEpochDay(-1L);
 
+    private static final Long DEFAULT_SHEET_NUM = 1L;
+    private static final Long UPDATED_SHEET_NUM = 2L;
+    private static final Long SMALLER_SHEET_NUM = 1L - 1L;
+
     private static final String ENTITY_API_URL = "/api/working-group-references";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -137,7 +141,8 @@ class WorkingGroupReferencesResourceIT {
             .createdBy(DEFAULT_CREATED_BY)
             .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY)
             .createdDate(DEFAULT_CREATED_DATE)
-            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE);
+            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE)
+            .sheetNum(DEFAULT_SHEET_NUM);
         return workingGroupReferences;
     }
 
@@ -166,7 +171,8 @@ class WorkingGroupReferencesResourceIT {
             .createdBy(UPDATED_CREATED_BY)
             .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
             .createdDate(UPDATED_CREATED_DATE)
-            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE)
+            .sheetNum(UPDATED_SHEET_NUM);
         return workingGroupReferences;
     }
 
@@ -211,6 +217,7 @@ class WorkingGroupReferencesResourceIT {
         assertThat(testWorkingGroupReferences.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
         assertThat(testWorkingGroupReferences.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
         assertThat(testWorkingGroupReferences.getLastModifiedDate()).isEqualTo(DEFAULT_LAST_MODIFIED_DATE);
+        assertThat(testWorkingGroupReferences.getSheetNum()).isEqualTo(DEFAULT_SHEET_NUM);
     }
 
     @Test
@@ -267,7 +274,8 @@ class WorkingGroupReferencesResourceIT {
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
             .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY)))
             .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
-            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())));
+            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())))
+            .andExpect(jsonPath("$.[*].sheetNum").value(hasItem(DEFAULT_SHEET_NUM.intValue())));
     }
 
     @Test
@@ -299,7 +307,8 @@ class WorkingGroupReferencesResourceIT {
             .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY))
             .andExpect(jsonPath("$.lastModifiedBy").value(DEFAULT_LAST_MODIFIED_BY))
             .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
-            .andExpect(jsonPath("$.lastModifiedDate").value(DEFAULT_LAST_MODIFIED_DATE.toString()));
+            .andExpect(jsonPath("$.lastModifiedDate").value(DEFAULT_LAST_MODIFIED_DATE.toString()))
+            .andExpect(jsonPath("$.sheetNum").value(DEFAULT_SHEET_NUM.intValue()));
     }
 
     @Test
@@ -1647,6 +1656,97 @@ class WorkingGroupReferencesResourceIT {
         defaultWorkingGroupReferencesShouldBeFound("lastModifiedDate.greaterThan=" + SMALLER_LAST_MODIFIED_DATE);
     }
 
+    @Test
+    @Transactional
+    void getAllWorkingGroupReferencesBySheetNumIsEqualToSomething() throws Exception {
+        // Initialize the database
+        workingGroupReferencesRepository.saveAndFlush(workingGroupReferences);
+
+        // Get all the workingGroupReferencesList where sheetNum equals to DEFAULT_SHEET_NUM
+        defaultWorkingGroupReferencesShouldBeFound("sheetNum.equals=" + DEFAULT_SHEET_NUM);
+
+        // Get all the workingGroupReferencesList where sheetNum equals to UPDATED_SHEET_NUM
+        defaultWorkingGroupReferencesShouldNotBeFound("sheetNum.equals=" + UPDATED_SHEET_NUM);
+    }
+
+    @Test
+    @Transactional
+    void getAllWorkingGroupReferencesBySheetNumIsInShouldWork() throws Exception {
+        // Initialize the database
+        workingGroupReferencesRepository.saveAndFlush(workingGroupReferences);
+
+        // Get all the workingGroupReferencesList where sheetNum in DEFAULT_SHEET_NUM or UPDATED_SHEET_NUM
+        defaultWorkingGroupReferencesShouldBeFound("sheetNum.in=" + DEFAULT_SHEET_NUM + "," + UPDATED_SHEET_NUM);
+
+        // Get all the workingGroupReferencesList where sheetNum equals to UPDATED_SHEET_NUM
+        defaultWorkingGroupReferencesShouldNotBeFound("sheetNum.in=" + UPDATED_SHEET_NUM);
+    }
+
+    @Test
+    @Transactional
+    void getAllWorkingGroupReferencesBySheetNumIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        workingGroupReferencesRepository.saveAndFlush(workingGroupReferences);
+
+        // Get all the workingGroupReferencesList where sheetNum is not null
+        defaultWorkingGroupReferencesShouldBeFound("sheetNum.specified=true");
+
+        // Get all the workingGroupReferencesList where sheetNum is null
+        defaultWorkingGroupReferencesShouldNotBeFound("sheetNum.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllWorkingGroupReferencesBySheetNumIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        workingGroupReferencesRepository.saveAndFlush(workingGroupReferences);
+
+        // Get all the workingGroupReferencesList where sheetNum is greater than or equal to DEFAULT_SHEET_NUM
+        defaultWorkingGroupReferencesShouldBeFound("sheetNum.greaterThanOrEqual=" + DEFAULT_SHEET_NUM);
+
+        // Get all the workingGroupReferencesList where sheetNum is greater than or equal to UPDATED_SHEET_NUM
+        defaultWorkingGroupReferencesShouldNotBeFound("sheetNum.greaterThanOrEqual=" + UPDATED_SHEET_NUM);
+    }
+
+    @Test
+    @Transactional
+    void getAllWorkingGroupReferencesBySheetNumIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        workingGroupReferencesRepository.saveAndFlush(workingGroupReferences);
+
+        // Get all the workingGroupReferencesList where sheetNum is less than or equal to DEFAULT_SHEET_NUM
+        defaultWorkingGroupReferencesShouldBeFound("sheetNum.lessThanOrEqual=" + DEFAULT_SHEET_NUM);
+
+        // Get all the workingGroupReferencesList where sheetNum is less than or equal to SMALLER_SHEET_NUM
+        defaultWorkingGroupReferencesShouldNotBeFound("sheetNum.lessThanOrEqual=" + SMALLER_SHEET_NUM);
+    }
+
+    @Test
+    @Transactional
+    void getAllWorkingGroupReferencesBySheetNumIsLessThanSomething() throws Exception {
+        // Initialize the database
+        workingGroupReferencesRepository.saveAndFlush(workingGroupReferences);
+
+        // Get all the workingGroupReferencesList where sheetNum is less than DEFAULT_SHEET_NUM
+        defaultWorkingGroupReferencesShouldNotBeFound("sheetNum.lessThan=" + DEFAULT_SHEET_NUM);
+
+        // Get all the workingGroupReferencesList where sheetNum is less than UPDATED_SHEET_NUM
+        defaultWorkingGroupReferencesShouldBeFound("sheetNum.lessThan=" + UPDATED_SHEET_NUM);
+    }
+
+    @Test
+    @Transactional
+    void getAllWorkingGroupReferencesBySheetNumIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        workingGroupReferencesRepository.saveAndFlush(workingGroupReferences);
+
+        // Get all the workingGroupReferencesList where sheetNum is greater than DEFAULT_SHEET_NUM
+        defaultWorkingGroupReferencesShouldNotBeFound("sheetNum.greaterThan=" + DEFAULT_SHEET_NUM);
+
+        // Get all the workingGroupReferencesList where sheetNum is greater than SMALLER_SHEET_NUM
+        defaultWorkingGroupReferencesShouldBeFound("sheetNum.greaterThan=" + SMALLER_SHEET_NUM);
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -1675,7 +1775,8 @@ class WorkingGroupReferencesResourceIT {
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
             .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY)))
             .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
-            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())));
+            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())))
+            .andExpect(jsonPath("$.[*].sheetNum").value(hasItem(DEFAULT_SHEET_NUM.intValue())));
 
         // Check, that the count call also returns 1
         restWorkingGroupReferencesMockMvc
@@ -1743,7 +1844,8 @@ class WorkingGroupReferencesResourceIT {
             .createdBy(UPDATED_CREATED_BY)
             .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
             .createdDate(UPDATED_CREATED_DATE)
-            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE)
+            .sheetNum(UPDATED_SHEET_NUM);
         WorkingGroupReferencesDTO workingGroupReferencesDTO = workingGroupReferencesMapper.toDto(updatedWorkingGroupReferences);
 
         restWorkingGroupReferencesMockMvc
@@ -1776,6 +1878,7 @@ class WorkingGroupReferencesResourceIT {
         assertThat(testWorkingGroupReferences.getLastModifiedBy()).isEqualTo(UPDATED_LAST_MODIFIED_BY);
         assertThat(testWorkingGroupReferences.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
         assertThat(testWorkingGroupReferences.getLastModifiedDate()).isEqualTo(UPDATED_LAST_MODIFIED_DATE);
+        assertThat(testWorkingGroupReferences.getSheetNum()).isEqualTo(UPDATED_SHEET_NUM);
     }
 
     @Test
@@ -1900,6 +2003,7 @@ class WorkingGroupReferencesResourceIT {
         assertThat(testWorkingGroupReferences.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
         assertThat(testWorkingGroupReferences.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
         assertThat(testWorkingGroupReferences.getLastModifiedDate()).isEqualTo(UPDATED_LAST_MODIFIED_DATE);
+        assertThat(testWorkingGroupReferences.getSheetNum()).isEqualTo(DEFAULT_SHEET_NUM);
     }
 
     @Test
@@ -1932,7 +2036,8 @@ class WorkingGroupReferencesResourceIT {
             .createdBy(UPDATED_CREATED_BY)
             .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
             .createdDate(UPDATED_CREATED_DATE)
-            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE)
+            .sheetNum(UPDATED_SHEET_NUM);
 
         restWorkingGroupReferencesMockMvc
             .perform(
@@ -1964,6 +2069,7 @@ class WorkingGroupReferencesResourceIT {
         assertThat(testWorkingGroupReferences.getLastModifiedBy()).isEqualTo(UPDATED_LAST_MODIFIED_BY);
         assertThat(testWorkingGroupReferences.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
         assertThat(testWorkingGroupReferences.getLastModifiedDate()).isEqualTo(UPDATED_LAST_MODIFIED_DATE);
+        assertThat(testWorkingGroupReferences.getSheetNum()).isEqualTo(UPDATED_SHEET_NUM);
     }
 
     @Test
