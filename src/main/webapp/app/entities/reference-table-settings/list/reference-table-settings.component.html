@@ -83,13 +83,25 @@
               <a [routerLink]="['/reference-table-settings', referenceTableSettings.id, 'view']">show more</a>
             </span>
           </td>
+          <!--          <td>-->
+          <!--            <a *ngIf="referenceTableSettings.file" (click)="openFile(referenceTableSettings.file, referenceTableSettings.fileContentType)"-->
+          <!--              >Open</a-->
+          <!--            >-->
+          <!--            <span *ngIf="referenceTableSettings.file"-->
+          <!--              >{{ referenceTableSettings.fileContentType }}, {{ byteSize(referenceTableSettings.file) }}</span-->
+          <!--            >-->
+          <!--          </td>-->
           <td>
-            <a *ngIf="referenceTableSettings.file" (click)="openFile(referenceTableSettings.file, referenceTableSettings.fileContentType)"
-              >Open</a
-            >
-            <span *ngIf="referenceTableSettings.file"
-              >{{ referenceTableSettings.fileContentType }}, {{ byteSize(referenceTableSettings.file) }}</span
-            >
+            <span class="download-link">
+              <a
+                *ngIf="referenceTableSettings.file"
+                (click)="openFile(referenceTableSettings.file, referenceTableSettings.fileContentType)"
+                style="color: red"
+              >
+                <i class="fas fa-download"></i> <span style="color: red">Download</span>
+              </a>
+              <a style="color: red"></a>
+            </span>
           </td>
           <!--          <td>{{ referenceTableSettings.path }}</td>-->
           <!--          <td>{{ referenceTableSettings.isActive }}</td>-->

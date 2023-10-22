@@ -68,19 +68,28 @@
 
         <div class="row mb-3">
           <label class="form-label" for="field_reportTemplate">Template of BIRT report designer</label>
-          <select
-            class="form-control"
+          <ng-select
+            [items]="reportTemplatesSharedCollection"
+            bindLabel="name"
             id="field_reportTemplate"
-            data-cy="reportTemplate"
-            name="reportTemplate"
+            placeholder="Select report template"
             formControlName="reportTemplate"
             [compareWith]="compareReportTemplate"
           >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="reportTemplateOption" *ngFor="let reportTemplateOption of reportTemplatesSharedCollection">
-              {{ reportTemplateOption.name }} ({{ reportTemplateOption.description }})
-            </option>
-          </select>
+          </ng-select>
+          <!--          <select-->
+          <!--            class="form-control"-->
+          <!--            id="field_reportTemplate"-->
+          <!--            data-cy="reportTemplate"-->
+          <!--            name="reportTemplate"-->
+          <!--            formControlName="reportTemplate"-->
+          <!--            [compareWith]="compareReportTemplate"-->
+          <!--          >-->
+          <!--            <option [ngValue]="null"></option>-->
+          <!--            <option [ngValue]="reportTemplateOption" *ngFor="let reportTemplateOption of reportTemplatesSharedCollection">-->
+          <!--              {{ reportTemplateOption.name }} ({{ reportTemplateOption.description }})-->
+          <!--            </option>-->
+          <!--          </select>-->
         </div>
       </div>
 

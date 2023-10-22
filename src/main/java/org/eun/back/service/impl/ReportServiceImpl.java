@@ -64,7 +64,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public ReportDTO cloneReportBlocks(ReportDTO reportDTO) {
-        List<RelReportBlocksReport> relReportBlocksReports = relReportBlocksReportService.findAllByReport(reportDTO.getId());
+        List<RelReportBlocksReport> relReportBlocksReports = relReportBlocksReportService.findAllByReport(reportDTO.getParentId());
         for (RelReportBlocksReport relReportBlocksReport : relReportBlocksReports) {
             RelReportBlocksReport newRelReportBlocksReport = new RelReportBlocksReport();
             newRelReportBlocksReport.setReportId(reportDTO.getId());
@@ -104,7 +104,7 @@ public class ReportServiceImpl implements ReportService {
     public Page<ReportDTO> findAll(Pageable pageable, boolean forMinistries) {
         log.debug("Request to get all Reports");
         if (forMinistries) {
-            return reportRepository.findAllByIsMinistry(true, pageable).map(reportMapper::toDtoToShowInHomePage);
+            return reportRepository.findAllByIsMinistryAndIsActive(true, true, pageable).map(reportMapper::toDtoToShowInHomePage);
         }
         return reportRepository.findAllByIsActive(true, pageable).map(reportMapper::toDtoToShowInHomePage);
     }

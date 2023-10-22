@@ -58,33 +58,33 @@ import { ITEM_CLONED, ITEM_DELETED_EVENT } from '../../config/navigation.constan
                     </div>
                   </div>
 
-                  <div class="row mb-3">
-                    <label class="form-label" for="field_acronym">Acronym</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="acronym"
-                      id="field_acronym"
-                      data-cy="acronym"
-                      formControlName="acronym"
-                      [readonly]="true"
-                      [class.disabled]="true"
-                    />
-                  </div>
+                  <!--                  <div class="row mb-3">-->
+                  <!--                    <label class="form-label" for="field_acronym">Acronym</label>-->
+                  <!--                    <input-->
+                  <!--                      type="text"-->
+                  <!--                      class="form-control"-->
+                  <!--                      name="acronym"-->
+                  <!--                      id="field_acronym"-->
+                  <!--                      data-cy="acronym"-->
+                  <!--                      formControlName="acronym"-->
+                  <!--                      [readonly]="true"-->
+                  <!--                      [class.disabled]="true"-->
+                  <!--                    />-->
+                  <!--                  </div>-->
 
-                  <div class="row mb-3">
-                    <label class="form-label" for="field_type">Type</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="type"
-                      id="field_type"
-                      data-cy="type"
-                      formControlName="type"
-                      [readonly]="true"
-                      [class.disabled]="true"
-                    />
-                  </div>
+                  <!--                  <div class="row mb-3">-->
+                  <!--                    <label class="form-label" for="field_type">Type</label>-->
+                  <!--                    <input-->
+                  <!--                      type="text"-->
+                  <!--                      class="form-control"-->
+                  <!--                      name="type"-->
+                  <!--                      id="field_type"-->
+                  <!--                      data-cy="type"-->
+                  <!--                      formControlName="type"-->
+                  <!--                      [readonly]="true"-->
+                  <!--                      [class.disabled]="true"-->
+                  <!--                    />-->
+                  <!--                  </div>-->
 
                   <div class="row mb-3">
                     <label class="form-label" for="field_description">Description</label>

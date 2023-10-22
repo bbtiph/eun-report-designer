@@ -157,7 +157,7 @@ export class ReportComponent implements OnInit {
     console.log('trpr: ', report);
     const modalRef = this.modalService.open(AbstractCloneReportModal, {
       animation: true,
-      size: 'xl',
+      size: 'lg',
     });
     modalRef.componentInstance.param = this;
     modalRef.componentInstance.reportToClone = report;

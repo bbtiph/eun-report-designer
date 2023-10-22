@@ -12,9 +12,18 @@ import { ReportBlocksModule } from '../report-blocks/report-blocks.module';
 import { ReportCountryContentComponent } from './report-country-content/report-country-content.component';
 import { DragulaModule } from 'ng2-dragula';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-  imports: [SharedModule, ReportRoutingModule, AngularEditorModule, ReportBlocksModule, DragulaModule, MatProgressSpinnerModule],
+  imports: [
+    SharedModule,
+    ReportRoutingModule,
+    AngularEditorModule,
+    ReportBlocksModule,
+    DragulaModule,
+    MatProgressSpinnerModule,
+    NgSelectModule,
+  ],
   declarations: [
     ReportComponent,
     ReportDetailComponent,

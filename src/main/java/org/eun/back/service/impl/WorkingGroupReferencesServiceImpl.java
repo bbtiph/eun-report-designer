@@ -136,7 +136,23 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
         try (InputStream fileInputStream = file.getInputStream()) {
             workingGroupReferencesRepository.updateAllIsActiveToFalse();
             Workbook workbook = WorkbookFactory.create(fileInputStream);
-            for (int pageNumber : new int[] { 3, 4, 5, 9 }) {
+
+            List<String> keywords = Arrays.asList("working group", "working", "wg", "WG");
+            List<Integer> sheetNumbers = new ArrayList<>();
+
+            for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+                Sheet sheet = workbook.getSheetAt(i);
+                String sheetName = sheet.getSheetName().toLowerCase();
+
+                for (String keyword : keywords) {
+                    if (sheetName.contains(keyword)) {
+                        sheetNumbers.add(i);
+                        break;
+                    }
+                }
+            }
+
+            for (int pageNumber : sheetNumbers) {
                 Sheet sheet = workbook.getSheetAt(pageNumber);
                 String sheetName = sheet.getSheetName();
                 int i = 0;
@@ -230,17 +246,24 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
             ByteArrayInputStream templateStream = new ByteArrayInputStream(referenceTableSettings.getFile());
             Workbook workbook = new XSSFWorkbook(templateStream)
         ) {
-            Map<Long, List<WorkingGroupReferences>> dataBySheetNum = new HashMap<>();
-            for (WorkingGroupReferences wg : workingGroupReferences) {
-                Long sheetNum = wg.getSheetNum();
-                dataBySheetNum.computeIfAbsent(sheetNum, k -> new ArrayList<>()).add(wg);
+            Map<String, Sheet> sheetMap = new HashMap<>();
+
+            for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+                Sheet sheet = workbook.getSheetAt(i);
+                sheetMap.put(sheet.getSheetName(), sheet);
             }
 
-            for (Map.Entry<Long, List<WorkingGroupReferences>> entry : dataBySheetNum.entrySet()) {
-                Long sheetNum = entry.getKey();
-                List<WorkingGroupReferences> dataForSheet = entry.getValue();
+            Map<String, List<WorkingGroupReferences>> dataBySheetName = new HashMap();
 
-                Sheet sheet = workbook.getSheetAt(Math.toIntExact(sheetNum));
+            for (WorkingGroupReferences wg : workingGroupReferences) {
+                String sheetName = wg.getType();
+                dataBySheetName.computeIfAbsent(sheetName, k -> new ArrayList<>()).add(wg);
+            }
+
+            for (Map.Entry<String, List<WorkingGroupReferences>> entry : dataBySheetName.entrySet()) {
+                String sheetName = entry.getKey();
+                List<WorkingGroupReferences> dataForSheet = entry.getValue();
+                Sheet sheet = sheetMap.get(sheetName);
 
                 int rowNum = 2;
                 for (WorkingGroupReferences wg : dataForSheet) {

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
-    Page<Report> findAllByIsMinistry(boolean forMinistries, Pageable pageable);
+    Page<Report> findAllByIsMinistryAndIsActive(boolean forMinistries, boolean isActive, Pageable pageable);
 
     @Modifying
     @Query("UPDATE Report r SET r.isActive = false WHERE r.id = :id")
