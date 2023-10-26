@@ -14,10 +14,12 @@ import { ICountries } from '../../countries/countries.model';
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
 import { ColDef, ColGroupDef, ICellRendererParams } from '@ag-grid-community/core';
 import { RendererComponent } from '../../../shared/filter/renderer-component/renderer.component';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'jhi-working-group-references',
   templateUrl: './working-group-references.component.html',
+  styleUrls: ['./working-group-references.component.scss'],
 })
 export class WorkingGroupReferencesComponent implements OnInit {
   @Input() template: any | null = null;
@@ -40,6 +42,7 @@ export class WorkingGroupReferencesComponent implements OnInit {
   showModal = false;
   // @ts-ignore
   selectedFile: File;
+  formGroup: FormGroup;
 
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
@@ -50,8 +53,11 @@ export class WorkingGroupReferencesComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+    private formBuilder: FormBuilder
+  ) {
+    this.formGroup = this.formBuilder.group({});
+  }
 
   trackId = (_index: number, item: IWorkingGroupReferences): number =>
     this.workingGroupReferencesService.getWorkingGroupReferencesIdentifier(item);
@@ -237,6 +243,27 @@ export class WorkingGroupReferencesComponent implements OnInit {
     ];
     if ((this.isFromReportBlock && this.type !== 'template') || this.isEdit) this.loadByCountry();
     else if (!this.isFromReportBlock) this.load();
+  }
+
+  // @ts-ignore
+  getColumnFormControl(index: string, name: string): FormControl {
+    const formControlName = `column_${index}`;
+    let column;
+    if (!this.formGroup.get(formControlName) || this.formGroup.get(formControlName) === null) {
+      column = this.template.columns.find((c: { name: string; index: string }) => c.index === index);
+      debugger;
+      this.formGroup.addControl(formControlName, new FormControl(column != null ? column.name : name));
+    }
+    return this.formGroup.get(formControlName) as FormControl;
+  }
+
+  setColumnValue(index: string): void {
+    const formControlName = `column_${index}`;
+    this.template.columns.forEach((c: { name: string; index: string }) => {
+      if (c.index === index) c.name = this.formGroup.get(formControlName)?.value;
+    });
+
+    this.templateChanged.emit(this.template);
   }
 
   getValueTemplate(index: string): boolean {
