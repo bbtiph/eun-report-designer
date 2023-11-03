@@ -42,6 +42,10 @@ export class ReferenceTableSettingsService {
     return this.http.get<IReferenceTableSettings>(`${this.resourceUrl}/by-ref-table/${source}`);
   }
 
+  findAllReferenceTableSettingsData(source: string): Observable<any> {
+    return this.http.get<any>(`${this.resourceUrl}/by-ref-table/data/${source}`);
+  }
+
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IReferenceTableSettings>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

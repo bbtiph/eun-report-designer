@@ -39,6 +39,8 @@ public interface ReferenceTableSettingsService {
      */
     List<ReferenceTableSettingsDTO> findAll();
 
+    List<?> findAllDataByRefTable(String refTable);
+
     /**
      * Get the "id" referenceTableSettings.
      *

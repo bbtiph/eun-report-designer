@@ -1,7 +1,6 @@
 package org.eun.back.service.dto;
 
 import java.util.List;
-import lombok.Data;
 
 public class Indicator<T> {
 

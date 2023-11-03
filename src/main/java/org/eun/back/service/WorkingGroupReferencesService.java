@@ -47,6 +47,8 @@ public interface WorkingGroupReferencesService {
 
     List<WorkingGroupReferencesDTO> findAllByCountry(String countryCode);
 
+    List<WorkingGroupReferencesDTO> findAllData();
+
     /**
      * Get the "id" workingGroupReferences.
      *

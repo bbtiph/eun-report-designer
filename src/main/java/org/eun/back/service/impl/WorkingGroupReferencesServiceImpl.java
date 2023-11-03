@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.eun.back.domain.ReferenceTableSettings;
@@ -109,6 +110,17 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
     public Page<WorkingGroupReferencesDTO> findAll(Pageable pageable) {
         log.debug("Request to get all WorkingGroupReferences");
         return workingGroupReferencesRepository.findAllByIsActive(true, pageable).map(workingGroupReferencesMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<WorkingGroupReferencesDTO> findAllData() {
+        log.debug("Request to get all WorkingGroupReferences");
+        return workingGroupReferencesRepository
+            .findAllByIsActive(true)
+            .stream()
+            .map(workingGroupReferencesMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override

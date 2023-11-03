@@ -1,0 +1,12 @@
+<div class="d-flex justify-content-center">
+  <div class="col-11">
+    <ng-select [(ngModel)]="selectedRefTable" (change)="onRefTableSelect(selectedRefTable)" class="custom-ng-select">
+      <ng-option [value]="">Select...</ng-option>
+      <ng-option *ngFor="let setting of referenceTableSettings" [value]="setting.refTable">
+        {{ setting.refTable }}
+      </ng-option>
+    </ng-select>
+
+    <jhi-filter [columnDefs]="columnDefs" [rowData]="data" [totalItems]="data?.length"></jhi-filter>
+  </div>
+</div>

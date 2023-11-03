@@ -368,6 +368,18 @@
             <li>
               <a
                 class="dropdown-item"
+                routerLink="reference-table-settings/manage"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="th-list" [fixedWidth]="true"></fa-icon>
+                <span>References</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
                 routerLink="organization-eun-indicator"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"

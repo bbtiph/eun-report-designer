@@ -42,6 +42,10 @@ export class MoeContactsService {
     return this.http.get<IMoeContacts>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findAll(): Observable<IMoeContacts[]> {
+    return this.http.get<IMoeContacts[]>(this.resourceUrl);
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IMoeContacts[]>(this.resourceUrl, { params: options, observe: 'response' });

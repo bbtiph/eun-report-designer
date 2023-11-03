@@ -72,8 +72,12 @@ export class WorkingGroupReferencesService {
       .pipe(map(res => this.convertResponseFromServer(res)));
   }
 
-  findAll(code?: string): Observable<IWorkingGroupReferences[]> {
+  findAllByCountry(code?: string): Observable<IWorkingGroupReferences[]> {
     return this.http.get<IWorkingGroupReferences[]>(this.resourceUrl + '/by-country/' + code);
+  }
+
+  findAll(): Observable<IWorkingGroupReferences[]> {
+    return this.http.get<IWorkingGroupReferences[]>(this.resourceUrl);
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

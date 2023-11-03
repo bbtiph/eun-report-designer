@@ -310,7 +310,7 @@ export class WorkingGroupReferencesComponent implements OnInit {
 
   loadByCountry(): void {
     this.workingGroupReferencesService
-      .findAll(this.selectedCountry?.countryCode ?? '')
+      .findAllByCountry(this.selectedCountry?.countryCode ?? '')
       .subscribe((workingGroupReference: IWorkingGroupReferences[]) => {
         this.workingGroupReferences = workingGroupReference;
       });

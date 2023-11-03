@@ -18,10 +18,12 @@ public interface WorkingGroupReferencesRepository
     WorkingGroupReferences findByCountryCodeAndCountryRepresentativeMinistryAndType(String countryCode, String ministryName, String type);
 
     @Modifying
-    @Query("UPDATE MoeContacts e SET e.isActive = false")
+    @Query("UPDATE WorkingGroupReferences e SET e.isActive = false")
     void updateAllIsActiveToFalse();
 
     Page<WorkingGroupReferences> findAllByIsActive(Boolean isActive, Pageable pageable);
+
+    List<WorkingGroupReferences> findAllByIsActive(Boolean isActive);
 
     List<WorkingGroupReferences> findAllByIsActiveAndCountryCode(Boolean isActive, String countryCode);
 }

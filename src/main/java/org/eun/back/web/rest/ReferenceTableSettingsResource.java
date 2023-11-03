@@ -140,6 +140,12 @@ public class ReferenceTableSettingsResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of referenceTableSettings in body.
      */
+    @GetMapping("/reference-table-settings/by-ref-table/data/{refTable}")
+    public List<?> getAllReferenceTableSettingsData(@PathVariable String refTable) {
+        log.debug("REST request to get all ReferenceTableSettings");
+        return referenceTableSettingsService.findAllDataByRefTable(refTable);
+    }
+
     @GetMapping("/reference-table-settings")
     public List<ReferenceTableSettingsDTO> getAllReferenceTableSettings() {
         log.debug("REST request to get all ReferenceTableSettings");

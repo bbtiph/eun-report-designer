@@ -7,14 +7,17 @@ import { ReferenceTableSettingsDeleteDialogComponent } from './delete/reference-
 import { ReferenceTableSettingsRoutingModule } from './route/reference-table-settings-routing.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ReferenceTableSettingsManageComponent } from './manage/reference-table-settings-manage.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-  imports: [SharedModule, ReferenceTableSettingsRoutingModule, MatSnackBarModule, MatDialogModule],
+  imports: [SharedModule, ReferenceTableSettingsRoutingModule, MatSnackBarModule, MatDialogModule, NgSelectModule],
   declarations: [
     ReferenceTableSettingsComponent,
     ReferenceTableSettingsDetailComponent,
     ReferenceTableSettingsUpdateComponent,
     ReferenceTableSettingsDeleteDialogComponent,
+    ReferenceTableSettingsManageComponent,
   ],
 })
 export class ReferenceTableSettingsModule {}

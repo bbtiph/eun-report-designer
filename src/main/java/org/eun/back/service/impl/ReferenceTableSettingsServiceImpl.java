@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.eun.back.domain.ReferenceTableSettings;
+import org.eun.back.repository.MoeContactsRepository;
 import org.eun.back.repository.ReferenceTableSettingsRepository;
+import org.eun.back.repository.WorkingGroupReferencesRepository;
 import org.eun.back.service.ReferenceTableSettingsService;
 import org.eun.back.service.dto.ReferenceTableSettingsDTO;
 import org.eun.back.service.mapper.ReferenceTableSettingsMapper;
@@ -27,12 +29,20 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
 
     private final ReferenceTableSettingsMapper referenceTableSettingsMapper;
 
+    private final WorkingGroupReferencesRepository workingGroupReferencesRepository;
+
+    private final MoeContactsRepository moeContactsRepository;
+
     public ReferenceTableSettingsServiceImpl(
         ReferenceTableSettingsRepository referenceTableSettingsRepository,
-        ReferenceTableSettingsMapper referenceTableSettingsMapper
+        ReferenceTableSettingsMapper referenceTableSettingsMapper,
+        WorkingGroupReferencesRepository workingGroupReferencesRepository,
+        MoeContactsRepository moeContactsRepository
     ) {
         this.referenceTableSettingsRepository = referenceTableSettingsRepository;
         this.referenceTableSettingsMapper = referenceTableSettingsMapper;
+        this.workingGroupReferencesRepository = workingGroupReferencesRepository;
+        this.moeContactsRepository = moeContactsRepository;
     }
 
     @Override
@@ -75,6 +85,21 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             .stream()
             .map(referenceTableSettingsMapper::toDtoToShowInHomePage)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<?> findAllDataByRefTable(String refTable) {
+        log.debug("Request to get all ReferenceTableSettings Data");
+        switch (refTable) {
+            case "moe_contacts_reference":
+            case "moe_contacts":
+                return moeContactsRepository.findAll();
+            case "working_group_reference":
+            case "working_group":
+                return workingGroupReferencesRepository.findAllByIsActive(true);
+        }
+        return null;
     }
 
     @Override

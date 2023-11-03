@@ -7,11 +7,20 @@ import { ReferenceTableSettingsDetailComponent } from '../detail/reference-table
 import { ReferenceTableSettingsUpdateComponent } from '../update/reference-table-settings-update.component';
 import { ReferenceTableSettingsRoutingResolveService } from './reference-table-settings-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
+import { ReferenceTableSettingsManageComponent } from '../manage/reference-table-settings-manage.component';
 
 const referenceTableSettingsRoute: Routes = [
   {
     path: '',
     component: ReferenceTableSettingsComponent,
+    data: {
+      defaultSort: 'id,' + ASC,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'manage',
+    component: ReferenceTableSettingsManageComponent,
     data: {
       defaultSort: 'id,' + ASC,
     },
