@@ -1,7 +1,7 @@
-entity ReportTemplate {
+entity GeneratedReport {
     name String
     description String
-    type String
+    requestBody String
     isActive Boolean
     file Blob
     createdBy String
@@ -11,7 +11,8 @@ entity ReportTemplate {
 }
 
 
-dto ReportTemplate with mapstruct
-service ReportTemplate with serviceImpl
+dto GeneratedReport with mapstruct
+service GeneratedReport with serviceImpl
+paginate GeneratedReport with pagination
 
 

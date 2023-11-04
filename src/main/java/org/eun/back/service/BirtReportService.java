@@ -2,17 +2,22 @@ package org.eun.back.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.birt.core.exception.BirtException;
 import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.engine.api.*;
+import org.eun.back.security.SecurityUtils;
 import org.eun.back.service.dto.*;
 import org.eun.back.util.Utils;
 import org.slf4j.Logger;
@@ -58,8 +63,11 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
     private final ReportService reportService;
 
-    public BirtReportService(ReportService reportService) {
+    private final GeneratedReportService generatedReportService;
+
+    public BirtReportService(ReportService reportService, GeneratedReportService generatedReportService) {
         this.reportService = reportService;
+        this.generatedReportService = generatedReportService;
     }
 
     @SuppressWarnings("unchecked")
@@ -119,10 +127,15 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         return Report.ParameterType.STRING;
     }
 
-    private IReportRunnable getReport(Long reportId) {
+    private Pair<ReportDTO, IReportRunnable> getReport(Long reportId) {
         ReportDTO report = this.reportService.findOne(reportId).get();
         try {
-            return birtEngine.openReportDesign(convertByteArrayToInputStream(report.getReportTemplate().getFile()));
+            Pair<ReportDTO, IReportRunnable> response = ImmutablePair.of(
+                report,
+                birtEngine.openReportDesign(convertByteArrayToInputStream(report.getReportTemplate().getFile()))
+            );
+
+            return response;
         } catch (EngineException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -165,16 +178,16 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
         switch (output) {
             case HTML:
-                generateHTMLReport(getReport(reportId), data, lang, countryId, response, request);
+                generateHTMLReport(getReport(reportId).getRight(), data, lang, countryId, response, request);
                 break;
             case PDF:
-                generatePDFReport(getReport(reportId), data, lang, countryId, response, request);
+                generatePDFReport(getReport(reportId).getRight(), data, lang, countryId, response, request);
                 break;
             case DOCX:
-                generateDOCXReport(getReport(reportId), data, lang, countryId, response, request);
+                generateDOCXReport(getReport(reportId).getRight(), data, lang, countryId, response, request);
                 break;
             case DOC:
-                generateReport(getReport(reportId), output, data, lang, countryId, response, request);
+                generateReport(getReport(reportId).getRight(), output, data, lang, countryId, response, request);
                 break;
             case XLSX:
                 generateXLSXReport(reports.get(reportName.toLowerCase()), data, lang, countryId, response, request);
@@ -187,7 +200,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         }
     }
 
-    public void generateExternalReport(
+    public GeneratedReportDTO generateExternalReport(
         ReportExternalRequest reportExternalRequest,
         HttpServletResponse response,
         HttpServletRequest request
@@ -215,26 +228,18 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
         switch (output) {
             case HTML:
-                generateHTMLReport(getReport(reportId), data, lang, countryId, response, request);
-                break;
+                return generateHTMLReportForExternalServices(getReport(reportId), data, lang, countryId, response, request);
             case PDF:
-                generatePDFReport(getReport(reportId), data, lang, countryId, response, request);
-                break;
-            case DOCX:
-                generateDOCXReport(getReport(reportId), data, lang, countryId, response, request);
-                break;
+                return generatePDFReportForExternalServices(getReport(reportId), data, lang, countryId, response, request);
             case DOC:
-                generateReport(getReport(reportId), output, data, lang, countryId, response, request);
-                break;
-            case XLSX:
-                generateXLSXReport(getReport(reportId), data, lang, countryId, response, request);
-                break;
-            case ODT:
-                generateReport(getReport(reportId), output, data, lang, countryId, response, request);
-                break;
+                return generateReportForExternalServices(getReport(reportId), output, data, lang, countryId, response, request);
             default:
                 throw new IllegalArgumentException("Output type not recognized:" + output);
         }
+    }
+
+    public Optional<GeneratedReportDTO> getGeneratedReportDTO(Long fileId) {
+        return generatedReportService.findOne(fileId);
     }
 
     /**
@@ -416,6 +421,146 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         try {
             options.setOutputStream(response.getOutputStream());
             runAndRenderTask.run();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            runAndRenderTask.close();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private GeneratedReportDTO generateHTMLReportForExternalServices(
+        Pair<ReportDTO, IReportRunnable> report,
+        Object id,
+        String lang,
+        Long country,
+        HttpServletResponse response,
+        HttpServletRequest request
+    ) {
+        IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report.getRight());
+        IRenderOption options = new RenderOption();
+        HTMLRenderOption htmlOptions = new HTMLRenderOption(options);
+        htmlOptions.setOutputFormat("html");
+        htmlOptions.setBaseImageURL("/" + reportsPath + imagesPath);
+        htmlOptions.setImageDirectory(imageFolder);
+        htmlOptions.setImageHandler(htmlImageHandler);
+
+        Map<String, Object> birtParams = new HashMap<>();
+        birtParams.put("docId", id);
+        birtParams.put("country", country);
+        birtParams.put("lang", lang);
+
+        runAndRenderTask.setParameterValues(birtParams);
+        runAndRenderTask.setRenderOption(htmlOptions);
+
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            htmlOptions.setOutputStream(byteArrayOutputStream);
+            runAndRenderTask.run();
+
+            GeneratedReportDTO generatedReportDTO = new GeneratedReportDTO();
+            generatedReportDTO.setName(report.getLeft().getReportName());
+            generatedReportDTO.setDescription(report.getLeft().getDescription());
+            generatedReportDTO.setFile(byteArrayOutputStream.toByteArray());
+            generatedReportDTO.setFileContentType(birtEngine.getMIMEType("html"));
+            generatedReportDTO.setCreatedBy(SecurityUtils.getCurrentUserLogin().get());
+            generatedReportDTO.setCreatedDate(LocalDate.now());
+
+            generatedReportDTO = generatedReportService.save(generatedReportDTO);
+            generatedReportDTO.setFile(null);
+            return generatedReportDTO;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            runAndRenderTask.close();
+        }
+    }
+
+    /**
+     * Generate a report as PDF
+     */
+    @SuppressWarnings("unchecked")
+    private GeneratedReportDTO generatePDFReportForExternalServices(
+        Pair<ReportDTO, IReportRunnable> report,
+        Object data,
+        String lang,
+        Long country,
+        HttpServletResponse response,
+        HttpServletRequest request
+    ) {
+        IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report.getRight());
+        IRenderOption options = new RenderOption();
+        PDFRenderOption pdfRenderOption = new PDFRenderOption(options);
+        pdfRenderOption.setOutputFormat("pdf");
+
+        Map<String, Object> birtParams = new HashMap<>();
+        birtParams.put("docId", data);
+        birtParams.put("country", country);
+        birtParams.put("lang", lang);
+
+        runAndRenderTask.setParameterValues(birtParams);
+        runAndRenderTask.setRenderOption(pdfRenderOption);
+
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            pdfRenderOption.setOutputStream(byteArrayOutputStream);
+            runAndRenderTask.run();
+
+            GeneratedReportDTO generatedReportDTO = new GeneratedReportDTO();
+            generatedReportDTO.setName(report.getLeft().getReportName());
+            generatedReportDTO.setDescription(report.getLeft().getDescription());
+            generatedReportDTO.setFile(byteArrayOutputStream.toByteArray());
+            generatedReportDTO.setFileContentType(birtEngine.getMIMEType("pdf"));
+            generatedReportDTO.setCreatedBy(SecurityUtils.getCurrentUserLogin().get());
+            generatedReportDTO.setCreatedDate(LocalDate.now());
+
+            generatedReportDTO = generatedReportService.save(generatedReportDTO);
+            generatedReportDTO.setFile(null);
+            return generatedReportDTO;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            runAndRenderTask.close();
+        }
+    }
+
+    private GeneratedReportDTO generateReportForExternalServices(
+        Pair<ReportDTO, IReportRunnable> report,
+        OutputType output,
+        Object id,
+        String lang,
+        Long country,
+        HttpServletResponse response,
+        HttpServletRequest request
+    ) {
+        IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report.getRight());
+        IRenderOption options = new RenderOption();
+        options.setOutputFormat(output.name());
+
+        Map<String, Object> birtParams = new HashMap<>();
+        birtParams.put("docId", id);
+        birtParams.put("country", country);
+        birtParams.put("lang", lang);
+
+        runAndRenderTask.setParameterValues(birtParams);
+        runAndRenderTask.setRenderOption(options);
+
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            options.setOutputStream(byteArrayOutputStream);
+            runAndRenderTask.run();
+
+            GeneratedReportDTO generatedReportDTO = new GeneratedReportDTO();
+            generatedReportDTO.setName(report.getLeft().getReportName());
+            generatedReportDTO.setDescription(report.getLeft().getDescription());
+            generatedReportDTO.setFile(byteArrayOutputStream.toByteArray());
+            generatedReportDTO.setFileContentType(birtEngine.getMIMEType("doc"));
+            generatedReportDTO.setCreatedBy(SecurityUtils.getCurrentUserLogin().get());
+            generatedReportDTO.setCreatedDate(LocalDate.now());
+
+            generatedReportDTO = generatedReportService.save(generatedReportDTO);
+            generatedReportDTO.setFile(null);
+            return generatedReportDTO;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         } finally {

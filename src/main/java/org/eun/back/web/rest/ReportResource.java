@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -279,12 +281,32 @@ public class ReportResource {
 
     @PostMapping("/reports/generate")
     @CrossOrigin
-    public void externalGenerateFullReport(
+    public ResponseEntity<GeneratedReportDTO> externalGenerateFullReport(
         @RequestBody ReportExternalRequest reportExternalRequest,
         HttpServletResponse response,
         HttpServletRequest request
     ) {
         log.info("Generating full report: " + reportExternalRequest.toString() + ";");
-        birtReportService.generateExternalReport(reportExternalRequest, response, request);
+        GeneratedReportDTO generatedReportDTO = birtReportService.generateExternalReport(reportExternalRequest, response, request);
+        return ResponseEntity.ok(generatedReportDTO);
+    }
+
+    @GetMapping("/reports/download/{fileId}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long fileId) {
+        Optional<GeneratedReportDTO> generatedReportDTO = birtReportService.getGeneratedReportDTO(fileId);
+        if (generatedReportDTO.isPresent()) {
+            GeneratedReportDTO generatedReport = generatedReportDTO.get();
+            byte[] fileData = generatedReport.getFile();
+            String fileContentType = generatedReport.getFileContentType();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType(fileContentType));
+
+            headers.setContentDispositionFormData(generatedReport.getName(), generatedReport.getName());
+
+            return new ResponseEntity<>(fileData, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

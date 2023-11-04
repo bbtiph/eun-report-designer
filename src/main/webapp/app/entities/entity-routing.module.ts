@@ -162,6 +162,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'ReportTemplates' },
         loadChildren: () => import('./report-template/report-template.module').then(m => m.ReportTemplateModule),
       },
+      {
+        path: 'generated-report',
+        data: { pageTitle: 'GeneratedReports' },
+        loadChildren: () => import('./generated-report/generated-report.module').then(m => m.GeneratedReportModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
