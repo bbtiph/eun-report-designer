@@ -5,6 +5,7 @@ export interface IGeneratedReport {
   name?: string | null;
   description?: string | null;
   requestBody?: string | null;
+  url?: string | null;
   isActive?: boolean | null;
   file?: string | null;
   fileContentType?: string | null;

@@ -272,14 +272,6 @@ public class ReportBlocksServiceImpl implements ReportBlocksService {
     ) {
         log.debug("Request to get all ReportBlocks");
         Set<Long> reportBlockIdsSet = reportBlockIds.stream().map(ReportBlockId::getId).collect(Collectors.toSet());
-        List<ReportBlocks> rrr = reportBlocksRepository.findAllWithEagerRelationshipsByReport(reportId, countryId);
-        List<ReportBlocksDTO> rrrr = rrr
-            .stream()
-            .filter(reportBlock -> reportBlockIdsSet.contains(reportBlock.getId()))
-            .collect(Collectors.toList())
-            .stream()
-            .map(reportBlocksMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
         return reportBlocksRepository
             .findAllWithEagerRelationshipsByReport(reportId, countryId)
             .stream()

@@ -6,6 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 import javax.annotation.PostConstruct;
@@ -205,6 +207,13 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         HttpServletResponse response,
         HttpServletRequest request
     ) {
+        URL url = null;
+        try {
+            url = new URL(request.getRequestURL().toString());
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        String currentDomain = url.getProtocol() + "://" + url.getHost();
         String format = reportExternalRequest.getFormat();
         String lang = reportExternalRequest.getLang();
         Long countryId = reportExternalRequest.getCountryId();
@@ -228,11 +237,20 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
         switch (output) {
             case HTML:
-                return generateHTMLReportForExternalServices(getReport(reportId), data, lang, countryId, response, request);
+                return generateHTMLReportForExternalServices(currentDomain, getReport(reportId), data, lang, countryId, response, request);
             case PDF:
-                return generatePDFReportForExternalServices(getReport(reportId), data, lang, countryId, response, request);
+                return generatePDFReportForExternalServices(currentDomain, getReport(reportId), data, lang, countryId, response, request);
             case DOC:
-                return generateReportForExternalServices(getReport(reportId), output, data, lang, countryId, response, request);
+                return generateReportForExternalServices(
+                    currentDomain,
+                    getReport(reportId),
+                    output,
+                    data,
+                    lang,
+                    countryId,
+                    response,
+                    request
+                );
             default:
                 throw new IllegalArgumentException("Output type not recognized:" + output);
         }
@@ -430,6 +448,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
     @SuppressWarnings("unchecked")
     private GeneratedReportDTO generateHTMLReportForExternalServices(
+        String currentDomain,
         Pair<ReportDTO, IReportRunnable> report,
         Object id,
         String lang,
@@ -467,6 +486,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             generatedReportDTO.setCreatedDate(LocalDate.now());
 
             generatedReportDTO = generatedReportService.save(generatedReportDTO);
+            generatedReportDTO.setUrl(currentDomain + "/api/reports/download/" + generatedReportDTO.getId());
             generatedReportDTO.setFile(null);
             return generatedReportDTO;
         } catch (Exception e) {
@@ -481,6 +501,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
      */
     @SuppressWarnings("unchecked")
     private GeneratedReportDTO generatePDFReportForExternalServices(
+        String currentDomain,
         Pair<ReportDTO, IReportRunnable> report,
         Object data,
         String lang,
@@ -515,6 +536,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             generatedReportDTO.setCreatedDate(LocalDate.now());
 
             generatedReportDTO = generatedReportService.save(generatedReportDTO);
+            generatedReportDTO.setUrl(currentDomain + "/api/reports/download/" + generatedReportDTO.getId());
             generatedReportDTO.setFile(null);
             return generatedReportDTO;
         } catch (Exception e) {
@@ -525,6 +547,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
     }
 
     private GeneratedReportDTO generateReportForExternalServices(
+        String currentDomain,
         Pair<ReportDTO, IReportRunnable> report,
         OutputType output,
         Object id,
@@ -559,6 +582,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             generatedReportDTO.setCreatedDate(LocalDate.now());
 
             generatedReportDTO = generatedReportService.save(generatedReportDTO);
+            generatedReportDTO.setUrl(currentDomain + "/api/reports/download/" + generatedReportDTO.getId());
             generatedReportDTO.setFile(null);
             return generatedReportDTO;
         } catch (Exception e) {

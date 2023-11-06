@@ -21,6 +21,7 @@ type GeneratedReportFormGroupContent = {
   name: FormControl<IGeneratedReport['name']>;
   description: FormControl<IGeneratedReport['description']>;
   requestBody: FormControl<IGeneratedReport['requestBody']>;
+  url: FormControl<IGeneratedReport['url']>;
   isActive: FormControl<IGeneratedReport['isActive']>;
   file: FormControl<IGeneratedReport['file']>;
   fileContentType: FormControl<IGeneratedReport['fileContentType']>;
@@ -50,6 +51,7 @@ export class GeneratedReportFormService {
       name: new FormControl(generatedReportRawValue.name),
       description: new FormControl(generatedReportRawValue.description),
       requestBody: new FormControl(generatedReportRawValue.requestBody),
+      url: new FormControl(generatedReportRawValue.url),
       isActive: new FormControl(generatedReportRawValue.isActive),
       file: new FormControl(generatedReportRawValue.file),
       fileContentType: new FormControl(generatedReportRawValue.fileContentType),

@@ -56,6 +56,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="url">
+            <div class="d-flex">
+              <span>Url</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="isActive">
             <div class="d-flex">
               <span>Is Active</span>
@@ -103,6 +109,7 @@
           <td>{{ generatedReport.name }}</td>
           <td>{{ generatedReport.description }}</td>
           <td>{{ generatedReport.requestBody }}</td>
+          <td>{{ generatedReport.url }}</td>
           <td>{{ generatedReport.isActive }}</td>
           <td>
             <a *ngIf="generatedReport.file" (click)="openFile(generatedReport.file, generatedReport.fileContentType)">Open</a>

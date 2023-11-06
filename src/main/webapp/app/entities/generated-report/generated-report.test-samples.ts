@@ -7,27 +7,29 @@ export const sampleWithRequiredData: IGeneratedReport = {
 };
 
 export const sampleWithPartialData: IGeneratedReport = {
-  id: 66897,
-  description: 'grey Forest',
+  id: 36696,
+  description: 'best-of-breed',
+  isActive: false,
   file: '../fake-data/blob/hipster.png',
   fileContentType: 'unknown',
-  createdBy: 'Ergonomic Architect Incredible',
-  createdDate: dayjs('2023-11-02'),
-  lastModifiedDate: dayjs('2023-11-02'),
+  lastModifiedBy: 'primary zero',
+  createdDate: dayjs('2023-11-03'),
+  lastModifiedDate: dayjs('2023-11-03'),
 };
 
 export const sampleWithFullData: IGeneratedReport = {
-  id: 58279,
-  name: 'withdrawal matrix',
-  description: 'hub Lari',
-  requestBody: 'bypass Small',
-  isActive: true,
+  id: 31045,
+  name: 'Automated',
+  description: 'Missouri paradigms',
+  requestBody: 'brand Harbors even-keeled',
+  url: 'https://austen.biz',
+  isActive: false,
   file: '../fake-data/blob/hipster.png',
   fileContentType: 'unknown',
-  createdBy: 'policy',
-  lastModifiedBy: 'application',
+  createdBy: 'wireless',
+  lastModifiedBy: 'transmitter',
   createdDate: dayjs('2023-11-02'),
-  lastModifiedDate: dayjs('2023-11-03'),
+  lastModifiedDate: dayjs('2023-11-02'),
 };
 
 export const sampleWithNewData: NewGeneratedReport = {

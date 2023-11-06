@@ -29,6 +29,9 @@ public class GeneratedReport implements Serializable {
     @Column(name = "request_body")
     private String requestBody;
 
+    @Column(name = "url")
+    private String url;
+
     @Column(name = "is_active")
     private Boolean isActive;
 
@@ -103,6 +106,19 @@ public class GeneratedReport implements Serializable {
 
     public void setRequestBody(String requestBody) {
         this.requestBody = requestBody;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+
+    public GeneratedReport url(String url) {
+        this.setUrl(url);
+        return this;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Boolean getIsActive() {
@@ -223,6 +239,7 @@ public class GeneratedReport implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", requestBody='" + getRequestBody() + "'" +
+            ", url='" + getUrl() + "'" +
             ", isActive='" + getIsActive() + "'" +
             ", file='" + getFile() + "'" +
             ", fileContentType='" + getFileContentType() + "'" +

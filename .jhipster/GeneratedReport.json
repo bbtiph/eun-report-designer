@@ -18,6 +18,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "url",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "isActive",
       "fieldType": "Boolean"
     },

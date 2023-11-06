@@ -19,6 +19,8 @@ public class GeneratedReportDTO implements Serializable {
 
     private String requestBody;
 
+    private String url;
+
     private Boolean isActive;
 
     @Lob
@@ -63,6 +65,14 @@ public class GeneratedReportDTO implements Serializable {
 
     public void setRequestBody(String requestBody) {
         this.requestBody = requestBody;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Boolean getIsActive() {
@@ -150,6 +160,7 @@ public class GeneratedReportDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", requestBody='" + getRequestBody() + "'" +
+            ", url='" + getUrl() + "'" +
             ", isActive='" + getIsActive() + "'" +
             ", file='" + getFile() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

@@ -43,6 +43,9 @@ class GeneratedReportResourceIT {
     private static final String DEFAULT_REQUEST_BODY = "AAAAAAAAAA";
     private static final String UPDATED_REQUEST_BODY = "BBBBBBBBBB";
 
+    private static final String DEFAULT_URL = "AAAAAAAAAA";
+    private static final String UPDATED_URL = "BBBBBBBBBB";
+
     private static final Boolean DEFAULT_IS_ACTIVE = false;
     private static final Boolean UPDATED_IS_ACTIVE = true;
 
@@ -94,6 +97,7 @@ class GeneratedReportResourceIT {
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .requestBody(DEFAULT_REQUEST_BODY)
+            .url(DEFAULT_URL)
             .isActive(DEFAULT_IS_ACTIVE)
             .file(DEFAULT_FILE)
             .fileContentType(DEFAULT_FILE_CONTENT_TYPE)
@@ -115,6 +119,7 @@ class GeneratedReportResourceIT {
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .requestBody(UPDATED_REQUEST_BODY)
+            .url(UPDATED_URL)
             .isActive(UPDATED_IS_ACTIVE)
             .file(UPDATED_FILE)
             .fileContentType(UPDATED_FILE_CONTENT_TYPE)
@@ -149,6 +154,7 @@ class GeneratedReportResourceIT {
         assertThat(testGeneratedReport.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testGeneratedReport.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testGeneratedReport.getRequestBody()).isEqualTo(DEFAULT_REQUEST_BODY);
+        assertThat(testGeneratedReport.getUrl()).isEqualTo(DEFAULT_URL);
         assertThat(testGeneratedReport.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
         assertThat(testGeneratedReport.getFile()).isEqualTo(DEFAULT_FILE);
         assertThat(testGeneratedReport.getFileContentType()).isEqualTo(DEFAULT_FILE_CONTENT_TYPE);
@@ -194,6 +200,7 @@ class GeneratedReportResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].requestBody").value(hasItem(DEFAULT_REQUEST_BODY)))
+            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
             .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())))
             .andExpect(jsonPath("$.[*].fileContentType").value(hasItem(DEFAULT_FILE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].file").value(hasItem(Base64Utils.encodeToString(DEFAULT_FILE))))
@@ -218,6 +225,7 @@ class GeneratedReportResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.requestBody").value(DEFAULT_REQUEST_BODY))
+            .andExpect(jsonPath("$.url").value(DEFAULT_URL))
             .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()))
             .andExpect(jsonPath("$.fileContentType").value(DEFAULT_FILE_CONTENT_TYPE))
             .andExpect(jsonPath("$.file").value(Base64Utils.encodeToString(DEFAULT_FILE)))
@@ -250,6 +258,7 @@ class GeneratedReportResourceIT {
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .requestBody(UPDATED_REQUEST_BODY)
+            .url(UPDATED_URL)
             .isActive(UPDATED_IS_ACTIVE)
             .file(UPDATED_FILE)
             .fileContentType(UPDATED_FILE_CONTENT_TYPE)
@@ -274,6 +283,7 @@ class GeneratedReportResourceIT {
         assertThat(testGeneratedReport.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testGeneratedReport.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testGeneratedReport.getRequestBody()).isEqualTo(UPDATED_REQUEST_BODY);
+        assertThat(testGeneratedReport.getUrl()).isEqualTo(UPDATED_URL);
         assertThat(testGeneratedReport.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
         assertThat(testGeneratedReport.getFile()).isEqualTo(UPDATED_FILE);
         assertThat(testGeneratedReport.getFileContentType()).isEqualTo(UPDATED_FILE_CONTENT_TYPE);
@@ -365,11 +375,10 @@ class GeneratedReportResourceIT {
         partialUpdatedGeneratedReport
             .description(UPDATED_DESCRIPTION)
             .requestBody(UPDATED_REQUEST_BODY)
+            .url(UPDATED_URL)
             .isActive(UPDATED_IS_ACTIVE)
-            .file(UPDATED_FILE)
-            .fileContentType(UPDATED_FILE_CONTENT_TYPE)
-            .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
-            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
+            .createdBy(UPDATED_CREATED_BY)
+            .createdDate(UPDATED_CREATED_DATE);
 
         restGeneratedReportMockMvc
             .perform(
@@ -386,13 +395,14 @@ class GeneratedReportResourceIT {
         assertThat(testGeneratedReport.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testGeneratedReport.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testGeneratedReport.getRequestBody()).isEqualTo(UPDATED_REQUEST_BODY);
+        assertThat(testGeneratedReport.getUrl()).isEqualTo(UPDATED_URL);
         assertThat(testGeneratedReport.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
-        assertThat(testGeneratedReport.getFile()).isEqualTo(UPDATED_FILE);
-        assertThat(testGeneratedReport.getFileContentType()).isEqualTo(UPDATED_FILE_CONTENT_TYPE);
-        assertThat(testGeneratedReport.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
-        assertThat(testGeneratedReport.getLastModifiedBy()).isEqualTo(UPDATED_LAST_MODIFIED_BY);
-        assertThat(testGeneratedReport.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
-        assertThat(testGeneratedReport.getLastModifiedDate()).isEqualTo(UPDATED_LAST_MODIFIED_DATE);
+        assertThat(testGeneratedReport.getFile()).isEqualTo(DEFAULT_FILE);
+        assertThat(testGeneratedReport.getFileContentType()).isEqualTo(DEFAULT_FILE_CONTENT_TYPE);
+        assertThat(testGeneratedReport.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
+        assertThat(testGeneratedReport.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
+        assertThat(testGeneratedReport.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
+        assertThat(testGeneratedReport.getLastModifiedDate()).isEqualTo(DEFAULT_LAST_MODIFIED_DATE);
     }
 
     @Test
@@ -411,6 +421,7 @@ class GeneratedReportResourceIT {
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .requestBody(UPDATED_REQUEST_BODY)
+            .url(UPDATED_URL)
             .isActive(UPDATED_IS_ACTIVE)
             .file(UPDATED_FILE)
             .fileContentType(UPDATED_FILE_CONTENT_TYPE)
@@ -434,6 +445,7 @@ class GeneratedReportResourceIT {
         assertThat(testGeneratedReport.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testGeneratedReport.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testGeneratedReport.getRequestBody()).isEqualTo(UPDATED_REQUEST_BODY);
+        assertThat(testGeneratedReport.getUrl()).isEqualTo(UPDATED_URL);
         assertThat(testGeneratedReport.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
         assertThat(testGeneratedReport.getFile()).isEqualTo(UPDATED_FILE);
         assertThat(testGeneratedReport.getFileContentType()).isEqualTo(UPDATED_FILE_CONTENT_TYPE);
