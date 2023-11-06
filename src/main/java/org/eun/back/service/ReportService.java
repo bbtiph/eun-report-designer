@@ -1,5 +1,6 @@
 package org.eun.back.service;
 
+import java.util.List;
 import java.util.Optional;
 import org.eun.back.service.dto.ReportDTO;
 import org.springframework.data.domain.Page;
@@ -44,6 +45,8 @@ public interface ReportService {
      * @return the list of entities.
      */
     Page<ReportDTO> findAll(Pageable pageable, boolean forMinistries);
+
+    List<ReportDTO> findAllByCountry(boolean forMinistries, Long countryId);
 
     /**
      * Get the "id" report.

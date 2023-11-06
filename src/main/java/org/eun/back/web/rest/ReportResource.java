@@ -205,6 +205,16 @@ public class ReportResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/reports/by-country")
+    public ResponseEntity<List<ReportDTO>> getAllReportsByCountry(
+        @RequestParam(required = false, defaultValue = "false") boolean forMinistries,
+        @RequestParam Long countryId
+    ) {
+        log.debug("REST request to get a page of Reports");
+        List<ReportDTO> response = reportService.findAllByCountry(forMinistries, countryId);
+        return ResponseEntity.ok().body(response);
+    }
+
     /**
      * {@code GET  /reports/:id} : get the "id" report.
      *

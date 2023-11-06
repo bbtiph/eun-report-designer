@@ -1,7 +1,9 @@
 package org.eun.back.service.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.eun.back.domain.RelReportBlocksReport;
 import org.eun.back.domain.Report;
 import org.eun.back.repository.ReportRepository;
@@ -107,6 +109,17 @@ public class ReportServiceImpl implements ReportService {
             return reportRepository.findAllByIsMinistryAndIsActive(true, true, pageable).map(reportMapper::toDtoToShowInHomePage);
         }
         return reportRepository.findAllByIsActive(true, pageable).map(reportMapper::toDtoToShowInHomePage);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReportDTO> findAllByCountry(boolean forMinistries, Long countryId) {
+        log.debug("Request to get all Reports By Country");
+        return reportRepository
+            .findReportsByCountry(forMinistries, true, countryId)
+            .stream()
+            .map(reportMapper::toDtoToShowInHomePage)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
