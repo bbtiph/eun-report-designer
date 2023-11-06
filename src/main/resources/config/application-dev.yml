@@ -37,6 +37,8 @@ eun:
     url: http://eundb-test.eun.org:11005/eundwh/
   reports-etl:
     url: https://reports-etl-test.eun.org/
+  report-designer:
+    url: https://reports-test.eun.org/
 
 spring:
   ldap:
