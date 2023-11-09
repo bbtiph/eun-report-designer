@@ -12,6 +12,7 @@ import { MoeContactsService } from '../../moe-contacts/service/moe-contacts.serv
 import { IWorkingGroupReferences } from '../../working-group-references/working-group-references.model';
 import { IMoeContacts } from '../../moe-contacts/moe-contacts.model';
 import { ColDef, ColGroupDef, ICellRendererParams } from '@ag-grid-community/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'jhi-reference-table-settings-manage',
@@ -34,13 +35,12 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
 
   constructor(
     protected referenceTableSettingsService: ReferenceTableSettingsService,
-    protected workingGroupReferencesService: WorkingGroupReferencesService,
-    protected moeContactsService: MoeContactsService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected sortService: SortService,
     protected dataUtils: DataUtils,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -147,14 +147,20 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
     });
   }
 
-  getColumnsForSelectedTable(): any[] {
-    return JSON.parse(this.selectedReferenceTableSettings?.columns ?? '[{}]');
+  downloadExcel() {
+    this.http
+      .post(`api/reference-table-settings/by-ref-table/download/${this.selectedRefTable}`, null, { responseType: 'blob' as 'json' })
+      .subscribe(response => {
+        // @ts-ignore
+        const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${this.selectedRefTable}.xlsx`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
   }
-
-  // getSelectedTableData(): any[] {
-  //   const selectedTable = this.referenceTableSettings?.find(data => data.refTable === this.selectedRefTable);
-  //   return selectedTable ? selectedTable.data : [];
-  // }
 }
 
 function pad(num: number, totalStringSize: number) {

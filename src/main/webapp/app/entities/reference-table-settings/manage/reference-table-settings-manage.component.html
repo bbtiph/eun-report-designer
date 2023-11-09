@@ -1,12 +1,34 @@
+<div class="d-flex justify-content-end">
+  <ng-select [(ngModel)]="selectedRefTable" (change)="onRefTableSelect(selectedRefTable)" class="custom-ng-select me-2">
+    <ng-option [value]="">Select...</ng-option>
+    <ng-option *ngFor="let setting of referenceTableSettings" [value]="setting.refTable">
+      {{ setting.refTable }}
+    </ng-option>
+  </ng-select>
+
+  <button [disabled]="!selectedRefTable" type="button" class="btn btn-success me-2" (click)="downloadExcel()">
+    <fa-icon icon="check"></fa-icon>
+    <span>Download Excel</span>
+  </button>
+
+  <button [disabled]="!selectedRefTable" type="button" class="btn btn-info me-2">
+    <fa-icon icon="plus"></fa-icon>
+    <span>Upload Excel</span>
+  </button>
+
+  <button
+    [disabled]="!selectedRefTable"
+    id="jh-create-entity"
+    data-cy="entityCreateButton"
+    class="btn btn-primary jh-create-entity create-working-group-references"
+    [routerLink]="['/working-group-references/new']"
+  >
+    <fa-icon icon="plus"></fa-icon>
+    <span> Create a new Working Group References </span>
+  </button>
+</div>
 <div class="d-flex justify-content-center">
   <div class="col-11">
-    <ng-select [(ngModel)]="selectedRefTable" (change)="onRefTableSelect(selectedRefTable)" class="custom-ng-select">
-      <ng-option [value]="">Select...</ng-option>
-      <ng-option *ngFor="let setting of referenceTableSettings" [value]="setting.refTable">
-        {{ setting.refTable }}
-      </ng-option>
-    </ng-select>
-
     <jhi-filter [columnDefs]="columnDefs" [rowData]="data" [totalItems]="data?.length"></jhi-filter>
   </div>
 </div>

@@ -1,5 +1,6 @@
 package org.eun.back.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.eun.back.service.dto.ReferenceTableSettingsDTO;
@@ -40,6 +41,8 @@ public interface ReferenceTableSettingsService {
     List<ReferenceTableSettingsDTO> findAll();
 
     List<?> findAllDataByRefTable(String refTable);
+
+    byte[] download(String refTable) throws IOException;
 
     /**
      * Get the "id" referenceTableSettings.

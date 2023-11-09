@@ -49,6 +49,9 @@ public class MoeContacts implements Serializable {
     @Column(name = "contact_eun_last_name")
     private String contactEunLastName;
 
+    @Column(name = "type")
+    private String type;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -192,6 +195,14 @@ public class MoeContacts implements Serializable {
     public MoeContacts isActive(Boolean isActive) {
         this.setActive(isActive);
         return this;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

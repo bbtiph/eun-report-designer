@@ -141,6 +141,7 @@ public class MoeContactsServiceImpl implements MoeContactsService {
                         moeContacts.setShippingAddress(row.getCell(5) != null ? row.getCell(5).toString() : "");
                         moeContacts.setContactEunFirstName(row.getCell(7) != null ? row.getCell(7).toString() : "");
                         moeContacts.setContactEunLastName(row.getCell(8) != null ? row.getCell(8).toString() : "");
+                        moeContacts.setType(sheet.getSheetName());
                         MoeContacts moeContactsRes = moeContactsRepository.findByCountryCodeAndMinistryEnglishName(
                             moeContacts.getCountryCode(),
                             moeContacts.getMinistryEnglishName()

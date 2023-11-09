@@ -1,5 +1,6 @@
 package org.eun.back.web.rest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -12,6 +13,8 @@ import org.eun.back.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -144,6 +147,16 @@ public class ReferenceTableSettingsResource {
     public List<?> getAllReferenceTableSettingsData(@PathVariable String refTable) {
         log.debug("REST request to get all ReferenceTableSettings");
         return referenceTableSettingsService.findAllDataByRefTable(refTable);
+    }
+
+    @PostMapping("/reference-table-settings/by-ref-table/download/{refTable}")
+    public ResponseEntity<byte[]> generateExcel(@PathVariable String refTable) throws IOException {
+        byte[] generatedExcel = referenceTableSettingsService.download(refTable);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=working_group_references.xlsx");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM).body(generatedExcel);
     }
 
     @GetMapping("/reference-table-settings")
