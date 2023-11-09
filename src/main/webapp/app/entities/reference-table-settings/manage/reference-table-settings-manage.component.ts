@@ -14,6 +14,7 @@ import { IMoeContacts } from '../../moe-contacts/moe-contacts.model';
 import { ColDef, ColGroupDef, ICellRendererParams } from '@ag-grid-community/core';
 import { HttpClient } from '@angular/common/http';
 import { AbstractUploadFileModal } from '../../../shared/modal/abstract-upload-file.modal';
+import { LoaderService } from '../../../shared/loader/loader-service.service';
 
 @Component({
   selector: 'jhi-reference-table-settings-manage',
@@ -41,7 +42,8 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
     protected sortService: SortService,
     protected dataUtils: DataUtils,
     protected modalService: NgbModal,
-    private http: HttpClient
+    private http: HttpClient,
+    public loader: LoaderService
   ) {}
 
   ngOnInit(): void {

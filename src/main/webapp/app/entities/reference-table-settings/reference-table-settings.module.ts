@@ -9,9 +9,17 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReferenceTableSettingsManageComponent } from './manage/reference-table-settings-manage.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  imports: [SharedModule, ReferenceTableSettingsRoutingModule, MatSnackBarModule, MatDialogModule, NgSelectModule],
+  imports: [
+    SharedModule,
+    ReferenceTableSettingsRoutingModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    NgSelectModule,
+    MatProgressSpinnerModule,
+  ],
   declarations: [
     ReferenceTableSettingsComponent,
     ReferenceTableSettingsDetailComponent,
