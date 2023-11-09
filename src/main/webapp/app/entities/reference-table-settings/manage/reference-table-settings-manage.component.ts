@@ -13,6 +13,7 @@ import { IWorkingGroupReferences } from '../../working-group-references/working-
 import { IMoeContacts } from '../../moe-contacts/moe-contacts.model';
 import { ColDef, ColGroupDef, ICellRendererParams } from '@ag-grid-community/core';
 import { HttpClient } from '@angular/common/http';
+import { AbstractUploadFileModal } from '../../../shared/modal/abstract-upload-file.modal';
 
 @Component({
   selector: 'jhi-reference-table-settings-manage',
@@ -142,7 +143,6 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
       this.columnDefs = this.transformSettingsToColumnDefs(JSON.parse(result?.columns));
       this.referenceTableSettingsService.findAllReferenceTableSettingsData(refTable ?? '').subscribe(data => {
         this.data = data;
-        console.log('data ref: ', data);
       });
     });
   }
@@ -160,6 +160,24 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
         a.click();
         window.URL.revokeObjectURL(url);
       });
+  }
+
+  uploadFile(): void {
+    const modalRef = this.modalService.open(AbstractUploadFileModal, {
+      animation: true,
+      size: 'lg',
+    });
+    modalRef.componentInstance.param = this;
+    modalRef.result.then(params => {
+      console.log(params.files[0]);
+      const formData = new FormData();
+      formData.append('file', params.files[0]);
+      this.http
+        .post(`api/reference-table-settings/by-ref-table/upload/${this.selectedRefTable}`, formData, { observe: 'response' })
+        .subscribe(() => {
+          this.load();
+        });
+    });
   }
 }
 

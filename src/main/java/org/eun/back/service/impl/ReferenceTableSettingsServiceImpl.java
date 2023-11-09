@@ -3,12 +3,12 @@ package org.eun.back.service.impl;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.eun.back.domain.MoeContacts;
 import org.eun.back.domain.ReferenceTableSettings;
@@ -16,6 +16,7 @@ import org.eun.back.domain.WorkingGroupReferences;
 import org.eun.back.repository.MoeContactsRepository;
 import org.eun.back.repository.ReferenceTableSettingsRepository;
 import org.eun.back.repository.WorkingGroupReferencesRepository;
+import org.eun.back.security.SecurityUtils;
 import org.eun.back.service.ReferenceTableSettingsService;
 import org.eun.back.service.dto.ReferenceTableSettingsDTO;
 import org.eun.back.service.mapper.ReferenceTableSettingsMapper;
@@ -23,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Service Implementation for managing {@link ReferenceTableSettings}.
@@ -108,6 +110,198 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 return workingGroupReferencesRepository.findAllByIsActive(true);
         }
         return null;
+    }
+
+    @Override
+    public void upload(MultipartFile file, String refTable) throws IOException {
+        try (InputStream fileInputStream = file.getInputStream()) {
+            Workbook workbook = WorkbookFactory.create(fileInputStream);
+            List<String> keywords;
+            List<Integer> sheetNumbers = new ArrayList<>();
+            switch (refTable) {
+                case "moe_contacts_reference":
+                case "moe_contacts":
+                    moeContactsRepository.updateAllIsActiveToFalse();
+                    keywords = Arrays.asList("moe");
+                    for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+                        Sheet sheet = workbook.getSheetAt(i);
+                        String sheetName = sheet.getSheetName().toLowerCase();
+
+                        for (String keyword : keywords) {
+                            if (sheetName.equals(keyword)) {
+                                sheetNumbers.add(i);
+                                break;
+                            }
+                        }
+                    }
+
+                    for (int pageNumber : sheetNumbers) {
+                        Sheet sheet = workbook.getSheetAt(pageNumber);
+                        int i = 0;
+                        for (Row row : sheet) {
+                            i++;
+                            if (i > 2) {
+                                try {
+                                    if (row.getCell(0) == null || row.getCell(1) == null) {
+                                        break;
+                                    }
+                                    MoeContacts moeContacts = new MoeContacts();
+                                    moeContacts.setCountryCode(row.getCell(0) != null ? row.getCell(0).toString() : "");
+                                    Cell cell = row.getCell(1);
+                                    String cellValue = "";
+
+                                    if (cell != null) {
+                                        if (cell.getCellType() == CellType.FORMULA) {
+                                            FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+                                            CellValue evaluatedCellValue = evaluator.evaluate(cell);
+                                            switch (evaluatedCellValue.getCellType()) {
+                                                case STRING:
+                                                    cellValue = evaluatedCellValue.getStringValue();
+                                                    break;
+                                                case NUMERIC:
+                                                    cellValue = String.valueOf(evaluatedCellValue.getNumberValue());
+                                                    break;
+                                                case BOOLEAN:
+                                                    cellValue = String.valueOf(evaluatedCellValue.getBooleanValue());
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                        } else {
+                                            cellValue = cell.toString();
+                                        }
+                                    }
+
+                                    moeContacts.setCountryName(cellValue);
+                                    moeContacts.setMinistryName(row.getCell(2) != null ? row.getCell(2).toString() : "");
+                                    moeContacts.setMinistryEnglishName(row.getCell(3) != null ? row.getCell(3).toString() : "");
+                                    moeContacts.setPostalAddress(row.getCell(4) != null ? row.getCell(4).toString() : "");
+                                    moeContacts.setShippingAddress(row.getCell(5) != null ? row.getCell(5).toString() : "");
+                                    moeContacts.setContactEunFirstName(row.getCell(7) != null ? row.getCell(7).toString() : "");
+                                    moeContacts.setContactEunLastName(row.getCell(8) != null ? row.getCell(8).toString() : "");
+                                    moeContacts.setType(sheet.getSheetName());
+                                    MoeContacts moeContactsRes = moeContactsRepository.findByCountryCodeAndMinistryEnglishName(
+                                        moeContacts.getCountryCode(),
+                                        moeContacts.getMinistryEnglishName()
+                                    );
+                                    if (moeContactsRes != null) {
+                                        moeContacts.setId(moeContactsRes.getId());
+                                    }
+                                    moeContacts.setActive(true);
+                                    moeContactsRepository.save(moeContacts);
+                                } catch (Exception e) {
+                                    log.error("Error ", e);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "working_group_reference":
+                case "working_group":
+                    workingGroupReferencesRepository.updateAllIsActiveToFalse();
+                    keywords = Arrays.asList("working group", "working", "wg", "WG");
+
+                    for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+                        Sheet sheet = workbook.getSheetAt(i);
+                        String sheetName = sheet.getSheetName().toLowerCase();
+
+                        for (String keyword : keywords) {
+                            if (sheetName.contains(keyword)) {
+                                sheetNumbers.add(i);
+                                break;
+                            }
+                        }
+                    }
+
+                    for (int pageNumber : sheetNumbers) {
+                        Sheet sheet = workbook.getSheetAt(pageNumber);
+                        String sheetName = sheet.getSheetName();
+                        int i = 0;
+                        for (Row row : sheet) {
+                            i++;
+                            if (i > 2) {
+                                try {
+                                    if (row.getCell(0) == null || row.getCell(1) == null) {
+                                        break;
+                                    }
+                                    WorkingGroupReferences workingGroupReferences = new WorkingGroupReferences();
+                                    workingGroupReferences.setCountryCode(row.getCell(0) != null ? row.getCell(0).toString() : "");
+                                    Cell cell = row.getCell(1);
+                                    String cellValue = "";
+
+                                    if (cell != null) {
+                                        if (cell.getCellType() == CellType.FORMULA) {
+                                            FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+                                            CellValue evaluatedCellValue = evaluator.evaluate(cell);
+                                            switch (evaluatedCellValue.getCellType()) {
+                                                case STRING:
+                                                    cellValue = evaluatedCellValue.getStringValue();
+                                                    break;
+                                                case NUMERIC:
+                                                    cellValue = String.valueOf(evaluatedCellValue.getNumberValue());
+                                                    break;
+                                                case BOOLEAN:
+                                                    cellValue = String.valueOf(evaluatedCellValue.getBooleanValue());
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                        } else {
+                                            cellValue = cell.toString();
+                                        }
+                                    }
+
+                                    workingGroupReferences.setCountryName(cellValue);
+                                    workingGroupReferences.setCountryRepresentativeFirstName(
+                                        row.getCell(2) != null ? row.getCell(2).toString() : ""
+                                    );
+                                    workingGroupReferences.setCountryRepresentativeLastName(
+                                        row.getCell(3) != null ? row.getCell(3).toString() : ""
+                                    );
+                                    workingGroupReferences.setCountryRepresentativeMail(
+                                        row.getCell(4) != null ? row.getCell(4).toString() : ""
+                                    );
+                                    workingGroupReferences.setCountryRepresentativePosition(
+                                        row.getCell(5) != null ? row.getCell(5).toString() : ""
+                                    );
+                                    workingGroupReferences.setCountryRepresentativeMinistry(
+                                        row.getCell(8) != null ? row.getCell(8).toString() : ""
+                                    );
+                                    workingGroupReferences.setCountryRepresentativeDepartment(
+                                        row.getCell(9) != null ? row.getCell(9).toString() : ""
+                                    );
+                                    workingGroupReferences.setContactEunFirstName(
+                                        row.getCell(10) != null ? row.getCell(10).toString() : ""
+                                    );
+                                    workingGroupReferences.setContactEunLastName(row.getCell(11) != null ? row.getCell(11).toString() : "");
+                                    workingGroupReferences.setType(sheetName);
+                                    workingGroupReferences.setSheetNum((long) pageNumber);
+                                    WorkingGroupReferences workingGroupReferencesRes = workingGroupReferencesRepository.findByCountryCodeAndCountryRepresentativeMinistryAndType(
+                                        workingGroupReferences.getCountryCode(),
+                                        workingGroupReferences.getCountryRepresentativeMinistry(),
+                                        workingGroupReferences.getType()
+                                    );
+                                    if (workingGroupReferencesRes != null) {
+                                        workingGroupReferences.setId(workingGroupReferencesRes.getId());
+                                        workingGroupReferences.setLastModifiedBy(SecurityUtils.getCurrentUserLogin().get());
+                                        workingGroupReferences.setLastModifiedDate(LocalDate.now());
+                                    } else {
+                                        workingGroupReferences.setCreatedBy(SecurityUtils.getCurrentUserLogin().get());
+                                        workingGroupReferences.setCreatedDate(LocalDate.now());
+                                    }
+                                    workingGroupReferences.setIsActive(true);
+                                    workingGroupReferencesRepository.save(workingGroupReferences);
+                                } catch (Exception e) {
+                                    log.error("Error ", e);
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+        } catch (IOException e) {
+            log.error("Error ", e);
+        }
     }
 
     @Override

@@ -11,7 +11,7 @@
     <span>Download Excel</span>
   </button>
 
-  <button [disabled]="!selectedRefTable" type="button" class="btn btn-info me-2">
+  <button [disabled]="!selectedRefTable" type="button" class="btn btn-info me-2" (click)="uploadFile()">
     <fa-icon icon="plus"></fa-icon>
     <span>Upload Excel</span>
   </button>

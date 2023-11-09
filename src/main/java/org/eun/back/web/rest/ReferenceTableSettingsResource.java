@@ -17,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -157,6 +158,23 @@ public class ReferenceTableSettingsResource {
         headers.add("Content-Disposition", "attachment; filename=working_group_references.xlsx");
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM).body(generatedExcel);
+    }
+
+    @PostMapping(value = "/reference-table-settings/by-ref-table/upload/{refTable}")
+    public ResponseEntity<Void> handleFileUpload(@PathVariable String refTable, @RequestParam("file") MultipartFile file) {
+        try {
+            referenceTableSettingsService.upload(file, refTable);
+        } catch (Exception e) {
+            return ResponseEntity
+                .noContent()
+                .headers(HeaderUtil.createFailureAlert(applicationName, false, ENTITY_NAME, e.toString(), file.getName()))
+                .build();
+        }
+
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, file.getName()))
+            .build();
     }
 
     @GetMapping("/reference-table-settings")

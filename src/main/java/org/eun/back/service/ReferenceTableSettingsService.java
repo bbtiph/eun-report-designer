@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.eun.back.service.dto.ReferenceTableSettingsDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Service Interface for managing {@link org.eun.back.domain.ReferenceTableSettings}.
@@ -43,6 +44,8 @@ public interface ReferenceTableSettingsService {
     List<?> findAllDataByRefTable(String refTable);
 
     byte[] download(String refTable) throws IOException;
+
+    void upload(MultipartFile file, String refTable) throws IOException;
 
     /**
      * Get the "id" referenceTableSettings.

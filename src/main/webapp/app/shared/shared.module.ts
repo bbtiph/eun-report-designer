@@ -26,6 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PopupWindowHtmlModal } from './modal/popup-window-html.modal';
 import { AbstractCloneReportModal } from './modal/abstract-clone-report.modal';
 import { ReportUpdateComponent } from '../entities/report/update/report-update.component';
+import { AbstractUploadFileModal } from './modal/abstract-upload-file.modal';
 
 @NgModule({
   imports: [SharedLibsModule, AgGridModule, RouterLink, MatProgressSpinnerModule],
@@ -46,6 +47,7 @@ import { ReportUpdateComponent } from '../entities/report/update/report-update.c
     ItemCountComponent,
     FilterComponent,
     AbstractExportModal,
+    AbstractUploadFileModal,
     PopupWindowHtmlModal,
     AbstractCloneReportModal,
     ReferenceSelectionModal,
