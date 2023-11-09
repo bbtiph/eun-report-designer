@@ -18,10 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -302,7 +300,7 @@ public class ReportResource {
     }
 
     @GetMapping("/reports/download/{fileId}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable Long fileId) {
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long fileId, HttpServletResponse response) {
         Optional<GeneratedReportDTO> generatedReportDTO = birtReportService.getGeneratedReportDTO(fileId);
         if (generatedReportDTO.isPresent()) {
             GeneratedReportDTO generatedReport = generatedReportDTO.get();
@@ -311,8 +309,11 @@ public class ReportResource {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.parseMediaType(fileContentType));
-
-            headers.setContentDispositionFormData(generatedReport.getName(), generatedReport.getName());
+            String fileExtension = MimeTypeUtils.parseMimeType(fileContentType).getSubtype();
+            response.setHeader(
+                "Content-Disposition",
+                "attachment; filename=" + generatedReport.getName() + "." + (fileExtension.equals("msword") ? "doc" : fileExtension)
+            );
 
             return new ResponseEntity<>(fileData, headers, HttpStatus.OK);
         } else {
