@@ -1,0 +1,58 @@
+<div class="modal-header">
+  <h4 class="modal-title text-center" id="modal-title">Export</h4>
+  <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="d-flex justify-content-center">
+    <div class="col-8">
+      <form *ngIf="filterForm" [formGroup]="filterForm" class="filter-form">
+        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: filterFields,formGroup:filterForm }"> </ng-container>
+      </form>
+      <ng-template #recursiveList let-filterFields let-formGroup="formGroup">
+        <div class="form-group">
+          <ng-container *ngFor="let item of filterFields">
+            <p *ngIf="item.children" class="centered-content">{{item.name}}:</p>
+            <ng-container *ngIf="item.children; else default;">
+              <div class="row pb-4">
+                <div [formGroup]="formGroup.get(item.index)">
+                  <ng-container
+                    *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children, formGroup: formGroup.get( item.index)}"
+                  >
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #default>
+              <dl *ngIf="action === 'view'" class="row-md jh-entity-details">
+                <dt><span>{{item.name}}</span></dt>
+                <dd>
+                  <span>{{formGroup.get(item.index).value}}</span>
+                </dd>
+              </dl>
+              <div *ngIf="action === 'edit'" class="row mb-3">
+                <label class="form-label">{{item.name}}</label>
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    [type]="item.type"
+                    [formControl]="formGroup.get(item.index)"
+                    [placeholder]="item.name"
+                    [name]="item.index"
+                  />
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">Close</button>
+  <!--  <button type="button" class="btn btn-success" (click)="modal.close({ lang: lang, format: format })">-->
+  <!--    {{ format.name !== 'HTML' ? 'Download' : 'View  ' }}-->
+  <!--  </button>-->
+</div>

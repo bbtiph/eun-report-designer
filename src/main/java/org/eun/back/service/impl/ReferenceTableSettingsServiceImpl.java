@@ -502,4 +502,17 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         log.debug("Request to delete ReferenceTableSettings : {}", id);
         referenceTableSettingsRepository.deleteById(id);
     }
+
+    @Override
+    public void deleteReferenceRowByRefTableAndId(String refTable, Long id) {
+        switch (refTable) {
+            case "moe_contacts_reference":
+            case "moe_contacts":
+                moeContactsRepository.deleteById(id);
+                break;
+            case "working_group_reference":
+            case "working_group":
+                workingGroupReferencesRepository.deleteById(id);
+        }
+    }
 }

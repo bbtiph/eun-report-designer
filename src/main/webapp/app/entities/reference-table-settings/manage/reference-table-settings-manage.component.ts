@@ -5,16 +5,14 @@ import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { SortService } from '../../../shared/sort/sort.service';
 import { DataUtils } from '../../../core/util/data-util.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { combineLatest, Observable, switchMap, tap } from 'rxjs';
-import { ASC, DEFAULT_SORT_DATA, DESC, SORT } from '../../../config/navigation.constants';
-import { WorkingGroupReferencesService } from '../../working-group-references/service/working-group-references.service';
-import { MoeContactsService } from '../../moe-contacts/service/moe-contacts.service';
-import { IWorkingGroupReferences } from '../../working-group-references/working-group-references.model';
+import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
+import { ASC, DEFAULT_SORT_DATA, DESC, ITEM_DELETED_EVENT, SORT } from '../../../config/navigation.constants';
 import { IMoeContacts } from '../../moe-contacts/moe-contacts.model';
 import { ColDef, ColGroupDef, ICellRendererParams } from '@ag-grid-community/core';
 import { HttpClient } from '@angular/common/http';
 import { AbstractUploadFileModal } from '../../../shared/modal/abstract-upload-file.modal';
 import { LoaderService } from '../../../shared/loader/loader-service.service';
+import { AbstractDynamicFormBySettingsModal } from '../../../shared/modal/abstract-dynamic-form-by-settings.modal';
 
 @Component({
   selector: 'jhi-reference-table-settings-manage',
@@ -28,8 +26,6 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
   selectedRefTable: string | null = null;
 
   public columnDefs!: (ColDef | ColGroupDef)[];
-  workingGroupReferences?: IWorkingGroupReferences[] = [];
-  moeContacts?: IMoeContacts[] = [];
   data?: any[] = [];
 
   predicate = 'id';
@@ -141,11 +137,56 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
     this.selectedRefTable = refTable;
     this.referenceTableSettingsService.findByRefTable(refTable ?? '').subscribe((result: IReferenceTableSettings) => {
       this.selectedReferenceTableSettings = result;
+      const columnDef: any = {
+        headerName: 'Actions',
+        field: 'reference-table-settings-manage',
+        cellRenderer: 'btnCellRendererOfReferences',
+        filter: false,
+        sortable: false,
+        suppressMenu: true,
+        pinned: true,
+        cellRendererParams: {
+          deleteAction: function (row: any) {
+            // @ts-ignore
+            this.deleteReferenceRowByRefTableAndId(row);
+          }.bind(this),
+          viewAction: function (row: any) {
+            // @ts-ignore
+            this.viewReferenceRowByRefTable(row, 'view');
+          }.bind(this),
+          editAction: function (row: any) {
+            // @ts-ignore
+            this.viewReferenceRowByRefTable(row, 'edit');
+          }.bind(this),
+        },
+      };
       // @ts-ignore
       this.columnDefs = this.transformSettingsToColumnDefs(JSON.parse(result?.columns));
+      this.columnDefs.push(columnDef);
       this.referenceTableSettingsService.findAllReferenceTableSettingsData(refTable ?? '').subscribe(data => {
         this.data = data;
       });
+    });
+  }
+
+  deleteReferenceRowByRefTableAndId(row: any): void {
+    this.referenceTableSettingsService.deleteReferenceRowByRefTableAndId(this.selectedRefTable ?? '', row.id).subscribe(() => {
+      console.log('deleted: ', row.id);
+      this.onRefTableSelect(this.selectedRefTable);
+    });
+  }
+
+  viewReferenceRowByRefTable(row: any, action: string): void {
+    const modalRef = this.modalService.open(AbstractDynamicFormBySettingsModal, {
+      animation: true,
+      size: 'lg',
+    });
+    modalRef.componentInstance.param = this;
+    modalRef.componentInstance.row = row;
+    modalRef.componentInstance.action = action;
+    modalRef.componentInstance.settings = this.selectedReferenceTableSettings?.columns;
+    modalRef.result.then(params => {
+      console.log(params);
     });
   }
 

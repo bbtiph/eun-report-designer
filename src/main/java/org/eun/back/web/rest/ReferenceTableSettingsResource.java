@@ -177,6 +177,15 @@ public class ReferenceTableSettingsResource {
             .build();
     }
 
+    @DeleteMapping("/reference-table-settings/by-ref-table/delete/{refTable}/{id}")
+    public ResponseEntity<Void> deleteReferenceRowByRefTableAndId(@PathVariable String refTable, @PathVariable Long id) {
+        referenceTableSettingsService.deleteReferenceRowByRefTableAndId(refTable, id);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, refTable, id.toString()))
+            .build();
+    }
+
     @GetMapping("/reference-table-settings")
     public List<ReferenceTableSettingsDTO> getAllReferenceTableSettings() {
         log.debug("REST request to get all ReferenceTableSettings");

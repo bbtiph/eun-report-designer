@@ -26,6 +26,7 @@ import { HeaderGroupComponent } from './header-group-component/header-group.comp
 import { DateComponent } from './date-component/date.component';
 import { IWorkingGroupReferences } from '../../entities/working-group-references/working-group-references.model';
 import { ButtonRendererComponent } from './actions/actions.component';
+import { ButtonRendererOfReferencesComponent } from './actionsOfReferences/actions-of-references.component';
 
 @Component({
   selector: 'jhi-filter',
@@ -75,6 +76,7 @@ export class FilterComponent {
       headerGroupComponent: HeaderGroupComponent,
       rendererComponent: RendererComponent,
       btnCellRenderer: ButtonRendererComponent,
+      btnCellRendererOfReferences: ButtonRendererOfReferencesComponent,
     };
   }
 
@@ -96,7 +98,6 @@ export class FilterComponent {
   }
 
   public onModelUpdated() {
-    console.log('onModelUpdated');
     this.calculateRowCount();
   }
 
