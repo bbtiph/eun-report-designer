@@ -2,6 +2,7 @@ package org.eun.back.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -312,7 +313,13 @@ public class ReportResource {
             String fileExtension = MimeTypeUtils.parseMimeType(fileContentType).getSubtype();
             response.setHeader(
                 "Content-Disposition",
-                "attachment; filename=" + generatedReport.getName() + "." + (fileExtension.equals("msword") ? "doc" : fileExtension)
+                "attachment; filename=" +
+                "report_" +
+                generatedReport.getName() +
+                "_" +
+                LocalDate.now() +
+                "." +
+                (fileExtension.equals("msword") ? "doc" : fileExtension)
             );
 
             return new ResponseEntity<>(fileData, headers, HttpStatus.OK);
