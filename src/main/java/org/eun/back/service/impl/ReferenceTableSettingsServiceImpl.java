@@ -1,5 +1,9 @@
 package org.eun.back.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -64,7 +68,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
     }
 
     @Override
-    public ReferenceTableSettingsDTO update(ReferenceTableSettingsDTO referenceTableSettingsDTO) {
+    public ReferenceTableSettingsDTO updateReferenceRowByRefTable(ReferenceTableSettingsDTO referenceTableSettingsDTO) {
         log.debug("Request to update ReferenceTableSettings : {}", referenceTableSettingsDTO);
         ReferenceTableSettings referenceTableSettings = referenceTableSettingsMapper.toEntity(referenceTableSettingsDTO);
         referenceTableSettings = referenceTableSettingsRepository.save(referenceTableSettings);
@@ -514,5 +518,24 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "working_group":
                 workingGroupReferencesRepository.deleteById(id);
         }
+    }
+
+    @Override
+    public Object updateReferenceRowByRefTable(String refTable, Object row) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRow = objectMapper.writeValueAsString(row);
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        switch (refTable) {
+            case "moe_contacts_reference":
+            case "moe_contacts":
+                MoeContacts moeContacts = objectMapper.readValue(jsonRow, MoeContacts.class);
+                return moeContactsRepository.save(moeContacts);
+            case "working_group_reference":
+            case "working_group":
+                WorkingGroupReferences workingGroupReferences = objectMapper.readValue(jsonRow, WorkingGroupReferences.class);
+                return workingGroupReferencesRepository.save(workingGroupReferences);
+        }
+        return null;
     }
 }

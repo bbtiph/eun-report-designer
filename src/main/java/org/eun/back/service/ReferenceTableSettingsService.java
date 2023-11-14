@@ -1,5 +1,6 @@
 package org.eun.back.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,7 @@ public interface ReferenceTableSettingsService {
      * @param referenceTableSettingsDTO the entity to update.
      * @return the persisted entity.
      */
-    ReferenceTableSettingsDTO update(ReferenceTableSettingsDTO referenceTableSettingsDTO);
+    ReferenceTableSettingsDTO updateReferenceRowByRefTable(ReferenceTableSettingsDTO referenceTableSettingsDTO);
 
     /**
      * Partially updates a referenceTableSettings.
@@ -65,4 +66,5 @@ public interface ReferenceTableSettingsService {
     void delete(Long id);
 
     void deleteReferenceRowByRefTableAndId(String refTable, Long id);
+    Object updateReferenceRowByRefTable(String refTable, Object row) throws JsonProcessingException;
 }

@@ -2,7 +2,8 @@ package org.eun.back.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -311,13 +312,15 @@ public class ReportResource {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.parseMediaType(fileContentType));
             String fileExtension = MimeTypeUtils.parseMimeType(fileContentType).getSubtype();
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             response.setHeader(
                 "Content-Disposition",
                 "attachment; filename=" +
                 "report_" +
                 generatedReport.getName() +
                 "_" +
-                LocalDate.now() +
+                currentDateTime.format(formatter) +
                 "." +
                 (fileExtension.equals("msword") ? "doc" : fileExtension)
             );

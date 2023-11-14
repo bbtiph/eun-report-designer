@@ -63,6 +63,10 @@ export class ReferenceTableSettingsService {
     return this.http.delete(`${this.resourceUrl}/by-ref-table/delete/${refTable}/${id}`, { observe: 'response' });
   }
 
+  updateReferenceRowByRefTable(refTable: string, row: any): Observable<any> {
+    return this.http.post<any>(`${this.resourceUrl}/by-ref-table/update/${refTable}`, row, { observe: 'response' });
+  }
+
   getReferenceTableSettingsIdentifier(referenceTableSettings: Pick<IReferenceTableSettings, 'id'>): number {
     return referenceTableSettings.id;
   }

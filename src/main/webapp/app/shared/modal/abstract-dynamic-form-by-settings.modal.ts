@@ -25,7 +25,6 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
   ngOnInit() {
     this.filterFields = JSON.parse(this.settings);
     this.filterForm = this.generateFilterForm();
-    console.log(this.row);
   }
 
   generateFilterForm(): FormGroup {
@@ -46,5 +45,28 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
     }
 
     return new FormControl(this.row[index]);
+  }
+
+  convert(): any {
+    const result: { [key: string]: any } = {};
+
+    const extractControls = (controls: { [key: string]: AbstractControl }) => {
+      for (const key of Object.keys(controls)) {
+        const control = controls[key];
+
+        if (control instanceof FormGroup) {
+          Object.assign(result, extractControls(control.controls));
+        } else {
+          result[key] = control.value;
+        }
+      }
+    };
+    extractControls(this.filterForm.controls);
+
+    Object.keys(this.row)
+      .filter(key => !result.hasOwnProperty(key))
+      .forEach(key => (result[key] = this.row[key]));
+
+    return result;
   }
 }

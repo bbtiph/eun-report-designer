@@ -1,5 +1,6 @@
 package org.eun.back.web.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -96,7 +98,7 @@ public class ReferenceTableSettingsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ReferenceTableSettingsDTO result = referenceTableSettingsService.update(referenceTableSettingsDTO);
+        ReferenceTableSettingsDTO result = referenceTableSettingsService.updateReferenceRowByRefTable(referenceTableSettingsDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, referenceTableSettingsDTO.getId().toString()))
@@ -184,6 +186,16 @@ public class ReferenceTableSettingsResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, refTable, id.toString()))
             .build();
+    }
+
+    @PostMapping("/reference-table-settings/by-ref-table/update/{refTable}")
+    public ResponseEntity<Object> updateReferenceRowByRefTable(@PathVariable String refTable, @RequestBody Object row) {
+        try {
+            referenceTableSettingsService.updateReferenceRowByRefTable(refTable, row);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return new ResponseEntity<>(row, HttpStatus.OK);
     }
 
     @GetMapping("/reference-table-settings")

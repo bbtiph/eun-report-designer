@@ -23,7 +23,7 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
   referenceTableSettings?: IReferenceTableSettings[];
   selectedReferenceTableSettings: IReferenceTableSettings | null = null;
   isLoading = false;
-  selectedRefTable: string | null = null;
+  selectedRefTable: string = 'working_group_reference';
 
   public columnDefs!: (ColDef | ColGroupDef)[];
   data?: any[] = [];
@@ -83,6 +83,7 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
+        this.onRefTableSelect(this.selectedRefTable);
       },
     });
   }
@@ -133,7 +134,7 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
     return data.sort(this.sortService.startSort(this.predicate, this.ascending ? 1 : -1));
   }
 
-  onRefTableSelect(refTable: string | null) {
+  onRefTableSelect(refTable: string) {
     this.selectedRefTable = refTable;
     this.referenceTableSettingsService.findByRefTable(refTable ?? '').subscribe((result: IReferenceTableSettings) => {
       this.selectedReferenceTableSettings = result;
@@ -171,7 +172,6 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
 
   deleteReferenceRowByRefTableAndId(row: any): void {
     this.referenceTableSettingsService.deleteReferenceRowByRefTableAndId(this.selectedRefTable ?? '', row.id).subscribe(() => {
-      console.log('deleted: ', row.id);
       this.onRefTableSelect(this.selectedRefTable);
     });
   }
@@ -187,6 +187,11 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
     modalRef.componentInstance.settings = this.selectedReferenceTableSettings?.columns;
     modalRef.result.then(params => {
       console.log(params);
+      if (params.row) {
+        this.referenceTableSettingsService.updateReferenceRowByRefTable(this.selectedRefTable ?? '', params.row).subscribe(() => {
+          this.onRefTableSelect(this.selectedRefTable);
+        });
+      }
     });
   }
 
