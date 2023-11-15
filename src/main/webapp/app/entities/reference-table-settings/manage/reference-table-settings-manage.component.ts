@@ -186,7 +186,6 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
     modalRef.componentInstance.action = action;
     modalRef.componentInstance.settings = this.selectedReferenceTableSettings?.columns;
     modalRef.result.then(params => {
-      console.log(params);
       if (params.row) {
         this.referenceTableSettingsService.updateReferenceRowByRefTable(this.selectedRefTable ?? '', params.row).subscribe(() => {
           this.onRefTableSelect(this.selectedRefTable);

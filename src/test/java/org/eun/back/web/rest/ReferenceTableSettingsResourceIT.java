@@ -35,6 +35,9 @@ class ReferenceTableSettingsResourceIT {
     private static final String DEFAULT_REF_TABLE = "AAAAAAAAAA";
     private static final String UPDATED_REF_TABLE = "BBBBBBBBBB";
 
+    private static final String DEFAULT_DISPLAY_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_DISPLAY_NAME = "BBBBBBBBBB";
+
     private static final String DEFAULT_COLUMNS = "AAAAAAAAAA";
     private static final String UPDATED_COLUMNS = "BBBBBBBBBB";
 
@@ -78,6 +81,7 @@ class ReferenceTableSettingsResourceIT {
     public static ReferenceTableSettings createEntity(EntityManager em) {
         ReferenceTableSettings referenceTableSettings = new ReferenceTableSettings()
             .refTable(DEFAULT_REF_TABLE)
+            .displayName(DEFAULT_DISPLAY_NAME)
             .columns(DEFAULT_COLUMNS)
             .path(DEFAULT_PATH)
             .isActive(DEFAULT_IS_ACTIVE)
@@ -95,6 +99,7 @@ class ReferenceTableSettingsResourceIT {
     public static ReferenceTableSettings createUpdatedEntity(EntityManager em) {
         ReferenceTableSettings referenceTableSettings = new ReferenceTableSettings()
             .refTable(UPDATED_REF_TABLE)
+            .displayName(UPDATED_DISPLAY_NAME)
             .columns(UPDATED_COLUMNS)
             .path(UPDATED_PATH)
             .isActive(UPDATED_IS_ACTIVE)
@@ -127,6 +132,7 @@ class ReferenceTableSettingsResourceIT {
         assertThat(referenceTableSettingsList).hasSize(databaseSizeBeforeCreate + 1);
         ReferenceTableSettings testReferenceTableSettings = referenceTableSettingsList.get(referenceTableSettingsList.size() - 1);
         assertThat(testReferenceTableSettings.getRefTable()).isEqualTo(DEFAULT_REF_TABLE);
+        assertThat(testReferenceTableSettings.getDisplayName()).isEqualTo(DEFAULT_DISPLAY_NAME);
         assertThat(testReferenceTableSettings.getColumns()).isEqualTo(DEFAULT_COLUMNS);
         assertThat(testReferenceTableSettings.getPath()).isEqualTo(DEFAULT_PATH);
         assertThat(testReferenceTableSettings.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
@@ -170,6 +176,7 @@ class ReferenceTableSettingsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(referenceTableSettings.getId().intValue())))
             .andExpect(jsonPath("$.[*].refTable").value(hasItem(DEFAULT_REF_TABLE)))
+            .andExpect(jsonPath("$.[*].displayName").value(hasItem(DEFAULT_DISPLAY_NAME)))
             .andExpect(jsonPath("$.[*].columns").value(hasItem(DEFAULT_COLUMNS)))
             .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
             .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())))
@@ -190,6 +197,7 @@ class ReferenceTableSettingsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(referenceTableSettings.getId().intValue()))
             .andExpect(jsonPath("$.refTable").value(DEFAULT_REF_TABLE))
+            .andExpect(jsonPath("$.displayName").value(DEFAULT_DISPLAY_NAME))
             .andExpect(jsonPath("$.columns").value(DEFAULT_COLUMNS))
             .andExpect(jsonPath("$.path").value(DEFAULT_PATH))
             .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()))
@@ -220,6 +228,7 @@ class ReferenceTableSettingsResourceIT {
         em.detach(updatedReferenceTableSettings);
         updatedReferenceTableSettings
             .refTable(UPDATED_REF_TABLE)
+            .displayName(UPDATED_DISPLAY_NAME)
             .columns(UPDATED_COLUMNS)
             .path(UPDATED_PATH)
             .isActive(UPDATED_IS_ACTIVE)
@@ -240,6 +249,7 @@ class ReferenceTableSettingsResourceIT {
         assertThat(referenceTableSettingsList).hasSize(databaseSizeBeforeUpdate);
         ReferenceTableSettings testReferenceTableSettings = referenceTableSettingsList.get(referenceTableSettingsList.size() - 1);
         assertThat(testReferenceTableSettings.getRefTable()).isEqualTo(UPDATED_REF_TABLE);
+        assertThat(testReferenceTableSettings.getDisplayName()).isEqualTo(UPDATED_DISPLAY_NAME);
         assertThat(testReferenceTableSettings.getColumns()).isEqualTo(UPDATED_COLUMNS);
         assertThat(testReferenceTableSettings.getPath()).isEqualTo(UPDATED_PATH);
         assertThat(testReferenceTableSettings.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
@@ -328,7 +338,7 @@ class ReferenceTableSettingsResourceIT {
         ReferenceTableSettings partialUpdatedReferenceTableSettings = new ReferenceTableSettings();
         partialUpdatedReferenceTableSettings.setId(referenceTableSettings.getId());
 
-        partialUpdatedReferenceTableSettings.refTable(UPDATED_REF_TABLE).columns(UPDATED_COLUMNS);
+        partialUpdatedReferenceTableSettings.refTable(UPDATED_REF_TABLE).displayName(UPDATED_DISPLAY_NAME);
 
         restReferenceTableSettingsMockMvc
             .perform(
@@ -343,7 +353,8 @@ class ReferenceTableSettingsResourceIT {
         assertThat(referenceTableSettingsList).hasSize(databaseSizeBeforeUpdate);
         ReferenceTableSettings testReferenceTableSettings = referenceTableSettingsList.get(referenceTableSettingsList.size() - 1);
         assertThat(testReferenceTableSettings.getRefTable()).isEqualTo(UPDATED_REF_TABLE);
-        assertThat(testReferenceTableSettings.getColumns()).isEqualTo(UPDATED_COLUMNS);
+        assertThat(testReferenceTableSettings.getDisplayName()).isEqualTo(UPDATED_DISPLAY_NAME);
+        assertThat(testReferenceTableSettings.getColumns()).isEqualTo(DEFAULT_COLUMNS);
         assertThat(testReferenceTableSettings.getPath()).isEqualTo(DEFAULT_PATH);
         assertThat(testReferenceTableSettings.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
         assertThat(testReferenceTableSettings.getFile()).isEqualTo(DEFAULT_FILE);
@@ -364,6 +375,7 @@ class ReferenceTableSettingsResourceIT {
 
         partialUpdatedReferenceTableSettings
             .refTable(UPDATED_REF_TABLE)
+            .displayName(UPDATED_DISPLAY_NAME)
             .columns(UPDATED_COLUMNS)
             .path(UPDATED_PATH)
             .isActive(UPDATED_IS_ACTIVE)
@@ -383,6 +395,7 @@ class ReferenceTableSettingsResourceIT {
         assertThat(referenceTableSettingsList).hasSize(databaseSizeBeforeUpdate);
         ReferenceTableSettings testReferenceTableSettings = referenceTableSettingsList.get(referenceTableSettingsList.size() - 1);
         assertThat(testReferenceTableSettings.getRefTable()).isEqualTo(UPDATED_REF_TABLE);
+        assertThat(testReferenceTableSettings.getDisplayName()).isEqualTo(UPDATED_DISPLAY_NAME);
         assertThat(testReferenceTableSettings.getColumns()).isEqualTo(UPDATED_COLUMNS);
         assertThat(testReferenceTableSettings.getPath()).isEqualTo(UPDATED_PATH);
         assertThat(testReferenceTableSettings.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);

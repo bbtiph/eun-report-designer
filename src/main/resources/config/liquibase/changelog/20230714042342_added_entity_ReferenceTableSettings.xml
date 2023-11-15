@@ -65,4 +65,12 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="20230714042342-3" author="jhipster">
+        <addColumn tableName="reference_table_settings">
+            <column name="display_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

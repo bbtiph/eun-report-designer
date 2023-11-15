@@ -21,6 +21,7 @@ describe('ReferenceTableSettings Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             refTable: expect.any(Object),
+            displayName: expect.any(Object),
             columns: expect.any(Object),
             path: expect.any(Object),
             isActive: expect.any(Object),
@@ -36,6 +37,7 @@ describe('ReferenceTableSettings Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             refTable: expect.any(Object),
+            displayName: expect.any(Object),
             columns: expect.any(Object),
             path: expect.any(Object),
             isActive: expect.any(Object),

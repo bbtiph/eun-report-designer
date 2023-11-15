@@ -19,6 +19,7 @@ type ReferenceTableSettingsFormDefaults = Pick<NewReferenceTableSettings, 'id' |
 type ReferenceTableSettingsFormGroupContent = {
   id: FormControl<IReferenceTableSettings['id'] | NewReferenceTableSettings['id']>;
   refTable: FormControl<IReferenceTableSettings['refTable']>;
+  displayName: FormControl<IReferenceTableSettings['displayName']>;
   columns: FormControl<IReferenceTableSettings['columns']>;
   path: FormControl<IReferenceTableSettings['path']>;
   isActive: FormControl<IReferenceTableSettings['isActive']>;
@@ -46,6 +47,7 @@ export class ReferenceTableSettingsFormService {
         }
       ),
       refTable: new FormControl(referenceTableSettingsRawValue.refTable),
+      displayName: new FormControl(referenceTableSettingsRawValue.displayName),
       columns: new FormControl(referenceTableSettingsRawValue.columns),
       path: new FormControl(referenceTableSettingsRawValue.path),
       isActive: new FormControl(referenceTableSettingsRawValue.isActive),

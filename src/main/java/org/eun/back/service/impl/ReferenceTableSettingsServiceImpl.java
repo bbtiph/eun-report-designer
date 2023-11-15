@@ -530,10 +530,18 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "moe_contacts_reference":
             case "moe_contacts":
                 MoeContacts moeContacts = objectMapper.readValue(jsonRow, MoeContacts.class);
+                if (moeContacts.getId() == null) {
+                    //                    TODO: added logic to ext. fields
+                }
                 return moeContactsRepository.save(moeContacts);
             case "working_group_reference":
             case "working_group":
                 WorkingGroupReferences workingGroupReferences = objectMapper.readValue(jsonRow, WorkingGroupReferences.class);
+                if (workingGroupReferences.getId() == null) {
+                    workingGroupReferences.setIsActive(true);
+                    workingGroupReferences.setCreatedBy(SecurityUtils.getCurrentUserLogin().get());
+                    workingGroupReferences.setCreatedDate(LocalDate.now());
+                }
                 return workingGroupReferencesRepository.save(workingGroupReferences);
         }
         return null;

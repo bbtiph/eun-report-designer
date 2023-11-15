@@ -14,6 +14,8 @@ public class ReferenceTableSettingsDTO implements Serializable {
 
     private String refTable;
 
+    private String displayName;
+
     private String columns;
 
     private String path;
@@ -39,6 +41,14 @@ public class ReferenceTableSettingsDTO implements Serializable {
 
     public void setRefTable(String refTable) {
         this.refTable = refTable;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getColumns() {
@@ -108,6 +118,7 @@ public class ReferenceTableSettingsDTO implements Serializable {
         return "ReferenceTableSettingsDTO{" +
             "id=" + getId() +
             ", refTable='" + getRefTable() + "'" +
+            ", displayName='" + getDisplayName() + "'" +
             ", columns='" + getColumns() + "'" +
             ", path='" + getPath() + "'" +
             ", isActive='" + getIsActive() + "'" +

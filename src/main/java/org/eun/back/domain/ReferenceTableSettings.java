@@ -22,6 +22,9 @@ public class ReferenceTableSettings implements Serializable {
     @Column(name = "ref_table")
     private String refTable;
 
+    @Column(name = "display_name")
+    private String displayName;
+
     @Column(name = "columns")
     private String columns;
 
@@ -64,6 +67,19 @@ public class ReferenceTableSettings implements Serializable {
 
     public void setRefTable(String refTable) {
         this.refTable = refTable;
+    }
+
+    public String getDisplayName() {
+        return this.displayName;
+    }
+
+    public ReferenceTableSettings displayName(String displayName) {
+        this.setDisplayName(displayName);
+        return this;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getColumns() {
@@ -156,6 +172,7 @@ public class ReferenceTableSettings implements Serializable {
         return "ReferenceTableSettings{" +
             "id=" + getId() +
             ", refTable='" + getRefTable() + "'" +
+            ", displayName='" + getDisplayName() + "'" +
             ", columns='" + getColumns() + "'" +
             ", path='" + getPath() + "'" +
             ", isActive='" + getIsActive() + "'" +

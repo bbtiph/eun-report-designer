@@ -1,6 +1,7 @@
 export interface IReferenceTableSettings {
   id: number;
   refTable?: string | null;
+  displayName?: string | null;
   columns?: string | null;
   path?: string | null;
   isActive?: boolean | null;

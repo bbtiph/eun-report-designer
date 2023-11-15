@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title text-center" id="modal-title">Export</h4>
+  <h4 class="modal-title text-center" id="modal-title"></h4>
   <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss()">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -31,7 +31,7 @@
                   <span>{{formGroup.get(item.index).value}}</span>
                 </dd>
               </dl>
-              <div *ngIf="action === 'edit'" class="row mb-3">
+              <div *ngIf="action === 'edit' || action === 'create'" class="row mb-3">
                 <label class="form-label">{{item.name}}</label>
                 <div class="input-group">
                   <input
@@ -53,4 +53,5 @@
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">Close</button>
   <button *ngIf="action === 'edit'" type="button" class="btn btn-success" (click)="modal.close({ row: convert() })">Edit</button>
+  <button *ngIf="action === 'create'" type="button" class="btn btn-success" (click)="modal.close({ row: convert() })">Create</button>
 </div>

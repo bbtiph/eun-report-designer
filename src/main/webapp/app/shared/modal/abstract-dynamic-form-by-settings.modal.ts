@@ -44,7 +44,7 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
       return formGroup;
     }
 
-    return new FormControl(this.row[index]);
+    return new FormControl(this.row != null ? this.row[index] : '');
   }
 
   convert(): any {
@@ -63,10 +63,11 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
     };
     extractControls(this.filterForm.controls);
 
-    Object.keys(this.row)
-      .filter(key => !result.hasOwnProperty(key))
-      .forEach(key => (result[key] = this.row[key]));
-
+    if (this.row) {
+      Object.keys(this.row)
+        .filter(key => !result.hasOwnProperty(key))
+        .forEach(key => (result[key] = this.row[key]));
+    }
     return result;
   }
 }
