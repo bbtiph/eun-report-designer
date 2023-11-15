@@ -26,6 +26,8 @@ public class GeneratedReportDTO implements Serializable {
     @Lob
     private byte[] file;
 
+    private String content;
+
     private String fileContentType;
     private String createdBy;
 
@@ -129,6 +131,22 @@ public class GeneratedReportDTO implements Serializable {
 
     public void setLastModifiedDate(LocalDate lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override

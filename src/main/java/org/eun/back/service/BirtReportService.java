@@ -6,8 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 import javax.annotation.PostConstruct;
@@ -471,16 +470,25 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             htmlOptions.setOutputStream(byteArrayOutputStream);
             runAndRenderTask.run();
 
+            String generatedHTML = new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
+            generatedHTML =
+                generatedHTML
+                    .replaceAll("(?i)<(/?)html( [^>]*)?>", "")
+                    .replaceAll("(?i)<(/?)body( [^>]*)?>", "")
+                    .replaceAll("\n", "")
+                    .replaceAll("\t", "");
+
             GeneratedReportDTO generatedReportDTO = new GeneratedReportDTO();
             generatedReportDTO.setName(report.getLeft().getReportName());
             generatedReportDTO.setDescription(report.getLeft().getDescription());
-            generatedReportDTO.setFile(byteArrayOutputStream.toByteArray());
+            generatedReportDTO.setFile(generatedHTML.getBytes(StandardCharsets.UTF_8));
             generatedReportDTO.setFileContentType(birtEngine.getMIMEType("html"));
             generatedReportDTO.setCreatedBy(SecurityUtils.getCurrentUserLogin().get());
             generatedReportDTO.setCreatedDate(LocalDate.now());
 
             generatedReportDTO = generatedReportService.save(generatedReportDTO);
             generatedReportDTO.setUrl(currentDomain + "api/reports/download/" + generatedReportDTO.getId());
+            generatedReportDTO.setContent(generatedHTML);
             generatedReportDTO.setFile(null);
             return generatedReportDTO;
         } catch (Exception e) {
