@@ -30,9 +30,10 @@ import { AbstractDynamicFormBySettingsModal } from './modal/abstract-dynamic-for
 import { ButtonRendererOfReferencesComponent } from './filter/actionsOfReferences/actions-of-references.component';
 import { JsonEditorToolbarComponent } from './json-editor/json-editor-toolbar.component';
 import { NgJsonEditorModule } from 'ang-jsoneditor';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-  imports: [SharedLibsModule, AgGridModule, RouterLink, MatProgressSpinnerModule, NgJsonEditorModule],
+  imports: [SharedLibsModule, AgGridModule, RouterLink, MatProgressSpinnerModule, NgJsonEditorModule, NgSelectModule],
   declarations: [
     AlertComponent,
     AlertErrorComponent,

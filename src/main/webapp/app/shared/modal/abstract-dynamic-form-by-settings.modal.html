@@ -36,12 +36,22 @@
                 <div class="input-group">
                   <input
                     class="form-control"
-                    [type]="item.type"
+                    *ngIf="item.type != 'reference'"
+                    [type]="item.type != 'reference'"
                     [formControl]="formGroup.get(item.index)"
                     [placeholder]="item.name"
                     [name]="item.index"
                   />
                 </div>
+                <ng-select
+                  *ngIf="item.type == 'reference' && item.source == 'countries'"
+                  [items]="countriesSharedCollection"
+                  [bindLabel]="item.index"
+                  [bindValue]="item.index"
+                  placeholder="Select ..."
+                  [formControl]="formGroup.get(item.index)"
+                >
+                </ng-select>
               </div>
             </ng-template>
           </ng-container>

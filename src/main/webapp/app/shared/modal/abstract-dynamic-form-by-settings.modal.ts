@@ -1,6 +1,9 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { CountryService } from '../../entities/country/service/country.service';
+import { ICountry } from '../../entities/country/country.model';
+import { ICountries } from '../../entities/countries/countries.model';
 
 @Component({
   selector: 'abstract-dynamic-form-by-settings',
@@ -20,11 +23,16 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
   // @ts-ignore
   @Input() public row: any;
 
-  constructor(public modal: NgbActiveModal, private fb: FormBuilder) {}
+  countriesSharedCollection: ICountries[] = [];
+
+  constructor(public modal: NgbActiveModal, private fb: FormBuilder, protected countriesService: CountryService) {}
 
   ngOnInit() {
     this.filterFields = JSON.parse(this.settings);
     this.filterForm = this.generateFilterForm();
+    this.countriesService.findAll().subscribe((countries: ICountry[]) => {
+      this.countriesSharedCollection = countries;
+    });
   }
 
   generateFilterForm(): FormGroup {

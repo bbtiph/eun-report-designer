@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.eun.back.domain.MoeContacts;
 import org.eun.back.domain.ReferenceTableSettings;
 import org.eun.back.domain.WorkingGroupReferences;
+import org.eun.back.repository.CountriesRepository;
 import org.eun.back.repository.MoeContactsRepository;
 import org.eun.back.repository.ReferenceTableSettingsRepository;
 import org.eun.back.repository.WorkingGroupReferencesRepository;
@@ -47,16 +47,20 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
 
     private final MoeContactsRepository moeContactsRepository;
 
+    private final CountriesRepository countriesRepository;
+
     public ReferenceTableSettingsServiceImpl(
         ReferenceTableSettingsRepository referenceTableSettingsRepository,
         ReferenceTableSettingsMapper referenceTableSettingsMapper,
         WorkingGroupReferencesRepository workingGroupReferencesRepository,
-        MoeContactsRepository moeContactsRepository
+        MoeContactsRepository moeContactsRepository,
+        CountriesRepository countriesRepository
     ) {
         this.referenceTableSettingsRepository = referenceTableSettingsRepository;
         this.referenceTableSettingsMapper = referenceTableSettingsMapper;
         this.workingGroupReferencesRepository = workingGroupReferencesRepository;
         this.moeContactsRepository = moeContactsRepository;
+        this.countriesRepository = countriesRepository;
     }
 
     @Override
@@ -112,6 +116,8 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "working_group_reference":
             case "working_group":
                 return workingGroupReferencesRepository.findAllByIsActive(true);
+            case "countries":
+                return countriesRepository.findAll();
         }
         return null;
     }

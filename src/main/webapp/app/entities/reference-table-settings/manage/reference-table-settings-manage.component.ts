@@ -7,7 +7,6 @@ import { DataUtils } from '../../../core/util/data-util.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { ASC, DEFAULT_SORT_DATA, DESC, ITEM_DELETED_EVENT, SORT } from '../../../config/navigation.constants';
-import { IMoeContacts } from '../../moe-contacts/moe-contacts.model';
 import { ColDef, ColGroupDef, ICellRendererParams } from '@ag-grid-community/core';
 import { HttpClient } from '@angular/common/http';
 import { AbstractUploadFileModal } from '../../../shared/modal/abstract-upload-file.modal';
