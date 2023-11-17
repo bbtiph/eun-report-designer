@@ -13,6 +13,7 @@ import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmComponent } from '../../../shared/dialog-confirm/dialog-confirm.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'jhi-reference-table-settings-update',
@@ -68,6 +69,7 @@ export class ReferenceTableSettingsUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const referenceTableSettings = this.referenceTableSettingsFormService.getReferenceTableSettings(this.editForm);
+    console.log('res: ', referenceTableSettings);
     if (referenceTableSettings.id !== null) {
       this.subscribeToSaveResponse(this.referenceTableSettingsService.update(referenceTableSettings));
     } else {
@@ -121,7 +123,10 @@ export class ReferenceTableSettingsUpdateComponent implements OnInit {
 
   // @ts-ignore
   deleteFromArray(index) {
-    console.log(this.files);
     this.files.splice(index, 1);
+  }
+
+  updateColumns(updatedColumns: any) {
+    this.editForm.setControl('columns', new FormControl(updatedColumns));
   }
 }

@@ -31,8 +31,12 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_columns">Columns</label>
-          <input type="text" class="form-control" name="columns" id="field_columns" data-cy="columns" formControlName="columns" />
+          <label class="form-label">Settings</label>
+          <json-editor-toolbar
+            [schema]="editForm.getRawValue().columns"
+            [action]="'edit'"
+            (columnsUpdated)="updateColumns($event)"
+          ></json-editor-toolbar>
         </div>
 
         <!--        <div class="row mb-3">-->

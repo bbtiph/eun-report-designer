@@ -25,13 +25,14 @@ import { FileDragNDropDirective } from './file-drag-n-drop/file-drag-n-drop.dire
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PopupWindowHtmlModal } from './modal/popup-window-html.modal';
 import { AbstractCloneReportModal } from './modal/abstract-clone-report.modal';
-import { ReportUpdateComponent } from '../entities/report/update/report-update.component';
 import { AbstractUploadFileModal } from './modal/abstract-upload-file.modal';
 import { AbstractDynamicFormBySettingsModal } from './modal/abstract-dynamic-form-by-settings.modal';
 import { ButtonRendererOfReferencesComponent } from './filter/actionsOfReferences/actions-of-references.component';
+import { JsonEditorToolbarComponent } from './json-editor/json-editor-toolbar.component';
+import { NgJsonEditorModule } from 'ang-jsoneditor';
 
 @NgModule({
-  imports: [SharedLibsModule, AgGridModule, RouterLink, MatProgressSpinnerModule],
+  imports: [SharedLibsModule, AgGridModule, RouterLink, MatProgressSpinnerModule, NgJsonEditorModule],
   declarations: [
     AlertComponent,
     AlertErrorComponent,
@@ -51,6 +52,7 @@ import { ButtonRendererOfReferencesComponent } from './filter/actionsOfReference
     FilterComponent,
     AbstractExportModal,
     AbstractUploadFileModal,
+    JsonEditorToolbarComponent,
     AbstractDynamicFormBySettingsModal,
     PopupWindowHtmlModal,
     AbstractCloneReportModal,
@@ -71,6 +73,7 @@ import { ButtonRendererOfReferencesComponent } from './filter/actionsOfReference
     ItemCountComponent,
     FilterComponent,
     FileDragNDropDirective,
+    JsonEditorToolbarComponent,
   ],
 })
 export class SharedModule {}
