@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -471,12 +473,24 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             runAndRenderTask.run();
 
             String generatedHTML = new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
+            Pattern headPattern = Pattern.compile("(?i)<head>(.*?)</head>", Pattern.DOTALL);
+            Matcher headMatcher = headPattern.matcher(generatedHTML);
+
+            String extractedHead = "";
+            if (headMatcher.find()) {
+                extractedHead = headMatcher.group(1);
+                generatedHTML = generatedHTML.replace(headMatcher.group(), ""); // Remove the <head> section from generatedHTML
+            }
+
             generatedHTML =
                 generatedHTML
-                    .replaceAll("(?i)<(/?)html( [^>]*)?>", "")
-                    .replaceAll("(?i)<(/?)body( [^>]*)?>", "")
+                    .replaceAll("(?i)<!DOCTYPE\\s*HTML[^>]*>", "") // Remove DOCTYPE declaration
+                    .replaceAll("(?i)<(/?)html( [^>]*)?>", "") // Remove html tags
+                    .replaceAll("(?i)<(/?)body( [^>]*)?>", "") // Remove body tags
                     .replaceAll("\n", "")
                     .replaceAll("\t", "");
+
+            extractedHead = extractedHead.replaceAll("\n", "").replaceAll("\t", "");
 
             GeneratedReportDTO generatedReportDTO = new GeneratedReportDTO();
             generatedReportDTO.setName(report.getLeft().getReportName());
@@ -489,6 +503,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             generatedReportDTO = generatedReportService.save(generatedReportDTO);
             generatedReportDTO.setUrl(currentDomain + "api/reports/download/" + generatedReportDTO.getId());
             generatedReportDTO.setContent(generatedHTML);
+            generatedReportDTO.setHead(extractedHead);
             generatedReportDTO.setFile(null);
             return generatedReportDTO;
         } catch (Exception e) {

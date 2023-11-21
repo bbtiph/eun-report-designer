@@ -51,7 +51,7 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
       const columnDef: any = {
         headerName: setting.name,
         field: !setting.children ? setting.index : null,
-        filter: setting.type === 'text' ? 'agTextColumnFilter' : setting.type === 'date' ? 'agDateColumnFilter' : null,
+        filter: setting.type === 'text' ? 'agTextColumnFilter' : setting.type === 'date' ? 'agDateColumnFilter' : 'agTextColumnFilter',
         // any other options
       };
 

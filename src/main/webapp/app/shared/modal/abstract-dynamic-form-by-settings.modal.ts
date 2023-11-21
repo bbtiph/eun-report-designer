@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CountryService } from '../../entities/country/service/country.service';
 import { ICountry } from '../../entities/country/country.model';
 import { ICountries } from '../../entities/countries/countries.model';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'abstract-dynamic-form-by-settings',
@@ -24,6 +25,7 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
   @Input() public row: any;
 
   countriesSharedCollection: ICountries[] = [];
+  selectedCountry: ICountries | undefined;
 
   constructor(public modal: NgbActiveModal, private fb: FormBuilder, protected countriesService: CountryService) {}
 
@@ -43,7 +45,7 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
     return baseForm;
   }
 
-  generateFormGroup(baseForm: FormGroup, field: { children: any[] }, index: string): FormGroup | FormControl {
+  generateFormGroup(baseForm: FormGroup, field: { children: any[]; disabled: boolean }, index: string): FormGroup | FormControl {
     if (field.children) {
       const formGroup = this.fb.group({});
       field.children.forEach(item => {
@@ -52,7 +54,7 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
       return formGroup;
     }
 
-    return new FormControl(this.row != null ? this.row[index] : '');
+    return new FormControl({ value: this.row != null ? this.row[index] : '', disabled: field.disabled }, Validators.required);
   }
 
   convert(): any {
@@ -77,5 +79,9 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
         .forEach(key => (result[key] = this.row[key]));
     }
     return result;
+  }
+
+  onChangeCountry(event: any, relationField: string) {
+    this.filterForm.controls[relationField].setValue(event[relationField]);
   }
 }

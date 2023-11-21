@@ -2,7 +2,6 @@ import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
-import { FetchServer } from './server.service';
 @Component({
   selector: 'json-editor-toolbar',
   templateUrl: './json-editor-toolbar.component.html',
@@ -19,7 +18,7 @@ export class JsonEditorToolbarComponent implements OnInit {
   disableBtn = true;
   data: any;
 
-  constructor(private _service: FetchServer) {
+  constructor() {
     this.options.statusBar = false;
     this.options.onChange = () => this.fetchdata();
   }

@@ -37,19 +37,20 @@
                   <input
                     class="form-control"
                     *ngIf="item.type != 'reference'"
-                    [type]="item.type != 'reference'"
+                    [type]="item.type"
                     [formControl]="formGroup.get(item.index)"
                     [placeholder]="item.name"
                     [name]="item.index"
                   />
                 </div>
                 <ng-select
-                  *ngIf="item.type == 'reference' && item.source == 'countries'"
+                  *ngIf="item.type == 'reference' && item.source == 'countries' && !item.disabled"
                   [items]="countriesSharedCollection"
                   [bindLabel]="item.index"
                   [bindValue]="item.index"
                   placeholder="Select ..."
                   [formControl]="formGroup.get(item.index)"
+                  (change)="onChangeCountry($event, item.relationField)"
                 >
                 </ng-select>
               </div>

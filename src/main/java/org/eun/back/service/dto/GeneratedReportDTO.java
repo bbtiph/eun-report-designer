@@ -28,6 +28,8 @@ public class GeneratedReportDTO implements Serializable {
 
     private String content;
 
+    private String head;
+
     private String fileContentType;
     private String createdBy;
 
@@ -147,6 +149,14 @@ public class GeneratedReportDTO implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
     }
 
     @Override
