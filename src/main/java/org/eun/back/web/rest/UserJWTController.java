@@ -66,8 +66,10 @@ public class UserJWTController {
         Authentication authentication;
         if (loginVM.getUsername().equals(login)) {
             authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-            Countries country = countriesService.findOneById(loginVM.getCountryId()).get();
-            user.get().setCountry(country);
+            if (loginVM.getCountryId() != null) {
+                Countries country = countriesService.findOneById(loginVM.getCountryId()).get();
+                user.get().setCountry(country);
+            }
         } else {
             authentication = customAuthenticationManager.authenticate(authenticationToken);
         }
