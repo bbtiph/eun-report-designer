@@ -33,6 +33,8 @@ os:
     docker: true
 
 eun:
+  user:
+    login: admin
   dwh:
     url: http://eundb-test.eun.org:11005/eundwh/
   reports-etl:

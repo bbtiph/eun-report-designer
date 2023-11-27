@@ -7,9 +7,9 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.eun.back.domain.ReferenceTableSettings;
 import org.eun.back.domain.WorkingGroupReferences;
 import org.eun.back.repository.WorkingGroupReferencesRepository;
 import org.eun.back.security.SecurityUtils;
@@ -181,17 +181,17 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
                             String cellValue = "";
 
                             if (cell != null) {
-                                if (cell.getCellType() == CellType.FORMULA) {
+                                if (cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
                                     FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
                                     CellValue evaluatedCellValue = evaluator.evaluate(cell);
                                     switch (evaluatedCellValue.getCellType()) {
-                                        case STRING:
+                                        case Cell.CELL_TYPE_STRING:
                                             cellValue = evaluatedCellValue.getStringValue();
                                             break;
-                                        case NUMERIC:
+                                        case Cell.CELL_TYPE_NUMERIC:
                                             cellValue = String.valueOf(evaluatedCellValue.getNumberValue());
                                             break;
-                                        case BOOLEAN:
+                                        case Cell.CELL_TYPE_BOOLEAN:
                                             cellValue = String.valueOf(evaluatedCellValue.getBooleanValue());
                                             break;
                                         default:
@@ -246,6 +246,8 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
             }
         } catch (IOException e) {
             log.error("Error ", e);
+        } catch (InvalidFormatException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -254,10 +256,8 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
         List<WorkingGroupReferences> workingGroupReferences = workingGroupReferencesRepository.findAll();
         ReferenceTableSettingsDTO referenceTableSettings = referenceTableSettingsService.findOneByRefTable("working_group").get();
 
-        try (
-            ByteArrayInputStream templateStream = new ByteArrayInputStream(referenceTableSettings.getFile());
-            Workbook workbook = new XSSFWorkbook(templateStream)
-        ) {
+        try (ByteArrayInputStream templateStream = new ByteArrayInputStream(referenceTableSettings.getFile())) {
+            Workbook workbook = new XSSFWorkbook(templateStream);
             Map<String, Sheet> sheetMap = new HashMap<>();
 
             for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
@@ -286,8 +286,8 @@ public class WorkingGroupReferencesServiceImpl implements WorkingGroupReferences
                     row.createCell(3).setCellValue(wg.getCountryRepresentativeLastName());
                     row.createCell(4).setCellValue(wg.getCountryRepresentativeMail());
                     row.createCell(5).setCellValue(wg.getCountryRepresentativePosition());
-                    row.createCell(6).setCellValue(wg.getCountryRepresentativeStartDate());
-                    row.createCell(7).setCellValue(wg.getCountryRepresentativeEndDate());
+                    row.createCell(6).setCellValue(wg.getCountryRepresentativeStartDate().toString());
+                    row.createCell(7).setCellValue(wg.getCountryRepresentativeEndDate().toString());
                     row.createCell(8).setCellValue(wg.getCountryRepresentativeMinistry());
                     row.createCell(9).setCellValue(wg.getCountryRepresentativeDepartment());
                     row.createCell(10).setCellValue(wg.getContactEunFirstName());

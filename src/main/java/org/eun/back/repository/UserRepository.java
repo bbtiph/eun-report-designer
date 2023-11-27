@@ -34,9 +34,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
     Optional<User> findOneWithRolesByLogin(String login);
 
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.roles r LEFT JOIN FETCH r.privileges WHERE u.login = ?1")
+    @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
+    Optional<User> findOneWithRolesByLoginWithFetch(String login);
+
     @EntityGraph(attributePaths = "roles")
     @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
     Optional<User> findOneWithRolesByEmailIgnoreCase(String email);
+
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.roles r LEFT JOIN FETCH r.privileges WHERE u.email = ?1")
+    @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
+    Optional<User> findOneWithRolesByEmailIgnoreCaseWithFetch(String email);
 
     Page<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);
 }

@@ -9,9 +9,9 @@ import org.eun.back.repository.CountriesRepository;
 import org.eun.back.service.CountriesService;
 import org.eun.back.service.dto.CountriesDTO;
 import org.eun.back.service.mapper.CountriesMapper;
+import org.eun.back.web.rest.errors.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,6 +86,15 @@ public class CountriesServiceImpl implements CountriesService {
     public Optional<CountriesDTO> findOne(Long id) {
         log.debug("Request to get Countries : {}", id);
         return countriesRepository.findById(id).map(countriesMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Countries> findOneById(Long id) {
+        log.debug("Request to get Countries : {}", id);
+        return Optional.ofNullable(
+            countriesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Countries not found with id: " + id))
+        );
     }
 
     @Override

@@ -142,15 +142,14 @@ public class SecurityConfiguration {
 
         return contextSource;
     }
-
-    @Inject
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .ldapAuthentication()
-            .userSearchBase("o=myO,ou=myOu")
-            .userSearchFilter("(uid={0})")
-            .groupSearchBase("ou=Groups")
-            .groupSearchFilter("member={0}")
-            .contextSource(getContextSource());
-    }
+    //    @Inject
+    //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    //        auth
+    //            .ldapAuthentication()
+    //            .userSearchBase("o=myO,ou=myOu")
+    //            .userSearchFilter("(uid={0})")
+    //            .groupSearchBase("ou=Groups")
+    //            .groupSearchFilter("member={0}")
+    //            .contextSource(getContextSource());
+    //    }
 }

@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.eclipse.birt.report.engine.api.EngineException;
 import org.eun.back.repository.ReferenceTableSettingsRepository;
 import org.eun.back.service.ReferenceTableSettingsService;
 import org.eun.back.service.dto.ReferenceTableSettingsDTO;
@@ -154,7 +155,12 @@ public class ReferenceTableSettingsResource {
 
     @PostMapping("/reference-table-settings/by-ref-table/download/{refTable}")
     public ResponseEntity<byte[]> generateExcel(@PathVariable String refTable) throws IOException {
-        byte[] generatedExcel = referenceTableSettingsService.download(refTable);
+        byte[] generatedExcel = new byte[0];
+        try {
+            generatedExcel = referenceTableSettingsService.download(refTable);
+        } catch (EngineException e) {
+            throw new RuntimeException(e);
+        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=working_group_references.xlsx");

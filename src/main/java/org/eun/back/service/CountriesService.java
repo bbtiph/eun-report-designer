@@ -2,6 +2,7 @@ package org.eun.back.service;
 
 import java.util.List;
 import java.util.Optional;
+import org.eun.back.domain.Countries;
 import org.eun.back.service.dto.CountriesDTO;
 
 /**
@@ -48,6 +49,8 @@ public interface CountriesService {
      * @return the entity.
      */
     Optional<CountriesDTO> findOne(Long id);
+
+    Optional<Countries> findOneById(Long id);
 
     /**
      * Delete the "id" countries.

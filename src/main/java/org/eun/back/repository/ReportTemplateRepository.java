@@ -1,5 +1,6 @@
 package org.eun.back.repository;
 
+import java.util.Optional;
 import org.eun.back.domain.ReportTemplate;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
@@ -9,4 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ReportTemplateRepository extends JpaRepository<ReportTemplate, Long> {}
+public interface ReportTemplateRepository extends JpaRepository<ReportTemplate, Long> {
+    Optional<ReportTemplate> findByName(String name);
+}

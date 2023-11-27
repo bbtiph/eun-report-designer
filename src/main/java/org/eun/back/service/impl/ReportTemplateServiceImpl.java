@@ -82,6 +82,13 @@ public class ReportTemplateServiceImpl implements ReportTemplateService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<ReportTemplateDTO> findOneByName(String name) {
+        log.debug("Request to get ReportTemplate : {}", name);
+        return reportTemplateRepository.findByName(name).map(reportTemplateMapper::toDto);
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete ReportTemplate : {}", id);
         reportTemplateRepository.deleteById(id);

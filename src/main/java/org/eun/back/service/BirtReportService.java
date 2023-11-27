@@ -71,9 +71,16 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
 
     private final GeneratedReportService generatedReportService;
 
-    public BirtReportService(ReportService reportService, GeneratedReportService generatedReportService) {
+    private final ReportTemplateService reportTemplateService;
+
+    public BirtReportService(
+        ReportService reportService,
+        GeneratedReportService generatedReportService,
+        ReportTemplateService reportTemplateService
+    ) {
         this.reportService = reportService;
         this.generatedReportService = generatedReportService;
+        this.reportTemplateService = reportTemplateService;
     }
 
     @SuppressWarnings("unchecked")
@@ -211,14 +218,6 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         HttpServletResponse response,
         HttpServletRequest request
     ) {
-        //        URL url = null;
-        //        try {
-        //            url = new URL(request.getRequestURL().toString());
-        //        } catch (MalformedURLException e) {
-        //            throw new RuntimeException(e);
-        //        }
-        //        String currentDomain = url.getProtocol() + "://" + url.getHost();
-
         String format = reportExternalRequest.getFormat();
         String lang = reportExternalRequest.getLang();
         Long countryId = reportExternalRequest.getCountryId();
@@ -250,6 +249,15 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             default:
                 throw new IllegalArgumentException("Output type not recognized:" + output);
         }
+    }
+
+    public byte[] generateReferenceReport(ReferenceTableSettingsDTO referenceTableSettingsDTO) throws IOException, EngineException {
+        ReportTemplateDTO reportTemplate = reportTemplateService.findOneByName("Reference").get();
+        return generateXLSXReportForReferences(
+            birtEngine.openReportDesign(convertByteArrayToInputStream(reportTemplate.getFile())),
+            referenceTableSettingsDTO.getId(),
+            "en"
+        );
     }
 
     public Optional<GeneratedReportDTO> getGeneratedReportDTO(Long fileId) {
@@ -555,6 +563,31 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             generatedReportDTO.setUrl(currentDomain + "api/reports/download/" + generatedReportDTO.getId());
             generatedReportDTO.setFile(null);
             return generatedReportDTO;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            runAndRenderTask.close();
+        }
+    }
+
+    private byte[] generateXLSXReportForReferences(IReportRunnable report, Object id, String lang) {
+        IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report);
+        IExcelRenderOption options = new EXCELRenderOption();
+        options.setOutputFormat("xlsx");
+
+        Map<String, Object> birtParams = new HashMap<>();
+        birtParams.put("id", id.toString());
+        birtParams.put("lang", lang);
+
+        runAndRenderTask.setParameterValues(birtParams);
+        runAndRenderTask.setRenderOption(options);
+
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            options.setOutputStream(byteArrayOutputStream);
+            runAndRenderTask.run();
+
+            return byteArrayOutputStream.toByteArray();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         } finally {

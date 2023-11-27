@@ -47,6 +47,8 @@ public interface ReportTemplateService {
      */
     Optional<ReportTemplateDTO> findOne(Long id);
 
+    Optional<ReportTemplateDTO> findOneByName(String name);
+
     /**
      * Delete the "id" reportTemplate.
      *

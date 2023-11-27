@@ -26,6 +26,7 @@ public class TokenProvider {
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
     private static final String AUTHORITIES_KEY = "auth";
+    private static final String COUNTRY_KEY = "country_id";
 
     private static final String INVALID_JWT_TOKEN = "Invalid JWT token.";
 
@@ -62,7 +63,7 @@ public class TokenProvider {
         this.securityMetersService = securityMetersService;
     }
 
-    public String createToken(Authentication authentication, boolean rememberMe) {
+    public String createToken(Authentication authentication, boolean rememberMe, Optional<org.eun.back.domain.User> user) {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
@@ -77,6 +78,7 @@ public class TokenProvider {
             .builder()
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
+            .claim(COUNTRY_KEY, (!user.isEmpty() ? (user.get().getCountry() != null ? user.get().getCountry().getId() : 0) : 0))
             .signWith(key, SignatureAlgorithm.HS512)
             .setExpiration(validity)
             .compact();

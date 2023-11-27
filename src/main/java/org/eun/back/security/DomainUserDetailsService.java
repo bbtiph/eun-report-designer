@@ -37,14 +37,14 @@ public class DomainUserDetailsService implements UserDetailsService {
 
         if (new EmailValidator().isValid(login, null)) {
             return userRepository
-                .findOneWithRolesByEmailIgnoreCase(login)
+                .findOneWithRolesByEmailIgnoreCaseWithFetch(login)
                 .map(user -> createSpringSecurityUser(login, user))
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"));
         }
 
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         return userRepository
-            .findOneWithRolesByLogin(lowercaseLogin)
+            .findOneWithRolesByLoginWithFetch(lowercaseLogin)
             .map(user -> createSpringSecurityUser(lowercaseLogin, user))
             .orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database"));
     }

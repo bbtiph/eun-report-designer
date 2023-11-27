@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import org.eclipse.birt.report.engine.api.EngineException;
 import org.eun.back.service.dto.ReferenceTableSettingsDTO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,7 +45,7 @@ public interface ReferenceTableSettingsService {
 
     List<?> findAllDataByRefTable(String refTable);
 
-    byte[] download(String refTable) throws IOException;
+    byte[] download(String refTable) throws IOException, EngineException;
 
     void upload(MultipartFile file, String refTable) throws IOException;
 

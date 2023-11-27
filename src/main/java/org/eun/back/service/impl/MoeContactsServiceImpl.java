@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.eun.back.domain.MoeContacts;
 import org.eun.back.repository.MoeContactsRepository;
@@ -113,17 +114,17 @@ public class MoeContactsServiceImpl implements MoeContactsService {
                         String cellValue = "";
 
                         if (cell != null) {
-                            if (cell.getCellType() == CellType.FORMULA) {
+                            if (cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
                                 FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
                                 CellValue evaluatedCellValue = evaluator.evaluate(cell);
                                 switch (evaluatedCellValue.getCellType()) {
-                                    case STRING:
+                                    case Cell.CELL_TYPE_STRING:
                                         cellValue = evaluatedCellValue.getStringValue();
                                         break;
-                                    case NUMERIC:
+                                    case Cell.CELL_TYPE_NUMERIC:
                                         cellValue = String.valueOf(evaluatedCellValue.getNumberValue());
                                         break;
-                                    case BOOLEAN:
+                                    case Cell.CELL_TYPE_BOOLEAN:
                                         cellValue = String.valueOf(evaluatedCellValue.getBooleanValue());
                                         break;
                                     default:
@@ -158,6 +159,8 @@ public class MoeContactsServiceImpl implements MoeContactsService {
             }
         } catch (IOException e) {
             log.error("Error ", e);
+        } catch (InvalidFormatException e) {
+            log.error("InvalidFormatException ", e);
         }
     }
 }
