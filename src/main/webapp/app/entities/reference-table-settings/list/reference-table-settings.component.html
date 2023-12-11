@@ -68,12 +68,12 @@
           <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
           <!--            </div>-->
           <!--          </th>-->
-          <th scope="col" jhiSortBy="file">
-            <div class="d-flex">
-              <span>File</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          <!--          <th scope="col" jhiSortBy="file">-->
+          <!--            <div class="d-flex">-->
+          <!--              <span>File</span>-->
+          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+          <!--            </div>-->
+          <!--          </th>-->
           <th scope="col"></th>
         </tr>
       </thead>
@@ -98,18 +98,18 @@
           <!--              >{{ referenceTableSettings.fileContentType }}, {{ byteSize(referenceTableSettings.file) }}</span-->
           <!--            >-->
           <!--          </td>-->
-          <td>
-            <span class="download-link">
-              <a
-                *ngIf="referenceTableSettings.file"
-                (click)="openFile(referenceTableSettings.file, referenceTableSettings.fileContentType)"
-                style="color: red"
-              >
-                <i class="fas fa-download"></i> <span style="color: red">Download</span>
-              </a>
-              <a style="color: red"></a>
-            </span>
-          </td>
+          <!--          <td>-->
+          <!--            <span class="download-link">-->
+          <!--              <a-->
+          <!--                *ngIf="referenceTableSettings.file"-->
+          <!--                (click)="openFile(referenceTableSettings.file, referenceTableSettings.fileContentType)"-->
+          <!--                style="color: red"-->
+          <!--              >-->
+          <!--                <i class="fas fa-download"></i> <span style="color: red">Download</span>-->
+          <!--              </a>-->
+          <!--              <a style="color: red"></a>-->
+          <!--            </span>-->
+          <!--          </td>-->
           <!--          <td>{{ referenceTableSettings.path }}</td>-->
           <!--          <td>{{ referenceTableSettings.isActive }}</td>-->
           <td class="text-end">
