@@ -48,6 +48,7 @@ public interface ReportBlocksMapper extends EntityMapper<ReportBlocksDTO, Report
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "reportName", source = "reportName")
+    @Mapping(target = "isActive", source = "isActive")
     ReportDTO toDtoReportId(Report report);
 
     @Named("reportIdSet")

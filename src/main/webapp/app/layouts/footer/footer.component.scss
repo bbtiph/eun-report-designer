@@ -1,0 +1,63 @@
+@import '~bootstrap/scss/functions';
+@import '~bootswatch/dist/simplex/variables';
+@import '~bootstrap/scss/variables';
+
+.logo {
+  margin-top: 50px;
+}
+
+.list-unstyled {
+  font-weight: bold;
+
+  li {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    align-items: center;
+
+    .link-icon {
+      width: 10px;
+      height: 15px;
+      margin-right: 10px;
+      fill: yellow;
+    }
+
+    .social-link {
+      height: 20px;
+      fill: #009eff;
+      margin-right: 10px;
+    }
+
+    .facebook-icon {
+      margin-left: 10px;
+      margin-right: 21px;
+    }
+
+    .youtube-icon {
+      margin-right: 12px;
+    }
+
+    .twitter-icon {
+      margin-left: 3px;
+      margin-right: 12px;
+    }
+
+    .linkedin-icon {
+      margin-left: 5px;
+      margin-right: 15px;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+  a:hover {
+    color: #009eff;
+  }
+}
+
+.text-uppercase {
+  margin-bottom: 20px;
+}

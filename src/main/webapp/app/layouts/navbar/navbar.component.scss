@@ -46,3 +46,68 @@ Logo styles
   background: url('../../../content/images/EUN_new-logo_2017.png') no-repeat center center;
   background-size: contain;
 }
+
+/* ==========================================================================
+Social links
+========================================================================== */
+.upper-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 2.5%;
+  width: 95%;
+  justify-content: space-between;
+}
+
+.header-social {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+
+  .icon {
+    display: inline-block !important;
+    fill: white;
+  }
+
+  .facebook-icon {
+    width: 6px;
+    height: 12px;
+    position: absolute;
+    top: 10%;
+    left: 40%;
+  }
+
+  .twitter-icon {
+    width: 12px;
+    height: 9px;
+    position: absolute;
+    top: 10%;
+    left: 30%;
+  }
+
+  .youtube-icon {
+    width: 14px;
+    height: 8px;
+    position: absolute;
+    top: 6%;
+    left: 25%;
+  }
+
+  .linkedin-icon {
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: 6%;
+    left: 30%;
+  }
+
+  .social-link {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    background: #0078be;
+    border-radius: 50%;
+  }
+}

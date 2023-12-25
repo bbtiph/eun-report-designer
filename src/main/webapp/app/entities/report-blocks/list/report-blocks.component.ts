@@ -12,6 +12,7 @@ import { SortService } from 'app/shared/sort/sort.service';
 @Component({
   selector: 'jhi-report-blocks',
   templateUrl: './report-blocks.component.html',
+  styleUrls: ['./report-blocks.component.scss'],
 })
 export class ReportBlocksComponent implements OnInit {
   reportBlocks?: IReportBlocks[];

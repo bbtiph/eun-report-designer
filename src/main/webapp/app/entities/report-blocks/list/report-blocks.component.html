@@ -8,12 +8,7 @@
       <!--        <span>Refresh list</span>-->
       <!--      </button>-->
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-report-blocks"
-        [routerLink]="['/report-blocks/new']"
-      >
+      <button id="jh-create-entity" data-cy="entityCreateButton" class="create-report-blocks" [routerLink]="['/report-blocks/new']">
         <fa-icon icon="plus"></fa-icon>
         <span> Create a new Report Block </span>
       </button>
@@ -46,13 +41,13 @@
           </th>
           <th scope="col" jhiSortBy="countryId.id">
             <div class="d-flex">
-              <span>Country Id</span>
+              <span>Country</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="reportId.id">
             <div class="d-flex">
-              <span>Report Id</span>
+              <span>Report</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -67,14 +62,31 @@
           <td>{{ reportBlocks.name }}</td>
           <td>
             <span *ngFor="let countryId of reportBlocks.countryIds; let last = last">
-              <a class="form-control-static" [routerLink]="['/countries', countryId.id, 'view']">{{ countryId.countryCode }}</a
+              <a
+                lsm-tooltip="{{ countryId.countryName }}"
+                placement="top"
+                delay="500"
+                class="form-control-static"
+                [routerLink]="['/countries', countryId.id, 'view']"
+                >{{ countryId.countryCode }}</a
               >{{ last ? '' : ', ' }}
             </span>
           </td>
           <td>
             <span *ngFor="let reportId of reportBlocks.reportIds; let last = last">
-              <a class="form-control-static" [routerLink]="['/report', reportId.id, 'view']">{{ reportId.reportName }}</a
-              >{{ last ? '' : ', ' }}
+              <ng-container *ngIf="reportId.isActive">
+                <a class="form-control-static" [routerLink]="['/report', reportId.id, 'report-country']">{{ reportId.reportName }}</a>
+              </ng-container>
+              <ng-container *ngIf="!reportId.isActive">
+                <span
+                  lsm-tooltip="'{{ reportId.reportName }}' is not active;"
+                  placement="top"
+                  delay="500"
+                  class="form-control-static inactive-link"
+                  >{{ reportId.reportName }}</span
+                >
+              </ng-container>
+              {{ last ? '' : ', ' }}
             </span>
           </td>
           <td class="text-end">
@@ -92,7 +104,7 @@
                 <button
                   type="submit"
                   [routerLink]="['/report-blocks', reportBlocks.id, 'edit-template']"
-                  class="btn btn btn-success btn-sm"
+                  class="edit-button"
                   data-cy="entityEditButton"
                 >
                   <fa-icon icon="pencil-alt"></fa-icon>
@@ -102,7 +114,7 @@
                 <button
                   type="submit"
                   [routerLink]="['/report-blocks', reportBlocks.id, 'country-content']"
-                  class="btn btn btn-warning btn-sm"
+                  class="edit-con-button"
                   data-cy="entityEditButton"
                 >
                   <fa-icon icon="pencil-alt"></fa-icon>
@@ -110,7 +122,7 @@
                 </button>
               </div>
 
-              <button type="submit" (click)="delete(reportBlocks)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(reportBlocks)" class="delete-button" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Delete</span>
               </button>

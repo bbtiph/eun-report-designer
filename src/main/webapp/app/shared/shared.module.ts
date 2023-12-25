@@ -31,6 +31,7 @@ import { ButtonRendererOfReferencesComponent } from './filter/actionsOfReference
 import { JsonEditorToolbarComponent } from './json-editor/json-editor-toolbar.component';
 import { NgJsonEditorModule } from 'ang-jsoneditor';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { HintDirective } from './hint/hint.directive';
 
 @NgModule({
   imports: [SharedLibsModule, AgGridModule, RouterLink, MatProgressSpinnerModule, NgJsonEditorModule, NgSelectModule],
@@ -60,6 +61,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReferenceSelectionModal,
     DialogConfirmComponent,
     FileDragNDropDirective,
+    HintDirective,
   ],
   exports: [
     SharedLibsModule,
@@ -75,6 +77,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FilterComponent,
     FileDragNDropDirective,
     JsonEditorToolbarComponent,
+    HintDirective,
   ],
 })
 export class SharedModule {}

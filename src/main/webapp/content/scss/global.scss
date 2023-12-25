@@ -209,4 +209,49 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
     }
   }
 }
+
+.lsm-tooltip {
+  text-align: center;
+  padding: 0 50px;
+}
+.lsm-tooltip [tooltip] {
+  display: inline-block;
+  margin: 50px 20px;
+  width: 180px;
+  height: 50px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  line-height: 50px;
+  text-align: center;
+}
+.ng-tooltip {
+  position: absolute;
+  max-width: 260px;
+  font-size: 15px;
+  text-align: left;
+  color: black;
+  padding: 3px 8px;
+  background: white;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: gray;
+  z-index: 1000;
+  opacity: 1;
+}
+.ng-tooltip:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+}
+.ng-tooltip-top:after {
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 10px;
+  border-color: grey transparent transparent transparent;
+}
+.ng-tooltip-show {
+  opacity: 1;
+}
+
 /* jhipster-needle-scss-add-main JHipster will add new css style */
