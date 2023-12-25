@@ -1,18 +1,19 @@
-entity GeneratedReport {
-    name String
-    description String
-    requestBody String
-    isActive Boolean
-    file Blob
-    createdBy String
-    lastModifiedBy String
-    createdDate LocalDate
-    lastModifiedDate LocalDate
+entity EventReferences{
+    name String,
+    type String
+}
+
+entity EventReferencesParticipantsCategory {
+    category String,
+    participantsCount Long
+}
+
+relationship OneToMany {
+    EventReferences to EventReferencesParticipantsCategory{eventReference(id)},
 }
 
 
-dto GeneratedReport with mapstruct
-service GeneratedReport with serviceImpl
-paginate GeneratedReport with pagination
+dto EventReferences, EventReferencesParticipantsCategory with mapstruct
+service EventReferences, EventReferencesParticipantsCategory with serviceImpl
 
 

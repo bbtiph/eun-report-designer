@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="eventReferencesParticipantsCategory">
+      <h2 data-cy="eventReferencesParticipantsCategoryDetailsHeading"><span>Event References Participants Category</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ eventReferencesParticipantsCategory.id }}</span>
+        </dd>
+        <dt><span>Category</span></dt>
+        <dd>
+          <span>{{ eventReferencesParticipantsCategory.category }}</span>
+        </dd>
+        <dt><span>Participants Count</span></dt>
+        <dd>
+          <span>{{ eventReferencesParticipantsCategory.participantsCount }}</span>
+        </dd>
+        <dt><span>Event Reference</span></dt>
+        <dd>
+          <div *ngIf="eventReferencesParticipantsCategory.eventReference">
+            <a [routerLink]="['/event-references', eventReferencesParticipantsCategory.eventReference.id, 'view']">{{
+              eventReferencesParticipantsCategory.eventReference.id
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button
+        type="button"
+        [routerLink]="['/event-references-participants-category', eventReferencesParticipantsCategory.id, 'edit']"
+        class="btn btn-primary"
+      >
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

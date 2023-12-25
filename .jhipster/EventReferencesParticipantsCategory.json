@@ -1,0 +1,32 @@
+{
+  "applications": "*",
+  "changelogDate": "20231225101053",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "event_references_participants_category",
+  "fields": [
+    {
+      "fieldName": "category",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "participantsCount",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EventReferencesParticipantsCategory",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "eventReferences",
+      "otherEntityRelationshipName": "eventReferencesParticipantsCategory",
+      "relationshipName": "eventReference",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

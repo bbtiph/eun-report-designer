@@ -43,6 +43,8 @@
     <include file="config/liquibase/changelog/20230829060411_added_entity_ParticipantsEunIndicator.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230831073726_added_entity_ReportTemplate.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20231103111920_added_entity_GeneratedReport.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231225101052_added_entity_EventReferences.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231225101053_added_entity_EventReferencesParticipantsCategory.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 <!--    <include file="config/liquibase/changelog/20230427100940_added_entity_constraints_Project.xml" relativeToChangelogFile="false"/>-->
 <!--    <include file="config/liquibase/changelog/20230427114022_added_entity_constraints_EunTeam.xml" relativeToChangelogFile="false"/>-->
@@ -66,6 +68,7 @@
     <include file="config/liquibase/changelog/20230530095339_added_entity_constraints_ReportBlocksContent.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230530095340_added_entity_constraints_ReportBlocksContentData.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230504050412_added_entity_constraints_Report.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231225101053_added_entity_constraints_EventReferencesParticipantsCategory.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

@@ -1,0 +1,122 @@
+<div>
+  <h2 id="page-heading" data-cy="EventReferencesParticipantsCategoryHeading">
+    <span>Event References Participants Categories</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-event-references-participants-category"
+        [routerLink]="['/event-references-participants-category/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Event References Participants Category </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="eventReferencesParticipantsCategories?.length === 0">
+    <span>No Event References Participants Categories found</span>
+  </div>
+
+  <div
+    class="table-responsive table-entities"
+    id="entities"
+    *ngIf="eventReferencesParticipantsCategories && eventReferencesParticipantsCategories.length > 0"
+  >
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="category">
+            <div class="d-flex">
+              <span>Category</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="participantsCount">
+            <div class="d-flex">
+              <span>Participants Count</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="eventReference.id">
+            <div class="d-flex">
+              <span>Event Reference</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let eventReferencesParticipantsCategory of eventReferencesParticipantsCategories; trackBy: trackId"
+          data-cy="entityTable"
+        >
+          <td>
+            <a [routerLink]="['/event-references-participants-category', eventReferencesParticipantsCategory.id, 'view']">{{
+              eventReferencesParticipantsCategory.id
+            }}</a>
+          </td>
+          <td>{{ eventReferencesParticipantsCategory.category }}</td>
+          <td>{{ eventReferencesParticipantsCategory.participantsCount }}</td>
+          <td>
+            <div *ngIf="eventReferencesParticipantsCategory.eventReference">
+              <a [routerLink]="['/event-references', eventReferencesParticipantsCategory.eventReference.id, 'view']">{{
+                eventReferencesParticipantsCategory.eventReference.id
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/event-references-participants-category', eventReferencesParticipantsCategory.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/event-references-participants-category', eventReferencesParticipantsCategory.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button
+                type="submit"
+                (click)="delete(eventReferencesParticipantsCategory)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

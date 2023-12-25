@@ -1,0 +1,31 @@
+{
+  "applications": "*",
+  "changelogDate": "20231225101052",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "event_references",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EventReferences",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "eventReferencesParticipantsCategory",
+      "otherEntityRelationshipName": "eventReference",
+      "relationshipName": "eventReferencesParticipantsCategory",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

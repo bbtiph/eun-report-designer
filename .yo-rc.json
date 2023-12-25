@@ -51,14 +51,16 @@
       "PersonEunIndicator",
       "ParticipantsEunIndicator",
       "ReportTemplate",
-      "GeneratedReport"
+      "GeneratedReport",
+      "EventReferences",
+      "EventReferencesParticipantsCategory"
     ],
     "entitySuffix": "",
     "jhiPrefix": "jhi",
     "jhipsterVersion": "7.9.3",
     "jwtSecretKey": "MWNjNDQyYmI1NDRlNzAyNmM5Y2M3MjQ1MjUwYWIwZjA1YzI4ZGE2MWFkMDE5OWJkNWM4YWZiYTIzZjg0MjRhNmNhMTg5NzMzOGFhMGExNzNjYWNiMTEwYzM0OWU5OTMxNGYyNGY3YTU3MGE0MWE5M2RhNDMwOWQ0NGJiZGM5MGM=",
     "languages": ["en", "fr"],
-    "lastLiquibaseTimestamp": 1699010360000,
+    "lastLiquibaseTimestamp": 1703499053000,
     "messageBroker": false,
     "microfrontend": false,
     "microfrontends": [],
