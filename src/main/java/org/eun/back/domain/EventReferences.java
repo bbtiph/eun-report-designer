@@ -28,6 +28,9 @@ public class EventReferences implements Serializable {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "is_active")
+    private Boolean isActive;
+
     @OneToMany(mappedBy = "eventReference")
     @JsonIgnoreProperties(value = { "eventReference" }, allowSetters = true)
     private Set<EventReferencesParticipantsCategory> eventReferencesParticipantsCategories = new HashSet<>();
@@ -80,6 +83,19 @@ public class EventReferences implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Boolean getIsActive() {
+        return this.isActive;
+    }
+
+    public EventReferences isActive(Boolean isActive) {
+        this.setIsActive(isActive);
+        return this;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
     public Set<EventReferencesParticipantsCategory> getEventReferencesParticipantsCategories() {
@@ -168,6 +184,7 @@ public class EventReferences implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
+            ", isActive='" + getIsActive() + "'" +
             "}";
     }
 }

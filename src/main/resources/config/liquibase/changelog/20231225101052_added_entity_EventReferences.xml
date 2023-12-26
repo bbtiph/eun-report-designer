@@ -60,7 +60,16 @@
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <column name="type" type="string"/>
+            <column name="is_active" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
+    </changeSet>
+
+    <changeSet id="20231225101052-2" author="jhipster">
+        <addColumn tableName="event_references">
+            <column name="is_active" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

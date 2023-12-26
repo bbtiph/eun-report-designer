@@ -4,6 +4,7 @@ export interface IEventReferences {
   id: number;
   name?: string | null;
   type?: string | null;
+  isActive?: boolean | null;
   countries?: Pick<ICountries, 'id'>[] | null;
 }
 

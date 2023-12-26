@@ -47,6 +47,9 @@ class EventReferencesResourceIT {
     private static final String DEFAULT_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_TYPE = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_ACTIVE = false;
+    private static final Boolean UPDATED_IS_ACTIVE = true;
+
     private static final String ENTITY_API_URL = "/api/event-references";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -80,7 +83,7 @@ class EventReferencesResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static EventReferences createEntity(EntityManager em) {
-        EventReferences eventReferences = new EventReferences().name(DEFAULT_NAME).type(DEFAULT_TYPE);
+        EventReferences eventReferences = new EventReferences().name(DEFAULT_NAME).type(DEFAULT_TYPE).isActive(DEFAULT_IS_ACTIVE);
         return eventReferences;
     }
 
@@ -91,7 +94,7 @@ class EventReferencesResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static EventReferences createUpdatedEntity(EntityManager em) {
-        EventReferences eventReferences = new EventReferences().name(UPDATED_NAME).type(UPDATED_TYPE);
+        EventReferences eventReferences = new EventReferences().name(UPDATED_NAME).type(UPDATED_TYPE).isActive(UPDATED_IS_ACTIVE);
         return eventReferences;
     }
 
@@ -118,6 +121,7 @@ class EventReferencesResourceIT {
         EventReferences testEventReferences = eventReferencesList.get(eventReferencesList.size() - 1);
         assertThat(testEventReferences.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testEventReferences.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testEventReferences.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
     }
 
     @Test
@@ -154,7 +158,8 @@ class EventReferencesResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(eventReferences.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
+            .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -187,7 +192,8 @@ class EventReferencesResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(eventReferences.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE));
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
+            .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()));
     }
 
     @Test
@@ -209,7 +215,7 @@ class EventReferencesResourceIT {
         EventReferences updatedEventReferences = eventReferencesRepository.findById(eventReferences.getId()).get();
         // Disconnect from session so that the updates on updatedEventReferences are not directly saved in db
         em.detach(updatedEventReferences);
-        updatedEventReferences.name(UPDATED_NAME).type(UPDATED_TYPE);
+        updatedEventReferences.name(UPDATED_NAME).type(UPDATED_TYPE).isActive(UPDATED_IS_ACTIVE);
         EventReferencesDTO eventReferencesDTO = eventReferencesMapper.toDto(updatedEventReferences);
 
         restEventReferencesMockMvc
@@ -226,6 +232,7 @@ class EventReferencesResourceIT {
         EventReferences testEventReferences = eventReferencesList.get(eventReferencesList.size() - 1);
         assertThat(testEventReferences.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testEventReferences.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testEventReferences.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
     }
 
     @Test
@@ -323,6 +330,7 @@ class EventReferencesResourceIT {
         EventReferences testEventReferences = eventReferencesList.get(eventReferencesList.size() - 1);
         assertThat(testEventReferences.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testEventReferences.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testEventReferences.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
     }
 
     @Test
@@ -337,7 +345,7 @@ class EventReferencesResourceIT {
         EventReferences partialUpdatedEventReferences = new EventReferences();
         partialUpdatedEventReferences.setId(eventReferences.getId());
 
-        partialUpdatedEventReferences.name(UPDATED_NAME).type(UPDATED_TYPE);
+        partialUpdatedEventReferences.name(UPDATED_NAME).type(UPDATED_TYPE).isActive(UPDATED_IS_ACTIVE);
 
         restEventReferencesMockMvc
             .perform(
@@ -353,6 +361,7 @@ class EventReferencesResourceIT {
         EventReferences testEventReferences = eventReferencesList.get(eventReferencesList.size() - 1);
         assertThat(testEventReferences.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testEventReferences.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testEventReferences.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
     }
 
     @Test

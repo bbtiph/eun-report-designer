@@ -5,13 +5,15 @@ export const sampleWithRequiredData: IEventReferences = {
 };
 
 export const sampleWithPartialData: IEventReferences = {
-  id: 76498,
+  id: 81021,
+  isActive: true,
 };
 
 export const sampleWithFullData: IEventReferences = {
-  id: 81021,
-  name: 'invoice Wooden Seychelles',
-  type: 'Sports SMS',
+  id: 65982,
+  name: 'Avon Designer moderator',
+  type: 'Agent Future Rubber',
+  isActive: false,
 };
 
 export const sampleWithNewData: NewEventReferences = {

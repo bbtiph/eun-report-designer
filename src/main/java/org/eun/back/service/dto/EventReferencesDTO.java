@@ -17,6 +17,8 @@ public class EventReferencesDTO implements Serializable {
 
     private String type;
 
+    private Boolean isActive;
+
     private Set<CountriesDTO> countries = new HashSet<>();
 
     private Long participantsCount;
@@ -43,6 +45,14 @@ public class EventReferencesDTO implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
     public Set<CountriesDTO> getCountries() {
@@ -89,6 +99,7 @@ public class EventReferencesDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
+            ", isActive='" + getIsActive() + "'" +
             ", countries=" + getCountries() +
             "}";
     }

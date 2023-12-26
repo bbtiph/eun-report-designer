@@ -12,6 +12,10 @@
     {
       "fieldName": "type",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "isActive",
+      "fieldType": "Boolean"
     }
   ],
   "fluentMethods": true,
