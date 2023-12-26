@@ -26,6 +26,13 @@
       "ownerSide": false,
       "relationshipName": "reportBlockId",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "eventReferences",
+      "otherEntityRelationshipName": "countries",
+      "ownerSide": false,
+      "relationshipName": "eventReferences",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

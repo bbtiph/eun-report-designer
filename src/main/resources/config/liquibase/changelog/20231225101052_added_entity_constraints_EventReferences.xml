@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity EventReferences.
+    -->
+    <changeSet id="20231225101052-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="event_references_id"
+                                 baseTableName="rel_event_references_countries"
+                                 constraintName="fk_rel_event_references_countries_event_references_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event_references"/>
+
+        <addForeignKeyConstraint baseColumnNames="countries_id"
+                                 baseTableName="rel_event_references_countries"
+                                 constraintName="fk_rel_event_references_countries_countries_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="countries"/>
+    </changeSet>
+</databaseChangeLog>

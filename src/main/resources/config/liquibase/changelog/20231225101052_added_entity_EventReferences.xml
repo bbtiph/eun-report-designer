@@ -24,6 +24,23 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="20231225101052-1-relations" author="jhipster">
+
+        <createTable tableName="rel_event_references_countries">
+            <column name="countries_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_references_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="participants_count" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="event_references_id, countries_id" tableName="rel_event_references_countries"/>
+    </changeSet>
+
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

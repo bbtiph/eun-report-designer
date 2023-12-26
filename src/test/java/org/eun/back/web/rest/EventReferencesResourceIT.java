@@ -2,9 +2,11 @@ package org.eun.back.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -12,12 +14,19 @@ import javax.persistence.EntityManager;
 import org.eun.back.IntegrationTest;
 import org.eun.back.domain.EventReferences;
 import org.eun.back.repository.EventReferencesRepository;
+import org.eun.back.service.EventReferencesService;
 import org.eun.back.service.dto.EventReferencesDTO;
 import org.eun.back.service.mapper.EventReferencesMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link EventReferencesResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class EventReferencesResourceIT {
@@ -46,8 +56,14 @@ class EventReferencesResourceIT {
     @Autowired
     private EventReferencesRepository eventReferencesRepository;
 
+    @Mock
+    private EventReferencesRepository eventReferencesRepositoryMock;
+
     @Autowired
     private EventReferencesMapper eventReferencesMapper;
+
+    @Mock
+    private EventReferencesService eventReferencesServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -139,6 +155,23 @@ class EventReferencesResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(eventReferences.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllEventReferencesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(eventReferencesServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restEventReferencesMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(eventReferencesServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllEventReferencesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(eventReferencesServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restEventReferencesMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(eventReferencesRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

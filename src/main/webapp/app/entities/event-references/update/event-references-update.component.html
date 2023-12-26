@@ -20,6 +20,21 @@
           <label class="form-label" for="field_type">Type</label>
           <input type="text" class="form-control" name="type" id="field_type" data-cy="type" formControlName="type" />
         </div>
+
+        <div class="row mb-3">
+          <label for="field_countries">Countries</label>
+          <select
+            class="form-control"
+            id="field_countries"
+            data-cy="countries"
+            multiple
+            name="countries"
+            formControlName="countries"
+            [compareWith]="compareCountries"
+          >
+            <option [ngValue]="countriesOption" *ngFor="let countriesOption of countriesSharedCollection">{{ countriesOption.id }}</option>
+          </select>
+        </div>
       </div>
 
       <div>

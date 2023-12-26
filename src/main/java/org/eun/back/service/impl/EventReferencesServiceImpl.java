@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.eun.back.domain.EventReferences;
+import org.eun.back.domain.RelEventReferencesCountries;
 import org.eun.back.repository.EventReferencesRepository;
 import org.eun.back.service.EventReferencesService;
+import org.eun.back.service.RelEventReferencesCountriesService;
 import org.eun.back.service.dto.EventReferencesDTO;
 import org.eun.back.service.mapper.EventReferencesMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +31,16 @@ public class EventReferencesServiceImpl implements EventReferencesService {
 
     private final EventReferencesMapper eventReferencesMapper;
 
-    public EventReferencesServiceImpl(EventReferencesRepository eventReferencesRepository, EventReferencesMapper eventReferencesMapper) {
+    private final RelEventReferencesCountriesService relEventReferencesCountriesService;
+
+    public EventReferencesServiceImpl(
+        EventReferencesRepository eventReferencesRepository,
+        EventReferencesMapper eventReferencesMapper,
+        RelEventReferencesCountriesService relEventReferencesCountriesService
+    ) {
         this.eventReferencesRepository = eventReferencesRepository;
         this.eventReferencesMapper = eventReferencesMapper;
+        this.relEventReferencesCountriesService = relEventReferencesCountriesService;
     }
 
     @Override
@@ -74,11 +85,34 @@ public class EventReferencesServiceImpl implements EventReferencesService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    public Page<EventReferencesDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return eventReferencesRepository.findAllWithEagerRelationships(pageable).map(eventReferencesMapper::toDto);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<EventReferencesDTO> findOne(Long id) {
         log.debug("Request to get EventReferences : {}", id);
-        return eventReferencesRepository.findById(id).map(eventReferencesMapper::toDto);
+        return eventReferencesRepository.findOneWithEagerRelationships(id).map(eventReferencesMapper::toDto);
+    }
+
+    @Override
+    public Optional<EventReferencesDTO> findOneByCountryId(Long id, Long countryId) {
+        Optional<EventReferencesDTO> response = eventReferencesRepository
+            .findOneWithEagerRelationships(id)
+            .map(eventReferencesMapper::toDto);
+        Optional<RelEventReferencesCountries> relEventReferencesCountries = relEventReferencesCountriesService.findFirstByCountriesIdAndEventReferencesId(
+            countryId,
+            id
+        );
+        if (relEventReferencesCountries.isPresent()) response
+            .get()
+            .setParticipantsCount(
+                relEventReferencesCountries.get().getParticipantsCount() != null
+                    ? relEventReferencesCountries.get().getParticipantsCount()
+                    : 0
+            );
+        return response;
     }
 
     @Override

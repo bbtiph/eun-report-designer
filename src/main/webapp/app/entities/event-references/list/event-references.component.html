@@ -50,6 +50,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="countries.id">
+            <div class="d-flex">
+              <span>Countries</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -60,6 +66,12 @@
           </td>
           <td>{{ eventReferences.name }}</td>
           <td>{{ eventReferences.type }}</td>
+          <td>
+            <span *ngFor="let countries of eventReferences.countries; let last = last">
+              <a class="form-control-static" [routerLink]="['/countries', countries.id, 'view']">{{ countries.id }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

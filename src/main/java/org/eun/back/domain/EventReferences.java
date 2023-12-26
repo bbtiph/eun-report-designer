@@ -32,6 +32,15 @@ public class EventReferences implements Serializable {
     @JsonIgnoreProperties(value = { "eventReference" }, allowSetters = true)
     private Set<EventReferencesParticipantsCategory> eventReferencesParticipantsCategories = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+        name = "rel_event_references_countries",
+        joinColumns = @JoinColumn(name = "event_references_id"),
+        inverseJoinColumns = @JoinColumn(name = "countries_id")
+    )
+    @JsonIgnoreProperties(value = { "reportBlockIds", "eventReferences" }, allowSetters = true)
+    private Set<Countries> countries = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -105,6 +114,31 @@ public class EventReferences implements Serializable {
     ) {
         this.eventReferencesParticipantsCategories.remove(eventReferencesParticipantsCategory);
         eventReferencesParticipantsCategory.setEventReference(null);
+        return this;
+    }
+
+    public Set<Countries> getCountries() {
+        return this.countries;
+    }
+
+    public void setCountries(Set<Countries> countries) {
+        this.countries = countries;
+    }
+
+    public EventReferences countries(Set<Countries> countries) {
+        this.setCountries(countries);
+        return this;
+    }
+
+    public EventReferences addCountries(Countries countries) {
+        this.countries.add(countries);
+        countries.getEventReferences().add(this);
+        return this;
+    }
+
+    public EventReferences removeCountries(Countries countries) {
+        this.countries.remove(countries);
+        countries.getEventReferences().remove(this);
         return this;
     }
 

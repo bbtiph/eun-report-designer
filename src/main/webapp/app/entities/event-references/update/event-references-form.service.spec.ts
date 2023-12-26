@@ -22,6 +22,7 @@ describe('EventReferences Form Service', () => {
             id: expect.any(Object),
             name: expect.any(Object),
             type: expect.any(Object),
+            countries: expect.any(Object),
           })
         );
       });
@@ -34,6 +35,7 @@ describe('EventReferences Form Service', () => {
             id: expect.any(Object),
             name: expect.any(Object),
             type: expect.any(Object),
+            countries: expect.any(Object),
           })
         );
       });

@@ -25,6 +25,13 @@
       "otherEntityRelationshipName": "eventReference",
       "relationshipName": "eventReferencesParticipantsCategory",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "countries",
+      "otherEntityRelationshipName": "eventReferences",
+      "ownerSide": true,
+      "relationshipName": "countries",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { EventReferencesFormService } from './event-references-form.service';
 import { EventReferencesService } from '../service/event-references.service';
 import { IEventReferences } from '../event-references.model';
+import { ICountries } from 'app/entities/countries/countries.model';
+import { CountriesService } from 'app/entities/countries/service/countries.service';
 
 import { EventReferencesUpdateComponent } from './event-references-update.component';
 
@@ -18,6 +20,7 @@ describe('EventReferences Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let eventReferencesFormService: EventReferencesFormService;
   let eventReferencesService: EventReferencesService;
+  let countriesService: CountriesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +43,43 @@ describe('EventReferences Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     eventReferencesFormService = TestBed.inject(EventReferencesFormService);
     eventReferencesService = TestBed.inject(EventReferencesService);
+    countriesService = TestBed.inject(CountriesService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call Countries query and add missing value', () => {
       const eventReferences: IEventReferences = { id: 456 };
+      const countries: ICountries[] = [{ id: 54502 }];
+      eventReferences.countries = countries;
+
+      const countriesCollection: ICountries[] = [{ id: 5415 }];
+      jest.spyOn(countriesService, 'query').mockReturnValue(of(new HttpResponse({ body: countriesCollection })));
+      const additionalCountries = [...countries];
+      const expectedCollection: ICountries[] = [...additionalCountries, ...countriesCollection];
+      jest.spyOn(countriesService, 'addCountriesToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ eventReferences });
       comp.ngOnInit();
 
+      expect(countriesService.query).toHaveBeenCalled();
+      expect(countriesService.addCountriesToCollectionIfMissing).toHaveBeenCalledWith(
+        countriesCollection,
+        ...additionalCountries.map(expect.objectContaining)
+      );
+      expect(comp.countriesSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const eventReferences: IEventReferences = { id: 456 };
+      const countries: ICountries = { id: 51407 };
+      eventReferences.countries = [countries];
+
+      activatedRoute.data = of({ eventReferences });
+      comp.ngOnInit();
+
+      expect(comp.countriesSharedCollection).toContain(countries);
       expect(comp.eventReferences).toEqual(eventReferences);
     });
   });
@@ -120,6 +149,18 @@ describe('EventReferences Management Update Component', () => {
       expect(eventReferencesService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareCountries', () => {
+      it('Should forward to countriesService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(countriesService, 'compareCountries');
+        comp.compareCountries(entity, entity2);
+        expect(countriesService.compareCountries).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

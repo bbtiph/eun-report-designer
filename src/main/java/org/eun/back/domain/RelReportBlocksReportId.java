@@ -8,16 +8,12 @@ public class RelReportBlocksReportId implements Serializable {
     private Long reportBlocksId;
     private Long reportId;
 
-    // Конструктор без аргументов
     public RelReportBlocksReportId() {}
 
-    // Конструктор с аргументами
     public RelReportBlocksReportId(Long reportBlocksId, Long reportId) {
         this.reportBlocksId = reportBlocksId;
         this.reportId = reportId;
     }
-
-    // Геттеры и сеттеры для reportBlocksId и reportId
 
     @Override
     public boolean equals(Object o) {

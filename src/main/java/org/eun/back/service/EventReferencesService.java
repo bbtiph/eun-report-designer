@@ -3,6 +3,8 @@ package org.eun.back.service;
 import java.util.List;
 import java.util.Optional;
 import org.eun.back.service.dto.EventReferencesDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Service Interface for managing {@link org.eun.back.domain.EventReferences}.
@@ -40,12 +42,22 @@ public interface EventReferencesService {
     List<EventReferencesDTO> findAll();
 
     /**
+     * Get all the eventReferences with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<EventReferencesDTO> findAllWithEagerRelationships(Pageable pageable);
+
+    /**
      * Get the "id" eventReferences.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
     Optional<EventReferencesDTO> findOne(Long id);
+
+    Optional<EventReferencesDTO> findOneByCountryId(Long id, Long countryId);
 
     /**
      * Delete the "id" eventReferences.

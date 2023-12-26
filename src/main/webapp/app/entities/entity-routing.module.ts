@@ -167,6 +167,19 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'GeneratedReports' },
         loadChildren: () => import('./generated-report/generated-report.module').then(m => m.GeneratedReportModule),
       },
+      {
+        path: 'event-references',
+        data: { pageTitle: 'EventReferences' },
+        loadChildren: () => import('./event-references/event-references.module').then(m => m.EventReferencesModule),
+      },
+      {
+        path: 'event-references-participants-category',
+        data: { pageTitle: 'EventReferencesParticipantsCategories' },
+        loadChildren: () =>
+          import('./event-references-participants-category/event-references-participants-category.module').then(
+            m => m.EventReferencesParticipantsCategoryModule
+          ),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

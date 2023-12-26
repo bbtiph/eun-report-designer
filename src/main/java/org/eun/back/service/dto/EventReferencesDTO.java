@@ -1,7 +1,9 @@
 package org.eun.back.service.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link org.eun.back.domain.EventReferences} entity.
@@ -14,6 +16,10 @@ public class EventReferencesDTO implements Serializable {
     private String name;
 
     private String type;
+
+    private Set<CountriesDTO> countries = new HashSet<>();
+
+    private Long participantsCount;
 
     public Long getId() {
         return id;
@@ -37,6 +43,22 @@ public class EventReferencesDTO implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Set<CountriesDTO> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(Set<CountriesDTO> countries) {
+        this.countries = countries;
+    }
+
+    public Long getParticipantsCount() {
+        return participantsCount;
+    }
+
+    public void setParticipantsCount(Long participantsCount) {
+        this.participantsCount = participantsCount;
     }
 
     @Override
@@ -67,6 +89,7 @@ public class EventReferencesDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
+            ", countries=" + getCountries() +
             "}";
     }
 }

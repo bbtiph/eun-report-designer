@@ -134,10 +134,11 @@ public class EventReferencesResource {
     /**
      * {@code GET  /event-references} : get all the eventReferences.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of eventReferences in body.
      */
     @GetMapping("/event-references")
-    public List<EventReferencesDTO> getAllEventReferences() {
+    public List<EventReferencesDTO> getAllEventReferences(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all EventReferences");
         return eventReferencesService.findAll();
     }
@@ -152,6 +153,13 @@ public class EventReferencesResource {
     public ResponseEntity<EventReferencesDTO> getEventReferences(@PathVariable Long id) {
         log.debug("REST request to get EventReferences : {}", id);
         Optional<EventReferencesDTO> eventReferencesDTO = eventReferencesService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(eventReferencesDTO);
+    }
+
+    @GetMapping("/event-references/{id}/{countryId}")
+    public ResponseEntity<EventReferencesDTO> getEventReferencesByCountry(@PathVariable Long id, @PathVariable Long countryId) {
+        log.debug("REST request to get EventReferences : {}", id);
+        Optional<EventReferencesDTO> eventReferencesDTO = eventReferencesService.findOneByCountryId(id, countryId);
         return ResponseUtil.wrapOrNotFound(eventReferencesDTO);
     }
 

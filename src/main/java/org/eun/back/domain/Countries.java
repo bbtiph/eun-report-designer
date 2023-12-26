@@ -29,8 +29,12 @@ public class Countries implements Serializable {
     private String countryCode;
 
     @ManyToMany(mappedBy = "countryIds")
-    @JsonIgnoreProperties(value = { "countryIds", "reportIds" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "countryIds", "reportIds", "reportBlocksContents" }, allowSetters = true)
     private Set<ReportBlocks> reportBlockIds = new HashSet<>();
+
+    @ManyToMany(mappedBy = "countries")
+    @JsonIgnoreProperties(value = { "eventReferencesParticipantsCategories", "countries" }, allowSetters = true)
+    private Set<EventReferences> eventReferences = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -101,6 +105,37 @@ public class Countries implements Serializable {
     public Countries removeReportBlockId(ReportBlocks reportBlocks) {
         this.reportBlockIds.remove(reportBlocks);
         reportBlocks.getCountryIds().remove(this);
+        return this;
+    }
+
+    public Set<EventReferences> getEventReferences() {
+        return this.eventReferences;
+    }
+
+    public void setEventReferences(Set<EventReferences> eventReferences) {
+        if (this.eventReferences != null) {
+            this.eventReferences.forEach(i -> i.removeCountries(this));
+        }
+        if (eventReferences != null) {
+            eventReferences.forEach(i -> i.addCountries(this));
+        }
+        this.eventReferences = eventReferences;
+    }
+
+    public Countries eventReferences(Set<EventReferences> eventReferences) {
+        this.setEventReferences(eventReferences);
+        return this;
+    }
+
+    public Countries addEventReferences(EventReferences eventReferences) {
+        this.eventReferences.add(eventReferences);
+        eventReferences.getCountries().add(this);
+        return this;
+    }
+
+    public Countries removeEventReferences(EventReferences eventReferences) {
+        this.eventReferences.remove(eventReferences);
+        eventReferences.getCountries().remove(this);
         return this;
     }
 

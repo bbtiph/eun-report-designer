@@ -14,12 +14,13 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type EventReferencesFormGroupInput = IEventReferences | PartialWithRequiredKeyOf<NewEventReferences>;
 
-type EventReferencesFormDefaults = Pick<NewEventReferences, 'id'>;
+type EventReferencesFormDefaults = Pick<NewEventReferences, 'id' | 'countries'>;
 
 type EventReferencesFormGroupContent = {
   id: FormControl<IEventReferences['id'] | NewEventReferences['id']>;
   name: FormControl<IEventReferences['name']>;
   type: FormControl<IEventReferences['type']>;
+  countries: FormControl<IEventReferences['countries']>;
 };
 
 export type EventReferencesFormGroup = FormGroup<EventReferencesFormGroupContent>;
@@ -41,6 +42,7 @@ export class EventReferencesFormService {
       ),
       name: new FormControl(eventReferencesRawValue.name),
       type: new FormControl(eventReferencesRawValue.type),
+      countries: new FormControl(eventReferencesRawValue.countries ?? []),
     });
   }
 
@@ -61,6 +63,7 @@ export class EventReferencesFormService {
   private getFormDefaults(): EventReferencesFormDefaults {
     return {
       id: null,
+      countries: [],
     };
   }
 }
