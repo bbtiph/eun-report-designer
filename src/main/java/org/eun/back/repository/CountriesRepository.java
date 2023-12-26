@@ -23,4 +23,6 @@ public interface CountriesRepository extends JpaRepository<Countries, Long> {
 
     @Query("SELECT DISTINCT c FROM Countries c ORDER BY c.countryName ASC")
     List<Countries> findAll();
+
+    Countries findFirstByCountryNameIgnoreCase(String countryName);
 }

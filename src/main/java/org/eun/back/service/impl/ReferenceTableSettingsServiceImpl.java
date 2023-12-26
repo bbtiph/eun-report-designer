@@ -12,13 +12,8 @@ import java.util.stream.Collectors;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.eclipse.birt.report.engine.api.EngineException;
-import org.eun.back.domain.MoeContacts;
-import org.eun.back.domain.ReferenceTableSettings;
-import org.eun.back.domain.WorkingGroupReferences;
-import org.eun.back.repository.CountriesRepository;
-import org.eun.back.repository.MoeContactsRepository;
-import org.eun.back.repository.ReferenceTableSettingsRepository;
-import org.eun.back.repository.WorkingGroupReferencesRepository;
+import org.eun.back.domain.*;
+import org.eun.back.repository.*;
 import org.eun.back.security.SecurityUtils;
 import org.eun.back.service.BirtReportService;
 import org.eun.back.service.ReferenceTableSettingsService;
@@ -49,6 +44,12 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
 
     private final CountriesRepository countriesRepository;
 
+    private final EventReferencesRepository eventReferencesRepository;
+
+    private final RelEventReferencesCountriesRepository relEventReferencesCountriesRepository;
+
+    private final EventReferencesParticipantsCategoryRepository eventReferencesParticipantsCategoryRepository;
+
     private final BirtReportService birtReportService;
 
     public ReferenceTableSettingsServiceImpl(
@@ -57,6 +58,9 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         WorkingGroupReferencesRepository workingGroupReferencesRepository,
         MoeContactsRepository moeContactsRepository,
         CountriesRepository countriesRepository,
+        EventReferencesRepository eventReferencesRepository,
+        RelEventReferencesCountriesRepository relEventReferencesCountriesRepository,
+        EventReferencesParticipantsCategoryRepository eventReferencesParticipantsCategoryRepository,
         BirtReportService birtReportService
     ) {
         this.referenceTableSettingsRepository = referenceTableSettingsRepository;
@@ -64,6 +68,9 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         this.workingGroupReferencesRepository = workingGroupReferencesRepository;
         this.moeContactsRepository = moeContactsRepository;
         this.countriesRepository = countriesRepository;
+        this.eventReferencesRepository = eventReferencesRepository;
+        this.relEventReferencesCountriesRepository = relEventReferencesCountriesRepository;
+        this.eventReferencesParticipantsCategoryRepository = eventReferencesParticipantsCategoryRepository;
         this.birtReportService = birtReportService;
     }
 
@@ -314,6 +321,99 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                                     log.error("Error ", e);
                                 }
                             }
+                        }
+                    }
+                    break;
+                case "event_reference":
+                case "event":
+                    eventReferencesRepository.updateAllIsActiveToFalse();
+                    keywords = Arrays.asList("School Innovation Forum");
+
+                    for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+                        Sheet sheet = workbook.getSheetAt(i);
+                        String sheetName = sheet.getSheetName().toLowerCase();
+
+                        for (String keyword : keywords) {
+                            if (sheetName.contains(keyword.toLowerCase())) {
+                                sheetNumbers.add(i);
+                                break;
+                            }
+                        }
+                    }
+
+                    for (int pageNumber : sheetNumbers) {
+                        Sheet sheet = workbook.getSheetAt(pageNumber);
+                        EventReferences event = null;
+                        int i = 0;
+                        for (Row row : sheet) {
+                            i++;
+                            if (i > 3) {
+                                try {
+                                    if (row.getCell(0) != null || row.getCell(1) != null) {
+                                        EventReferences eventReferences = new EventReferences();
+                                        eventReferences.setId(row.getCell(2) != null ? Long.parseLong(row.getCell(2).toString()) : null);
+                                        eventReferences.setName(row.getCell(0) != null ? row.getCell(0).toString() : "");
+                                        eventReferences.setType(row.getCell(1) != null ? row.getCell(1).toString() : "");
+                                        eventReferences.isActive(true);
+
+                                        if (eventReferences.getId() == null) {
+                                            EventReferences eventReferencesRes = eventReferencesRepository.findByNameAndType(
+                                                eventReferences.getName(),
+                                                eventReferences.getType()
+                                            );
+                                            if (eventReferencesRes != null) {
+                                                eventReferences.setId(eventReferences.getId());
+                                            }
+                                        }
+                                        eventReferences = eventReferencesRepository.save(eventReferences);
+                                        event = eventReferences;
+                                    }
+
+                                    if (row.getCell(3) != null || row.getCell(4) != null) {
+                                        RelEventReferencesCountries relEventReferencesCountries = new RelEventReferencesCountries();
+                                        Countries country = countriesRepository.findFirstByCountryNameIgnoreCase(row.getCell(3).toString());
+                                        if (country != null) {
+                                            relEventReferencesCountries.setCountriesId(country.getId());
+                                            relEventReferencesCountries.setEventReferencesId(event.getId());
+                                            relEventReferencesCountries.setParticipantsCount(
+                                                row.getCell(4) != null ? Long.parseLong(row.getCell(4).toString()) : 0
+                                            );
+
+                                            relEventReferencesCountriesRepository.save(relEventReferencesCountries);
+                                        }
+                                    }
+
+                                    if (row.getCell(5) != null || row.getCell(6) != null) {
+                                        EventReferencesParticipantsCategory participantsCategory = new EventReferencesParticipantsCategory();
+                                        participantsCategory.setEventReference(event);
+                                        participantsCategory.setCategory(row.getCell(5) != null ? row.getCell(5).toString() : "");
+                                        participantsCategory.setParticipantsCount(
+                                            row.getCell(6) != null ? Long.parseLong(row.getCell(6).toString()) : 0
+                                        );
+
+                                        EventReferencesParticipantsCategory eventReferencesParticipantsCategoryRes = eventReferencesParticipantsCategoryRepository.findFirstByCategoryAndEventReference(
+                                            participantsCategory.getCategory(),
+                                            participantsCategory.getEventReference()
+                                        );
+                                        if (eventReferencesParticipantsCategoryRes != null) {
+                                            participantsCategory.setId(eventReferencesParticipantsCategoryRes.getId());
+                                        }
+                                        eventReferencesParticipantsCategoryRepository.save(participantsCategory);
+                                    }
+                                } catch (Exception e) {
+                                    log.error("Error ", e);
+                                }
+                            }
+                            //                          TODO: delete kostil
+                            if (
+                                row.getCell(0) == null &&
+                                row.getCell(1) == null &&
+                                row.getCell(2) == null &&
+                                row.getCell(3) == null &&
+                                row.getCell(4) == null &&
+                                row.getCell(5) == null &&
+                                row.getCell(6) == null
+                            ) break;
                         }
                     }
                     break;

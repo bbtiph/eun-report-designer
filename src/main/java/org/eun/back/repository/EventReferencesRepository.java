@@ -6,7 +6,6 @@ import org.eun.back.domain.EventReferences;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,6 +19,12 @@ public interface EventReferencesRepository extends EventReferencesRepositoryWith
     default Optional<EventReferences> findOneWithEagerRelationships(Long id) {
         return this.fetchBagRelationships(this.findById(id));
     }
+
+    EventReferences findByNameAndType(String name, String type);
+
+    @Modifying
+    @Query("UPDATE EventReferences e SET e.isActive = false")
+    void updateAllIsActiveToFalse();
 
     default List<EventReferences> findAllWithEagerRelationships() {
         return this.fetchBagRelationships(this.findAll());
