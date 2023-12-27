@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -127,6 +128,9 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "working_group_reference":
             case "working_group":
                 return workingGroupReferencesRepository.findAllByIsActive(true);
+            case "event_reference":
+            case "event":
+                return eventReferencesRepository.findAllByIsActive(true);
             case "countries":
                 return countriesRepository.findAll();
         }
@@ -347,11 +351,18 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                         int i = 0;
                         for (Row row : sheet) {
                             i++;
-                            if (i > 3) {
+                            if (i > 2 && i < 30) {
                                 try {
-                                    if (row.getCell(0) != null || row.getCell(1) != null) {
+                                    if (row.getCell(0).toString().length() > 0 || row.getCell(1).toString().length() > 0) {
                                         EventReferences eventReferences = new EventReferences();
-                                        eventReferences.setId(row.getCell(2) != null ? Long.parseLong(row.getCell(2).toString()) : null);
+                                        try {
+                                            double cellValue = row.getCell(2).getNumericCellValue();
+                                            DecimalFormat decimalFormat = new DecimalFormat("#");
+                                            Long formattedValue = Long.parseLong(decimalFormat.format(cellValue));
+                                            eventReferences.setId(formattedValue);
+                                        } catch (Exception e) {
+                                            log.error(String.valueOf(e));
+                                        }
                                         eventReferences.setName(row.getCell(0) != null ? row.getCell(0).toString() : "");
                                         eventReferences.setType(row.getCell(1) != null ? row.getCell(1).toString() : "");
                                         eventReferences.isActive(true);
@@ -362,34 +373,46 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                                                 eventReferences.getType()
                                             );
                                             if (eventReferencesRes != null) {
-                                                eventReferences.setId(eventReferences.getId());
+                                                eventReferences.setId(eventReferencesRes.getId());
                                             }
                                         }
                                         eventReferences = eventReferencesRepository.save(eventReferences);
                                         event = eventReferences;
                                     }
 
-                                    if (row.getCell(3) != null || row.getCell(4) != null) {
+                                    if (row.getCell(3).toString().length() > 0 || row.getCell(4).toString().length() > 0) {
                                         RelEventReferencesCountries relEventReferencesCountries = new RelEventReferencesCountries();
                                         Countries country = countriesRepository.findFirstByCountryNameIgnoreCase(row.getCell(3).toString());
                                         if (country != null) {
                                             relEventReferencesCountries.setCountriesId(country.getId());
                                             relEventReferencesCountries.setEventReferencesId(event.getId());
-                                            relEventReferencesCountries.setParticipantsCount(
-                                                row.getCell(4) != null ? Long.parseLong(row.getCell(4).toString()) : 0
-                                            );
+                                            try {
+                                                double cellValue = row.getCell(4).getNumericCellValue();
+                                                DecimalFormat decimalFormat = new DecimalFormat("#");
+                                                Long formattedValue = Long.parseLong(decimalFormat.format(cellValue));
+                                                relEventReferencesCountries.setParticipantsCount(
+                                                    formattedValue != null ? formattedValue : 0
+                                                );
+                                            } catch (Exception e) {
+                                                log.error(String.valueOf(e));
+                                            }
 
                                             relEventReferencesCountriesRepository.save(relEventReferencesCountries);
                                         }
                                     }
 
-                                    if (row.getCell(5) != null || row.getCell(6) != null) {
+                                    if (row.getCell(5).toString().length() > 0 || row.getCell(6).toString().length() > 0) {
                                         EventReferencesParticipantsCategory participantsCategory = new EventReferencesParticipantsCategory();
                                         participantsCategory.setEventReference(event);
                                         participantsCategory.setCategory(row.getCell(5) != null ? row.getCell(5).toString() : "");
-                                        participantsCategory.setParticipantsCount(
-                                            row.getCell(6) != null ? Long.parseLong(row.getCell(6).toString()) : 0
-                                        );
+                                        try {
+                                            double cellValue = row.getCell(6).getNumericCellValue();
+                                            DecimalFormat decimalFormat = new DecimalFormat("#");
+                                            Long formattedValue = Long.parseLong(decimalFormat.format(cellValue));
+                                            participantsCategory.setParticipantsCount(formattedValue != null ? formattedValue : 0);
+                                        } catch (Exception e) {
+                                            log.error(String.valueOf(e));
+                                        }
 
                                         EventReferencesParticipantsCategory eventReferencesParticipantsCategoryRes = eventReferencesParticipantsCategoryRepository.findFirstByCategoryAndEventReference(
                                             participantsCategory.getCategory(),
@@ -405,15 +428,16 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                                 }
                             }
                             //                          TODO: delete kostil
-                            if (
-                                row.getCell(0) == null &&
-                                row.getCell(1) == null &&
-                                row.getCell(2) == null &&
-                                row.getCell(3) == null &&
-                                row.getCell(4) == null &&
-                                row.getCell(5) == null &&
-                                row.getCell(6) == null
-                            ) break;
+
+                            //                            if (
+                            //                                row.getCell(0).toString().length() == 0 &&
+                            //                                row.getCell(1).toString().length() == 0 &&
+                            //                                row.getCell(2).toString().length() == 0 &&
+                            //                                row.getCell(3).toString().length() == 0 &&
+                            //                                row.getCell(4).toString().length() == 0 &&
+                            //                                row.getCell(5).toString().length() == 0 &&
+                            //                                row.getCell(6).toString().length() == 0
+                            //                            ) break;
                         }
                     }
                     break;

@@ -22,6 +22,8 @@ public interface EventReferencesRepository extends EventReferencesRepositoryWith
 
     EventReferences findByNameAndType(String name, String type);
 
+    List<EventReferences> findAllByIsActive(Boolean isActive);
+
     @Modifying
     @Query("UPDATE EventReferences e SET e.isActive = false")
     void updateAllIsActiveToFalse();

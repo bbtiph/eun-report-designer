@@ -150,6 +150,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
   loadReferenceTableSettings() {
     if (this.reportBlocks && this.reportBlocks.reportBlocksContents) {
       const elements = this.reportBlocks.reportBlocksContents.filter(a => a.type === 'reference');
+      debugger;
       elements.forEach(element => {
         let content = JSON.parse(element.template ?? '{}');
         if (!this.referenceTableSettings.has(content.source)) {
