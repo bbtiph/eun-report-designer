@@ -116,6 +116,39 @@ public class EventReferencesServiceImpl implements EventReferencesService {
     }
 
     @Override
+    public List<EventReferencesDTO> findAllByCountryId(Long countryId) {
+        List<RelEventReferencesCountries> relEventReferencesCountries = relEventReferencesCountriesService.findFirstByCountriesId(
+            countryId
+        );
+
+        List<Long> eventReferencesIds = relEventReferencesCountries
+            .stream()
+            .map(RelEventReferencesCountries::getEventReferencesId)
+            .collect(Collectors.toList());
+
+        List<EventReferencesDTO> eventReferencesDTOS = eventReferencesRepository
+            .findAllByIdIn(eventReferencesIds)
+            .stream()
+            .map(eventReferencesMapper::toDto)
+            .collect(Collectors.toList());
+
+        for (RelEventReferencesCountries relEventReferencesCountry : relEventReferencesCountries) {
+            Long eventId = relEventReferencesCountry.getEventReferencesId();
+            Long participantsCount = relEventReferencesCountry.getParticipantsCount() != null
+                ? relEventReferencesCountry.getParticipantsCount()
+                : 0;
+
+            eventReferencesDTOS
+                .stream()
+                .filter(dto -> dto.getId().equals(eventId))
+                .findFirst()
+                .ifPresent(dto -> dto.setParticipantsCount(participantsCount));
+        }
+
+        return eventReferencesDTOS;
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete EventReferences : {}", id);
         eventReferencesRepository.deleteById(id);

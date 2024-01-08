@@ -25,4 +25,6 @@ public interface CountriesRepository extends JpaRepository<Countries, Long> {
     List<Countries> findAll();
 
     Countries findFirstByCountryNameIgnoreCase(String countryName);
+
+    Countries findFirstByCountryCodeIgnoreCase(String countryCode);
 }

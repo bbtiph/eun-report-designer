@@ -27,5 +27,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReferenceTableSettingsDeleteDialogComponent,
     ReferenceTableSettingsManageComponent,
   ],
+  exports: [ReferenceTableSettingsManageComponent],
 })
 export class ReferenceTableSettingsModule {}

@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RelEventReferencesCountriesRepository extends JpaRepository<RelEventReferencesCountries, Long> {
     Optional<RelEventReferencesCountries> findFirstByCountriesIdAndEventReferencesId(Long countriesId, Long referencesId);
+
+    List<RelEventReferencesCountries> findFirstByCountriesId(Long countriesId);
 }

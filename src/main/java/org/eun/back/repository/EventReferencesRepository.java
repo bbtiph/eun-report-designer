@@ -35,4 +35,6 @@ public interface EventReferencesRepository extends EventReferencesRepositoryWith
     default Page<EventReferences> findAllWithEagerRelationships(Pageable pageable) {
         return this.fetchBagRelationships(this.findAll(pageable));
     }
+
+    List<EventReferences> findAllByIdIn(List<Long> ids);
 }

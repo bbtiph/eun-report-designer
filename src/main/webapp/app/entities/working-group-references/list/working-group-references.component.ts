@@ -251,7 +251,6 @@ export class WorkingGroupReferencesComponent implements OnInit {
     let column;
     if (!this.formGroup.get(formControlName) || this.formGroup.get(formControlName) === null) {
       column = this.template.columns.find((c: { name: string; index: string }) => c.index === index);
-      debugger;
       this.formGroup.addControl(formControlName, new FormControl(column != null ? column.name : name));
     }
     return this.formGroup.get(formControlName) as FormControl;

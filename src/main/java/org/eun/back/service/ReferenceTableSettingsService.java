@@ -45,6 +45,8 @@ public interface ReferenceTableSettingsService {
 
     List<?> findAllDataByRefTable(String refTable);
 
+    List<?> findAllDataByRefTableByCountryCode(String refTable, String countryCode);
+
     byte[] download(String refTable) throws IOException, EngineException;
 
     void upload(MultipartFile file, String refTable) throws IOException;

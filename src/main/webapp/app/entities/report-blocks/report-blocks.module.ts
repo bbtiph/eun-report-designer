@@ -11,9 +11,18 @@ import { SortContentByPriorityPipe } from './sort/sort-content-by-priority.pipe'
 import { WorkingGroupReferencesModule } from '../working-group-references/working-group-references.module';
 import { DragulaModule } from 'ng2-dragula';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReferenceTableSettingsModule } from '../reference-table-settings/reference-table-settings.module';
 
 @NgModule({
-  imports: [SharedModule, ReportBlocksRoutingModule, AngularEditorModule, WorkingGroupReferencesModule, DragulaModule, NgSelectModule],
+  imports: [
+    SharedModule,
+    ReportBlocksRoutingModule,
+    AngularEditorModule,
+    WorkingGroupReferencesModule,
+    DragulaModule,
+    NgSelectModule,
+    ReferenceTableSettingsModule,
+  ],
   declarations: [
     ReportBlocksComponent,
     ReportBlocksDetailComponent,

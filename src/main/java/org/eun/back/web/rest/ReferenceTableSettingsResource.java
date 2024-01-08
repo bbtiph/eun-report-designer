@@ -153,6 +153,12 @@ public class ReferenceTableSettingsResource {
         return referenceTableSettingsService.findAllDataByRefTable(refTable);
     }
 
+    @GetMapping("/reference-table-settings/by-ref-table/data/{refTable}/country/{countryCode}")
+    public List<?> getAllReferenceTableSettingsDataByCountryCode(@PathVariable String refTable, @PathVariable String countryCode) {
+        log.debug("REST request to get all ReferenceTableSettings");
+        return referenceTableSettingsService.findAllDataByRefTableByCountryCode(refTable, countryCode);
+    }
+
     @PostMapping("/reference-table-settings/by-ref-table/download/{refTable}")
     public ResponseEntity<byte[]> generateExcel(@PathVariable String refTable) throws IOException {
         byte[] generatedExcel = new byte[0];

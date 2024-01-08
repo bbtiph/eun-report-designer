@@ -59,6 +59,8 @@ public interface EventReferencesService {
 
     Optional<EventReferencesDTO> findOneByCountryId(Long id, Long countryId);
 
+    List<EventReferencesDTO> findAllByCountryId(Long countryId);
+
     /**
      * Delete the "id" eventReferences.
      *

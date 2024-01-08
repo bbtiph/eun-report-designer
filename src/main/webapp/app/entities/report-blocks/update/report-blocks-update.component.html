@@ -164,16 +164,16 @@
                 </table>
 
                 <div *ngIf="content.type === 'reference' && selectedCountry">
-                  <jhi-working-group-references
-                    *ngIf="tableColumns.get(content.id).source === 'working_group'"
+                  <jhi-reference-table-settings-manage
                     [template]="tableColumns.get(content.id)"
                     [isFromReportBlock]="true"
                     [type]="type"
                     [selectedCountry]="selectedCountry"
                     [settings]="referenceTableSettings.get(tableColumns.get(content.id).source)"
+                    [source]="tableColumns.get(content.id).source"
                     [isEdit]="isEdit"
                     (templateChanged)="onDataChanged(content, $event)"
-                  ></jhi-working-group-references>
+                  ></jhi-reference-table-settings-manage>
                 </div>
 
                 <span *ngIf="type === 'template' && content.type === 'text'">*Default text for selected countries</span>

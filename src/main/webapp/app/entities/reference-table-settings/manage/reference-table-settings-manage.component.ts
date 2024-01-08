@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IReferenceTableSettings } from '../reference-table-settings.model';
 import { EntityArrayResponseType, ReferenceTableSettingsService } from '../service/reference-table-settings.service';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
@@ -12,6 +12,8 @@ import { HttpClient } from '@angular/common/http';
 import { AbstractUploadFileModal } from '../../../shared/modal/abstract-upload-file.modal';
 import { LoaderService } from '../../../shared/loader/loader-service.service';
 import { AbstractDynamicFormBySettingsModal } from '../../../shared/modal/abstract-dynamic-form-by-settings.modal';
+import { ICountries } from '../../countries/countries.model';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'jhi-reference-table-settings-manage',
@@ -19,6 +21,15 @@ import { AbstractDynamicFormBySettingsModal } from '../../../shared/modal/abstra
   styleUrls: ['./reference-table-settings-manage.component.scss'],
 })
 export class ReferenceTableSettingsManageComponent implements OnInit {
+  @Input() template: any | null = null;
+  @Input() type: string | '' | undefined;
+  @Input() isFromReportBlock: boolean | false | undefined;
+  @Input() isEdit: boolean | false | undefined;
+  @Input() selectedCountry: ICountries | null = null;
+  @Input() settings: any | null = null;
+  @Input() source: string | '' | undefined;
+  @Output() templateChanged = new EventEmitter<any>();
+
   referenceTableSettings?: IReferenceTableSettings[];
   selectedReferenceTableSettings: IReferenceTableSettings | null = null;
   isLoading = false;
@@ -29,6 +40,7 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
 
   predicate = 'id';
   ascending = true;
+  formGroup: FormGroup;
 
   constructor(
     protected referenceTableSettingsService: ReferenceTableSettingsService,
@@ -38,11 +50,22 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
     protected dataUtils: DataUtils,
     protected modalService: NgbModal,
     private http: HttpClient,
-    public loader: LoaderService
-  ) {}
+    public loader: LoaderService,
+    private formBuilder: FormBuilder
+  ) {
+    this.formGroup = this.formBuilder.group({});
+  }
 
   ngOnInit(): void {
-    this.load();
+    if (this.isFromReportBlock) {
+      this.referenceTableSettingsService
+        .findAllReferenceTableSettingsDataByCountry(this.source ?? '', this.selectedCountry?.countryCode ?? '')
+        .subscribe(data => {
+          this.data = data;
+        });
+    } else {
+      this.load();
+    }
   }
 
   transformSettingsToColumnDefs(settings: any[]): any[] {
@@ -224,6 +247,45 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
           this.load();
         });
     });
+  }
+
+  // @ts-ignore
+  getColumnFormControl(index: string, name: string): FormControl {
+    const formControlName = `column_${index}`;
+    let column;
+    if (!this.formGroup.get(formControlName) || this.formGroup.get(formControlName) === null) {
+      column = this.template.columns.find((c: { name: string; index: string }) => c.index === index);
+      this.formGroup.addControl(formControlName, new FormControl(column != null ? column.name : name));
+    }
+    return this.formGroup.get(formControlName) as FormControl;
+  }
+
+  setColumnValue(index: string): void {
+    const formControlName = `column_${index}`;
+    this.template.columns.forEach((c: { name: string; index: string }) => {
+      if (c.index === index) c.name = this.formGroup.get(formControlName)?.value;
+    });
+
+    this.templateChanged.emit(this.template);
+  }
+
+  getValueTemplate(index: string): boolean {
+    return this.template.columns.find((c: { name: string; index: string }) => c.index === index) !== undefined;
+  }
+
+  setValueTemplate(index: string, name: string): void {
+    if (!this.getValueTemplate(index)) this.template.columns.push({ name: name, index: index });
+    else this.template.columns = this.template.columns.filter((c: { name: string; index: string }) => c.index !== index);
+
+    this.templateChanged.emit(this.template);
+  }
+
+  isActiveColumn(index: string): boolean {
+    return (this.getValueTemplate(index) && this.type !== 'template') || this.type === 'template';
+  }
+
+  getValue(obj: any, property: any): any {
+    return obj[property];
   }
 }
 

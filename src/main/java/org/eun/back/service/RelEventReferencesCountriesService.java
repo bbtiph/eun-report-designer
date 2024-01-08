@@ -16,4 +16,6 @@ public interface RelEventReferencesCountriesService {
     void delete(Long id);
 
     Optional<RelEventReferencesCountries> findFirstByCountriesIdAndEventReferencesId(Long countriesId, Long referencesId);
+
+    List<RelEventReferencesCountries> findFirstByCountriesId(Long countriesId);
 }
