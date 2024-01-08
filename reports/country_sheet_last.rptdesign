@@ -4,6 +4,7 @@
     <property name="units">in</property>
     <method name="initialize"><![CDATA[
         var wgs=[];
+        var events=[];
         var blocks=[];
         var projects=[];
         var json = eval('(' + params['docId'] + ')');
@@ -57,7 +58,7 @@
             <property name="dataType">decimal</property>
             <property name="distinct">true</property>
             <simple-property-list name="defaultValue">
-                <value type="constant">11</value>
+                <value type="constant">7</value>
             </simple-property-list>
             <list-property name="selectionList"/>
             <property name="paramType">simple</property>
@@ -533,6 +534,334 @@ from public.working_group_references wg where wg.country_code = (select country_
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="events" id="318">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">countries_id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">countries_id</text-property>
+                    <text-property name="heading">countries_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">event_references_id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">event_references_id</text-property>
+                    <text-property name="heading">event_references_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">participants_count</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">participants_count</text-property>
+                    <text-property name="heading">participants_count</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">id</text-property>
+                    <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">name</text-property>
+                    <text-property name="heading">name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">type</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">type</text-property>
+                    <text-property name="heading">type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">is_active</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">is_active</text-property>
+                    <text-property name="heading">is_active</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">country</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">params["country"]</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">countries_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">event_references_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">participants_count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">is_active</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">countries_id</property>
+                    <property name="nativeName">countries_id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">event_references_id</property>
+                    <property name="nativeName">event_references_id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">participants_count</property>
+                    <property name="nativeName">participants_count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">id</property>
+                    <property name="nativeName">id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">name</property>
+                    <property name="nativeName">name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">type</property>
+                    <property name="nativeName">type</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">is_active</property>
+                    <property name="nativeName">is_active</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select  rerc.*, er.* from rel_event_references_countries rerc
+    left join countries c on c.id = rerc.countries_id
+    left join event_references er on rerc.event_references_id = er.id
+    where c.id = ?;]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <DataSetParameters>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>1</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+          <design:precision>0</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Unknown</design:nullability>
+        </design:attributes>
+      </design:ParameterDefinition>
+    </parameter>
+  </DataSetParameters>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>countries_id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>countries_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>countries_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>event_references_id</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>event_references_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>event_references_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>participants_count</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>participants_count</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>participants_count</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>id</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>name</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>type</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>type</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>type</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>is_active</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-7</design:nativeDataTypeCode>
+            <design:precision>1</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>is_active</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>is_active</design:label>
+            <design:formattingHints>
+              <design:displaySize>1</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
@@ -550,6 +879,35 @@ onconsole += '&lt;img style="width:760px;height:50px;" src="https://reports-test
         <simple-master-page name="NewSimpleMasterPage" id="271"/>
     </page-setup>
     <body>
+        <table id="319">
+            <property name="dataSet">events</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">events</property>
+                    <expression name="expression" type="javascript">var obj = [];&#13;
+&#13;
+obj['countriesId'] = dataSetRow["countries_id"]==null?"":dataSetRow["countries_id"];&#13;
+obj['eventReferenceId'] = dataSetRow["event_reference_id"]==null?"":dataSetRow["event_reference_id"];&#13;
+obj['id'] = dataSetRow["id"]==null?"":dataSetRow["id"];&#13;
+obj['name'] = dataSetRow["name"]==null?"":dataSetRow["name"];&#13;
+obj['type'] = dataSetRow["type"]==null?"":dataSetRow["type"];&#13;
+&#13;
+events.push(obj);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="326"/>
+            <detail>
+                <row id="322">
+                    <cell id="323">
+                        <data id="329">
+                            <property name="resultSetColumn">events</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
         <table id="305">
             <property name="dataSet">workingGroups</property>
             <list-property name="visibility">
@@ -672,27 +1030,30 @@ for (var i = 0; i &lt; json.length; i++) {&#13;
         tableHTML += (textData.data.length > 0 ? textData.data : JSON.parse(content.template).data) + '&lt;br>';&#13;
       } else if (contentType === 'reference') {&#13;
         var contentTemplate = JSON.parse(content.template);&#13;
+        tableHTML += '&lt;h2>&lt;span>' + contentTemplate.name + '&lt;/span>&lt;/h2>&lt;br>&lt;br>'&#13;
+        tableHTML += '&lt;table border="1" bordercolor="#000000" cellspacing="0" cellpadding="10" width="100%" style="font-size : 11px; font-family : Times New Roman;">';&#13;
+        tableHTML += '&lt;tr>';&#13;
+        for (var c = 0; c &lt; contentTemplate.columns.length; c++) {&#13;
+          tableHTML += '&lt;th>&lt;b>' + contentTemplate.columns[c].name + '&lt;/b>&lt;/th>';&#13;
+        }&#13;
+        tableHTML += '&lt;/tr>';&#13;
         switch (contentTemplate.source) {&#13;
           case 'working_group':&#13;
-            tableHTML += '&lt;h2>&lt;span>' + contentTemplate.name + '&lt;/span>&lt;/h2>&lt;br>&lt;br>'&#13;
-            tableHTML += '&lt;table border="1" bordercolor="#000000" cellspacing="0" cellpadding="10" width="100%" style="font-size : 11px; font-family : Times New Roman;">';&#13;
-            tableHTML += '&lt;tr>';&#13;
-            for (var c = 0; c &lt; contentTemplate.columns.length; c++) {&#13;
-              tableHTML += '&lt;th>&lt;b>' + contentTemplate.columns[c].name + '&lt;/b>&lt;/th>';&#13;
-            }&#13;
-            // tableHTML += '&lt;th>&lt;b>Working group name&lt;/b>&lt;/th>';&#13;
-            // tableHTML += '&lt;th>&lt;b>Name of the nominated person&lt;/b>&lt;/th>';&#13;
-            // tableHTML += '&lt;th>&lt;b>e-mail&lt;/b>&lt;/th>';&#13;
-            tableHTML += '&lt;/tr>';&#13;
-&#13;
             for(var wg = 0; wg &lt; wgs.length; wg++) {&#13;
               tableHTML += '&lt;tr>';&#13;
               for (var c = 0; c &lt; contentTemplate.columns.length; c++) {&#13;
                 tableHTML += '&lt;th>' + wgs[wg][contentTemplate.columns[c].index] + '&lt;/th>';&#13;
               }&#13;
-              // tableHTML += '&lt;td>' + (wgs[wg]['type']) + '&lt;/td>';&#13;
-              // tableHTML += '&lt;td>' + (wgs[wg]['country_representative_first_name'] + ' ' + wgs[wg]['country_representative_last_name']) + '&lt;/td>';&#13;
-              // tableHTML += '&lt;td>' + (wgs[wg]['country_representative_mail']) + '&lt;/td>';&#13;
+              tableHTML += '&lt;/tr>';&#13;
+            }&#13;
+            tableHTML += '&lt;/table>';&#13;
+            break;&#13;
+          case 'events':&#13;
+            for(var event = 0; event &lt; events.length; event++) {&#13;
+              tableHTML += '&lt;tr>';&#13;
+              for (var c = 0; c &lt; contentTemplate.columns.length; c++) {&#13;
+                tableHTML += '&lt;th>' + events[event][contentTemplate.columns[c].index] + '&lt;/th>';&#13;
+              }&#13;
               tableHTML += '&lt;/tr>';&#13;
             }&#13;
             tableHTML += '&lt;/table>';&#13;
