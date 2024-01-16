@@ -13,7 +13,7 @@
       <ng-template #recursiveList let-filterFields let-formGroup="formGroup">
         <div class="form-group">
           <ng-container *ngFor="let item of filterFields">
-            <p *ngIf="item.children" class="centered-content">{{item.name}}:</p>
+            <p *ngIf="item.children || item.type == 'list'" class="centered-content">{{item.name}}:</p>
             <ng-container *ngIf="item.children; else default;">
               <div class="row pb-4">
                 <div [formGroup]="formGroup.get(item.index)">
@@ -25,18 +25,36 @@
               </div>
             </ng-container>
             <ng-template #default>
-              <dl *ngIf="action === 'view'" class="row-md jh-entity-details">
+              <div *ngIf="item.type == 'list'">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th *ngFor="let column of item.columns; let columnIndex = index" class="text-center">
+                        <p><b>{{column.title}}</b></p>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of formGroup.get(item.index).value; let rowIndex = index">
+                      <td *ngFor="let column of item.columns" class="text-center">
+                        <h6>{{ row[column.index] }}</h6>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <dl *ngIf="action === 'view' && item.type != 'list'" class="row-md jh-entity-details">
                 <dt><span>{{item.name}}</span></dt>
                 <dd>
                   <span>{{formGroup.get(item.index).value}}</span>
                 </dd>
               </dl>
               <div *ngIf="action === 'edit' || action === 'create'" class="row mb-3">
-                <label class="form-label">{{item.name}}</label>
+                <label *ngIf="item.type != 'list'" class="form-label">{{item.name}}</label>
                 <div class="input-group">
                   <input
                     class="form-control"
-                    *ngIf="item.type != 'reference'"
+                    *ngIf="item.type != 'reference' && item.type != 'list'"
                     [type]="item.type"
                     [formControl]="formGroup.get(item.index)"
                     [placeholder]="item.name"

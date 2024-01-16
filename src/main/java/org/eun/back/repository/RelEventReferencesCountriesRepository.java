@@ -11,4 +11,6 @@ public interface RelEventReferencesCountriesRepository extends JpaRepository<Rel
     Optional<RelEventReferencesCountries> findFirstByCountriesIdAndEventReferencesId(Long countriesId, Long referencesId);
 
     List<RelEventReferencesCountries> findFirstByCountriesId(Long countriesId);
+
+    List<RelEventReferencesCountries> findAllByEventReferencesId(Long eventReferencesId);
 }

@@ -53,4 +53,9 @@ public class RelEventReferencesCountriesServiceImpl implements RelEventReference
     public List<RelEventReferencesCountries> findFirstByCountriesId(Long countriesId) {
         return relEventReferencesCountriesRepository.findFirstByCountriesId(countriesId);
     }
+
+    @Override
+    public List<RelEventReferencesCountries> findFirstByReferencesId(Long referencesId) {
+        return relEventReferencesCountriesRepository.findAllByEventReferencesId(referencesId);
+    }
 }

@@ -19,9 +19,11 @@ public class EventReferencesDTO implements Serializable {
 
     private Boolean isActive;
 
-    private Set<CountriesDTO> countries = new HashSet<>();
+    private Set<CountriesWithParticipantsDTO> countries = new HashSet<>();
 
     private Long participantsCount;
+
+    private Long externalEventId;
 
     public Long getId() {
         return id;
@@ -55,11 +57,11 @@ public class EventReferencesDTO implements Serializable {
         this.isActive = isActive;
     }
 
-    public Set<CountriesDTO> getCountries() {
+    public Set<CountriesWithParticipantsDTO> getCountries() {
         return countries;
     }
 
-    public void setCountries(Set<CountriesDTO> countries) {
+    public void setCountries(Set<CountriesWithParticipantsDTO> countries) {
         this.countries = countries;
     }
 
@@ -69,6 +71,22 @@ public class EventReferencesDTO implements Serializable {
 
     public void setParticipantsCount(Long participantsCount) {
         this.participantsCount = participantsCount;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Long getExternalEventId() {
+        return externalEventId;
+    }
+
+    public void setExternalEventId(Long externalEventId) {
+        this.externalEventId = externalEventId;
     }
 
     @Override

@@ -18,4 +18,6 @@ public interface RelEventReferencesCountriesService {
     Optional<RelEventReferencesCountries> findFirstByCountriesIdAndEventReferencesId(Long countriesId, Long referencesId);
 
     List<RelEventReferencesCountries> findFirstByCountriesId(Long countriesId);
+
+    List<RelEventReferencesCountries> findFirstByReferencesId(Long referencesId);
 }

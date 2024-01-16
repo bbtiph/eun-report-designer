@@ -72,4 +72,12 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="20231225101052-3" author="jhipster">
+        <addColumn tableName="event_references">
+            <column name="external_event_id" type="numeric">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

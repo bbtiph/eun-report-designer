@@ -61,6 +61,8 @@ public interface EventReferencesService {
 
     List<EventReferencesDTO> findAllByCountryId(Long countryId);
 
+    List<EventReferencesDTO> findAllByIsActive(Boolean isActive);
+
     /**
      * Delete the "id" eventReferences.
      *

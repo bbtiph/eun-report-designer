@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.eun.back.domain.Countries;
 import org.eun.back.domain.EventReferences;
 import org.eun.back.service.dto.CountriesDTO;
+import org.eun.back.service.dto.CountriesWithParticipantsDTO;
 import org.eun.back.service.dto.EventReferencesDTO;
 import org.mapstruct.*;
 
@@ -24,10 +25,10 @@ public interface EventReferencesMapper extends EntityMapper<EventReferencesDTO, 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "countryCode", source = "countryCode")
     @Mapping(target = "countryName", source = "countryName")
-    CountriesDTO toDtoCountriesId(Countries countries);
+    CountriesWithParticipantsDTO toDtoCountriesId(Countries countries);
 
     @Named("countriesIdSet")
-    default Set<CountriesDTO> toDtoCountriesIdSet(Set<Countries> countries) {
+    default Set<CountriesWithParticipantsDTO> toDtoCountriesIdSet(Set<Countries> countries) {
         return countries.stream().map(this::toDtoCountriesId).collect(Collectors.toSet());
     }
 }

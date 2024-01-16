@@ -71,31 +71,33 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
   transformSettingsToColumnDefs(settings: any[]): any[] {
     const columnDefs: any[] = [];
     for (const setting of settings) {
-      const columnDef: any = {
-        headerName: setting.name,
-        field: !setting.children ? setting.index : null,
-        filter: setting.type === 'text' ? 'agTextColumnFilter' : setting.type === 'date' ? 'agDateColumnFilter' : 'agTextColumnFilter',
-        // any other options
-      };
-
-      if (setting.type === 'date') {
-        columnDef.cellRenderer = (params: ICellRendererParams) => {
-          if (typeof params.value === 'string' && params.value) {
-            const dateValue = new Date(params.value);
-            if (!isNaN(dateValue.getTime())) {
-              // Проверьте, что преобразование прошло успешно
-              return pad(dateValue.getDate(), 2) + '/' + pad(dateValue.getMonth() + 1, 2) + '/' + dateValue.getFullYear();
-            }
-          }
-          return '';
+      if (setting.type !== 'list') {
+        const columnDef: any = {
+          headerName: setting.name,
+          field: !setting.children ? setting.index : null,
+          filter: setting.type === 'text' ? 'agTextColumnFilter' : setting.type === 'date' ? 'agDateColumnFilter' : 'agTextColumnFilter',
+          // any other options
         };
-      }
 
-      if (setting.children) {
-        columnDef.children = this.transformSettingsToColumnDefs(setting.children);
-      }
+        if (setting.type === 'date') {
+          columnDef.cellRenderer = (params: ICellRendererParams) => {
+            if (typeof params.value === 'string' && params.value) {
+              const dateValue = new Date(params.value);
+              if (!isNaN(dateValue.getTime())) {
+                // Проверьте, что преобразование прошло успешно
+                return pad(dateValue.getDate(), 2) + '/' + pad(dateValue.getMonth() + 1, 2) + '/' + dateValue.getFullYear();
+              }
+            }
+            return '';
+          };
+        }
 
-      columnDefs.push(columnDef);
+        if (setting.children) {
+          columnDef.children = this.transformSettingsToColumnDefs(setting.children);
+        }
+
+        columnDefs.push(columnDef);
+      }
     }
 
     return columnDefs;
@@ -186,6 +188,7 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
       // @ts-ignore
       this.columnDefs = this.transformSettingsToColumnDefs(JSON.parse(result?.columns));
       this.columnDefs.push(columnDef);
+
       this.referenceTableSettingsService.findAllReferenceTableSettingsData(refTable ?? '').subscribe(data => {
         this.data = data;
       });

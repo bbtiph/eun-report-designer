@@ -22,6 +22,10 @@ public interface EventReferencesRepository extends EventReferencesRepositoryWith
 
     EventReferences findByNameAndType(String name, String type);
 
+    EventReferences findFirstByExternalEventId(Long externalEventId);
+
+    EventReferences findFirstById(Long id);
+
     List<EventReferences> findAllByIsActive(Boolean isActive);
 
     @Modifying

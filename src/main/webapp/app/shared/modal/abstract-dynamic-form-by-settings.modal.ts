@@ -5,6 +5,7 @@ import { CountryService } from '../../entities/country/service/country.service';
 import { ICountry } from '../../entities/country/country.model';
 import { ICountries } from '../../entities/countries/countries.model';
 import { Validators } from '@angular/forms';
+import { ReferenceTableSettingsService } from '../../entities/reference-table-settings/service/reference-table-settings.service';
 
 @Component({
   selector: 'abstract-dynamic-form-by-settings',
@@ -25,9 +26,13 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
   @Input() public row: any;
 
   countriesSharedCollection: ICountries[] = [];
-  selectedCountry: ICountries | undefined;
 
-  constructor(public modal: NgbActiveModal, private fb: FormBuilder, protected countriesService: CountryService) {}
+  constructor(
+    public modal: NgbActiveModal,
+    private fb: FormBuilder,
+    protected countriesService: CountryService,
+    protected referenceTableSettingsService: ReferenceTableSettingsService
+  ) {}
 
   ngOnInit() {
     this.filterFields = JSON.parse(this.settings);
@@ -54,7 +59,13 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
       return formGroup;
     }
 
-    return new FormControl({ value: this.row != null ? this.row[index] : '', disabled: field.disabled }, Validators.required);
+    return new FormControl(
+      {
+        value: this.row != null ? this.row[index] : '',
+        disabled: field.disabled,
+      },
+      Validators.required
+    );
   }
 
   convert(): any {

@@ -881,16 +881,23 @@ onconsole += '&lt;img style="width:760px;height:50px;" src="https://reports-test
     <body>
         <table id="319">
             <property name="dataSet">events</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">events</property>
                     <expression name="expression" type="javascript">var obj = [];&#13;
 &#13;
 obj['countriesId'] = dataSetRow["countries_id"]==null?"":dataSetRow["countries_id"];&#13;
-obj['eventReferenceId'] = dataSetRow["event_reference_id"]==null?"":dataSetRow["event_reference_id"];&#13;
+obj['eventReferencesId'] = dataSetRow["event_references_id"]==null?"":dataSetRow["event_references_id"];&#13;
 obj['id'] = dataSetRow["id"]==null?"":dataSetRow["id"];&#13;
 obj['name'] = dataSetRow["name"]==null?"":dataSetRow["name"];&#13;
 obj['type'] = dataSetRow["type"]==null?"":dataSetRow["type"];&#13;
+obj['participantsCount'] = dataSetRow["participants_count"]==null?"":dataSetRow["participants_count"];&#13;
 &#13;
 events.push(obj);</expression>
                     <property name="dataType">string</property>
@@ -902,6 +909,12 @@ events.push(obj);</expression>
                 <row id="322">
                     <cell id="323">
                         <data id="329">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                            </list-property>
                             <property name="resultSetColumn">events</property>
                         </data>
                     </cell>
@@ -951,6 +964,12 @@ wgs.push(obj);</expression>
                 <row id="308">
                     <cell id="309">
                         <data id="315">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                            </list-property>
                             <property name="resultSetColumn">wg</property>
                         </data>
                     </cell>
@@ -1048,7 +1067,7 @@ for (var i = 0; i &lt; json.length; i++) {&#13;
             }&#13;
             tableHTML += '&lt;/table>';&#13;
             break;&#13;
-          case 'events':&#13;
+          case 'event_reference':&#13;
             for(var event = 0; event &lt; events.length; event++) {&#13;
               tableHTML += '&lt;tr>';&#13;
               for (var c = 0; c &lt; contentTemplate.columns.length; c++) {&#13;

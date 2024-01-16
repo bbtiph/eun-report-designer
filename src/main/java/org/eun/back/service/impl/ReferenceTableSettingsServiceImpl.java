@@ -19,7 +19,9 @@ import org.eun.back.security.SecurityUtils;
 import org.eun.back.service.BirtReportService;
 import org.eun.back.service.EventReferencesService;
 import org.eun.back.service.ReferenceTableSettingsService;
+import org.eun.back.service.dto.EventReferencesDTO;
 import org.eun.back.service.dto.ReferenceTableSettingsDTO;
+import org.eun.back.service.mapper.EventReferencesMapper;
 import org.eun.back.service.mapper.ReferenceTableSettingsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +52,8 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
 
     private final EventReferencesService eventReferencesService;
 
+    private final EventReferencesMapper eventReferencesMapper;
+
     private final RelEventReferencesCountriesRepository relEventReferencesCountriesRepository;
 
     private final EventReferencesParticipantsCategoryRepository eventReferencesParticipantsCategoryRepository;
@@ -64,6 +68,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         CountriesRepository countriesRepository,
         EventReferencesRepository eventReferencesRepository,
         EventReferencesService eventReferencesService,
+        EventReferencesMapper eventReferencesMapper,
         RelEventReferencesCountriesRepository relEventReferencesCountriesRepository,
         EventReferencesParticipantsCategoryRepository eventReferencesParticipantsCategoryRepository,
         BirtReportService birtReportService
@@ -75,6 +80,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         this.countriesRepository = countriesRepository;
         this.eventReferencesRepository = eventReferencesRepository;
         this.eventReferencesService = eventReferencesService;
+        this.eventReferencesMapper = eventReferencesMapper;
         this.relEventReferencesCountriesRepository = relEventReferencesCountriesRepository;
         this.eventReferencesParticipantsCategoryRepository = eventReferencesParticipantsCategoryRepository;
         this.birtReportService = birtReportService;
@@ -135,7 +141,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 return workingGroupReferencesRepository.findAllByIsActive(true);
             case "event_reference":
             case "event":
-                return eventReferencesRepository.findAllByIsActive(true);
+                return eventReferencesService.findAllByIsActive(true);
             case "countries":
                 return countriesRepository.findAll();
         }
@@ -249,7 +255,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 case "working_group_reference":
                 case "working_group":
                     workingGroupReferencesRepository.updateAllIsActiveToFalse();
-                    keywords = Arrays.asList("Sheet");
+                    keywords = Arrays.asList("Sheet", "working group", "working", "wg", "WG");
 
                     for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
                         Sheet sheet = workbook.getSheetAt(i);
@@ -354,7 +360,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                     break;
                 case "event_reference":
                 case "event":
-                    eventReferencesRepository.updateAllIsActiveToFalse();
+                    //                    eventReferencesRepository.updateAllIsActiveToFalse();
                     keywords = Arrays.asList("School Innovation Forum");
 
                     for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
@@ -383,7 +389,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                                             double cellValue = row.getCell(2).getNumericCellValue();
                                             DecimalFormat decimalFormat = new DecimalFormat("#");
                                             Long formattedValue = Long.parseLong(decimalFormat.format(cellValue));
-                                            eventReferences.setId(formattedValue);
+                                            eventReferences.setExternalEventId(formattedValue);
                                         } catch (Exception e) {
                                             log.error(String.valueOf(e));
                                         }
@@ -392,9 +398,8 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                                         eventReferences.isActive(true);
 
                                         if (eventReferences.getId() == null) {
-                                            EventReferences eventReferencesRes = eventReferencesRepository.findByNameAndType(
-                                                eventReferences.getName(),
-                                                eventReferences.getType()
+                                            EventReferences eventReferencesRes = eventReferencesRepository.findFirstByExternalEventId(
+                                                eventReferences.getExternalEventId()
                                             );
                                             if (eventReferencesRes != null) {
                                                 eventReferences.setId(eventReferencesRes.getId());
@@ -507,6 +512,11 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "working_group_reference":
             case "working_group":
                 workingGroupReferencesRepository.deleteById(id);
+                break;
+            case "event_reference":
+            case "event":
+                eventReferencesService.delete(id);
+                break;
         }
     }
 
@@ -533,6 +543,13 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                     workingGroupReferences.setCreatedDate(LocalDate.now());
                 }
                 return workingGroupReferencesRepository.save(workingGroupReferences);
+            case "event_reference":
+            case "event":
+                EventReferencesDTO eventReferencesDTO = objectMapper.readValue(jsonRow, EventReferencesDTO.class);
+                if (eventReferencesDTO.getId() == null) {
+                    eventReferencesDTO.setIsActive(true);
+                }
+                return eventReferencesRepository.save(eventReferencesMapper.toEntity(eventReferencesDTO));
         }
         return null;
     }

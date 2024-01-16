@@ -31,6 +31,9 @@ public class EventReferences implements Serializable {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Column(name = "external_event_id")
+    private Long externalEventId;
+
     @OneToMany(mappedBy = "eventReference")
     @JsonIgnoreProperties(value = { "eventReference" }, allowSetters = true)
     private Set<EventReferencesParticipantsCategory> eventReferencesParticipantsCategories = new HashSet<>();
@@ -156,6 +159,22 @@ public class EventReferences implements Serializable {
         this.countries.remove(countries);
         countries.getEventReferences().remove(this);
         return this;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Long getExternalEventId() {
+        return externalEventId;
+    }
+
+    public void setExternalEventId(Long externalEventId) {
+        this.externalEventId = externalEventId;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

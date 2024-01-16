@@ -9,6 +9,7 @@ import org.eun.back.domain.RelEventReferencesCountries;
 import org.eun.back.repository.EventReferencesRepository;
 import org.eun.back.service.EventReferencesService;
 import org.eun.back.service.RelEventReferencesCountriesService;
+import org.eun.back.service.dto.CountriesWithParticipantsDTO;
 import org.eun.back.service.dto.EventReferencesDTO;
 import org.eun.back.service.mapper.EventReferencesMapper;
 import org.slf4j.Logger;
@@ -149,8 +150,35 @@ public class EventReferencesServiceImpl implements EventReferencesService {
     }
 
     @Override
+    public List<EventReferencesDTO> findAllByIsActive(Boolean isActive) {
+        List<EventReferencesDTO> res = eventReferencesRepository
+            .findAllByIsActive(isActive)
+            .stream()
+            .map(eventReferencesMapper::toDto)
+            .collect(Collectors.toList());
+
+        for (EventReferencesDTO eventReferencesDTO : res) {
+            Long totalParticipantsCount = 0L;
+            for (CountriesWithParticipantsDTO countries : eventReferencesDTO.getCountries()) {
+                countries.setParticipantsCount(
+                    relEventReferencesCountriesService
+                        .findFirstByCountriesIdAndEventReferencesId(countries.getId(), eventReferencesDTO.getId())
+                        .orElseThrow()
+                        .getParticipantsCount()
+                );
+                totalParticipantsCount += countries.getParticipantsCount();
+            }
+            eventReferencesDTO.setParticipantsCount(totalParticipantsCount);
+        }
+
+        return res;
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete EventReferences : {}", id);
-        eventReferencesRepository.deleteById(id);
+        EventReferences eventReferences = eventReferencesRepository.findFirstById(id);
+        eventReferences.setIsActive(false);
+        eventReferencesRepository.save(eventReferences);
     }
 }
