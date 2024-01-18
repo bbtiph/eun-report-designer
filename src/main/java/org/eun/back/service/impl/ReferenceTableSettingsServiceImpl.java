@@ -549,6 +549,22 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 if (eventReferencesDTO.getId() == null) {
                     eventReferencesDTO.setIsActive(true);
                 }
+                eventReferencesDTO
+                    .getCountries()
+                    .stream()
+                    .map(countriesWithParticipantsDTO -> {
+                        RelEventReferencesCountries relEventReferencesCountries = new RelEventReferencesCountries();
+                        relEventReferencesCountries.setParticipantsCount(countriesWithParticipantsDTO.getParticipantsCount());
+                        relEventReferencesCountries.setCountriesId(
+                            countriesRepository.findFirstByCountryCodeIgnoreCase(countriesWithParticipantsDTO.getCountryCode()).getId()
+                        );
+                        relEventReferencesCountries.setEventReferencesId(eventReferencesDTO.getId());
+                        return relEventReferencesCountries;
+                    })
+                    .forEach(relEventReferencesCountries -> {
+                        relEventReferencesCountriesRepository.save(relEventReferencesCountries);
+                    });
+
                 return eventReferencesRepository.save(eventReferencesMapper.toEntity(eventReferencesDTO));
         }
         return null;

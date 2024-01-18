@@ -42,6 +42,10 @@ export class AbstractDynamicFormBySettingsModal implements OnInit {
     });
   }
 
+  updateListCellValue(rowIndex: number, columnIndex: number, newValue: any, item: any) {
+    this.row[item.index][rowIndex][item.columns[columnIndex].index] = newValue;
+  }
+
   generateFilterForm(): FormGroup {
     const baseForm = this.fb.group({});
     this.filterFields.forEach(field => {

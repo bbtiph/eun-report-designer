@@ -35,9 +35,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let row of formGroup.get(item.index).value; let rowIndex = index">
-                      <td *ngFor="let column of item.columns" class="text-center">
-                        <h6>{{ row[column.index] }}</h6>
+                    <tr *ngFor="let row of row[item.index]; let rowIndex = index">
+                      <td *ngFor="let column of item.columns; let columnIndex = index" class="text-center">
+                        <div *ngIf="action !== 'view'" class="input-group">
+                          <input
+                            class="form-control"
+                            [(ngModel)]="row[column.index]"
+                            [disabled]="column.disabled"
+                            (ngModelChange)="updateListCellValue(rowIndex, columnIndex, $event, item)"
+                          />
+                        </div>
+                        <h6 *ngIf="action === 'view'">{{ row[column.index] }}</h6>
                       </td>
                     </tr>
                   </tbody>
