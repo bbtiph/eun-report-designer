@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { JobInfoModule } from './job-info/job-info.module';
 
 @NgModule({
   imports: [
@@ -171,6 +172,11 @@ import { RouterModule } from '@angular/router';
         path: 'event-references',
         data: { pageTitle: 'EventReferences' },
         loadChildren: () => import('./event-references/event-references.module').then(m => m.EventReferencesModule),
+      },
+      {
+        path: 'job-info',
+        data: { pageTitle: 'JobInfo' },
+        loadChildren: () => import('./job-info/job-info.module').then(m => m.JobInfoModule),
       },
       {
         path: 'event-references-participants-category',

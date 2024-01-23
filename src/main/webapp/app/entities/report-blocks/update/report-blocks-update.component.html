@@ -178,11 +178,13 @@
 
                 <span *ngIf="type === 'template' && content.type === 'text'">*Default text for selected countries</span>
                 <angular-editor
+                  [config]="editorConfig"
                   *ngIf="content.type === 'text' && type === 'template'"
                   [formControl]="getFormControlByKey('content_' + content.id + '_data')"
                 ></angular-editor>
                 <div *ngFor="let row of content.reportBlocksContentData; let rowIndex = index">
                   <angular-editor
+                    [config]="editorConfig"
                     *ngIf="content.type === 'text' && (type === 'content' || (type === 'report' && isEdit))"
                     [formControl]="getFormControlByKey('content_' + content.id + '_' + row.id + '_data')"
                   ></angular-editor>

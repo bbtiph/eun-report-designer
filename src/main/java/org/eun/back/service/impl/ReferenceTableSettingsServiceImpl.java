@@ -18,8 +18,10 @@ import org.eun.back.repository.*;
 import org.eun.back.security.SecurityUtils;
 import org.eun.back.service.BirtReportService;
 import org.eun.back.service.EventReferencesService;
+import org.eun.back.service.JobInfoService;
 import org.eun.back.service.ReferenceTableSettingsService;
 import org.eun.back.service.dto.EventReferencesDTO;
+import org.eun.back.service.dto.JobInfoDTO;
 import org.eun.back.service.dto.ReferenceTableSettingsDTO;
 import org.eun.back.service.mapper.EventReferencesMapper;
 import org.eun.back.service.mapper.ReferenceTableSettingsMapper;
@@ -58,6 +60,8 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
 
     private final EventReferencesParticipantsCategoryRepository eventReferencesParticipantsCategoryRepository;
 
+    private final JobInfoService jobInfoService;
+
     private final BirtReportService birtReportService;
 
     public ReferenceTableSettingsServiceImpl(
@@ -71,6 +75,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         EventReferencesMapper eventReferencesMapper,
         RelEventReferencesCountriesRepository relEventReferencesCountriesRepository,
         EventReferencesParticipantsCategoryRepository eventReferencesParticipantsCategoryRepository,
+        JobInfoService jobInfoService,
         BirtReportService birtReportService
     ) {
         this.referenceTableSettingsRepository = referenceTableSettingsRepository;
@@ -83,6 +88,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         this.eventReferencesMapper = eventReferencesMapper;
         this.relEventReferencesCountriesRepository = relEventReferencesCountriesRepository;
         this.eventReferencesParticipantsCategoryRepository = eventReferencesParticipantsCategoryRepository;
+        this.jobInfoService = jobInfoService;
         this.birtReportService = birtReportService;
     }
 
@@ -142,6 +148,9 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "event_reference":
             case "event":
                 return eventReferencesService.findAllByIsActive(true);
+            case "job_info_reference":
+            case "job_info":
+                return jobInfoService.findAllByStatusProposal("Approved");
             case "countries":
                 return countriesRepository.findAll();
         }
@@ -517,6 +526,10 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "event":
                 eventReferencesService.delete(id);
                 break;
+            case "job_info_reference":
+            case "job_info":
+                jobInfoService.delete(id);
+                break;
         }
     }
 
@@ -566,6 +579,10 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                     });
 
                 return eventReferencesRepository.save(eventReferencesMapper.toEntity(eventReferencesDTO));
+            case "job_info_reference":
+            case "job_info":
+                JobInfoDTO jobInfo = objectMapper.readValue(jsonRow, JobInfoDTO.class);
+                return jobInfoService.save(jobInfo);
         }
         return null;
     }

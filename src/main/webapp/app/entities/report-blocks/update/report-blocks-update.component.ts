@@ -22,6 +22,8 @@ import { ReferenceSelectionModal } from '../../../shared/modal/reference-selecti
 import { IReferenceTableSettings } from '../../reference-table-settings/reference-table-settings.model';
 import { ReferenceTableSettingsService } from '../../reference-table-settings/service/reference-table-settings.service';
 import { DragulaService } from 'ng2-dragula';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'jhi-report-blocks-update',
@@ -48,6 +50,49 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
   columns: IReportBlocksContentTemplateColumn[] = [];
   formGroup: FormGroup;
 
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' },
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText',
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: 'v1/image',
+    uploadWithCredentials: false,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [[], ['fontSize']],
+  };
+
   editForm: ReportBlocksFormGroup = this.reportBlocksFormService.createReportBlocksFormGroup();
 
   constructor(
@@ -61,7 +106,8 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     protected reportBlocksContentDataService: ReportBlocksContentDataService,
     protected referenceTableSettingsService: ReferenceTableSettingsService,
-    private dragulaService: DragulaService
+    private dragulaService: DragulaService,
+    private sanitizer: DomSanitizer
   ) {
     this.formGroup = this.formBuilder.group({});
   }
@@ -114,6 +160,10 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
     if (this.type != 'new') this.initializeFormControls();
     this.getTableColumns();
     this.loadReferenceTableSettings();
+  }
+
+  getSafeHtml(text: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(text);
   }
 
   ngOnDestroy() {
@@ -422,7 +472,11 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
         this.formGroup.addControl(`content_${content.id}_data`, new FormControl(contentData.data));
         for (const row of content.reportBlocksContentData) {
           const formControlName = `content_${content.id}_${row.id}_data`;
-          this.formGroup.addControl(formControlName, new FormControl(JSON.parse(row.data ?? '{}').data));
+          if (JSON.parse(row.data ?? '{"data":""}').data.length < 1) {
+            this.formGroup.addControl(formControlName, new FormControl(contentData.data));
+          } else {
+            this.formGroup.addControl(formControlName, new FormControl(JSON.parse(row.data ?? '{"data":""}').data));
+          }
         }
       } else {
         // @ts-ignore

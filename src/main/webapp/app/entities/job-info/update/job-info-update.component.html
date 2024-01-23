@@ -1,0 +1,357 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-job-info-heading" data-cy="JobInfoCreateUpdateHeading">Create or edit a Job Info</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_odataEtag">Odata Etag</label>
+          <input type="text" class="form-control" name="odataEtag" id="field_odataEtag" data-cy="odataEtag" formControlName="odataEtag" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_externalId">External Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="externalId"
+            id="field_externalId"
+            data-cy="externalId"
+            formControlName="externalId"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_jobNumber">Job Number</label>
+          <input type="text" class="form-control" name="jobNumber" id="field_jobNumber" data-cy="jobNumber" formControlName="jobNumber" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_description2">Description 2</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description2"
+            id="field_description2"
+            data-cy="description2"
+            formControlName="description2"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_billToCustomerNo">Bill To Customer No</label>
+          <input
+            type="text"
+            class="form-control"
+            name="billToCustomerNo"
+            id="field_billToCustomerNo"
+            data-cy="billToCustomerNo"
+            formControlName="billToCustomerNo"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_billToName">Bill To Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="billToName"
+            id="field_billToName"
+            data-cy="billToName"
+            formControlName="billToName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_billToCountryRegionCode">Bill To Country Region Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="billToCountryRegionCode"
+            id="field_billToCountryRegionCode"
+            data-cy="billToCountryRegionCode"
+            formControlName="billToCountryRegionCode"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_sellToContact">Sell To Contact</label>
+          <input
+            type="text"
+            class="form-control"
+            name="sellToContact"
+            id="field_sellToContact"
+            data-cy="sellToContact"
+            formControlName="sellToContact"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_yourReference">Your Reference</label>
+          <input
+            type="text"
+            class="form-control"
+            name="yourReference"
+            id="field_yourReference"
+            data-cy="yourReference"
+            formControlName="yourReference"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_contractNo">Contract No</label>
+          <input
+            type="text"
+            class="form-control"
+            name="contractNo"
+            id="field_contractNo"
+            data-cy="contractNo"
+            formControlName="contractNo"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_statusProposal">Status Proposal</label>
+          <input
+            type="text"
+            class="form-control"
+            name="statusProposal"
+            id="field_statusProposal"
+            data-cy="statusProposal"
+            formControlName="statusProposal"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_startingDate">Starting Date</label>
+          <div class="input-group">
+            <input
+              id="field_startingDate"
+              data-cy="startingDate"
+              type="text"
+              class="form-control"
+              name="startingDate"
+              ngbDatepicker
+              #startingDateDp="ngbDatepicker"
+              formControlName="startingDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="startingDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_endingDate">Ending Date</label>
+          <div class="input-group">
+            <input
+              id="field_endingDate"
+              data-cy="endingDate"
+              type="text"
+              class="form-control"
+              name="endingDate"
+              ngbDatepicker
+              #endingDateDp="ngbDatepicker"
+              formControlName="endingDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="endingDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_durationInMonths">Duration In Months</label>
+          <input
+            type="number"
+            class="form-control"
+            name="durationInMonths"
+            id="field_durationInMonths"
+            data-cy="durationInMonths"
+            formControlName="durationInMonths"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_projectManager">Project Manager</label>
+          <input
+            type="text"
+            class="form-control"
+            name="projectManager"
+            id="field_projectManager"
+            data-cy="projectManager"
+            formControlName="projectManager"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_projectManagerMail">Project Manager Mail</label>
+          <input
+            type="text"
+            class="form-control"
+            name="projectManagerMail"
+            id="field_projectManagerMail"
+            data-cy="projectManagerMail"
+            formControlName="projectManagerMail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_eunRole">Eun Role</label>
+          <input type="text" class="form-control" name="eunRole" id="field_eunRole" data-cy="eunRole" formControlName="eunRole" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_visaNumber">Visa Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="visaNumber"
+            id="field_visaNumber"
+            data-cy="visaNumber"
+            formControlName="visaNumber"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_jobType">Job Type</label>
+          <input type="text" class="form-control" name="jobType" id="field_jobType" data-cy="jobType" formControlName="jobType" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_jobTypeText">Job Type Text</label>
+          <input
+            type="text"
+            class="form-control"
+            name="jobTypeText"
+            id="field_jobTypeText"
+            data-cy="jobTypeText"
+            formControlName="jobTypeText"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_jobProgram">Job Program</label>
+          <input
+            type="text"
+            class="form-control"
+            name="jobProgram"
+            id="field_jobProgram"
+            data-cy="jobProgram"
+            formControlName="jobProgram"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_programManager">Program Manager</label>
+          <input
+            type="text"
+            class="form-control"
+            name="programManager"
+            id="field_programManager"
+            data-cy="programManager"
+            formControlName="programManager"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_budgetEUN">Budget EUN</label>
+          <input type="number" class="form-control" name="budgetEUN" id="field_budgetEUN" data-cy="budgetEUN" formControlName="budgetEUN" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_fundingEUN">Funding EUN</label>
+          <input
+            type="number"
+            class="form-control"
+            name="fundingEUN"
+            id="field_fundingEUN"
+            data-cy="fundingEUN"
+            formControlName="fundingEUN"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_fundingRate">Funding Rate</label>
+          <input
+            type="number"
+            class="form-control"
+            name="fundingRate"
+            id="field_fundingRate"
+            data-cy="fundingRate"
+            formControlName="fundingRate"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_budgetConsortium">Budget Consortium</label>
+          <input
+            type="number"
+            class="form-control"
+            name="budgetConsortium"
+            id="field_budgetConsortium"
+            data-cy="budgetConsortium"
+            formControlName="budgetConsortium"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_fundingConsortium">Funding Consortium</label>
+          <input
+            type="number"
+            class="form-control"
+            name="fundingConsortium"
+            id="field_fundingConsortium"
+            data-cy="fundingConsortium"
+            formControlName="fundingConsortium"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_overheadPerc">Overhead Perc</label>
+          <input
+            type="number"
+            class="form-control"
+            name="overheadPerc"
+            id="field_overheadPerc"
+            data-cy="overheadPerc"
+            formControlName="overheadPerc"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

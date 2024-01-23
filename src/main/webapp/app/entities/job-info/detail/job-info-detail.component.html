@@ -1,0 +1,144 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="jobInfo">
+      <h2 data-cy="jobInfoDetailsHeading"><span>Job Info</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ jobInfo.id }}</span>
+        </dd>
+        <dt><span>Odata Etag</span></dt>
+        <dd>
+          <span>{{ jobInfo.odataEtag }}</span>
+        </dd>
+        <dt><span>External Id</span></dt>
+        <dd>
+          <span>{{ jobInfo.externalId }}</span>
+        </dd>
+        <dt><span>Job Number</span></dt>
+        <dd>
+          <span>{{ jobInfo.jobNumber }}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+          <span>{{ jobInfo.description }}</span>
+        </dd>
+        <dt><span>Description 2</span></dt>
+        <dd>
+          <span>{{ jobInfo.description2 }}</span>
+        </dd>
+        <dt><span>Bill To Customer No</span></dt>
+        <dd>
+          <span>{{ jobInfo.billToCustomerNo }}</span>
+        </dd>
+        <dt><span>Bill To Name</span></dt>
+        <dd>
+          <span>{{ jobInfo.billToName }}</span>
+        </dd>
+        <dt><span>Bill To Country Region Code</span></dt>
+        <dd>
+          <span>{{ jobInfo.billToCountryRegionCode }}</span>
+        </dd>
+        <dt><span>Sell To Contact</span></dt>
+        <dd>
+          <span>{{ jobInfo.sellToContact }}</span>
+        </dd>
+        <dt><span>Your Reference</span></dt>
+        <dd>
+          <span>{{ jobInfo.yourReference }}</span>
+        </dd>
+        <dt><span>Contract No</span></dt>
+        <dd>
+          <span>{{ jobInfo.contractNo }}</span>
+        </dd>
+        <dt><span>Status Proposal</span></dt>
+        <dd>
+          <span>{{ jobInfo.statusProposal }}</span>
+        </dd>
+        <dt><span>Starting Date</span></dt>
+        <dd>
+          <span>{{ jobInfo.startingDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Ending Date</span></dt>
+        <dd>
+          <span>{{ jobInfo.endingDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Duration In Months</span></dt>
+        <dd>
+          <span>{{ jobInfo.durationInMonths }}</span>
+        </dd>
+        <dt><span>Project Manager</span></dt>
+        <dd>
+          <span>{{ jobInfo.projectManager }}</span>
+        </dd>
+        <dt><span>Project Manager Mail</span></dt>
+        <dd>
+          <span>{{ jobInfo.projectManagerMail }}</span>
+        </dd>
+        <dt><span>Eun Role</span></dt>
+        <dd>
+          <span>{{ jobInfo.eunRole }}</span>
+        </dd>
+        <dt><span>Visa Number</span></dt>
+        <dd>
+          <span>{{ jobInfo.visaNumber }}</span>
+        </dd>
+        <dt><span>Job Type</span></dt>
+        <dd>
+          <span>{{ jobInfo.jobType }}</span>
+        </dd>
+        <dt><span>Job Type Text</span></dt>
+        <dd>
+          <span>{{ jobInfo.jobTypeText }}</span>
+        </dd>
+        <dt><span>Job Program</span></dt>
+        <dd>
+          <span>{{ jobInfo.jobProgram }}</span>
+        </dd>
+        <dt><span>Program Manager</span></dt>
+        <dd>
+          <span>{{ jobInfo.programManager }}</span>
+        </dd>
+        <dt><span>Budget EUN</span></dt>
+        <dd>
+          <span>{{ jobInfo.budgetEUN }}</span>
+        </dd>
+        <dt><span>Funding EUN</span></dt>
+        <dd>
+          <span>{{ jobInfo.fundingEUN }}</span>
+        </dd>
+        <dt><span>Funding Rate</span></dt>
+        <dd>
+          <span>{{ jobInfo.fundingRate }}</span>
+        </dd>
+        <dt><span>Budget Consortium</span></dt>
+        <dd>
+          <span>{{ jobInfo.budgetConsortium }}</span>
+        </dd>
+        <dt><span>Funding Consortium</span></dt>
+        <dd>
+          <span>{{ jobInfo.fundingConsortium }}</span>
+        </dd>
+        <dt><span>Overhead Perc</span></dt>
+        <dd>
+          <span>{{ jobInfo.overheadPerc }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/job-info', jobInfo.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

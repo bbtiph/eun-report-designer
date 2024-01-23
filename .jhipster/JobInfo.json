@@ -1,0 +1,132 @@
+{
+  "applications": "*",
+  "changelogDate": "20240118092500",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "job_info",
+  "fields": [
+    {
+      "fieldName": "odataEtag",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "externalId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "jobNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description2",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "billToCustomerNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "billToName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "billToCountryRegionCode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sellToContact",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "yourReference",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "contractNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statusProposal",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "startingDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "endingDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "durationInMonths",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "projectManager",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "projectManagerMail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "eunRole",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "visaNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "jobType",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "jobTypeText",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "jobProgram",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "programManager",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "budgetEUN",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "fundingEUN",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "fundingRate",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "budgetConsortium",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "fundingConsortium",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "overheadPerc",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "JobInfo",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

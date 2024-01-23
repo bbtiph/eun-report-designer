@@ -1,0 +1,284 @@
+<div>
+  <h2 id="page-heading" data-cy="JobInfoHeading">
+    <span>Job Infos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-job-info"
+        [routerLink]="['/job-info/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Job Info </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="jobInfos?.length === 0">
+    <span>No Job Infos found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="jobInfos && jobInfos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="odataEtag">
+            <div class="d-flex">
+              <span>Odata Etag</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="externalId">
+            <div class="d-flex">
+              <span>External Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="jobNumber">
+            <div class="d-flex">
+              <span>Job Number</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span>Description</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description2">
+            <div class="d-flex">
+              <span>Description 2</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="billToCustomerNo">
+            <div class="d-flex">
+              <span>Bill To Customer No</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="billToName">
+            <div class="d-flex">
+              <span>Bill To Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="billToCountryRegionCode">
+            <div class="d-flex">
+              <span>Bill To Country Region Code</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sellToContact">
+            <div class="d-flex">
+              <span>Sell To Contact</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="yourReference">
+            <div class="d-flex">
+              <span>Your Reference</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="contractNo">
+            <div class="d-flex">
+              <span>Contract No</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="statusProposal">
+            <div class="d-flex">
+              <span>Status Proposal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="startingDate">
+            <div class="d-flex">
+              <span>Starting Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="endingDate">
+            <div class="d-flex">
+              <span>Ending Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="durationInMonths">
+            <div class="d-flex">
+              <span>Duration In Months</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="projectManager">
+            <div class="d-flex">
+              <span>Project Manager</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="projectManagerMail">
+            <div class="d-flex">
+              <span>Project Manager Mail</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="eunRole">
+            <div class="d-flex">
+              <span>Eun Role</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="visaNumber">
+            <div class="d-flex">
+              <span>Visa Number</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="jobType">
+            <div class="d-flex">
+              <span>Job Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="jobTypeText">
+            <div class="d-flex">
+              <span>Job Type Text</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="jobProgram">
+            <div class="d-flex">
+              <span>Job Program</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="programManager">
+            <div class="d-flex">
+              <span>Program Manager</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="budgetEUN">
+            <div class="d-flex">
+              <span>Budget EUN</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fundingEUN">
+            <div class="d-flex">
+              <span>Funding EUN</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fundingRate">
+            <div class="d-flex">
+              <span>Funding Rate</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="budgetConsortium">
+            <div class="d-flex">
+              <span>Budget Consortium</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fundingConsortium">
+            <div class="d-flex">
+              <span>Funding Consortium</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="overheadPerc">
+            <div class="d-flex">
+              <span>Overhead Perc</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let jobInfo of jobInfos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/job-info', jobInfo.id, 'view']">{{ jobInfo.id }}</a>
+          </td>
+          <td>{{ jobInfo.odataEtag }}</td>
+          <td>{{ jobInfo.externalId }}</td>
+          <td>{{ jobInfo.jobNumber }}</td>
+          <td>{{ jobInfo.description }}</td>
+          <td>{{ jobInfo.description2 }}</td>
+          <td>{{ jobInfo.billToCustomerNo }}</td>
+          <td>{{ jobInfo.billToName }}</td>
+          <td>{{ jobInfo.billToCountryRegionCode }}</td>
+          <td>{{ jobInfo.sellToContact }}</td>
+          <td>{{ jobInfo.yourReference }}</td>
+          <td>{{ jobInfo.contractNo }}</td>
+          <td>{{ jobInfo.statusProposal }}</td>
+          <td>{{ jobInfo.startingDate | formatMediumDate }}</td>
+          <td>{{ jobInfo.endingDate | formatMediumDate }}</td>
+          <td>{{ jobInfo.durationInMonths }}</td>
+          <td>{{ jobInfo.projectManager }}</td>
+          <td>{{ jobInfo.projectManagerMail }}</td>
+          <td>{{ jobInfo.eunRole }}</td>
+          <td>{{ jobInfo.visaNumber }}</td>
+          <td>{{ jobInfo.jobType }}</td>
+          <td>{{ jobInfo.jobTypeText }}</td>
+          <td>{{ jobInfo.jobProgram }}</td>
+          <td>{{ jobInfo.programManager }}</td>
+          <td>{{ jobInfo.budgetEUN }}</td>
+          <td>{{ jobInfo.fundingEUN }}</td>
+          <td>{{ jobInfo.fundingRate }}</td>
+          <td>{{ jobInfo.budgetConsortium }}</td>
+          <td>{{ jobInfo.fundingConsortium }}</td>
+          <td>{{ jobInfo.overheadPerc }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/job-info', jobInfo.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/job-info', jobInfo.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(jobInfo)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
