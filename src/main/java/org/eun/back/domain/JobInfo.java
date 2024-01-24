@@ -3,6 +3,7 @@ package org.eun.back.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
+import lombok.Builder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -12,6 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "job_info")
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@Builder
 public class JobInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -108,6 +110,72 @@ public class JobInfo implements Serializable {
 
     @Column(name = "overhead_perc")
     private Integer overheadPerc;
+
+    public JobInfo() {}
+
+    public JobInfo(
+        Long id,
+        String odataEtag,
+        String externalId,
+        String jobNumber,
+        String description,
+        String description2,
+        String billToCustomerNo,
+        String billToName,
+        String billToCountryRegionCode,
+        String sellToContact,
+        String yourReference,
+        String contractNo,
+        String statusProposal,
+        LocalDate startingDate,
+        LocalDate endingDate,
+        Integer durationInMonths,
+        String projectManager,
+        String projectManagerMail,
+        String eunRole,
+        String visaNumber,
+        String jobType,
+        String jobTypeText,
+        String jobProgram,
+        String programManager,
+        Double budgetEUN,
+        Double fundingEUN,
+        Double fundingRate,
+        Double budgetConsortium,
+        Double fundingConsortium,
+        Integer overheadPerc
+    ) {
+        this.id = id;
+        this.odataEtag = odataEtag;
+        this.externalId = externalId;
+        this.jobNumber = jobNumber;
+        this.description = description;
+        this.description2 = description2;
+        this.billToCustomerNo = billToCustomerNo;
+        this.billToName = billToName;
+        this.billToCountryRegionCode = billToCountryRegionCode;
+        this.sellToContact = sellToContact;
+        this.yourReference = yourReference;
+        this.contractNo = contractNo;
+        this.statusProposal = statusProposal;
+        this.startingDate = startingDate;
+        this.endingDate = endingDate;
+        this.durationInMonths = durationInMonths;
+        this.projectManager = projectManager;
+        this.projectManagerMail = projectManagerMail;
+        this.eunRole = eunRole;
+        this.visaNumber = visaNumber;
+        this.jobType = jobType;
+        this.jobTypeText = jobTypeText;
+        this.jobProgram = jobProgram;
+        this.programManager = programManager;
+        this.budgetEUN = budgetEUN;
+        this.fundingEUN = fundingEUN;
+        this.fundingRate = fundingRate;
+        this.budgetConsortium = budgetConsortium;
+        this.fundingConsortium = fundingConsortium;
+        this.overheadPerc = overheadPerc;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
