@@ -7,6 +7,8 @@
 		var sortedColumns = [];
 		var wgs = [];
 		var moe = [];
+		var projects = [];
+		var events = [];
 	]]></method>
     <property name="iconFile">/templates/blank_report.gif</property>
     <property name="layoutPreference">fixed layout</property>
@@ -1385,6 +1387,1463 @@ from public.moe_contacts]]></xml-property>
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Projects" id="351">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">id</text-property>
+                    <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">odata_etag</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">odata_etag</text-property>
+                    <text-property name="heading">odata_etag</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">external_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">external_id</text-property>
+                    <text-property name="heading">external_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">job_number</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">job_number</text-property>
+                    <text-property name="heading">job_number</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">description</text-property>
+                    <text-property name="heading">description</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">description_2</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">description_2</text-property>
+                    <text-property name="heading">description_2</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">bill_to_customer_no</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">bill_to_customer_no</text-property>
+                    <text-property name="heading">bill_to_customer_no</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">bill_to_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">bill_to_name</text-property>
+                    <text-property name="heading">bill_to_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">bill_to_country_region_code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">bill_to_country_region_code</text-property>
+                    <text-property name="heading">bill_to_country_region_code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">sell_to_contact</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">sell_to_contact</text-property>
+                    <text-property name="heading">sell_to_contact</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">your_reference</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">your_reference</text-property>
+                    <text-property name="heading">your_reference</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">contract_no</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">contract_no</text-property>
+                    <text-property name="heading">contract_no</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">status_proposal</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">status_proposal</text-property>
+                    <text-property name="heading">status_proposal</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">starting_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">starting_date</text-property>
+                    <text-property name="heading">starting_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ending_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">ending_date</text-property>
+                    <text-property name="heading">ending_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">duration_in_months</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">duration_in_months</text-property>
+                    <text-property name="heading">duration_in_months</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">project_manager</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">project_manager</text-property>
+                    <text-property name="heading">project_manager</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">project_manager_mail</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">project_manager_mail</text-property>
+                    <text-property name="heading">project_manager_mail</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">eun_role</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">eun_role</text-property>
+                    <text-property name="heading">eun_role</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">visa_number</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">visa_number</text-property>
+                    <text-property name="heading">visa_number</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">job_type</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">job_type</text-property>
+                    <text-property name="heading">job_type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">job_type_text</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">job_type_text</text-property>
+                    <text-property name="heading">job_type_text</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">job_program</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">job_program</text-property>
+                    <text-property name="heading">job_program</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">program_manager</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">program_manager</text-property>
+                    <text-property name="heading">program_manager</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">budget_eun</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">budget_eun</text-property>
+                    <text-property name="heading">budget_eun</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">funding_eun</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">funding_eun</text-property>
+                    <text-property name="heading">funding_eun</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">funding_rate</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">funding_rate</text-property>
+                    <text-property name="heading">funding_rate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">budget_consortium</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">budget_consortium</text-property>
+                    <text-property name="heading">budget_consortium</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">funding_consortium</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">funding_consortium</text-property>
+                    <text-property name="heading">funding_consortium</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">overhead_perc</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">overhead_perc</text-property>
+                    <text-property name="heading">overhead_perc</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">odata_etag</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">external_id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">job_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">description_2</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">bill_to_customer_no</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">bill_to_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">bill_to_country_region_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">sell_to_contact</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">your_reference</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">contract_no</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">status_proposal</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">starting_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">ending_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">duration_in_months</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">project_manager</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">project_manager_mail</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">eun_role</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">visa_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">job_type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">job_type_text</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">job_program</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">program_manager</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">25</property>
+                        <property name="name">budget_eun</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">26</property>
+                        <property name="name">funding_eun</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">27</property>
+                        <property name="name">funding_rate</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">28</property>
+                        <property name="name">budget_consortium</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">29</property>
+                        <property name="name">funding_consortium</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">30</property>
+                        <property name="name">overhead_perc</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">id</property>
+                    <property name="nativeName">id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">odata_etag</property>
+                    <property name="nativeName">odata_etag</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">external_id</property>
+                    <property name="nativeName">external_id</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">job_number</property>
+                    <property name="nativeName">job_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">description</property>
+                    <property name="nativeName">description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">description_2</property>
+                    <property name="nativeName">description_2</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">bill_to_customer_no</property>
+                    <property name="nativeName">bill_to_customer_no</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">bill_to_name</property>
+                    <property name="nativeName">bill_to_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">bill_to_country_region_code</property>
+                    <property name="nativeName">bill_to_country_region_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">sell_to_contact</property>
+                    <property name="nativeName">sell_to_contact</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">your_reference</property>
+                    <property name="nativeName">your_reference</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">contract_no</property>
+                    <property name="nativeName">contract_no</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">status_proposal</property>
+                    <property name="nativeName">status_proposal</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">starting_date</property>
+                    <property name="nativeName">starting_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">ending_date</property>
+                    <property name="nativeName">ending_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">duration_in_months</property>
+                    <property name="nativeName">duration_in_months</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">project_manager</property>
+                    <property name="nativeName">project_manager</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">project_manager_mail</property>
+                    <property name="nativeName">project_manager_mail</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">eun_role</property>
+                    <property name="nativeName">eun_role</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">visa_number</property>
+                    <property name="nativeName">visa_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">job_type</property>
+                    <property name="nativeName">job_type</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">job_type_text</property>
+                    <property name="nativeName">job_type_text</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">job_program</property>
+                    <property name="nativeName">job_program</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">24</property>
+                    <property name="name">program_manager</property>
+                    <property name="nativeName">program_manager</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">25</property>
+                    <property name="name">budget_eun</property>
+                    <property name="nativeName">budget_eun</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">26</property>
+                    <property name="name">funding_eun</property>
+                    <property name="nativeName">funding_eun</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">27</property>
+                    <property name="name">funding_rate</property>
+                    <property name="nativeName">funding_rate</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">28</property>
+                    <property name="name">budget_consortium</property>
+                    <property name="nativeName">budget_consortium</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">29</property>
+                    <property name="name">funding_consortium</property>
+                    <property name="nativeName">funding_consortium</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">30</property>
+                    <property name="name">overhead_perc</property>
+                    <property name="nativeName">overhead_perc</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select * from public.job_info 
+where status_proposal = 'Approved']]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>odata_etag</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>odata_etag</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>odata_etag</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>external_id</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>external_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>external_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>job_number</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>job_number</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>job_number</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>description</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>description</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>description</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>description_2</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>description_2</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>description_2</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>bill_to_customer_no</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>bill_to_customer_no</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>bill_to_customer_no</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>bill_to_name</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>bill_to_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>bill_to_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>bill_to_country_region_code</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>bill_to_country_region_code</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>bill_to_country_region_code</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>sell_to_contact</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>sell_to_contact</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>sell_to_contact</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>your_reference</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>your_reference</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>your_reference</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>contract_no</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>contract_no</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>contract_no</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>status_proposal</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>status_proposal</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>status_proposal</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>starting_date</design:name>
+              <design:position>14</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>13</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>starting_date</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>starting_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ending_date</design:name>
+              <design:position>15</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>13</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ending_date</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ending_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>duration_in_months</design:name>
+              <design:position>16</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>duration_in_months</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>duration_in_months</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>project_manager</design:name>
+              <design:position>17</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>project_manager</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>project_manager</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>project_manager_mail</design:name>
+              <design:position>18</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>project_manager_mail</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>project_manager_mail</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>eun_role</design:name>
+              <design:position>19</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>eun_role</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>eun_role</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>visa_number</design:name>
+              <design:position>20</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>visa_number</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>visa_number</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>job_type</design:name>
+              <design:position>21</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>job_type</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>job_type</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>job_type_text</design:name>
+              <design:position>22</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>job_type_text</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>job_type_text</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>job_program</design:name>
+              <design:position>23</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>job_program</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>job_program</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>program_manager</design:name>
+              <design:position>24</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>program_manager</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>program_manager</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>budget_eun</design:name>
+              <design:position>25</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>17</design:precision>
+            <design:scale>17</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>budget_eun</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>budget_eun</design:label>
+            <design:formattingHints>
+              <design:displaySize>25</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>funding_eun</design:name>
+              <design:position>26</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>17</design:precision>
+            <design:scale>17</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>funding_eun</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>funding_eun</design:label>
+            <design:formattingHints>
+              <design:displaySize>25</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>funding_rate</design:name>
+              <design:position>27</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>17</design:precision>
+            <design:scale>17</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>funding_rate</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>funding_rate</design:label>
+            <design:formattingHints>
+              <design:displaySize>25</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>budget_consortium</design:name>
+              <design:position>28</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>17</design:precision>
+            <design:scale>17</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>budget_consortium</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>budget_consortium</design:label>
+            <design:formattingHints>
+              <design:displaySize>25</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>funding_consortium</design:name>
+              <design:position>29</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>17</design:precision>
+            <design:scale>17</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>funding_consortium</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>funding_consortium</design:label>
+            <design:formattingHints>
+              <design:displaySize>25</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>overhead_perc</design:name>
+              <design:position>30</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>overhead_perc</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>overhead_perc</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="events" id="353">
+            <property name="nullsOrdering">nulls lowest</property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">id</text-property>
+                    <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">name</text-property>
+                    <text-property name="heading">name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">type</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">type</text-property>
+                    <text-property name="heading">type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">is_active</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">is_active</text-property>
+                    <text-property name="heading">is_active</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">external_event_id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">external_event_id</text-property>
+                    <text-property name="heading">external_event_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">participants_count</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">participants_count</text-property>
+                    <text-property name="heading">participants_count</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">is_active</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">external_event_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">participants_count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">id</property>
+                    <property name="nativeName">id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">name</property>
+                    <property name="nativeName">name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">type</property>
+                    <property name="nativeName">type</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">is_active</property>
+                    <property name="nativeName">is_active</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">external_event_id</property>
+                    <property name="nativeName">external_event_id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">participants_count</property>
+                    <property name="nativeName">participants_count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT er.*, SUM(rerc.participants_count) AS participants_count
+FROM public.event_references er
+         LEFT OUTER JOIN public.rel_event_references_countries rerc ON er.id = rerc.event_references_id
+where is_active = true
+GROUP BY id, name, type, is_active, external_event_id]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>name</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>type</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>type</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>type</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>is_active</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-7</design:nativeDataTypeCode>
+            <design:precision>1</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>is_active</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>is_active</design:label>
+            <design:formattingHints>
+              <design:displaySize>1</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>external_event_id</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>external_event_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>external_event_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>131089</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>participants_count</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>participants_count</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>participants_count</design:label>
+            <design:formattingHints>
+              <design:displaySize>131089</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
@@ -1526,6 +2985,113 @@ obj.display_name = dataSetRow["display_name"];</expression>
                 </row>
             </detail>
         </table>
+        <table id="343">
+            <property name="dataSet">Projects</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">projects</property>
+                    <expression name="expression" type="javascript">var obj = [];&#13;
+obj['id'] = dataSetRow["id"]==null?"":dataSetRow["id"];&#13;
+obj['odataEtag'] = dataSetRow["odata_etag"]==null?"":dataSetRow["odata_etag"];&#13;
+obj['externalId'] = dataSetRow["external_id"]==null?"":dataSetRow["external_id"];&#13;
+obj['jobNumber'] = dataSetRow["job_number"]==null?"":dataSetRow["job_number"];&#13;
+obj['description'] = dataSetRow["description"]==null?"":dataSetRow["description"];&#13;
+obj['description2'] = dataSetRow["description_2"]==null?"":dataSetRow["description_2"];&#13;
+obj['billToCustomerNo'] = dataSetRow["bill_to_customer_no"]==null?"":dataSetRow["bill_to_customer_no"];&#13;
+obj['billToName'] = dataSetRow["bill_to_name"]==null?"":dataSetRow["bill_to_name"];&#13;
+obj['billToCountryRegionCode'] = dataSetRow["bill_to_country_region_code"]==null?"":dataSetRow["bill_to_country_region_code"];&#13;
+obj['sellToContact'] = dataSetRow["sell_to_contact"]==null?"":dataSetRow["sell_to_contact"];&#13;
+obj['yourReference'] = dataSetRow["your_reference"]==null?"":dataSetRow["your_reference"];&#13;
+obj['contractNo'] = dataSetRow["contract_no"]==null?"":dataSetRow["contract_no"];&#13;
+obj['statusProposal'] = dataSetRow["status_proposal"]==null?"":dataSetRow["status_proposal"];&#13;
+obj['startingDate'] = dataSetRow["starting_date"]==null?"":dataSetRow["starting_date"];&#13;
+obj['endingDate'] = dataSetRow["ending_date"]==null?"":dataSetRow["ending_date"];&#13;
+obj['durationInMonths'] = dataSetRow["duration_in_months"]==null?"":dataSetRow["duration_in_months"];&#13;
+obj['projectManager'] = dataSetRow["project_manager"]==null?"":dataSetRow["project_manager"];&#13;
+obj['projectManagerMail'] = dataSetRow["project_manager_mail"]==null?"":dataSetRow["project_manager_mail"];&#13;
+obj['eunRole'] = dataSetRow["eun_role"]==null?"":dataSetRow["eun_role"];&#13;
+obj['visaNumber'] = dataSetRow["visa_number"]==null?"":dataSetRow["visa_number"];&#13;
+obj['jobType'] = dataSetRow["job_type"]==null?"":dataSetRow["job_type"];&#13;
+obj['jobTypeText'] = dataSetRow["job_type_text"]==null?"":dataSetRow["job_type_text"];&#13;
+obj['jobProgram'] = dataSetRow["job_program"]==null?"":dataSetRow["job_program"];&#13;
+obj['programManager'] = dataSetRow["program_manager"]==null?"":dataSetRow["program_manager"];&#13;
+obj['budgetEUN'] = dataSetRow["budget_eun"]==null?"":dataSetRow["budget_eun"];&#13;
+obj['fundingEUN'] = dataSetRow["funding_eun"]==null?"":dataSetRow["funding_eun"];&#13;
+obj['fundingRate'] = dataSetRow["funding_rate"]==null?"":dataSetRow["funding_rate"];&#13;
+obj['budgetConsortium'] = dataSetRow["budget_consortium"]==null?"":dataSetRow["budget_consortium"];&#13;
+obj['fundingConsortium'] = dataSetRow["funding_consortium"]==null?"":dataSetRow["funding_consortium"];&#13;
+obj['overheadPerc'] = dataSetRow["overhead_perc"]==null?"":dataSetRow["overhead_perc"];&#13;
+&#13;
+projects.push(obj);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="350"/>
+            <detail>
+                <row id="346">
+                    <cell id="347">
+                        <data id="352">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">projects</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <table id="365">
+            <property name="dataSet">events</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">events</property>
+                    <expression name="expression" type="javascript">var obj = [];&#13;
+&#13;
+obj['id'] = dataSetRow["id"]==null?"":dataSetRow["id"];&#13;
+obj['name'] = dataSetRow["name"]==null?"":dataSetRow["name"];&#13;
+obj['type'] = dataSetRow["type"]==null?"":dataSetRow["type"];&#13;
+obj['isActive'] = dataSetRow["is_active"]==null?"":dataSetRow["is_active"];&#13;
+obj['externalEventId'] = dataSetRow["external_event_id"]==null?"":dataSetRow["external_event_id"];&#13;
+obj['participantsCount'] = dataSetRow["participants_count"]==null?"":dataSetRow["participants_count"];&#13;
+&#13;
+events.push(obj);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="372"/>
+            <detail>
+                <row id="368">
+                    <cell id="369">
+                        <data id="373">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">events</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
         <text-data id="6">
             <property name="fontFamily">"Times New Roman"</property>
             <property name="textAlign">center</property>
@@ -1547,15 +3113,17 @@ onconsole += '&lt;table border="1" bordercolor="#000000" cellspacing="0" cellpad
 onconsole += '&lt;tr>';&#13;
 var t = 0;&#13;
 for (var i = 0; i &lt; table.length; i++) {&#13;
-  onconsole += '&lt;td rowspan="' + (table[i].rowspan != null ? table[i].rowspan : 1) + '" colspan="' + ((table[i].children != null &amp;&amp; table[i].children.length > 0) ? table[i].children.length * 2 : 2) + '" style="color: white; text-align: center; background-color: #4472C4">&lt;b>'+ table[i].name +'&lt;/b>&lt;/td>';&#13;
-  if (table[i].children != null &amp;&amp; table[i].children.length > 0){&#13;
-    for (var j = 0; j &lt; table[i].children.length; j++) {&#13;
-      sortedColumns[t] = table[i].children[j].index;&#13;
+  if (table[i].type != 'list') {&#13;
+    onconsole += '&lt;td rowspan="' + (table[i].rowspan != null ? table[i].rowspan : 1) + '" colspan="' + ((table[i].children != null &amp;&amp; table[i].children.length > 0) ? table[i].children.length * 2 : 2) + '" style="color: white; text-align: center; background-color: #4472C4">&lt;b>'+ table[i].name +'&lt;/b>&lt;/td>';&#13;
+    if (table[i].children != null &amp;&amp; table[i].children.length > 0){&#13;
+      for (var j = 0; j &lt; table[i].children.length; j++) {&#13;
+        sortedColumns[t] = table[i].children[j].index;&#13;
+        t++;&#13;
+      }&#13;
+    } else {&#13;
+      sortedColumns[t] = table[i].index;&#13;
       t++;&#13;
     }&#13;
-  } else {&#13;
-    sortedColumns[t] = table[i].index;&#13;
-    t++;&#13;
   }&#13;
 }&#13;
 onconsole += '&lt;/tr>';&#13;
@@ -1589,6 +3157,26 @@ switch (obj.ref_table) {&#13;
       onconsole += '&lt;/tr>';&#13;
     }&#13;
     break;&#13;
+&#13;
+  case 'job_info':&#13;
+    for (var i = 0; i &lt; projects.length; i++) {&#13;
+      onconsole += '&lt;tr>';&#13;
+      for (var j = 0; j &lt; sortedColumns.length; j++) {&#13;
+        onconsole += '&lt;td rowspan="1" colspan="2">' + projects[i][sortedColumns[j]] + '&lt;/td>';&#13;
+      }&#13;
+      onconsole += '&lt;/tr>';&#13;
+    }&#13;
+    break;  &#13;
+&#13;
+  case 'event_reference':&#13;
+    for (var i = 0; i &lt; events.length; i++) {&#13;
+      onconsole += '&lt;tr>';&#13;
+      for (var j = 0; j &lt; sortedColumns.length; j++) {&#13;
+        onconsole += '&lt;td rowspan="1" colspan="2">' + events[i][sortedColumns[j]] + '&lt;/td>';&#13;
+      }&#13;
+      onconsole += '&lt;/tr>';&#13;
+    }&#13;
+    break;   &#13;
 }&#13;
 onconsole += '&lt;/table>';</expression>
             <property name="contentType">html</property>

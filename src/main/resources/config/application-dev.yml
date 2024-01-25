@@ -43,6 +43,12 @@ eun:
     url: https://reports-test.eun.org/
   erp:
     url: https://api.businesscentral.dynamics.com/v2.0/e21d18f1-2112-4ecf-a67c-d20aedbd18b3/EUN_Sandbox_ACCEPT_14122021/api/Scapta/Scapta/v1.0/companies(517d45f8-761f-ec11-8f45-00224882409b)
+    login:
+      url: https://login.microsoftonline.com/e21d18f1-2112-4ecf-a67c-d20aedbd18b3/oauth2/v2.0/token
+      grant-type: client_credentials
+      scope: https://api.businesscentral.dynamics.com/.default
+      client-id: d3ffeddc-0c54-444d-9055-13306c4e012b
+      client-secret: q5A8Q~D6CFrq~kydtkCPEP8645DaPZIiEqD.5bzt
 
 spring:
   ldap:

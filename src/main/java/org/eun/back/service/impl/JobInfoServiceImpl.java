@@ -21,11 +21,15 @@ import org.eun.back.service.mapper.JobInfoMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -38,6 +42,21 @@ public class JobInfoServiceImpl implements JobInfoService {
     @Value("${eun.erp.url}")
     private String url;
 
+    @Value("${eun.erp.login.url}")
+    private String loginUrl;
+
+    @Value("${eun.erp.login.grant-type}")
+    private String grantType;
+
+    @Value("${eun.erp.login.scope}")
+    private String scope;
+
+    @Value("${eun.erp.login.client-id}")
+    private String clientId;
+
+    @Value("${eun.erp.login.client-secret}")
+    private String clientSecret;
+
     private final Logger log = LoggerFactory.getLogger(JobInfoServiceImpl.class);
 
     private final JobInfoRepository jobInfoRepository;
@@ -49,15 +68,11 @@ public class JobInfoServiceImpl implements JobInfoService {
         this.jobInfoMapper = jobInfoMapper;
     }
 
-    //    @Scheduled(cron = "0/30 * * * * *")
-    //    @Scheduled(cron = "0 0 10 * * *")
-    public void fetchDataFromERP() {
+    @Scheduled(cron = "0 0 10 * * *")
+    public void fetchDataFromERP() throws JSONException {
         HttpHeaders headers = new HttpHeaders();
-        //      TODO: Implement logic auth with Scapta;
-        String authToken =
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjVCM25SeHRRN2ppOGVORGMzRnkwNUtmOTdaRSIsImtpZCI6IjVCM25SeHRRN2ppOGVORGMzRnkwNUtmOTdaRSJ9.eyJhdWQiOiJodHRwczovL2FwaS5idXNpbmVzc2NlbnRyYWwuZHluYW1pY3MuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZTIxZDE4ZjEtMjExMi00ZWNmLWE2N2MtZDIwYWVkYmQxOGIzLyIsImlhdCI6MTcwNjAxNjY4MywibmJmIjoxNzA2MDE2NjgzLCJleHAiOjE3MDYwMjA1ODMsImFpbyI6IkUyVmdZR0NhOGJQbHdyZFZmTGZuTjBwOTcrbG1Bd0E9IiwiYXBwaWQiOiJkM2ZmZWRkYy0wYzU0LTQ0NGQtOTA1NS0xMzMwNmM0ZTAxMmIiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9lMjFkMThmMS0yMTEyLTRlY2YtYTY3Yy1kMjBhZWRiZDE4YjMvIiwiaWR0eXAiOiJhcHAiLCJvaWQiOiJlMWUxY2Q1Yi03NjRkLTRlNDUtOTU1YS01NTQ2MTI4Y2U3YWMiLCJyaCI6IjAuQVFVQThSZ2Q0aEloejA2bWZOSUs3YjBZc3ozdmJabHNzMU5CaGdlbV9Ud0J1SjhiQVFBLiIsInJvbGVzIjpbImFwcF9hY2Nlc3MiLCJBUEkuUmVhZFdyaXRlLkFsbCJdLCJzdWIiOiJlMWUxY2Q1Yi03NjRkLTRlNDUtOTU1YS01NTQ2MTI4Y2U3YWMiLCJ0aWQiOiJlMjFkMThmMS0yMTEyLTRlY2YtYTY3Yy1kMjBhZWRiZDE4YjMiLCJ1dGkiOiI5c1NDR08xY1VrQ19na2F5Rmp5T0FBIiwidmVyIjoiMS4wIn0.QcW4GXjla0QbXw_GPeLI0EzpjZJK3m-Y7uPsUSFKG9pGk4RHM4sY-LZnEPpJMzJhzalClg23gJA4y_0bPwzaOqZMHr6aZRmVdiJxUxdG_hqd90axoktjosy7zfOD4UACsuNJN-Eqg-pDecjZTa0Nga0jHGYXS_3VMnt8c4UBpF7eITyhzLMF3yMKZOPypbx-heJTX8XLQiFH31-7GrTWPmYcGbHaHU6QlvFu7STVQ_s2sZrPxpD08I6r0MxaoiX5C6LNCud4q_mcGNPYe6bxDvdJhBTe-2PTbMm5vGout40Sk2WoITR6gQ83vFA38Cyn3iTBeWRapyDcR6rRlaJwsA";
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + authToken);
+        headers.set("Authorization", "Bearer " + getToken());
         RestTemplate restTemplate = new RestTemplate(new JobInfoServiceImpl.CustomHttpComponentsClientHttpRequestFactory());
 
         try {
@@ -110,6 +125,30 @@ public class JobInfoServiceImpl implements JobInfoService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private String getToken() throws JSONException {
+        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("grant_type", grantType);
+        requestBody.add("scope", scope);
+        requestBody.add("client_id", clientId);
+        requestBody.add("client_secret", clientSecret);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(loginUrl, requestEntity, String.class);
+
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            String responseBody = responseEntity.getBody();
+            JSONObject json = new JSONObject(responseBody);
+            return json.getString("access_token");
+        } else {
+            throw new RuntimeException();
         }
     }
 
