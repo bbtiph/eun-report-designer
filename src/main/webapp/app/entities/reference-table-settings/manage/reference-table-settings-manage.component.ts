@@ -59,10 +59,10 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isFromReportBlock) {
-      const queryParams = new HttpParams();
+      let queryParams = new HttpParams();
       if (this.periodDateFromAndTo) {
-        queryParams.append('fromDate', this.periodDateFromAndTo.from);
-        queryParams.append('toDate', this.periodDateFromAndTo.to);
+        queryParams = queryParams.set('fromDate', this.periodDateFromAndTo.from);
+        queryParams = queryParams.set('toDate', this.periodDateFromAndTo.to);
       }
       this.referenceTableSettingsService
         .findAllReferenceTableSettingsDataByCountry(this.source ?? '', this.selectedCountry?.countryCode ?? '', queryParams)

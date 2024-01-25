@@ -150,7 +150,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 return eventReferencesService.findAllByIsActive(true);
             case "job_info_reference":
             case "job_info":
-                return jobInfoService.findAllByStatusProposal("Approved");
+                return jobInfoService.findAllByStatusProposal("Approved", null);
             case "countries":
                 return countriesRepository.findAll();
         }
@@ -172,7 +172,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 return eventReferencesService.findAllByCountryId(countriesRepository.findFirstByCountryCodeIgnoreCase(countryCode).getId());
             case "job_info_reference":
             case "job_info":
-                return jobInfoService.findAllByStatusProposal("Approved");
+                return jobInfoService.findAllByStatusProposal("Approved", params);
             case "countries":
                 return countriesRepository.findAll();
         }

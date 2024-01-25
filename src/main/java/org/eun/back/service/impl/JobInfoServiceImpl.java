@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -152,8 +153,17 @@ public class JobInfoServiceImpl implements JobInfoService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<JobInfoDTO> findAllByStatusProposal(String statusProposal) {
+    public List<JobInfoDTO> findAllByStatusProposal(String statusProposal, Map<String, String> params) {
         log.debug("Request to get all JobInfos");
+        if (params != null && params.containsKey("fromDate") && params.containsKey("toDate")) {
+            LocalDate startDate = LocalDate.parse(params.get("fromDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate endDate = LocalDate.parse(params.get("toDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            return jobInfoRepository
+                .findAllByStatusProposalAndStartingDateGreaterThanEqualAndEndingDateIsLessThanEqual(statusProposal, startDate, endDate)
+                .stream()
+                .map(jobInfoMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+        }
         return jobInfoRepository
             .findAllByStatusProposal(statusProposal)
             .stream()

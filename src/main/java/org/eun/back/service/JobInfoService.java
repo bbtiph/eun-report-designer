@@ -1,6 +1,7 @@
 package org.eun.back.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.eun.back.service.dto.JobInfoDTO;
 
@@ -39,7 +40,7 @@ public interface JobInfoService {
      */
     List<JobInfoDTO> findAll();
 
-    List<JobInfoDTO> findAllByStatusProposal(String statusProposal);
+    List<JobInfoDTO> findAllByStatusProposal(String statusProposal, Map<String, String> params);
 
     /**
      * Get the "id" jobInfo.
