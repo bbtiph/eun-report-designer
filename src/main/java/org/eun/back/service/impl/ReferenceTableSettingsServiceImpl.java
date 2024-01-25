@@ -158,7 +158,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
     }
 
     @Override
-    public List<?> findAllDataByRefTableByCountryCode(String refTable, String countryCode) {
+    public List<?> findAllDataByRefTableByCountryCode(String refTable, String countryCode, Map<String, String> params) {
         log.debug("Request to get all ReferenceTableSettings Data by country code");
         switch (refTable) {
             case "moe_contacts_reference":
@@ -170,6 +170,9 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "event_reference":
             case "event":
                 return eventReferencesService.findAllByCountryId(countriesRepository.findFirstByCountryCodeIgnoreCase(countryCode).getId());
+            case "job_info_reference":
+            case "job_info":
+                return jobInfoService.findAllByStatusProposal("Approved");
             case "countries":
                 return countriesRepository.findAll();
         }

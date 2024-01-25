@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.eclipse.birt.report.engine.api.EngineException;
@@ -154,9 +155,13 @@ public class ReferenceTableSettingsResource {
     }
 
     @GetMapping("/reference-table-settings/by-ref-table/data/{refTable}/country/{countryCode}")
-    public List<?> getAllReferenceTableSettingsDataByCountryCode(@PathVariable String refTable, @PathVariable String countryCode) {
+    public List<?> getAllReferenceTableSettingsDataByCountryCode(
+        @PathVariable String refTable,
+        @PathVariable String countryCode,
+        @RequestParam Map<String, String> params
+    ) {
         log.debug("REST request to get all ReferenceTableSettings");
-        return referenceTableSettingsService.findAllDataByRefTableByCountryCode(refTable, countryCode);
+        return referenceTableSettingsService.findAllDataByRefTableByCountryCode(refTable, countryCode, params);
     }
 
     @PostMapping("/reference-table-settings/by-ref-table/download/{refTable}")

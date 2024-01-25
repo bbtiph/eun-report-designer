@@ -11,6 +11,7 @@ import { ICountries } from '../../countries/countries.model';
 import { DragulaService } from 'ng2-dragula';
 import { PopupWindowHtmlModal } from '../../../shared/modal/popup-window-html.modal';
 import { LoaderService } from '../../../shared/loader/loader-service.service';
+import { Period, PeriodService } from '../../../shared/data/period.service';
 
 @Component({
   selector: 'jhi-report-blocks-manage',
@@ -21,6 +22,8 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
   reportBlocks: IReportBlocks[] | undefined;
   report: IReport | null = null;
   selectedCountry: ICountries | null = null;
+  selectedPeriod: Period | undefined | null = null;
+  periodDateFromAndTo: any | undefined | null = null;
 
   @ViewChild('editor', { static: false }) editorElement?: ElementRef;
   editor: any;
@@ -32,7 +35,8 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     protected countriesService: CountriesService,
     private dragulaService: DragulaService,
-    public loader: LoaderService
+    public loader: LoaderService,
+    protected periodService: PeriodService
   ) {}
 
   ngOnInit() {
@@ -41,6 +45,10 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
     });
     // @ts-ignore
     let countryId = this.activatedRoute.params.value.country;
+    // @ts-ignore
+    this.selectedPeriod = this.periodService.getPeriodById(this.activatedRoute.params.value.period);
+    // @ts-ignore
+    this.periodDateFromAndTo = this.periodService.calculateDateRange(this.selectedPeriod?.code);
     this.countriesService.findById(countryId || 1).subscribe((country: ICountries) => {
       this.selectedCountry = country;
 

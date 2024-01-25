@@ -2,12 +2,23 @@
   <div class="row">
     <div class="col-md-11">
       <div class="form-group">
+        <label>Country: </label>
         <ng-select
           [items]="countriesSharedCollection"
           bindLabel="countryName"
           placeholder="Select country"
           [(ngModel)]="country"
           [(ngModel)]="selectedCountryId"
+        >
+        </ng-select>
+        <br />
+        <label>Period: </label>
+        <ng-select
+          [items]="periodSharedCollection"
+          bindLabel="displayName"
+          placeholder="Select period"
+          [(ngModel)]="period"
+          [(ngModel)]="selectedPeriodId"
         >
         </ng-select>
       </div>
@@ -21,8 +32,8 @@
         <button
           type="button"
           class="btn btn-success"
-          [routerLink]="['/report', reportId, country?.id, 'blocks']"
-          [disabled]="selectedCountryId === null"
+          [routerLink]="['/report', reportId, country?.id, period?.id, 'blocks']"
+          [disabled]="selectedCountryId === null || selectedPeriodId == null"
         >
           <span>Next</span>
           <i class="fa fa-arrow-right"></i>

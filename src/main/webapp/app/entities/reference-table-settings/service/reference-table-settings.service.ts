@@ -46,8 +46,8 @@ export class ReferenceTableSettingsService {
     return this.http.get<any>(`${this.resourceUrl}/by-ref-table/data/${source}`);
   }
 
-  findAllReferenceTableSettingsDataByCountry(source: string, countryCode: string): Observable<any> {
-    return this.http.get<any>(`${this.resourceUrl}/by-ref-table/data/${source}/country/${countryCode}`);
+  findAllReferenceTableSettingsDataByCountry(source: string, countryCode: string, queryParams: any): Observable<any> {
+    return this.http.get<any>(`${this.resourceUrl}/by-ref-table/data/${source}/country/${countryCode}`, { params: queryParams });
   }
 
   find(id: number): Observable<EntityResponseType> {

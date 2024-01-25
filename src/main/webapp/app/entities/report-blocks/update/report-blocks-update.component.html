@@ -171,6 +171,7 @@
                     [selectedCountry]="selectedCountry"
                     [settings]="referenceTableSettings.get(tableColumns.get(content.id).source)"
                     [source]="tableColumns.get(content.id).source"
+                    [periodDateFromAndTo]="periodDateFromAndTo"
                     [isEdit]="isEdit"
                     (templateChanged)="onDataChanged(content, $event)"
                   ></jhi-reference-table-settings-manage>

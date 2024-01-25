@@ -78,7 +78,7 @@ public class ReportBlocksResource {
     /**
      * {@code PUT  /report-blocks/:id} : Updates an existing reportBlocks.
      *
-     * @param id the id of the reportBlocksDTO to save.
+     * @param id              the id of the reportBlocksDTO to save.
      * @param reportBlocksDTO the reportBlocksDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated reportBlocksDTO,
      * or with status {@code 400 (Bad Request)} if the reportBlocksDTO is not valid,
@@ -126,7 +126,7 @@ public class ReportBlocksResource {
     /**
      * {@code PATCH  /report-blocks/:id} : Partial updates given fields of an existing reportBlocks, field will ignore if it is null
      *
-     * @param id the id of the reportBlocksDTO to save.
+     * @param id              the id of the reportBlocksDTO to save.
      * @param reportBlocksDTO the reportBlocksDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated reportBlocksDTO,
      * or with status {@code 400 (Bad Request)} if the reportBlocksDTO is not valid,

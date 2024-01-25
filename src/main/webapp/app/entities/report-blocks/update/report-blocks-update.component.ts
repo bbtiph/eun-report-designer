@@ -34,6 +34,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
   @Input() block: IReportBlocks | null = null;
   @Input() selectedCountryFromReport: ICountries | null = null;
   @Input() isFromReport: boolean | false | undefined;
+  @Input() periodDateFromAndTo: any | null = null;
   isSaving = false;
   isEdit = false;
   type: string = '';

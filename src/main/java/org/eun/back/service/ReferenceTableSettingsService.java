@@ -3,6 +3,7 @@ package org.eun.back.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.eclipse.birt.report.engine.api.EngineException;
 import org.eun.back.service.dto.ReferenceTableSettingsDTO;
@@ -45,7 +46,7 @@ public interface ReferenceTableSettingsService {
 
     List<?> findAllDataByRefTable(String refTable);
 
-    List<?> findAllDataByRefTableByCountryCode(String refTable, String countryCode);
+    List<?> findAllDataByRefTableByCountryCode(String refTable, String countryCode, Map<String, String> params);
 
     byte[] download(String refTable) throws IOException, EngineException;
 

@@ -48,7 +48,7 @@ public class JobInfoServiceImpl implements JobInfoService {
         this.jobInfoMapper = jobInfoMapper;
     }
 
-    @Scheduled(cron = "0/30 * * * * *")
+    //    @Scheduled(cron = "0/30 * * * * *")
     //    @Scheduled(cron = "0 0 10 * * *")
     public void fetchDataFromERP() {
         HttpHeaders headers = new HttpHeaders();

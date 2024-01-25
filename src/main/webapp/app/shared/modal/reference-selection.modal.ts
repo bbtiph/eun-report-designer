@@ -17,7 +17,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
             <select class="form-control" [(ngModel)]="source" data-cy="status">
               <option [value]="null"></option>
               <option [value]="'working_group'">Working group</option>
-              <option [value]="'projects'">Projects</option>
+              <option [value]="'job_info'">ERP Project Data</option>
+              <option [value]="'event_reference'">Event references</option>
               <option [value]="'event_reference'">Event references</option>
             </select>
           </div>

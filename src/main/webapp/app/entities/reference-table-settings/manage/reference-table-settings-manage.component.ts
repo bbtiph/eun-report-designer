@@ -8,7 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { ASC, DEFAULT_SORT_DATA, DESC, ITEM_DELETED_EVENT, SORT } from '../../../config/navigation.constants';
 import { ColDef, ColGroupDef, ICellRendererParams } from '@ag-grid-community/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AbstractUploadFileModal } from '../../../shared/modal/abstract-upload-file.modal';
 import { LoaderService } from '../../../shared/loader/loader-service.service';
 import { AbstractDynamicFormBySettingsModal } from '../../../shared/modal/abstract-dynamic-form-by-settings.modal';
@@ -27,6 +27,7 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
   @Input() isEdit: boolean | false | undefined;
   @Input() selectedCountry: ICountries | null = null;
   @Input() settings: any | null = null;
+  @Input() periodDateFromAndTo: any | null = null;
   @Input() source: string | '' | undefined;
   @Output() templateChanged = new EventEmitter<any>();
 
@@ -58,8 +59,13 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isFromReportBlock) {
+      const queryParams = new HttpParams();
+      if (this.periodDateFromAndTo) {
+        queryParams.append('fromDate', this.periodDateFromAndTo.from);
+        queryParams.append('toDate', this.periodDateFromAndTo.to);
+      }
       this.referenceTableSettingsService
-        .findAllReferenceTableSettingsDataByCountry(this.source ?? '', this.selectedCountry?.countryCode ?? '')
+        .findAllReferenceTableSettingsDataByCountry(this.source ?? '', this.selectedCountry?.countryCode ?? '', queryParams)
         .subscribe(data => {
           this.data = data;
         });
