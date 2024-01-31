@@ -63,6 +63,14 @@
   "name": "ProjectPartner",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "jobInfo",
+      "otherEntityRelationshipName": "projectPartner",
+      "relationshipName": "jobInfo",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "service": "serviceImpl"
 }

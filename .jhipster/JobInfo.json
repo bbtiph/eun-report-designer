@@ -127,6 +127,13 @@
   "name": "JobInfo",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "projectPartner",
+      "otherEntityRelationshipName": "jobInfo",
+      "relationshipName": "projectPartner",
+      "relationshipType": "one-to-many"
+    }
+  ],
   "service": "serviceImpl"
 }

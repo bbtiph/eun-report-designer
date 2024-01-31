@@ -33,6 +33,7 @@ describe('ProjectPartner Form Service', () => {
             lastModifiedBy: expect.any(Object),
             createdDate: expect.any(Object),
             lastModifiedDate: expect.any(Object),
+            jobInfo: expect.any(Object),
           })
         );
       });
@@ -56,6 +57,7 @@ describe('ProjectPartner Form Service', () => {
             lastModifiedBy: expect.any(Object),
             createdDate: expect.any(Object),
             lastModifiedDate: expect.any(Object),
+            jobInfo: expect.any(Object),
           })
         );
       });

@@ -145,6 +145,21 @@
             </button>
           </div>
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_jobInfo">Job Info</label>
+          <select
+            class="form-control"
+            id="field_jobInfo"
+            data-cy="jobInfo"
+            name="jobInfo"
+            formControlName="jobInfo"
+            [compareWith]="compareJobInfo"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="jobInfoOption" *ngFor="let jobInfoOption of jobInfosSharedCollection">{{ jobInfoOption.id }}</option>
+          </select>
+        </div>
       </div>
 
       <div>

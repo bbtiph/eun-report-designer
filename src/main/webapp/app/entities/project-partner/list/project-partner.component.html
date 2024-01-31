@@ -116,6 +116,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="jobInfo.id">
+            <div class="d-flex">
+              <span>Job Info</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -137,6 +143,11 @@
           <td>{{ projectPartner.lastModifiedBy }}</td>
           <td>{{ projectPartner.createdDate | formatMediumDate }}</td>
           <td>{{ projectPartner.lastModifiedDate | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="projectPartner.jobInfo">
+              <a [routerLink]="['/job-info', projectPartner.jobInfo.id, 'view']">{{ projectPartner.jobInfo.id }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

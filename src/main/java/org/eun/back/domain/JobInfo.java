@@ -1,11 +1,12 @@
 package org.eun.back.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import lombok.Builder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A JobInfo.
@@ -110,6 +111,10 @@ public class JobInfo implements Serializable {
 
     @Column(name = "overhead_perc")
     private Integer overheadPerc;
+
+    @OneToMany(mappedBy = "jobInfo")
+    @JsonIgnoreProperties(value = { "jobInfo" }, allowSetters = true)
+    private Set<ProjectPartner> projectPartners = new HashSet<>();
 
     public JobInfo() {}
 
@@ -567,6 +572,37 @@ public class JobInfo implements Serializable {
 
     public void setOverheadPerc(Integer overheadPerc) {
         this.overheadPerc = overheadPerc;
+    }
+
+    public Set<ProjectPartner> getProjectPartners() {
+        return this.projectPartners;
+    }
+
+    public void setProjectPartners(Set<ProjectPartner> projectPartners) {
+        if (this.projectPartners != null) {
+            this.projectPartners.forEach(i -> i.setJobInfo(null));
+        }
+        if (projectPartners != null) {
+            projectPartners.forEach(i -> i.setJobInfo(this));
+        }
+        this.projectPartners = projectPartners;
+    }
+
+    public JobInfo projectPartners(Set<ProjectPartner> projectPartners) {
+        this.setProjectPartners(projectPartners);
+        return this;
+    }
+
+    public JobInfo addProjectPartner(ProjectPartner projectPartner) {
+        this.projectPartners.add(projectPartner);
+        projectPartner.setJobInfo(this);
+        return this;
+    }
+
+    public JobInfo removeProjectPartner(ProjectPartner projectPartner) {
+        this.projectPartners.remove(projectPartner);
+        projectPartner.setJobInfo(null);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

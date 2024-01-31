@@ -1,4 +1,5 @@
 import dayjs from 'dayjs/esm';
+import { IJobInfo } from 'app/entities/job-info/job-info.model';
 
 export interface IProjectPartner {
   id: number;
@@ -15,6 +16,7 @@ export interface IProjectPartner {
   lastModifiedBy?: string | null;
   createdDate?: dayjs.Dayjs | null;
   lastModifiedDate?: dayjs.Dayjs | null;
+  jobInfo?: Pick<IJobInfo, 'id'> | null;
 }
 
 export type NewProjectPartner = Omit<IProjectPartner, 'id'> & { id: null };

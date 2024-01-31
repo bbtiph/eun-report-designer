@@ -38,6 +38,8 @@ public class ProjectPartnerDTO implements Serializable {
 
     private LocalDate lastModifiedDate;
 
+    private JobInfoDTO jobInfo;
+
     public Long getId() {
         return id;
     }
@@ -150,6 +152,14 @@ public class ProjectPartnerDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public JobInfoDTO getJobInfo() {
+        return jobInfo;
+    }
+
+    public void setJobInfo(JobInfoDTO jobInfo) {
+        this.jobInfo = jobInfo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -189,6 +199,7 @@ public class ProjectPartnerDTO implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
+            ", jobInfo=" + getJobInfo() +
             "}";
     }
 }

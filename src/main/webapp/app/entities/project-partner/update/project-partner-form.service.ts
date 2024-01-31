@@ -31,6 +31,7 @@ type ProjectPartnerFormGroupContent = {
   lastModifiedBy: FormControl<IProjectPartner['lastModifiedBy']>;
   createdDate: FormControl<IProjectPartner['createdDate']>;
   lastModifiedDate: FormControl<IProjectPartner['lastModifiedDate']>;
+  jobInfo: FormControl<IProjectPartner['jobInfo']>;
 };
 
 export type ProjectPartnerFormGroup = FormGroup<ProjectPartnerFormGroupContent>;
@@ -63,6 +64,7 @@ export class ProjectPartnerFormService {
       lastModifiedBy: new FormControl(projectPartnerRawValue.lastModifiedBy),
       createdDate: new FormControl(projectPartnerRawValue.createdDate),
       lastModifiedDate: new FormControl(projectPartnerRawValue.lastModifiedDate),
+      jobInfo: new FormControl(projectPartnerRawValue.jobInfo),
     });
   }
 

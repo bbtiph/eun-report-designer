@@ -1,5 +1,6 @@
 package org.eun.back.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
@@ -60,6 +61,10 @@ public class ProjectPartner implements Serializable {
 
     @Column(name = "last_modified_date")
     private LocalDate lastModifiedDate;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "projectPartners" }, allowSetters = true)
+    private JobInfo jobInfo;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -243,6 +248,19 @@ public class ProjectPartner implements Serializable {
 
     public void setLastModifiedDate(LocalDate lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public JobInfo getJobInfo() {
+        return this.jobInfo;
+    }
+
+    public void setJobInfo(JobInfo jobInfo) {
+        this.jobInfo = jobInfo;
+    }
+
+    public ProjectPartner jobInfo(JobInfo jobInfo) {
+        this.setJobInfo(jobInfo);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

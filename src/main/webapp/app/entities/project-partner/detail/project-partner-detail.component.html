@@ -66,6 +66,12 @@
         <dd>
           <span>{{ projectPartner.lastModifiedDate | formatMediumDate }}</span>
         </dd>
+        <dt><span>Job Info</span></dt>
+        <dd>
+          <div *ngIf="projectPartner.jobInfo">
+            <a [routerLink]="['/job-info', projectPartner.jobInfo.id, 'view']">{{ projectPartner.jobInfo.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
