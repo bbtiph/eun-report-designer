@@ -1,0 +1,167 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-project-partner-heading" data-cy="ProjectPartnerCreateUpdateHeading">Create or edit a Project Partner</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_odataEtag">Odata Etag</label>
+          <input type="text" class="form-control" name="odataEtag" id="field_odataEtag" data-cy="odataEtag" formControlName="odataEtag" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_no">No</label>
+          <input type="number" class="form-control" name="no" id="field_no" data-cy="no" formControlName="no" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_jobNo">Job No</label>
+          <input type="text" class="form-control" name="jobNo" id="field_jobNo" data-cy="jobNo" formControlName="jobNo" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_vendorCode">Vendor Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="vendorCode"
+            id="field_vendorCode"
+            data-cy="vendorCode"
+            formControlName="vendorCode"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_vendorName">Vendor Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="vendorName"
+            id="field_vendorName"
+            data-cy="vendorName"
+            formControlName="vendorName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryCode">Country Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryCode"
+            id="field_countryCode"
+            data-cy="countryCode"
+            formControlName="countryCode"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_countryName">Country Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryName"
+            id="field_countryName"
+            data-cy="countryName"
+            formControlName="countryName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_partnerAmount">Partner Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="partnerAmount"
+            id="field_partnerAmount"
+            data-cy="partnerAmount"
+            formControlName="partnerAmount"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_isActive">Is Active</label>
+          <input type="checkbox" class="form-check" name="isActive" id="field_isActive" data-cy="isActive" formControlName="isActive" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_createdBy">Created By</label>
+          <input type="text" class="form-control" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_lastModifiedBy">Last Modified By</label>
+          <input
+            type="text"
+            class="form-control"
+            name="lastModifiedBy"
+            id="field_lastModifiedBy"
+            data-cy="lastModifiedBy"
+            formControlName="lastModifiedBy"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_createdDate">Created Date</label>
+          <div class="input-group">
+            <input
+              id="field_createdDate"
+              data-cy="createdDate"
+              type="text"
+              class="form-control"
+              name="createdDate"
+              ngbDatepicker
+              #createdDateDp="ngbDatepicker"
+              formControlName="createdDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="createdDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_lastModifiedDate">Last Modified Date</label>
+          <div class="input-group">
+            <input
+              id="field_lastModifiedDate"
+              data-cy="lastModifiedDate"
+              type="text"
+              class="form-control"
+              name="lastModifiedDate"
+              ngbDatepicker
+              #lastModifiedDateDp="ngbDatepicker"
+              formControlName="lastModifiedDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="lastModifiedDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

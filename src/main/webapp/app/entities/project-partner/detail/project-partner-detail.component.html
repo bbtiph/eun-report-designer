@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="projectPartner">
+      <h2 data-cy="projectPartnerDetailsHeading"><span>Project Partner</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ projectPartner.id }}</span>
+        </dd>
+        <dt><span>Odata Etag</span></dt>
+        <dd>
+          <span>{{ projectPartner.odataEtag }}</span>
+        </dd>
+        <dt><span>No</span></dt>
+        <dd>
+          <span>{{ projectPartner.no }}</span>
+        </dd>
+        <dt><span>Job No</span></dt>
+        <dd>
+          <span>{{ projectPartner.jobNo }}</span>
+        </dd>
+        <dt><span>Vendor Code</span></dt>
+        <dd>
+          <span>{{ projectPartner.vendorCode }}</span>
+        </dd>
+        <dt><span>Vendor Name</span></dt>
+        <dd>
+          <span>{{ projectPartner.vendorName }}</span>
+        </dd>
+        <dt><span>Country Code</span></dt>
+        <dd>
+          <span>{{ projectPartner.countryCode }}</span>
+        </dd>
+        <dt><span>Country Name</span></dt>
+        <dd>
+          <span>{{ projectPartner.countryName }}</span>
+        </dd>
+        <dt><span>Partner Amount</span></dt>
+        <dd>
+          <span>{{ projectPartner.partnerAmount }}</span>
+        </dd>
+        <dt><span>Is Active</span></dt>
+        <dd>
+          <span>{{ projectPartner.isActive }}</span>
+        </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+          <span>{{ projectPartner.createdBy }}</span>
+        </dd>
+        <dt><span>Last Modified By</span></dt>
+        <dd>
+          <span>{{ projectPartner.lastModifiedBy }}</span>
+        </dd>
+        <dt><span>Created Date</span></dt>
+        <dd>
+          <span>{{ projectPartner.createdDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Last Modified Date</span></dt>
+        <dd>
+          <span>{{ projectPartner.lastModifiedDate | formatMediumDate }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/project-partner', projectPartner.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

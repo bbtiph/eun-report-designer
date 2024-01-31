@@ -1,0 +1,172 @@
+<div>
+  <h2 id="page-heading" data-cy="ProjectPartnerHeading">
+    <span>Project Partners</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-project-partner"
+        [routerLink]="['/project-partner/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Project Partner </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="projectPartners?.length === 0">
+    <span>No Project Partners found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="projectPartners && projectPartners.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="odataEtag">
+            <div class="d-flex">
+              <span>Odata Etag</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="no">
+            <div class="d-flex">
+              <span>No</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="jobNo">
+            <div class="d-flex">
+              <span>Job No</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="vendorCode">
+            <div class="d-flex">
+              <span>Vendor Code</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="vendorName">
+            <div class="d-flex">
+              <span>Vendor Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryCode">
+            <div class="d-flex">
+              <span>Country Code</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryName">
+            <div class="d-flex">
+              <span>Country Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="partnerAmount">
+            <div class="d-flex">
+              <span>Partner Amount</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isActive">
+            <div class="d-flex">
+              <span>Is Active</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy">
+            <div class="d-flex">
+              <span>Created By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastModifiedBy">
+            <div class="d-flex">
+              <span>Last Modified By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdDate">
+            <div class="d-flex">
+              <span>Created Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastModifiedDate">
+            <div class="d-flex">
+              <span>Last Modified Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let projectPartner of projectPartners; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/project-partner', projectPartner.id, 'view']">{{ projectPartner.id }}</a>
+          </td>
+          <td>{{ projectPartner.odataEtag }}</td>
+          <td>{{ projectPartner.no }}</td>
+          <td>{{ projectPartner.jobNo }}</td>
+          <td>{{ projectPartner.vendorCode }}</td>
+          <td>{{ projectPartner.vendorName }}</td>
+          <td>{{ projectPartner.countryCode }}</td>
+          <td>{{ projectPartner.countryName }}</td>
+          <td>{{ projectPartner.partnerAmount }}</td>
+          <td>{{ projectPartner.isActive }}</td>
+          <td>{{ projectPartner.createdBy }}</td>
+          <td>{{ projectPartner.lastModifiedBy }}</td>
+          <td>{{ projectPartner.createdDate | formatMediumDate }}</td>
+          <td>{{ projectPartner.lastModifiedDate | formatMediumDate }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/project-partner', projectPartner.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/project-partner', projectPartner.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(projectPartner)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

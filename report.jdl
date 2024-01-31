@@ -1,34 +1,18 @@
-entity JobInfo {
+entity ProjectPartner {
     odataEtag String,
-    externalId String,
-    jobNumber String,
-    description String,
-    description2 String,
-    billToCustomerNo String,
-    billToName String,
-    billToCountryRegionCode String,
-    sellToContact String,
-    yourReference String,
-    contractNo String,
-    statusProposal String,
-    startingDate LocalDate,
-    endingDate LocalDate,
-    durationInMonths Integer,
-    projectManager String,
-    projectManagerMail String,
-    eunRole String,
-    visaNumber String,
-    jobType String,
-    jobTypeText String,
-    jobProgram String,
-    programManager String,
-    budgetEUN Double,
-    fundingEUN Double,
-    fundingRate Double,
-    budgetConsortium Double,
-    fundingConsortium Double,
-    overheadPerc Integer
+    no Long,
+    jobNo String,
+    vendorCode String,
+    vendorName String,
+    countryCode String,
+    countryName String,
+    partnerAmount Double,
+    isActive Boolean,
+    createdBy String,
+    lastModifiedBy String,
+    createdDate LocalDate,
+    lastModifiedDate LocalDate,
 }
 
-dto JobInfo with mapstruct
-service JobInfo with serviceImpl
+dto ProjectPartner with mapstruct
+service ProjectPartner with serviceImpl

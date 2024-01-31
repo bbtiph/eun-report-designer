@@ -179,6 +179,11 @@ import { JobInfoModule } from './job-info/job-info.module';
         loadChildren: () => import('./job-info/job-info.module').then(m => m.JobInfoModule),
       },
       {
+        path: 'project-partner',
+        data: { pageTitle: 'Project partners' },
+        loadChildren: () => import('./project-partner/project-partner.module').then(m => m.ProjectPartnerModule),
+      },
+      {
         path: 'event-references-participants-category',
         data: { pageTitle: 'EventReferencesParticipantsCategories' },
         loadChildren: () =>
