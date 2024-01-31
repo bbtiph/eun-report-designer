@@ -46,11 +46,20 @@
   <div class="table-responsive table-entities">
     <table class="table table-bordered" aria-describedby="page-heading">
       <thead>
-        <tr>
+        <tr *ngIf="type === 'template' || isEdit">
+          <ng-container *ngFor="let col of settings">
+            <th scope="col">
+              <span>
+                {{ getColumnFormControl(col.index, col.name).value }}
+              </span>
+            </th>
+          </ng-container>
+        </tr>
+        <tr *ngIf="type !== 'template'">
           <ng-container *ngFor="let col of template.columns">
             <th scope="col">
               <span>
-                {{ col.name }}
+                {{ getColumnFormControl(col.index, col.name).value }}
               </span>
             </th>
           </ng-container>

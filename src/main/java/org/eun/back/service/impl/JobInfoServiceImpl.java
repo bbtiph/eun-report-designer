@@ -1,5 +1,8 @@
 package org.eun.back.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import java.net.URI;
 import java.time.LocalDate;
@@ -21,8 +24,6 @@ import org.eun.back.service.mapper.JobInfoMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -69,7 +70,8 @@ public class JobInfoServiceImpl implements JobInfoService {
     }
 
     @Scheduled(cron = "0 0 10 * * *")
-    public void fetchDataFromERP() throws JSONException {
+    public void fetchDataFromERP() {
+        log.debug("Scheduler started: {}", LocalDate.now());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + getToken());
@@ -128,7 +130,7 @@ public class JobInfoServiceImpl implements JobInfoService {
         }
     }
 
-    private String getToken() throws JSONException {
+    private String getToken() {
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
         requestBody.add("grant_type", grantType);
         requestBody.add("scope", scope);
@@ -145,8 +147,14 @@ public class JobInfoServiceImpl implements JobInfoService {
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             String responseBody = responseEntity.getBody();
-            JSONObject json = new JSONObject(responseBody);
-            return json.getString("access_token");
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = null;
+            try {
+                jsonNode = objectMapper.readTree(responseBody);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            return jsonNode.get("access_token").asText();
         } else {
             throw new RuntimeException();
         }
