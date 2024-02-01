@@ -16,10 +16,7 @@ import org.eclipse.birt.report.engine.api.EngineException;
 import org.eun.back.domain.*;
 import org.eun.back.repository.*;
 import org.eun.back.security.SecurityUtils;
-import org.eun.back.service.BirtReportService;
-import org.eun.back.service.EventReferencesService;
-import org.eun.back.service.JobInfoService;
-import org.eun.back.service.ReferenceTableSettingsService;
+import org.eun.back.service.*;
 import org.eun.back.service.dto.EventReferencesDTO;
 import org.eun.back.service.dto.JobInfoDTO;
 import org.eun.back.service.dto.ReferenceTableSettingsDTO;
@@ -64,6 +61,8 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
 
     private final BirtReportService birtReportService;
 
+    private final FundingAndBudgetService fundingAndBudgetService;
+
     public ReferenceTableSettingsServiceImpl(
         ReferenceTableSettingsRepository referenceTableSettingsRepository,
         ReferenceTableSettingsMapper referenceTableSettingsMapper,
@@ -76,7 +75,8 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         RelEventReferencesCountriesRepository relEventReferencesCountriesRepository,
         EventReferencesParticipantsCategoryRepository eventReferencesParticipantsCategoryRepository,
         JobInfoService jobInfoService,
-        BirtReportService birtReportService
+        BirtReportService birtReportService,
+        FundingAndBudgetService fundingAndBudgetService
     ) {
         this.referenceTableSettingsRepository = referenceTableSettingsRepository;
         this.referenceTableSettingsMapper = referenceTableSettingsMapper;
@@ -90,6 +90,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         this.eventReferencesParticipantsCategoryRepository = eventReferencesParticipantsCategoryRepository;
         this.jobInfoService = jobInfoService;
         this.birtReportService = birtReportService;
+        this.fundingAndBudgetService = fundingAndBudgetService;
     }
 
     @Override
@@ -145,6 +146,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "working_group_reference":
             case "working_group":
                 return workingGroupReferencesRepository.findAllByIsActive(true);
+            case "event_references":
             case "event_reference":
             case "event":
                 return eventReferencesService.findAllByIsActive(true);
@@ -153,6 +155,9 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 return jobInfoService.findAllByStatusProposal("Approved", null);
             case "countries":
                 return countriesRepository.findAll();
+            case "funding_and_project_of_project":
+            case "funding_and_project_for_eun":
+                return fundingAndBudgetService.findAll();
         }
         return null;
     }
