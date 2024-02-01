@@ -47,6 +47,8 @@ public interface ProjectPartnerService {
      */
     Optional<ProjectPartnerDTO> findOne(Long id);
 
+    ProjectPartnerDTO findFirstByCountryCodeAndVendorCode(Long id, String countryCode, String vendorCode);
+
     /**
      * Delete the "id" projectPartner.
      *

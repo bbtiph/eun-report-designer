@@ -17,10 +17,13 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.eun.back.domain.JobInfo;
 import org.eun.back.repository.JobInfoRepository;
 import org.eun.back.service.JobInfoService;
+import org.eun.back.service.ProjectPartnerService;
 import org.eun.back.service.dto.JobInfoContentFromERPDTO;
 import org.eun.back.service.dto.JobInfoDTO;
 import org.eun.back.service.dto.JobInfoFromERPDTO;
+import org.eun.back.service.dto.ProjectPartnerDTO;
 import org.eun.back.service.mapper.JobInfoMapper;
+import org.eun.back.service.mapper.ProjectPartnerMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,14 +65,26 @@ public class JobInfoServiceImpl implements JobInfoService {
 
     private final JobInfoRepository jobInfoRepository;
 
+    private final ProjectPartnerService partnerService;
+
+    private final ProjectPartnerMapper projectPartnerMapper;
+
     private final JobInfoMapper jobInfoMapper;
 
-    public JobInfoServiceImpl(JobInfoRepository jobInfoRepository, JobInfoMapper jobInfoMapper) {
+    public JobInfoServiceImpl(
+        JobInfoRepository jobInfoRepository,
+        ProjectPartnerService partnerService,
+        ProjectPartnerMapper projectPartnerMapper,
+        JobInfoMapper jobInfoMapper
+    ) {
         this.jobInfoRepository = jobInfoRepository;
+        this.partnerService = partnerService;
+        this.projectPartnerMapper = projectPartnerMapper;
         this.jobInfoMapper = jobInfoMapper;
     }
 
-    @Scheduled(cron = "0 0 10 * * *")
+    @Scheduled(cron = "0/30 * * * * *")
+    //    @Scheduled(cron = "0 0 10 * * *")
     public void fetchDataFromERP() {
         log.debug("Scheduler started: {}", LocalDate.now());
         HttpHeaders headers = new HttpHeaders();
@@ -79,7 +94,7 @@ public class JobInfoServiceImpl implements JobInfoService {
 
         try {
             ResponseEntity<String> response = restTemplate.exchange(
-                url + "/jobInfo",
+                url + "/jobInfo?&$expand=projectPartners",
                 HttpMethod.GET,
                 new HttpEntity<>("{}", headers),
                 String.class
@@ -123,7 +138,21 @@ public class JobInfoServiceImpl implements JobInfoService {
                 if (jobInfoRes != null) {
                     jobInfo.setId(jobInfoRes.getId());
                 }
-                jobInfoRepository.save(jobInfo);
+
+                JobInfo savedJobInfo = jobInfoRepository.save(jobInfo);
+
+                for (ProjectPartnerDTO projectPartnerDTO : jobInfoDTO.getProjectPartners()) {
+                    ProjectPartnerDTO projectPartnerDTORes = partnerService.findFirstByCountryCodeAndVendorCode(
+                        savedJobInfo.getId(),
+                        projectPartnerDTO.getCountryCode(),
+                        projectPartnerDTO.getVendorCode()
+                    );
+                    if (projectPartnerDTORes != null) {
+                        projectPartnerDTO.setId(projectPartnerDTORes.getId());
+                    }
+                    projectPartnerDTO.setJobInfo(jobInfoMapper.toDto(savedJobInfo));
+                    partnerService.save(projectPartnerDTO);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

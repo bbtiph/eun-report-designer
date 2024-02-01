@@ -82,6 +82,13 @@ public class ProjectPartnerServiceImpl implements ProjectPartnerService {
     }
 
     @Override
+    public ProjectPartnerDTO findFirstByCountryCodeAndVendorCode(Long id, String countryCode, String vendorCode) {
+        return projectPartnerMapper.toDto(
+            projectPartnerRepository.findFirstByJobInfoIdAndCountryCodeAndVendorCode(id, countryCode, vendorCode)
+        );
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete ProjectPartner : {}", id);
         projectPartnerRepository.deleteById(id);
