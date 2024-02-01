@@ -19,6 +19,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
               <option [value]="'working_group'">Working group</option>
               <option [value]="'job_info'">ERP Project Data</option>
               <option [value]="'event_reference'">Event references</option>
+              <option [value]="'funding_and_project_of_project'">Funding&project of the Project</option>
+              <option [value]="'funding_and_project_for_eun'">Funding&project for EUN</option>
             </select>
           </div>
         </div>

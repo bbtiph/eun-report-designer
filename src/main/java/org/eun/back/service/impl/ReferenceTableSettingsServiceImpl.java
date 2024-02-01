@@ -180,6 +180,9 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 return jobInfoService.findAllByStatusProposal("Approved", params);
             case "countries":
                 return countriesRepository.findAll();
+            case "funding_and_project_of_project":
+            case "funding_and_project_for_eun":
+                return fundingAndBudgetService.findAll();
         }
         return null;
     }

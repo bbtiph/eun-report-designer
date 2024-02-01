@@ -46,8 +46,8 @@
   <div class="table-responsive table-entities">
     <table class="table table-bordered" aria-describedby="page-heading">
       <thead>
-        <tr *ngIf="type === 'template' || isEdit">
-          <ng-container *ngFor="let col of settings">
+        <tr *ngIf="type !== 'template' && !isEdit">
+          <ng-container *ngFor="let col of template.columns">
             <th scope="col">
               <span>
                 {{ getColumnFormControl(col.index, col.name).value }}
@@ -55,8 +55,9 @@
             </th>
           </ng-container>
         </tr>
-        <tr *ngIf="type !== 'template'">
-          <ng-container *ngFor="let col of template.columns">
+
+        <tr *ngIf="type === 'template' || isEdit">
+          <ng-container *ngFor="let col of settings">
             <th scope="col">
               <span>
                 {{ getColumnFormControl(col.index, col.name).value }}
@@ -91,8 +92,8 @@
       </thead>
       <tbody *ngIf="type !== 'template' && !isEdit">
         <tr *ngFor="let row of data; trackBy: trackId" data-cy="entityTable">
-          <ng-container *ngFor="let col of settings">
-            <td *ngIf="isEdit || isActiveColumn(col.index)">
+          <ng-container *ngFor="let col of template.columns">
+            <td *ngIf="isActiveColumn(col.index)">
               {{ getValue(row, col.index) }}
             </td>
           </ng-container>
