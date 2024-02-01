@@ -2,7 +2,10 @@ package org.eun.back.service.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import org.eun.back.domain.ProjectPartner;
 
 /**
  * A DTO for the {@link org.eun.back.domain.JobInfo} entity.
@@ -69,6 +72,8 @@ public class JobInfoDTO implements Serializable {
     private Double fundingConsortium;
 
     private Integer overheadPerc;
+
+    private Set<ProjectPartnerDTO> projectPartners = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -308,6 +313,14 @@ public class JobInfoDTO implements Serializable {
 
     public void setOverheadPerc(Integer overheadPerc) {
         this.overheadPerc = overheadPerc;
+    }
+
+    public Set<ProjectPartnerDTO> getProjectPartners() {
+        return projectPartners;
+    }
+
+    public void setProjectPartners(Set<ProjectPartnerDTO> projectPartners) {
+        this.projectPartners = projectPartners;
     }
 
     @Override

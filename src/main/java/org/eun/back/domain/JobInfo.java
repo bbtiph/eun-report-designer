@@ -112,7 +112,7 @@ public class JobInfo implements Serializable {
     @Column(name = "overhead_perc")
     private Integer overheadPerc;
 
-    @OneToMany(mappedBy = "jobInfo")
+    @OneToMany(mappedBy = "jobInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "jobInfo" }, allowSetters = true)
     private Set<ProjectPartner> projectPartners = new HashSet<>();
 

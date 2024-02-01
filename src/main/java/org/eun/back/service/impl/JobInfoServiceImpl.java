@@ -83,8 +83,8 @@ public class JobInfoServiceImpl implements JobInfoService {
         this.jobInfoMapper = jobInfoMapper;
     }
 
-    @Scheduled(cron = "0/30 * * * * *")
-    //    @Scheduled(cron = "0 0 10 * * *")
+    //    @Scheduled(cron = "0/30 * * * * *")
+    @Scheduled(cron = "0 0 10 * * *")
     public void fetchDataFromERP() {
         log.debug("Scheduler started: {}", LocalDate.now());
         HttpHeaders headers = new HttpHeaders();
@@ -240,6 +240,11 @@ public class JobInfoServiceImpl implements JobInfoService {
                 .map(jobInfoMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
         }
+        List<JobInfoDTO> res = jobInfoRepository
+            .findAllByStatusProposal(statusProposal)
+            .stream()
+            .map(jobInfoMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
         return jobInfoRepository
             .findAllByStatusProposal(statusProposal)
             .stream()
