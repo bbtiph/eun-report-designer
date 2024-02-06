@@ -7,6 +7,7 @@
         var events=[];
         var blocks=[];
         var projects=[];
+        var fb=[];
         var json = eval('(' + params['docId'] + ')');
 	]]></method>
     <property name="iconFile">/templates/blank_report.gif</property>
@@ -2027,6 +2028,381 @@ where status_proposal = 'Approved']]></xml-property>
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="fundingAndBudget" id="350">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">id</property>
+                    <text-property name="displayName">id</text-property>
+                    <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">job_number</property>
+                    <text-property name="displayName">job_number</text-property>
+                    <text-property name="heading">job_number</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                    <text-property name="displayName">description</text-property>
+                    <text-property name="heading">description</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">budget_eun</property>
+                    <text-property name="displayName">budget_eun</text-property>
+                    <text-property name="heading">budget_eun</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">funding_eun</property>
+                    <text-property name="displayName">funding_eun</text-property>
+                    <text-property name="heading">funding_eun</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">funding_rate</property>
+                    <text-property name="displayName">funding_rate</text-property>
+                    <text-property name="heading">funding_rate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">total_budget</property>
+                    <text-property name="displayName">total_budget</text-property>
+                    <text-property name="heading">total_budget</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">total_funding</property>
+                    <text-property name="displayName">total_funding</text-property>
+                    <text-property name="heading">total_funding</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">overhead_perc</property>
+                    <text-property name="displayName">overhead_perc</text-property>
+                    <text-property name="heading">overhead_perc</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">job_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">budget_eun</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">funding_eun</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">funding_rate</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">total_budget</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">total_funding</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">overhead_perc</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">id</property>
+                    <property name="nativeName">id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">job_number</property>
+                    <property name="nativeName">job_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">description</property>
+                    <property name="nativeName">description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">budget_eun</property>
+                    <property name="nativeName">budget_eun</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">funding_eun</property>
+                    <property name="nativeName">funding_eun</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">funding_rate</property>
+                    <property name="nativeName">funding_rate</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">total_budget</property>
+                    <property name="nativeName">total_budget</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">total_funding</property>
+                    <property name="nativeName">total_funding</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">overhead_perc</property>
+                    <property name="nativeName">overhead_perc</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT
+    j.id AS id,
+    j.job_number AS job_number,
+    j.description AS description,
+    j.budget_eun AS budget_eun,
+    j.funding_eun AS funding_eun,
+    j.funding_rate AS funding_rate,
+    (j.budget_eun + j.budget_consortium) AS total_budget,
+    (j.funding_eun + j.funding_consortium) AS total_funding,
+    j.overhead_perc AS overhead_perc
+    FROM public.job_info j where j.status_proposal = 'Approved']]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>job_number</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>job_number</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>job_number</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>description</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>description</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>description</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>budget_eun</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>17</design:precision>
+            <design:scale>17</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>budget_eun</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>budget_eun</design:label>
+            <design:formattingHints>
+              <design:displaySize>25</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>funding_eun</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>17</design:precision>
+            <design:scale>17</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>funding_eun</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>funding_eun</design:label>
+            <design:formattingHints>
+              <design:displaySize>25</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>funding_rate</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>17</design:precision>
+            <design:scale>17</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>funding_rate</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>funding_rate</design:label>
+            <design:formattingHints>
+              <design:displaySize>25</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>total_budget</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>17</design:precision>
+            <design:scale>17</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>total_budget</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>total_budget</design:label>
+            <design:formattingHints>
+              <design:displaySize>25</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>total_funding</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>17</design:precision>
+            <design:scale>17</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>total_funding</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>total_funding</design:label>
+            <design:formattingHints>
+              <design:displaySize>25</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>overhead_perc</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>overhead_perc</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>overhead_perc</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
@@ -2207,6 +2583,50 @@ wgs.push(obj);</expression>
                 </row>
             </detail>
         </table>
+        <table id="351">
+            <property name="dataSet">fundingAndBudget</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">fundingAndBudget</property>
+                    <expression name="expression" type="javascript">var obj = [];&#13;
+obj['id'] = dataSetRow["id"]==null?"":dataSetRow["id"];&#13;
+obj['jobNumber'] = dataSetRow["job_number"]==null?"":dataSetRow["job_number"];&#13;
+obj['description'] = dataSetRow["description"]==null?"":dataSetRow["description"];&#13;
+obj['budgetEUN'] = dataSetRow["budget_eun"]==null?"":dataSetRow["budget_eun"];&#13;
+obj['fundingEUN'] = dataSetRow["funding_eun"]==null?"":dataSetRow["funding_eun"];&#13;
+obj['fundingRate'] = dataSetRow["funding_rate"]==null?"":dataSetRow["funding_rate"];&#13;
+obj['totalBudget'] = dataSetRow["total_budget"]==null?"":dataSetRow["total_budget"];&#13;
+obj['totalFunding'] = dataSetRow["total_funding"]==null?"":dataSetRow["total_funding"];&#13;
+obj['overheadPerc'] = dataSetRow["overhead_perc"]==null?"":dataSetRow["overhead_perc"];&#13;
+&#13;
+fb.push(obj);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="358"/>
+            <detail>
+                <row id="354">
+                    <cell id="355">
+                        <data id="359">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">fundingAndBudget</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
         <grid id="297">
             <column id="298"/>
             <row id="299">
@@ -2318,6 +2738,26 @@ for (var i = 0; i &lt; json.length; i++) {&#13;
             }&#13;
             tableHTML += '&lt;/table>';&#13;
             break;  &#13;
+          case 'funding_and_project_for_eun':&#13;
+            for(var i = 0; i &lt; fb.length; i++) {&#13;
+              tableHTML += '&lt;tr>';&#13;
+              for (var c = 0; c &lt; contentTemplate.columns.length; c++) {&#13;
+                tableHTML += '&lt;th>' + (fb[i][contentTemplate.columns[c].index] ? fb[i][contentTemplate.columns[c].index] : '') + '&lt;/th>';&#13;
+              }&#13;
+              tableHTML += '&lt;/tr>';&#13;
+            }&#13;
+            tableHTML += '&lt;/table>';&#13;
+            break;&#13;
+          case 'funding_and_project_of_project':&#13;
+            for(var j = 0; j &lt; fb.length; j++) {&#13;
+              tableHTML += '&lt;tr>';&#13;
+              for (var c = 0; c &lt; contentTemplate.columns.length; c++) {&#13;
+                tableHTML += '&lt;th>' + (fb[j][contentTemplate.columns[c].index] ? fb[j][contentTemplate.columns[c].index] : '') + '&lt;/th>';&#13;
+              }&#13;
+              tableHTML += '&lt;/tr>';&#13;
+            }&#13;
+            tableHTML += '&lt;/table>';&#13;
+            break;&#13;
         }&#13;
       }&#13;
     }&#13;
