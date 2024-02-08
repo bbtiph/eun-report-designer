@@ -54,7 +54,7 @@ export class ReportFormService {
       acronym: new FormControl(reportRawValue.acronym),
       description: new FormControl(reportRawValue.description),
       type: new FormControl(reportRawValue.type),
-      isActive: new FormControl(reportRawValue.isActive ?? true),
+      isActive: new FormControl(reportRawValue.isActive),
       isMinistry: new FormControl(reportRawValue.isMinistry),
       parentId: new FormControl(reportRawValue.parentId),
       file: new FormControl(reportRawValue.file),

@@ -53,7 +53,6 @@ export class ReportBlocksContentUpdateComponent implements OnInit {
     if (reportBlocksContent.id !== null) {
       this.subscribeToSaveResponse(this.reportBlocksContentService.update(reportBlocksContent));
     } else {
-      // @ts-ignore
       this.subscribeToSaveResponse(this.reportBlocksContentService.create(reportBlocksContent));
     }
   }

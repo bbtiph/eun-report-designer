@@ -52,7 +52,6 @@ export class ReportBlocksContentService {
   }
 
   getReportBlocksContentIdentifier(reportBlocksContent: Pick<IReportBlocksContent, 'id'>): number {
-    // @ts-ignore
     return reportBlocksContent.id;
   }
 
