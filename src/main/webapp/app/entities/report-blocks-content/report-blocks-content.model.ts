@@ -2,7 +2,7 @@ import { IReportBlocks } from 'app/entities/report-blocks/report-blocks.model';
 import { IReportBlocksContentData } from '../report-blocks-content-data/report-blocks-content-data.model';
 
 export interface IReportBlocksContent {
-  id: number;
+  id: number | null;
   type?: string | null;
   priorityNumber?: number | null;
   template?: string | null;

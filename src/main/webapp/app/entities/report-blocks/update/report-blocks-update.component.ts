@@ -352,6 +352,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
       newContentData: false,
     };
 
+    // @ts-ignore
     this.reportBlocksContentDataService.createWithContent(newRow, content.id).subscribe((res: HttpResponse<IReportBlocksContentData>) => {
       const newRow: IReportBlocksContentData = res.body!;
       // @ts-ignore
@@ -527,7 +528,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
     // @ts-ignore
     const priorityNumber = 1 + (priorityNumbers.length > 0 ? Math.max(...priorityNumbers) : 0);
     const subBlock: IReportBlocksContent = {
-      id: newContentIndex,
+      id: null,
       type: 'table',
       priorityNumber: priorityNumber + 1,
       template: '{"name":"","columns":[]}',
@@ -556,7 +557,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
       // @ts-ignore
       const priorityNumber = 1 + (priorityNumbers.length > 0 ? Math.max(...priorityNumbers) : 0);
       const subBlock: IReportBlocksContent = {
-        id: newContentIndex,
+        id: null,
         type: 'reference',
         priorityNumber: priorityNumber + 1,
         template: `{"name":"","columns":[],"source":"${params.source}"}`,
@@ -580,7 +581,7 @@ export class ReportBlocksUpdateComponent implements OnInit, OnDestroy {
     // @ts-ignore
     const priorityNumber = 1 + (priorityNumbers.length > 0 ? Math.max(...priorityNumbers) : 0);
     const subBlock: IReportBlocksContent = {
-      id: newContentIndex,
+      id: null,
       type: 'text',
       priorityNumber: priorityNumber + 1,
       template: '{"name":"","data":"Static text for all selected countries..."}',
