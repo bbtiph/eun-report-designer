@@ -73,4 +73,12 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="20230714042342-4" author="jhipster">
+        <addColumn tableName="reference_table_settings">
+            <column name="columns_of_template" type="varchar(10000)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

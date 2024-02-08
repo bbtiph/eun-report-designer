@@ -41,6 +41,9 @@ class ReferenceTableSettingsResourceIT {
     private static final String DEFAULT_COLUMNS = "AAAAAAAAAA";
     private static final String UPDATED_COLUMNS = "BBBBBBBBBB";
 
+    private static final String DEFAULT_COLUMNS_OF_TEMPLATE = "AAAAAAAAAA";
+    private static final String UPDATED_COLUMNS_OF_TEMPLATE = "BBBBBBBBBB";
+
     private static final String DEFAULT_PATH = "AAAAAAAAAA";
     private static final String UPDATED_PATH = "BBBBBBBBBB";
 
@@ -83,6 +86,7 @@ class ReferenceTableSettingsResourceIT {
             .refTable(DEFAULT_REF_TABLE)
             .displayName(DEFAULT_DISPLAY_NAME)
             .columns(DEFAULT_COLUMNS)
+            .columnsOfTemplate(DEFAULT_COLUMNS_OF_TEMPLATE)
             .path(DEFAULT_PATH)
             .isActive(DEFAULT_IS_ACTIVE)
             .file(DEFAULT_FILE)
@@ -101,6 +105,7 @@ class ReferenceTableSettingsResourceIT {
             .refTable(UPDATED_REF_TABLE)
             .displayName(UPDATED_DISPLAY_NAME)
             .columns(UPDATED_COLUMNS)
+            .columnsOfTemplate(UPDATED_COLUMNS_OF_TEMPLATE)
             .path(UPDATED_PATH)
             .isActive(UPDATED_IS_ACTIVE)
             .file(UPDATED_FILE)
@@ -134,6 +139,7 @@ class ReferenceTableSettingsResourceIT {
         assertThat(testReferenceTableSettings.getRefTable()).isEqualTo(DEFAULT_REF_TABLE);
         assertThat(testReferenceTableSettings.getDisplayName()).isEqualTo(DEFAULT_DISPLAY_NAME);
         assertThat(testReferenceTableSettings.getColumns()).isEqualTo(DEFAULT_COLUMNS);
+        assertThat(testReferenceTableSettings.getColumnsOfTemplate()).isEqualTo(DEFAULT_COLUMNS_OF_TEMPLATE);
         assertThat(testReferenceTableSettings.getPath()).isEqualTo(DEFAULT_PATH);
         assertThat(testReferenceTableSettings.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
         assertThat(testReferenceTableSettings.getFile()).isEqualTo(DEFAULT_FILE);
@@ -178,6 +184,7 @@ class ReferenceTableSettingsResourceIT {
             .andExpect(jsonPath("$.[*].refTable").value(hasItem(DEFAULT_REF_TABLE)))
             .andExpect(jsonPath("$.[*].displayName").value(hasItem(DEFAULT_DISPLAY_NAME)))
             .andExpect(jsonPath("$.[*].columns").value(hasItem(DEFAULT_COLUMNS)))
+            .andExpect(jsonPath("$.[*].columnsOfTemplate").value(hasItem(DEFAULT_COLUMNS_OF_TEMPLATE)))
             .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
             .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())))
             .andExpect(jsonPath("$.[*].fileContentType").value(hasItem(DEFAULT_FILE_CONTENT_TYPE)))
@@ -199,6 +206,7 @@ class ReferenceTableSettingsResourceIT {
             .andExpect(jsonPath("$.refTable").value(DEFAULT_REF_TABLE))
             .andExpect(jsonPath("$.displayName").value(DEFAULT_DISPLAY_NAME))
             .andExpect(jsonPath("$.columns").value(DEFAULT_COLUMNS))
+            .andExpect(jsonPath("$.columnsOfTemplate").value(DEFAULT_COLUMNS_OF_TEMPLATE))
             .andExpect(jsonPath("$.path").value(DEFAULT_PATH))
             .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()))
             .andExpect(jsonPath("$.fileContentType").value(DEFAULT_FILE_CONTENT_TYPE))
@@ -230,6 +238,7 @@ class ReferenceTableSettingsResourceIT {
             .refTable(UPDATED_REF_TABLE)
             .displayName(UPDATED_DISPLAY_NAME)
             .columns(UPDATED_COLUMNS)
+            .columnsOfTemplate(UPDATED_COLUMNS_OF_TEMPLATE)
             .path(UPDATED_PATH)
             .isActive(UPDATED_IS_ACTIVE)
             .file(UPDATED_FILE)
@@ -251,6 +260,7 @@ class ReferenceTableSettingsResourceIT {
         assertThat(testReferenceTableSettings.getRefTable()).isEqualTo(UPDATED_REF_TABLE);
         assertThat(testReferenceTableSettings.getDisplayName()).isEqualTo(UPDATED_DISPLAY_NAME);
         assertThat(testReferenceTableSettings.getColumns()).isEqualTo(UPDATED_COLUMNS);
+        assertThat(testReferenceTableSettings.getColumnsOfTemplate()).isEqualTo(UPDATED_COLUMNS_OF_TEMPLATE);
         assertThat(testReferenceTableSettings.getPath()).isEqualTo(UPDATED_PATH);
         assertThat(testReferenceTableSettings.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
         assertThat(testReferenceTableSettings.getFile()).isEqualTo(UPDATED_FILE);
@@ -338,7 +348,11 @@ class ReferenceTableSettingsResourceIT {
         ReferenceTableSettings partialUpdatedReferenceTableSettings = new ReferenceTableSettings();
         partialUpdatedReferenceTableSettings.setId(referenceTableSettings.getId());
 
-        partialUpdatedReferenceTableSettings.refTable(UPDATED_REF_TABLE).displayName(UPDATED_DISPLAY_NAME);
+        partialUpdatedReferenceTableSettings
+            .refTable(UPDATED_REF_TABLE)
+            .displayName(UPDATED_DISPLAY_NAME)
+            .file(UPDATED_FILE)
+            .fileContentType(UPDATED_FILE_CONTENT_TYPE);
 
         restReferenceTableSettingsMockMvc
             .perform(
@@ -355,10 +369,11 @@ class ReferenceTableSettingsResourceIT {
         assertThat(testReferenceTableSettings.getRefTable()).isEqualTo(UPDATED_REF_TABLE);
         assertThat(testReferenceTableSettings.getDisplayName()).isEqualTo(UPDATED_DISPLAY_NAME);
         assertThat(testReferenceTableSettings.getColumns()).isEqualTo(DEFAULT_COLUMNS);
+        assertThat(testReferenceTableSettings.getColumnsOfTemplate()).isEqualTo(DEFAULT_COLUMNS_OF_TEMPLATE);
         assertThat(testReferenceTableSettings.getPath()).isEqualTo(DEFAULT_PATH);
         assertThat(testReferenceTableSettings.getIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
-        assertThat(testReferenceTableSettings.getFile()).isEqualTo(DEFAULT_FILE);
-        assertThat(testReferenceTableSettings.getFileContentType()).isEqualTo(DEFAULT_FILE_CONTENT_TYPE);
+        assertThat(testReferenceTableSettings.getFile()).isEqualTo(UPDATED_FILE);
+        assertThat(testReferenceTableSettings.getFileContentType()).isEqualTo(UPDATED_FILE_CONTENT_TYPE);
     }
 
     @Test
@@ -377,6 +392,7 @@ class ReferenceTableSettingsResourceIT {
             .refTable(UPDATED_REF_TABLE)
             .displayName(UPDATED_DISPLAY_NAME)
             .columns(UPDATED_COLUMNS)
+            .columnsOfTemplate(UPDATED_COLUMNS_OF_TEMPLATE)
             .path(UPDATED_PATH)
             .isActive(UPDATED_IS_ACTIVE)
             .file(UPDATED_FILE)
@@ -397,6 +413,7 @@ class ReferenceTableSettingsResourceIT {
         assertThat(testReferenceTableSettings.getRefTable()).isEqualTo(UPDATED_REF_TABLE);
         assertThat(testReferenceTableSettings.getDisplayName()).isEqualTo(UPDATED_DISPLAY_NAME);
         assertThat(testReferenceTableSettings.getColumns()).isEqualTo(UPDATED_COLUMNS);
+        assertThat(testReferenceTableSettings.getColumnsOfTemplate()).isEqualTo(UPDATED_COLUMNS_OF_TEMPLATE);
         assertThat(testReferenceTableSettings.getPath()).isEqualTo(UPDATED_PATH);
         assertThat(testReferenceTableSettings.getIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
         assertThat(testReferenceTableSettings.getFile()).isEqualTo(UPDATED_FILE);

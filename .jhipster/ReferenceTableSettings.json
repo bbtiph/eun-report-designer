@@ -18,6 +18,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "columnsOfTemplate",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "path",
       "fieldType": "String"
     },

@@ -11,6 +11,7 @@ import org.mapstruct.*;
 public interface ReferenceTableSettingsMapper extends EntityMapper<ReferenceTableSettingsDTO, ReferenceTableSettings> {
     @Named("toDto")
     @Mapping(target = "columns", source = "columns", qualifiedByName = "truncateTemplate")
+    @Mapping(target = "columnsOfTemplate", source = "columnsOfTemplate", qualifiedByName = "truncateTemplate")
     ReferenceTableSettingsDTO toDtoToShowInHomePage(ReferenceTableSettings s);
 
     @Named("truncateTemplate")

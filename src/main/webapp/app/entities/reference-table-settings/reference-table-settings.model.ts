@@ -3,6 +3,7 @@ export interface IReferenceTableSettings {
   refTable?: string | null;
   displayName?: string | null;
   columns?: string | null;
+  columnsOfTemplate?: string | null;
   path?: string | null;
   isActive?: boolean | null;
   file?: string | null;

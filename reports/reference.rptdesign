@@ -133,6 +133,12 @@
                     <text-property name="displayName">display_name</text-property>
                     <text-property name="heading">display_name</text-property>
                 </structure>
+                <structure>
+                    <property name="columnName">columns_of_template</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">columns_of_template</text-property>
+                    <text-property name="heading">columns_of_template</text-property>
+                </structure>
             </list-property>
             <list-property name="parameters">
                 <structure>
@@ -186,6 +192,11 @@
                     <structure>
                         <property name="position">8</property>
                         <property name="name">display_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">columns_of_template</property>
                         <property name="dataType">string</property>
                     </structure>
                 </list-property>
@@ -248,6 +259,13 @@
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">columns_of_template</property>
+                    <property name="nativeName">columns_of_template</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[select *
 from public.reference_table_settings rts
@@ -255,23 +273,6 @@ where rts.id = ?]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
-  <DataSetParameters>
-    <parameter>
-      <design:ParameterDefinition>
-        <design:inOutMode>In</design:inOutMode>
-        <design:attributes>
-          <design:identifier>
-            <design:name></design:name>
-            <design:position>1</design:position>
-          </design:identifier>
-          <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
-          <design:precision>0</design:precision>
-          <design:scale>0</design:scale>
-          <design:nullability>Unknown</design:nullability>
-        </design:attributes>
-      </design:ParameterDefinition>
-    </parameter>
-  </DataSetParameters>
   <design:ResultSets derivedMetaData="true">
     <design:resultSetDefinitions>
       <design:resultSetColumns>
@@ -3334,6 +3335,7 @@ erpcs.push(obj);</expression>
                     <expression name="expression" type="javascript">obj.id = dataSetRow["id"];&#13;
 obj.ref_table = dataSetRow["ref_table"];&#13;
 obj.columns = dataSetRow["columns"];&#13;
+obj.columnsOfTemplate = dataSetRow["columns_of_template"]&#13;
 obj.path = dataSetRow["path"];&#13;
 obj.display_name = dataSetRow["display_name"];</expression>
                     <property name="dataType">string</property>
@@ -3545,7 +3547,7 @@ for (var i = 1; i &lt; max; i++) {&#13;
         <text-data id="236">
             <property name="fontFamily">"Times New Roman"</property>
             <property name="fontSize">12pt</property>
-            <expression name="valueExpr">var table = eval('(' + obj.columns + ')');&#13;
+            <expression name="valueExpr">var table = eval('(' + obj.columnsOfTemplate + ')');&#13;
 onconsole += '&lt;table border="1" bordercolor="#000000" cellspacing="0" cellpadding="10" width="100%" style="font-size : 11px; font-family : Times New Roman;">';&#13;
 onconsole += '&lt;tr>';&#13;
 var t = 0;&#13;

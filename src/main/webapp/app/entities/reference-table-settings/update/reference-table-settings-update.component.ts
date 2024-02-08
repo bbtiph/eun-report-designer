@@ -69,7 +69,6 @@ export class ReferenceTableSettingsUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const referenceTableSettings = this.referenceTableSettingsFormService.getReferenceTableSettings(this.editForm);
-    console.log('res: ', referenceTableSettings);
     if (referenceTableSettings.id !== null) {
       this.subscribeToSaveResponse(this.referenceTableSettingsService.update(referenceTableSettings));
     } else {

@@ -21,6 +21,7 @@ type ReferenceTableSettingsFormGroupContent = {
   refTable: FormControl<IReferenceTableSettings['refTable']>;
   displayName: FormControl<IReferenceTableSettings['displayName']>;
   columns: FormControl<IReferenceTableSettings['columns']>;
+  columnsOfTemplate: FormControl<IReferenceTableSettings['columnsOfTemplate']>;
   path: FormControl<IReferenceTableSettings['path']>;
   isActive: FormControl<IReferenceTableSettings['isActive']>;
   file: FormControl<IReferenceTableSettings['file']>;
@@ -49,6 +50,7 @@ export class ReferenceTableSettingsFormService {
       refTable: new FormControl(referenceTableSettingsRawValue.refTable),
       displayName: new FormControl(referenceTableSettingsRawValue.displayName),
       columns: new FormControl(referenceTableSettingsRawValue.columns),
+      columnsOfTemplate: new FormControl(referenceTableSettingsRawValue.columnsOfTemplate),
       path: new FormControl(referenceTableSettingsRawValue.path),
       isActive: new FormControl(referenceTableSettingsRawValue.isActive),
       file: new FormControl(referenceTableSettingsRawValue.file),

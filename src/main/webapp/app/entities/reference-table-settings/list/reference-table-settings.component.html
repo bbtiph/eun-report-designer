@@ -56,6 +56,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="columnsOfTemplate">
+            <div class="d-flex">
+              <span>Columns Of Template</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <!--          <th scope="col" jhiSortBy="path">-->
           <!--            <div class="d-flex">-->
           <!--              <span>Path</span>-->
@@ -87,6 +93,15 @@
           <td>
             {{ referenceTableSettings.columns }}
             <span *ngIf="referenceTableSettings.columns && referenceTableSettings.columns.length > 200" style="color: #10abce">
+              <a [routerLink]="['/reference-table-settings', referenceTableSettings.id, 'view']">show more</a>
+            </span>
+          </td>
+          <td>
+            {{ referenceTableSettings.columnsOfTemplate }}
+            <span
+              *ngIf="referenceTableSettings.columnsOfTemplate && referenceTableSettings.columnsOfTemplate.length > 200"
+              style="color: #10abce"
+            >
               <a [routerLink]="['/reference-table-settings', referenceTableSettings.id, 'view']">show more</a>
             </span>
           </td>
