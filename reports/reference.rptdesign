@@ -9,6 +9,8 @@
 		var moe = [];
 		var projects = [];
 		var events = [];
+		var rercs = [];
+		var erpcs = [];
 	]]></method>
     <property name="iconFile">/templates/blank_report.gif</property>
     <property name="layoutPreference">fixed layout</property>
@@ -46,7 +48,7 @@
             <property name="dataType">string</property>
             <property name="distinct">true</property>
             <simple-property-list name="defaultValue">
-                <value type="constant">13101</value>
+                <value type="constant">14205</value>
             </simple-property-list>
             <list-property name="selectionList"/>
             <property name="paramType">simple</property>
@@ -2844,6 +2846,296 @@ GROUP BY id, name, type, is_active, external_event_id]]></xml-property>
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="relRventReferencesCountries" id="374">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">country_code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_code</text-property>
+                    <text-property name="heading">country_code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_name</text-property>
+                    <text-property name="heading">country_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">countries_id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">countries_id</text-property>
+                    <text-property name="heading">countries_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">event_references_id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">event_references_id</text-property>
+                    <text-property name="heading">event_references_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">participants_count</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">participants_count</text-property>
+                    <text-property name="heading">participants_count</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">country_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">country_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">countries_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">event_references_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">participants_count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">country_code</property>
+                    <property name="nativeName">country_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">country_name</property>
+                    <property name="nativeName">country_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">countries_id</property>
+                    <property name="nativeName">countries_id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">event_references_id</property>
+                    <property name="nativeName">event_references_id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">participants_count</property>
+                    <property name="nativeName">participants_count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select c.country_code, c.country_name, rerc.* from rel_event_references_countries rerc
+    left join countries c on c.id = rerc.countries_id
+    left join event_references er on rerc.event_references_id = er.id
+where er.is_active
+;]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="erpc" id="375">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">id</text-property>
+                    <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">category</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">category</text-property>
+                    <text-property name="heading">category</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">participants_count</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">participants_count</text-property>
+                    <text-property name="heading">participants_count</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">event_reference_id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">event_reference_id</text-property>
+                    <text-property name="heading">event_reference_id</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">category</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">participants_count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">event_reference_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">id</property>
+                    <property name="nativeName">id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">category</property>
+                    <property name="nativeName">category</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">participants_count</property>
+                    <property name="nativeName">participants_count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">event_reference_id</property>
+                    <property name="nativeName">event_reference_id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select erpc.*
+from event_references_participants_category erpc
+left join event_references er on er.id = erpc.event_reference_id
+where er.is_active
+;]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>category</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>category</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>category</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>participants_count</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>participants_count</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>participants_count</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>event_reference_id</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>event_reference_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>event_reference_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
@@ -2942,6 +3234,87 @@ moe.push(obj);</expression>
                                 </structure>
                             </list-property>
                             <property name="resultSetColumn">moe</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <table id="376">
+            <property name="dataSet">relRventReferencesCountries</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">rerc</text-property>
+                    <expression name="expression" type="javascript">var obj = [];&#13;
+obj['countryCode'] = dataSetRow["country_code"]==null?"":dataSetRow["country_code"];&#13;
+obj['countryName'] = dataSetRow["country_name"]==null?"":dataSetRow["country_name"];&#13;
+obj['countries_id'] = dataSetRow["countries_id"]==null?"":dataSetRow["countries_id"];&#13;
+obj['event_references_id'] = dataSetRow["event_references_id"]==null?"":dataSetRow["event_references_id"];&#13;
+obj['participantsCount'] = dataSetRow["participants_count"]==null?"":dataSetRow["participants_count"];&#13;
+&#13;
+rercs.push(obj);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="383"/>
+            <detail>
+                <row id="379">
+                    <cell id="380">
+                        <data id="388">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">Column Binding</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <table id="389">
+            <property name="dataSet">erpc</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">erpc</property>
+                    <expression name="expression" type="javascript">var obj = [];&#13;
+&#13;
+obj['id'] = dataSetRow["id"]==null?"":dataSetRow["id"];&#13;
+obj['category'] = dataSetRow["category"]==null?"":dataSetRow["category"];&#13;
+obj['event_references_id'] = dataSetRow["event_reference_id"]==null?"":dataSetRow["event_reference_id"];&#13;
+obj['participantsCount'] = dataSetRow["participants_count"]==null? "" :dataSetRow["participants_count"];&#13;
+&#13;
+erpcs.push(obj);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="396"/>
+            <detail>
+                <row id="392">
+                    <cell id="393">
+                        <data id="397">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">erpc</property>
                         </data>
                     </cell>
                 </row>
@@ -3061,16 +3434,80 @@ projects.push(obj);</expression>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">events</property>
-                    <expression name="expression" type="javascript">var obj = [];&#13;
+                    <expression name="expression" type="javascript">var z = 0;&#13;
+var a = [];&#13;
+var x = 0;&#13;
+var b = [];&#13;
+for (var i = 0; i &lt; rercs.length; i++) {&#13;
+  if (dataSetRow["id"] === rercs[i].event_references_id) {&#13;
+    a[z] = rercs[i];&#13;
+    z++;&#13;
+  }&#13;
+}&#13;
+for (var i = 0; i &lt; erpcs.length; i++) {&#13;
+  if (dataSetRow["id"] === erpcs[i].event_references_id) {&#13;
+    b[x] = erpcs[i];&#13;
+    x++;&#13;
+  }&#13;
+}&#13;
+&#13;
+var obj = [];&#13;
 &#13;
 obj['id'] = dataSetRow["id"]==null?"":dataSetRow["id"];&#13;
 obj['name'] = dataSetRow["name"]==null?"":dataSetRow["name"];&#13;
 obj['type'] = dataSetRow["type"]==null?"":dataSetRow["type"];&#13;
 obj['isActive'] = dataSetRow["is_active"]==null?"":dataSetRow["is_active"];&#13;
 obj['externalEventId'] = dataSetRow["external_event_id"]==null?"":dataSetRow["external_event_id"];&#13;
-obj['participantsCount'] = dataSetRow["participants_count"]==null?"":dataSetRow["participants_count"];&#13;
+obj['totalCount'] = dataSetRow["participants_count"]==null?"":dataSetRow["participants_count"];&#13;
+if (z > 0) {&#13;
+  obj['countryCode'] = a[0].countryCode;&#13;
+  obj['countryName'] = a[0].countryName;&#13;
+  obj['participantsCount'] = a[0].participantsCount;&#13;
+} else {&#13;
+  obj['countryCode'] = '';&#13;
+  obj['countryName'] = '';&#13;
+  obj['participantsCount'] = '';&#13;
+}&#13;
 &#13;
-events.push(obj);</expression>
+if (x > 0) {&#13;
+  obj['category'] = b[0].category;&#13;
+  obj['participantsCountByCategory'] = b[0].participantsCount;&#13;
+} else {&#13;
+  obj['category'] = '';&#13;
+  obj['participantsCountByCategory'] = '';&#13;
+}&#13;
+&#13;
+events.push(obj);&#13;
+&#13;
+var max = x;&#13;
+if (max &lt; z) max = z;&#13;
+for (var i = 1; i &lt; max; i++) {&#13;
+  obj = [];&#13;
+  obj['id'] = '';&#13;
+  obj['name'] = '';&#13;
+  obj['type'] = '';&#13;
+  obj['isActive'] = '';&#13;
+  obj['externalEventId'] = '';&#13;
+  obj['totalCount'] = '';&#13;
+  if (a[i]) {&#13;
+    obj['countryCode'] = a[i].countryCode;&#13;
+    obj['countryName'] = a[i].countryName;&#13;
+    obj['participantsCount'] = a[i].participantsCount;&#13;
+  } else {&#13;
+    obj['countryCode'] = '';&#13;
+    obj['countryName'] = '';&#13;
+    obj['participantsCount'] = '';&#13;
+  }&#13;
+&#13;
+  if (b[i]) {&#13;
+    obj['category'] = b[i].category;&#13;
+    obj['participantsCountByCategory'] = b[i].participantsCount;&#13;
+  } else {&#13;
+    obj['category'] = '';&#13;
+    obj['participantsCountByCategory'] = '';&#13;
+  }&#13;
+  events.push(obj);&#13;
+}</expression>
                     <property name="dataType">string</property>
                     <property name="allowExport">true</property>
                 </structure>
@@ -3176,7 +3613,16 @@ switch (obj.ref_table) {&#13;
       }&#13;
       onconsole += '&lt;/tr>';&#13;
     }&#13;
-    break;   &#13;
+    break;  &#13;
+  case 'event_reference_test':&#13;
+    for (var i = 0; i &lt; events.length; i++) {&#13;
+      onconsole += '&lt;tr>';&#13;
+      for (var j = 0; j &lt; sortedColumns.length; j++) {&#13;
+        onconsole += '&lt;td rowspan="1" colspan="2">' + events[i][sortedColumns[j]] + '&lt;/td>';&#13;
+      }&#13;
+      onconsole += '&lt;/tr>';&#13;
+    }&#13;
+    break;   		 &#13;
 }&#13;
 onconsole += '&lt;/table>';</expression>
             <property name="contentType">html</property>
