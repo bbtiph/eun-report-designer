@@ -21,6 +21,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
               <option [value]="'event_reference'">Event references</option>
               <option [value]="'funding_and_project_of_project'">Funding&project of the Project</option>
               <option [value]="'funding_and_project_for_eun'">Funding&project for EUN</option>
+              <option [value]="'participants_eun_indicator'">Courses</option>
+              <option [value]="'organization_eun_indicator'">Organizations</option>
             </select>
           </div>
         </div>

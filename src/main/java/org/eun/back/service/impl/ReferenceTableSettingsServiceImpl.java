@@ -17,9 +17,7 @@ import org.eun.back.domain.*;
 import org.eun.back.repository.*;
 import org.eun.back.security.SecurityUtils;
 import org.eun.back.service.*;
-import org.eun.back.service.dto.EventReferencesDTO;
-import org.eun.back.service.dto.JobInfoDTO;
-import org.eun.back.service.dto.ReferenceTableSettingsDTO;
+import org.eun.back.service.dto.*;
 import org.eun.back.service.mapper.EventReferencesMapper;
 import org.eun.back.service.mapper.ReferenceTableSettingsMapper;
 import org.slf4j.Logger;
@@ -59,6 +57,10 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
 
     private final JobInfoService jobInfoService;
 
+    private final ParticipantsEunIndicatorService participantsEunIndicatorService;
+
+    private final OrganizationEunIndicatorService organizationEunIndicatorService;
+
     private final BirtReportService birtReportService;
 
     private final FundingAndBudgetService fundingAndBudgetService;
@@ -75,6 +77,8 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         RelEventReferencesCountriesRepository relEventReferencesCountriesRepository,
         EventReferencesParticipantsCategoryRepository eventReferencesParticipantsCategoryRepository,
         JobInfoService jobInfoService,
+        ParticipantsEunIndicatorService participantsEunIndicatorService,
+        OrganizationEunIndicatorService organizationEunIndicatorService,
         BirtReportService birtReportService,
         FundingAndBudgetService fundingAndBudgetService
     ) {
@@ -89,6 +93,8 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         this.relEventReferencesCountriesRepository = relEventReferencesCountriesRepository;
         this.eventReferencesParticipantsCategoryRepository = eventReferencesParticipantsCategoryRepository;
         this.jobInfoService = jobInfoService;
+        this.participantsEunIndicatorService = participantsEunIndicatorService;
+        this.organizationEunIndicatorService = organizationEunIndicatorService;
         this.birtReportService = birtReportService;
         this.fundingAndBudgetService = fundingAndBudgetService;
     }
@@ -158,6 +164,10 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "funding_and_project_of_project":
             case "funding_and_project_for_eun":
                 return fundingAndBudgetService.findAll();
+            case "participants_eun_indicator":
+                return participantsEunIndicatorService.findAll();
+            case "organization_eun_indicator":
+                return organizationEunIndicatorService.findAll();
         }
         return null;
     }
@@ -183,6 +193,12 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "funding_and_project_of_project":
             case "funding_and_project_for_eun":
                 return fundingAndBudgetService.findAll();
+            case "participants_eun_indicator":
+                return participantsEunIndicatorService.findAllByCountryId(countryCode);
+            case "organization_eun_indicator":
+                return organizationEunIndicatorService.findAllByCountryName(
+                    countriesRepository.findFirstByCountryCodeIgnoreCase(countryCode).getCountryName()
+                );
         }
         return null;
     }
@@ -541,6 +557,12 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "job_info":
                 jobInfoService.delete(id);
                 break;
+            case "participants_eun_indicator":
+                participantsEunIndicatorService.delete(id);
+                break;
+            case "organization_eun_indicator":
+                organizationEunIndicatorService.delete(id);
+                break;
         }
     }
 
@@ -594,6 +616,18 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "job_info":
                 JobInfoDTO jobInfo = objectMapper.readValue(jsonRow, JobInfoDTO.class);
                 return jobInfoService.save(jobInfo);
+            case "participants_eun_indicator":
+                ParticipantsEunIndicatorDTO participantsEunIndicatorDTO = objectMapper.readValue(
+                    jsonRow,
+                    ParticipantsEunIndicatorDTO.class
+                );
+                return participantsEunIndicatorService.save(participantsEunIndicatorDTO);
+            case "organization_eun_indicator":
+                OrganizationEunIndicatorDTO organizationEunIndicatorDTO = objectMapper.readValue(
+                    jsonRow,
+                    OrganizationEunIndicatorDTO.class
+                );
+                return organizationEunIndicatorService.save(organizationEunIndicatorDTO);
         }
         return null;
     }

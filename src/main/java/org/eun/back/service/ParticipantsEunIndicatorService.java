@@ -44,6 +44,8 @@ public interface ParticipantsEunIndicatorService {
      */
     List<ParticipantsEunIndicatorDTO> findAll();
 
+    List<ParticipantsEunIndicatorDTO> findAllByCountryId(String countryCode);
+
     /**
      * Get the "id" participantsEunIndicator.
      *

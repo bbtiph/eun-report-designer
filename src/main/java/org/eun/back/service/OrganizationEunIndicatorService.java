@@ -44,6 +44,8 @@ public interface OrganizationEunIndicatorService {
      */
     List<OrganizationEunIndicatorDTO> findAll();
 
+    List<OrganizationEunIndicatorDTO> findAllByCountryName(String countryName);
+
     /**
      * Get the "id" organizationEunIndicator.
      *

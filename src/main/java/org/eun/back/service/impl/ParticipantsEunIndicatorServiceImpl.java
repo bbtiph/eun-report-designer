@@ -166,6 +166,17 @@ public class ParticipantsEunIndicatorServiceImpl implements ParticipantsEunIndic
 
     @Override
     @Transactional(readOnly = true)
+    public List<ParticipantsEunIndicatorDTO> findAllByCountryId(String countryCode) {
+        log.debug("Request to get all ParticipantsEunIndicators");
+        return participantsEunIndicatorRepository
+            .findAllByCountryCodeEquals(countryCode)
+            .stream()
+            .map(participantsEunIndicatorMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<ParticipantsEunIndicatorDTO> findOne(Long id) {
         log.debug("Request to get ParticipantsEunIndicator : {}", id);
         return participantsEunIndicatorRepository.findById(id).map(participantsEunIndicatorMapper::toDto);

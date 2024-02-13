@@ -172,6 +172,16 @@ public class OrganizationEunIndicatorServiceImpl implements OrganizationEunIndic
     }
 
     @Override
+    public List<OrganizationEunIndicatorDTO> findAllByCountryName(String countryName) {
+        log.debug("Request to get all OrganizationEunIndicators");
+        return organizationEunIndicatorRepository
+            .findAllByCountryNameEquals(countryName)
+            .stream()
+            .map(organizationEunIndicatorMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<OrganizationEunIndicatorDTO> findOne(Long id) {
         log.debug("Request to get OrganizationEunIndicator : {}", id);
