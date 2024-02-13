@@ -9,6 +9,8 @@
         var projects=[];
         var fb=[];
         var json = eval('(' + params['docId'] + ')');
+		var participants = [];
+		var organizations = [];
 	]]></method>
     <property name="iconFile">/templates/blank_report.gif</property>
     <property name="bidiLayoutOrientation">ltr</property>
@@ -2403,6 +2405,938 @@ where status_proposal = 'Approved']]></xml-property>
   </design:ResultSets>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="organizationEunIndicator" id="399">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">id</property>
+                    <text-property name="displayName">id</text-property>
+                    <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">period</property>
+                    <text-property name="displayName">period</text-property>
+                    <text-property name="heading">period</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">n_count</property>
+                    <text-property name="displayName">n_count</text-property>
+                    <text-property name="heading">n_count</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_id</property>
+                    <text-property name="displayName">country_id</text-property>
+                    <text-property name="heading">country_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">project_id</property>
+                    <text-property name="displayName">project_id</text-property>
+                    <text-property name="heading">project_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">project_url</property>
+                    <text-property name="displayName">project_url</text-property>
+                    <text-property name="heading">project_url</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_name</property>
+                    <text-property name="displayName">country_name</text-property>
+                    <text-property name="heading">country_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">project_name</property>
+                    <text-property name="displayName">project_name</text-property>
+                    <text-property name="heading">project_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">reports_project_id</property>
+                    <text-property name="displayName">reports_project_id</text-property>
+                    <text-property name="heading">reports_project_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">created_by</property>
+                    <text-property name="displayName">created_by</text-property>
+                    <text-property name="heading">created_by</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">last_modified_by</property>
+                    <text-property name="displayName">last_modified_by</text-property>
+                    <text-property name="heading">last_modified_by</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">created_date</property>
+                    <text-property name="displayName">created_date</text-property>
+                    <text-property name="heading">created_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">last_modified_date</property>
+                    <text-property name="displayName">last_modified_date</text-property>
+                    <text-property name="heading">last_modified_date</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">period</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">n_count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">country_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">project_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">project_url</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">country_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">project_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">reports_project_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">created_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">last_modified_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">created_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">last_modified_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">id</property>
+                    <property name="nativeName">id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">period</property>
+                    <property name="nativeName">period</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">n_count</property>
+                    <property name="nativeName">n_count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">country_id</property>
+                    <property name="nativeName">country_id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">project_id</property>
+                    <property name="nativeName">project_id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">project_url</property>
+                    <property name="nativeName">project_url</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">country_name</property>
+                    <property name="nativeName">country_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">project_name</property>
+                    <property name="nativeName">project_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">reports_project_id</property>
+                    <property name="nativeName">reports_project_id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">created_by</property>
+                    <property name="nativeName">created_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">last_modified_by</property>
+                    <property name="nativeName">last_modified_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">created_date</property>
+                    <property name="nativeName">created_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">last_modified_date</property>
+                    <property name="nativeName">last_modified_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT t.*
+FROM public.organization_eun_indicator t]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>period</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>period</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>period</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>n_count</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>n_count</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>n_count</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>country_id</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>country_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>country_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>project_id</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>project_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>project_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>project_url</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>project_url</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>project_url</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>country_name</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>country_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>country_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>project_name</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>project_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>project_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>reports_project_id</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>reports_project_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>reports_project_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>created_by</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>created_by</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>created_by</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>last_modified_by</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>last_modified_by</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>last_modified_by</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>created_date</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>13</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>created_date</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>created_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>last_modified_date</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>13</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>last_modified_date</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>last_modified_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="participantsEunIndicator" id="398">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">id</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">id</text-property>
+                    <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">period</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">period</text-property>
+                    <text-property name="heading">period</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">n_count</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">n_count</text-property>
+                    <text-property name="heading">n_count</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">course_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">course_id</text-property>
+                    <text-property name="heading">course_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">course_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">course_name</text-property>
+                    <text-property name="heading">course_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">country_code</text-property>
+                    <text-property name="heading">country_code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">created_by</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">created_by</text-property>
+                    <text-property name="heading">created_by</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">last_modified_by</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">last_modified_by</text-property>
+                    <text-property name="heading">last_modified_by</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">created_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">created_date</text-property>
+                    <text-property name="heading">created_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">last_modified_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">last_modified_date</text-property>
+                    <text-property name="heading">last_modified_date</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">period</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">n_count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">course_id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">course_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">country_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">created_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">last_modified_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">created_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">last_modified_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">id</property>
+                    <property name="nativeName">id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">period</property>
+                    <property name="nativeName">period</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">n_count</property>
+                    <property name="nativeName">n_count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">course_id</property>
+                    <property name="nativeName">course_id</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">course_name</property>
+                    <property name="nativeName">course_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">country_code</property>
+                    <property name="nativeName">country_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">created_by</property>
+                    <property name="nativeName">created_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">last_modified_by</property>
+                    <property name="nativeName">last_modified_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">created_date</property>
+                    <property name="nativeName">created_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">last_modified_date</property>
+                    <property name="nativeName">last_modified_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT t.*
+FROM public.participants_eun_indicator t]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>period</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>period</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>period</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>n_count</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>n_count</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>n_count</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>course_id</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>course_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>course_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>course_name</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>course_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>course_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>country_code</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>country_code</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>country_code</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>created_by</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>created_by</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>created_by</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>last_modified_by</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>last_modified_by</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>last_modified_by</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>created_date</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>13</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>created_date</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>created_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>last_modified_date</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>13</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>last_modified_date</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>last_modified_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
@@ -2627,6 +3561,93 @@ fb.push(obj);</expression>
                 </row>
             </detail>
         </table>
+        <table id="400">
+            <property name="dataSet">participantsEunIndicator</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">paticipants</property>
+                    <expression name="expression" type="javascript">var obj = [];&#13;
+&#13;
+obj['id'] = dataSetRow["id"]==null?"":dataSetRow["id"];&#13;
+obj['period'] = dataSetRow["period"]==null?"":dataSetRow["period"];&#13;
+obj['nCount'] = dataSetRow["n_count"]==null?"":dataSetRow["n_count"];&#13;
+obj['courseId'] = dataSetRow["course_id"]==null? "" :dataSetRow["course_id"];&#13;
+obj['courseName'] = dataSetRow["course_name"]==null?"":dataSetRow["course_name"];&#13;
+obj['countryCode'] = dataSetRow["country_code"]==null? "" :dataSetRow["country_code"];&#13;
+&#13;
+participants.push(obj);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="407"/>
+            <detail>
+                <row id="403">
+                    <cell id="404">
+                        <data id="416">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">paticipants</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <table id="408">
+            <property name="dataSet">organizationEunIndicator</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">organizations</property>
+                    <expression name="expression" type="javascript">var obj = [];&#13;
+&#13;
+obj['id'] = dataSetRow["id"]==null?"":dataSetRow["id"];&#13;
+obj['period'] = dataSetRow["period"]==null?"":dataSetRow["period"];&#13;
+obj['nCount'] = dataSetRow["n_count"]==null?"":dataSetRow["n_count"];&#13;
+obj['countryId'] = dataSetRow["country_id"]==null? "" :dataSetRow["country_id"];&#13;
+obj['projectId'] = dataSetRow["project_id"]==null?"":dataSetRow["project_id"];&#13;
+obj['projectUrl'] = dataSetRow["project_url"]==null? "" :dataSetRow["project_url"];&#13;
+obj['countryName'] = dataSetRow["country_name"]==null? "" :dataSetRow["country_name"];&#13;
+obj['projectName'] = dataSetRow["project_name"]==null?"":dataSetRow["project_name"];&#13;
+obj['reportsProjectId'] = dataSetRow["reports_project_id"]==null? "" :dataSetRow["reports_project_id"];&#13;
+&#13;
+organizations.push(obj);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="415"/>
+            <detail>
+                <row id="411">
+                    <cell id="412">
+                        <data id="418">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">organizations</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
         <grid id="297">
             <column id="298"/>
             <row id="299">
@@ -2758,6 +3779,28 @@ for (var i = 0; i &lt; json.length; i++) {&#13;
             }&#13;
             tableHTML += '&lt;/table>';&#13;
             break;&#13;
+&#13;
+&#13;
+          case 'participants_eun_indicator':&#13;
+            for(var j = 0; j &lt; participants.length; j++) {&#13;
+              tableHTML += '&lt;tr>';&#13;
+              for (var c = 0; c &lt; contentTemplate.columns.length; c++) {&#13;
+                tableHTML += '&lt;th>' + (participants[j][contentTemplate.columns[c].index] ? participants[j][contentTemplate.columns[c].index] : '') + '&lt;/th>';&#13;
+              }&#13;
+              tableHTML += '&lt;/tr>';&#13;
+            }&#13;
+            tableHTML += '&lt;/table>';&#13;
+            break;  &#13;
+          case 'organization_eun_indicator':&#13;
+            for(var j = 0; j &lt; organizations.length; j++) {&#13;
+              tableHTML += '&lt;tr>';&#13;
+              for (var c = 0; c &lt; contentTemplate.columns.length; c++) {&#13;
+                tableHTML += '&lt;th>' + (organizations[j][contentTemplate.columns[c].index] ? organizations[j][contentTemplate.columns[c].index] : '') + '&lt;/th>';&#13;
+              }&#13;
+              tableHTML += '&lt;/tr>';&#13;
+            }&#13;
+            tableHTML += '&lt;/table>';&#13;
+            break;    &#13;
         }&#13;
       }&#13;
     }&#13;
