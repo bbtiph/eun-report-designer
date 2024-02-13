@@ -5,23 +5,23 @@ export const sampleWithRequiredData: IReferenceTableSettings = {
 };
 
 export const sampleWithPartialData: IReferenceTableSettings = {
-  id: 37726,
-  refTable: 'disintermediate Namibia backing',
-  columns: 'synergies Expressway',
-  columnsOfTemplate: 'payment Colorado target',
-  path: 'Savings utilize circuit',
+  id: 73637,
+  refTable: 'reintermediate Coordinator',
+  columns: 'salmon',
+  columnsOfTemplate: 'Practical',
+  actions: 'Dynamic multi-byte',
+  path: 'target',
   isActive: true,
-  file: '../fake-data/blob/hipster.png',
-  fileContentType: 'unknown',
 };
 
 export const sampleWithFullData: IReferenceTableSettings = {
-  id: 73333,
-  refTable: 'Corporate online',
-  displayName: 'RSS cultivate SAS',
-  columns: 'Account',
-  columnsOfTemplate: 'Cheese',
-  path: 'open-source Pants',
+  id: 62510,
+  refTable: 'maroon',
+  displayName: 'circuit',
+  columns: 'sensor Computer',
+  columnsOfTemplate: 'Human Rapid',
+  actions: 'Trail compress Auto',
+  path: 'Rubber',
   isActive: true,
   file: '../fake-data/blob/hipster.png',
   fileContentType: 'unknown',

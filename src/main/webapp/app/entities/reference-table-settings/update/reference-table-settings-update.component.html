@@ -48,6 +48,15 @@
           ></json-editor-toolbar>
         </div>
 
+        <div class="row mb-3">
+          <label class="form-label">Settings of Actions</label>
+          <json-editor-toolbar
+            [schema]="editForm.getRawValue().actions"
+            [action]="'edit'"
+            (columnsUpdated)="updateColumns($event)"
+          ></json-editor-toolbar>
+        </div>
+
         <!--        <div class="row mb-3">-->
         <!--          <label class="form-label" for="field_path">Path</label>-->
         <!--          <input type="text" class="form-control" name="path" id="field_path" data-cy="path" formControlName="path" />-->

@@ -56,30 +56,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="columnsOfTemplate">
-            <div class="d-flex">
-              <span>Columns Of Template</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <!--          <th scope="col" jhiSortBy="path">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span>Path</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
-          <!--          <th scope="col" jhiSortBy="isActive">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span>Is Active</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
-          <!--          <th scope="col" jhiSortBy="file">-->
-          <!--            <div class="d-flex">-->
-          <!--              <span>File</span>-->
-          <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
-          <!--            </div>-->
-          <!--          </th>-->
           <th scope="col"></th>
         </tr>
       </thead>
@@ -96,37 +72,6 @@
               <a [routerLink]="['/reference-table-settings', referenceTableSettings.id, 'view']">show more</a>
             </span>
           </td>
-          <td>
-            {{ referenceTableSettings.columnsOfTemplate }}
-            <span
-              *ngIf="referenceTableSettings.columnsOfTemplate && referenceTableSettings.columnsOfTemplate.length > 200"
-              style="color: #10abce"
-            >
-              <a [routerLink]="['/reference-table-settings', referenceTableSettings.id, 'view']">show more</a>
-            </span>
-          </td>
-          <!--          <td>-->
-          <!--            <a *ngIf="referenceTableSettings.file" (click)="openFile(referenceTableSettings.file, referenceTableSettings.fileContentType)"-->
-          <!--              >Open</a-->
-          <!--            >-->
-          <!--            <span *ngIf="referenceTableSettings.file"-->
-          <!--              >{{ referenceTableSettings.fileContentType }}, {{ byteSize(referenceTableSettings.file) }}</span-->
-          <!--            >-->
-          <!--          </td>-->
-          <!--          <td>-->
-          <!--            <span class="download-link">-->
-          <!--              <a-->
-          <!--                *ngIf="referenceTableSettings.file"-->
-          <!--                (click)="openFile(referenceTableSettings.file, referenceTableSettings.fileContentType)"-->
-          <!--                style="color: red"-->
-          <!--              >-->
-          <!--                <i class="fas fa-download"></i> <span style="color: red">Download</span>-->
-          <!--              </a>-->
-          <!--              <a style="color: red"></a>-->
-          <!--            </span>-->
-          <!--          </td>-->
-          <!--          <td>{{ referenceTableSettings.path }}</td>-->
-          <!--          <td>{{ referenceTableSettings.isActive }}</td>-->
           <td class="text-end">
             <div class="btn-group">
               <button

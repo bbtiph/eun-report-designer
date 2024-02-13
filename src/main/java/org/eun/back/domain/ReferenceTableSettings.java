@@ -31,6 +31,9 @@ public class ReferenceTableSettings implements Serializable {
     @Column(name = "columns_of_template")
     private String columnsOfTemplate;
 
+    @Column(name = "actions")
+    private String actions;
+
     @Column(name = "path")
     private String path;
 
@@ -109,6 +112,19 @@ public class ReferenceTableSettings implements Serializable {
 
     public void setColumnsOfTemplate(String columnsOfTemplate) {
         this.columnsOfTemplate = columnsOfTemplate;
+    }
+
+    public String getActions() {
+        return this.actions;
+    }
+
+    public ReferenceTableSettings actions(String actions) {
+        this.setActions(actions);
+        return this;
+    }
+
+    public void setActions(String actions) {
+        this.actions = actions;
     }
 
     public String getPath() {
@@ -191,6 +207,7 @@ public class ReferenceTableSettings implements Serializable {
             ", displayName='" + getDisplayName() + "'" +
             ", columns='" + getColumns() + "'" +
             ", columnsOfTemplate='" + getColumnsOfTemplate() + "'" +
+            ", actions='" + getActions() + "'" +
             ", path='" + getPath() + "'" +
             ", isActive='" + getIsActive() + "'" +
             ", file='" + getFile() + "'" +

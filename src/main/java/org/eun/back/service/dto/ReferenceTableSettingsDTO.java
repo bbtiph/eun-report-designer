@@ -20,6 +20,8 @@ public class ReferenceTableSettingsDTO implements Serializable {
 
     private String columnsOfTemplate;
 
+    private String actions;
+
     private String path;
 
     private Boolean isActive;
@@ -67,6 +69,14 @@ public class ReferenceTableSettingsDTO implements Serializable {
 
     public void setColumnsOfTemplate(String columnsOfTemplate) {
         this.columnsOfTemplate = columnsOfTemplate;
+    }
+
+    public String getActions() {
+        return actions;
+    }
+
+    public void setActions(String actions) {
+        this.actions = actions;
     }
 
     public String getPath() {
@@ -131,6 +141,7 @@ public class ReferenceTableSettingsDTO implements Serializable {
             ", displayName='" + getDisplayName() + "'" +
             ", columns='" + getColumns() + "'" +
             ", columnsOfTemplate='" + getColumnsOfTemplate() + "'" +
+            ", actions='" + getActions() + "'" +
             ", path='" + getPath() + "'" +
             ", isActive='" + getIsActive() + "'" +
             ", file='" + getFile() + "'" +

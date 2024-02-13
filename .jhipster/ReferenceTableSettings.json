@@ -22,6 +22,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "actions",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "path",
       "fieldType": "String"
     },

@@ -81,4 +81,12 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="20230714042342-5" author="jhipster">
+        <addColumn tableName="reference_table_settings">
+            <column name="actions" type="varchar(10000)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
