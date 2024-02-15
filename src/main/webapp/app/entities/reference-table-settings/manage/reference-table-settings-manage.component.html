@@ -58,16 +58,23 @@
 
         <tr *ngIf="type === 'template' || isEdit">
           <ng-container *ngFor="let col of settings">
-            <th scope="col">
+            <th *ngIf="col.type !== 'list'" scope="col">
               <span>
                 {{ getColumnFormControl(col.index, col.name).value }}
               </span>
             </th>
+            <ng-container *ngFor="let col2 of col?.columns">
+              <th *ngIf="col.type === 'list' && col?.embedded" scope="col">
+                <span>
+                  {{ getColumnFormControl(col2.index, col2.title).value }}
+                </span>
+              </th>
+            </ng-container>
           </ng-container>
         </tr>
         <tr *ngIf="type === 'template' || isEdit">
           <ng-container *ngFor="let col of settings">
-            <th scope="col" *ngIf="isEdit || isActiveColumn(col.index)">
+            <th scope="col" *ngIf="(isEdit || isActiveColumn(col.index)) && col.type !== 'list'">
               <div class="d-flex">
                 <input
                   [id]="'column_' + col.index"
@@ -84,14 +91,36 @@
                 class="form-check-input"
                 type="checkbox"
                 [ngModel]="getValueTemplate(col.index)"
-                (click)="setValueTemplate(col.index, col.name)"
+                (click)="setValueTemplate(col.index, col.name, '')"
               />
             </th>
+            <ng-container *ngFor="let col2 of col?.columns">
+              <th scope="col" *ngIf="(isEdit || isActiveColumn(col2.index)) && col.type === 'list' && col?.embedded">
+                <div class="d-flex">
+                  <input
+                    [id]="'column_' + col2.index"
+                    [formControl]="getColumnFormControl(col2.index, col2.title)"
+                    class="form-control"
+                    *ngIf="type === 'template' || isEdit"
+                    (change)="setColumnValue(col2.index)"
+                  />
+                  <br />
+                </div>
+                <p class="table-col"></p>
+                <input
+                  *ngIf="type === 'template' || isEdit"
+                  class="form-check-input"
+                  type="checkbox"
+                  [ngModel]="getValueTemplate(col2.index)"
+                  (click)="setValueTemplate(col2.index, col2.title, col.index)"
+                />
+              </th>
+            </ng-container>
           </ng-container>
         </tr>
       </thead>
       <tbody *ngIf="type !== 'template' && !isEdit">
-        <tr *ngFor="let row of data; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let row of confirmedData; trackBy: trackId" data-cy="entityTable">
           <ng-container *ngFor="let col of template.columns">
             <td *ngIf="isActiveColumn(col.index)">
               {{ getValue(row, col.index) }}

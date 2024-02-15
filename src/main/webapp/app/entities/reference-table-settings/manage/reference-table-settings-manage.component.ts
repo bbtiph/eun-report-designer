@@ -38,6 +38,7 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
 
   public columnDefs!: (ColDef | ColGroupDef)[];
   data?: any[] = [];
+  confirmedData?: any[] = [];
 
   predicate = 'id';
   ascending = true;
@@ -68,6 +69,33 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
         .findAllReferenceTableSettingsDataByCountry(this.source ?? '', this.selectedCountry?.countryCode ?? '', queryParams)
         .subscribe(data => {
           this.data = data;
+          for (let i = 0; i < data.length; i++) {
+            const mainData = data[i];
+            const keys = Object.keys(mainData);
+            let hasList = false;
+            keys.forEach(key => {
+              // @ts-ignore
+              const fieldConfig = this.settings.find(setting => setting.index === key);
+              if (mainData[key] instanceof Array && mainData[key].length > 0 && fieldConfig.embedded) {
+                hasList = true;
+                const listData = mainData[key];
+                for (let j = 0; j < listData.length; j++) {
+                  const combinedData = { ...mainData };
+                  combinedData[key] = '';
+                  const listEntry = listData[j];
+                  Object.assign(combinedData, listEntry);
+                  // @ts-ignore
+                  this.confirmedData.push(combinedData);
+                }
+              }
+            });
+            if (!hasList) {
+              // @ts-ignore
+              this.confirmedData.push(mainData);
+            }
+          }
+
+          console.log('>>>>   ', this.confirmedData);
         });
     } else {
       this.load();
@@ -282,9 +310,9 @@ export class ReferenceTableSettingsManageComponent implements OnInit {
     return this.template.columns.find((c: { name: string; index: string }) => c.index === index) !== undefined;
   }
 
-  setValueTemplate(index: string, name: string): void {
-    if (!this.getValueTemplate(index)) this.template.columns.push({ name: name, index: index });
-    else this.template.columns = this.template.columns.filter((c: { name: string; index: string }) => c.index !== index);
+  setValueTemplate(index: string, name: string, source: string): void {
+    if (!this.getValueTemplate(index)) this.template.columns.push({ name: name, index: index, source: source });
+    else this.template.columns = this.template.columns.filter((c: { name: string; index: string; source: string }) => c.index !== index);
 
     this.templateChanged.emit(this.template);
   }
