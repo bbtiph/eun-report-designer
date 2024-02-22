@@ -3974,7 +3974,7 @@ for (var i = 0; i &lt; json.length; i++) {&#13;
   var block = json[i];&#13;
   var blockName = block.name;&#13;
   var blockContents = block.reportBlocksContents;&#13;
-&#13;
+  tableHTML += '&lt;p style="color: white; text-align: center;">##' + blockName + '##&lt;/p>'&#13;
   if (block.isActive) {&#13;
 &#13;
     if (blockContents.length > 0) {&#13;

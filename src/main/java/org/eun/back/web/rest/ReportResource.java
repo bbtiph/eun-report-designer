@@ -289,6 +289,18 @@ public class ReportResource {
         birtReportService.generateMainReport(name, reportRequest, response, request);
     }
 
+    @PostMapping("/reports/generate/with/toc/{name}")
+    @CrossOrigin
+    public void generateFullReportWithTOC(
+        @PathVariable("name") String name,
+        @RequestBody ReportRequest reportRequest,
+        HttpServletResponse response,
+        HttpServletRequest request
+    ) {
+        log.info("Generating full report: " + reportRequest.toString() + ";");
+        birtReportService.generateMainReportWithTOC(name, reportRequest, response, request);
+    }
+
     @PostMapping("/reports/generate")
     @CrossOrigin
     public ResponseEntity<GeneratedReportDTO> externalGenerateFullReport(
