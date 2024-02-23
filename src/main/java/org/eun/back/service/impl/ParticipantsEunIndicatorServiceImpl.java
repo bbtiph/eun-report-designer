@@ -166,13 +166,34 @@ public class ParticipantsEunIndicatorServiceImpl implements ParticipantsEunIndic
 
     @Override
     @Transactional(readOnly = true)
-    public List<ParticipantsEunIndicatorDTO> findAllByCountryId(String countryCode) {
+    public List<ParticipantsEunIndicatorDTO> findAllByCountryId(String countryCode, Map<String, String> params) {
         log.debug("Request to get all ParticipantsEunIndicators");
-        return participantsEunIndicatorRepository
-            .findAllByCountryCodeEquals(countryCode)
-            .stream()
-            .map(participantsEunIndicatorMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+
+        String beginDateParam = params.get("fromDate");
+        String endDateParam = params.get("toDate");
+
+        Long startYear = parseYear(beginDateParam);
+        Long endYear = parseYear(endDateParam);
+
+        List<ParticipantsEunIndicator> indicators;
+        if (startYear != null && endYear != null) {
+            indicators =
+                participantsEunIndicatorRepository.findAllByCountryCodeEqualsAndPeriodBetweenOrderByPeriod(countryCode, startYear, endYear);
+        } else {
+            indicators = participantsEunIndicatorRepository.findAllByCountryCodeEqualsOrderByPeriod(countryCode);
+        }
+        return indicators.stream().map(participantsEunIndicatorMapper::toDto).collect(Collectors.toList());
+    }
+
+    private Long parseYear(String date) {
+        if (date != null && !date.isEmpty()) {
+            try {
+                return Long.parseLong(date.split("-")[0]);
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                return null;
+            }
+        }
+        return null;
     }
 
     @Override

@@ -14,4 +14,12 @@ import org.springframework.stereotype.Repository;
 public interface ParticipantsEunIndicatorRepository extends JpaRepository<ParticipantsEunIndicator, Long> {
     ParticipantsEunIndicator findByCountryCodeAndCourseId(String countryCode, String courseId);
     List<ParticipantsEunIndicator> findAllByCountryCodeEquals(String countryCode);
+
+    List<ParticipantsEunIndicator> findAllByCountryCodeEqualsOrderByPeriod(String countryCode);
+
+    List<ParticipantsEunIndicator> findAllByCountryCodeEqualsAndPeriodBetweenOrderByPeriod(
+        String countryCode,
+        Long startYear,
+        Long endYear
+    );
 }

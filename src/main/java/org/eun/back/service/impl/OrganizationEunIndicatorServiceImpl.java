@@ -172,13 +172,34 @@ public class OrganizationEunIndicatorServiceImpl implements OrganizationEunIndic
     }
 
     @Override
-    public List<OrganizationEunIndicatorDTO> findAllByCountryName(String countryName) {
+    public List<OrganizationEunIndicatorDTO> findAllByCountryName(String countryName, Map<String, String> params) {
         log.debug("Request to get all OrganizationEunIndicators");
-        return organizationEunIndicatorRepository
-            .findAllByCountryNameEquals(countryName)
-            .stream()
-            .map(organizationEunIndicatorMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        String beginDateParam = params.get("fromDate");
+        String endDateParam = params.get("toDate");
+
+        Long startYear = parseYear(beginDateParam);
+        Long endYear = parseYear(endDateParam);
+
+        List<OrganizationEunIndicator> indicators;
+        if (startYear != null && endYear != null) {
+            indicators =
+                organizationEunIndicatorRepository.findAllByCountryNameEqualsAndPeriodBetweenOrderByPeriod(countryName, startYear, endYear);
+        } else {
+            indicators = organizationEunIndicatorRepository.findAllByCountryNameEqualsOrderByPeriod(countryName);
+        }
+
+        return indicators.stream().map(organizationEunIndicatorMapper::toDto).collect(Collectors.toList());
+    }
+
+    private Long parseYear(String date) {
+        if (date != null && !date.isEmpty()) {
+            try {
+                return Long.parseLong(date.split("-")[0]);
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                return null;
+            }
+        }
+        return null;
     }
 
     @Override

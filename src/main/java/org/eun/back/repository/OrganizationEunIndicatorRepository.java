@@ -14,4 +14,12 @@ public interface OrganizationEunIndicatorRepository extends JpaRepository<Organi
     OrganizationEunIndicator findByCountryIdAndProjectIdAndReportsProjectId(Long countryId, Long projectId, Long reportsProjectId);
 
     List<OrganizationEunIndicator> findAllByCountryNameEquals(String countryName);
+
+    List<OrganizationEunIndicator> findAllByCountryNameEqualsOrderByPeriod(String countryName);
+
+    List<OrganizationEunIndicator> findAllByCountryNameEqualsAndPeriodBetweenOrderByPeriod(
+        String countryName,
+        Long startYear,
+        Long endYear
+    );
 }

@@ -194,10 +194,11 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "funding_and_project_for_eun":
                 return fundingAndBudgetService.findAll();
             case "participants_eun_indicator":
-                return participantsEunIndicatorService.findAllByCountryId(countryCode);
+                return participantsEunIndicatorService.findAllByCountryId(countryCode, params);
             case "organization_eun_indicator":
                 return organizationEunIndicatorService.findAllByCountryName(
-                    countriesRepository.findFirstByCountryCodeIgnoreCase(countryCode).getCountryName()
+                    countriesRepository.findFirstByCountryCodeIgnoreCase(countryCode).getCountryName(),
+                    params
                 );
         }
         return null;

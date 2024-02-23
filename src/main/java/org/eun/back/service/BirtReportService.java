@@ -401,7 +401,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
                 contentStream.beginText();
                 contentStream.newLineAtOffset(LINE_START_X, TOP_MARGIN);
-                contentStream.setNonStrokingColor(68, 114, 196); // #4472C4 in RGB
+                //                contentStream.setNonStrokingColor(68, 114, 196); // #4472C4 in RGB
                 contentStream.showText("Contents:");
                 contentStream.endText();
 
@@ -422,30 +422,34 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
                     item.setTitle(entry.getKey());
                     tocItem.addLast(item);
 
-                    contentStream.beginText();
-                    contentStream.newLineAtOffset(LINE_START_X, TOP_MARGIN - (20 * pageNumber));
-                    contentStream.setNonStrokingColor(68, 114, 196); // #4472C4 in RGB
-                    contentStream.showText(entry.getKey());
-                    contentStream.endText();
-
-                    float pageWidth = PDType1Font.HELVETICA_BOLD.getStringWidth(Integer.toString(pageNumber)) / 1000f * 12;
-                    float xPos = tocPage.getMediaBox().getWidth() - LINE_START_X - pageWidth;
-
-                    contentStream.beginText();
-                    contentStream.newLineAtOffset(xPos, TOP_MARGIN - (20 * pageNumber));
-                    contentStream.setNonStrokingColor(0, 0, 0); // Reset color to black for page numbers
-                    contentStream.showText(Integer.toString(entry.getValue()));
-                    contentStream.endText();
-
                     // Draw dots
-                    float dotX = LINE_START_X + 12; // Initial x-coordinate for the first dot
-                    while (dotX < xPos) {
+                    float keyWidth = PDType1Font.TIMES_ROMAN.getStringWidth(entry.getKey()) / 1000f * 12;
+                    float dotsStartX = LINE_START_X + keyWidth;
+                    float dotsEndX = tocPage.getMediaBox().getWidth() - LINE_START_X - 12;
+                    float dotX = dotsStartX;
+                    while (dotX < dotsEndX) {
                         contentStream.beginText();
                         contentStream.newLineAtOffset(dotX, TOP_MARGIN - 2.5f - (20 * pageNumber));
                         contentStream.showText(".");
                         contentStream.endText();
-                        dotX += 3; // Increase x-coordinate for the next dot
+                        dotX += 3;
                     }
+
+                    // Draw entry key
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(LINE_START_X, TOP_MARGIN - (20 * pageNumber));
+                    //                    contentStream.setNonStrokingColor(68, 114, 196); // #4472C4 in RGB
+                    contentStream.showText(entry.getKey());
+                    contentStream.endText();
+
+                    // Draw page number
+                    float pageNumberWidth = PDType1Font.HELVETICA_BOLD.getStringWidth(Integer.toString(entry.getValue())) / 1000f * 12;
+                    float pageNumberXPos = tocPage.getMediaBox().getWidth() - LINE_START_X - pageNumberWidth;
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(pageNumberXPos, TOP_MARGIN - (20 * pageNumber));
+                    contentStream.setNonStrokingColor(0, 0, 0);
+                    contentStream.showText(Integer.toString(entry.getValue()));
+                    contentStream.endText();
 
                     pageNumber++;
                 }
