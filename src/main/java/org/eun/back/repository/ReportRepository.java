@@ -1,6 +1,7 @@
 package org.eun.back.repository;
 
 import java.util.List;
+import java.util.Optional;
 import org.eun.back.domain.Report;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,8 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
         @Param("isActive") boolean isActive,
         @Param("countryId") Long countryId
     );
+
+    Optional<Report> findFirstByReportName(String reportName);
 
     @Modifying
     @Query("UPDATE Report r SET r.isActive = false WHERE r.id = :id")

@@ -130,6 +130,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public Optional<ReportDTO> findOne(String reportName) {
+        log.debug("Request to get Report : {}", reportName);
+        return reportRepository.findFirstByReportName(reportName).map(reportMapper::toDto);
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Report : {}", id);
         reportRepository.deleteByChangeIsActive(id);

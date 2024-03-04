@@ -56,6 +56,8 @@ public interface ReportService {
      */
     Optional<ReportDTO> findOne(Long id);
 
+    Optional<ReportDTO> findOne(String reportName);
+
     /**
      * Delete the "id" report.
      *

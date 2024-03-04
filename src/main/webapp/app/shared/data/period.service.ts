@@ -47,7 +47,7 @@ export class PeriodService {
     return this.periods.find(period => period.id == id);
   }
 
-  calculateDateRange(periodCode: string): { from: string; to: string } | undefined {
+  calculateDateRange(periodCode: string, type: number): { from: string; to: string } | undefined {
     const period = this.getPeriodByCode(periodCode);
 
     if (!period) {
@@ -79,6 +79,12 @@ export class PeriodService {
         return undefined;
     }
 
+    if (type === 1) {
+      return {
+        from: this.formatDateWithOnlyYear(from),
+        to: this.formatDateWithOnlyYear(to),
+      };
+    }
     return {
       from: this.formatDate(from),
       to: this.formatDate(to),
@@ -91,5 +97,11 @@ export class PeriodService {
     const year = date.getFullYear();
 
     return `${year}-${month}-${day}`;
+  }
+
+  private formatDateWithOnlyYear(date: Date): string {
+    const year = date.getFullYear();
+
+    return `${year}`;
   }
 }

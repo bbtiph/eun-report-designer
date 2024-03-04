@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, OnDestr
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IReportBlocks } from '../../report-blocks/report-blocks.model';
 import { ReportBlocksService } from '../../report-blocks/service/report-blocks.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { IReport } from '../report.model';
 import { AbstractExportModal } from '../../../shared/modal/abstract-export.modal';
 import { ActivatedRoute } from '@angular/router';
@@ -24,6 +24,7 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
   selectedCountry: ICountries | null = null;
   selectedPeriod: Period | undefined | null = null;
   periodDateFromAndTo: any | undefined | null = null;
+  params: any | undefined | null = null;
 
   @ViewChild('editor', { static: false }) editorElement?: ElementRef;
   editor: any;
@@ -48,10 +49,17 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
     // @ts-ignore
     this.selectedPeriod = this.periodService.getPeriodById(this.activatedRoute.params.value.period);
     // @ts-ignore
-    this.periodDateFromAndTo = this.periodService.calculateDateRange(this.selectedPeriod?.code);
+    this.periodDateFromAndTo = this.periodService.calculateDateRange(this.selectedPeriod?.code, 2);
+    // @ts-ignore
+    this.params = this.periodService.calculateDateRange(this.selectedPeriod?.code, 1);
+
     this.countriesService.findById(countryId || 1).subscribe((country: ICountries) => {
       this.selectedCountry = country;
-
+      this.params = {
+        ...this.params,
+        reportName: this.report?.reportName,
+        country: this.selectedCountry.countryName,
+      };
       // @ts-ignore
       this.reportBlocksService.findAllByReport(this.report?.id, this.selectedCountry?.id).subscribe(blocks => {
         this.reportBlocks = blocks;
@@ -99,6 +107,13 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.countryName = this.selectedCountry?.countryName;
 
     modalRef.result.then(params => {
+      let queryParams = new HttpParams();
+      if (this.periodDateFromAndTo) {
+        queryParams = queryParams.set('fromDate', this.params.from);
+        queryParams = queryParams.set('toDate', this.params.to);
+        queryParams = queryParams.set('country', this.params.country);
+      }
+
       const body = {
         // data: JSON.stringify(this.reportBlocks),
         output: params.format.name,
@@ -107,22 +122,26 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
         reportId: this.report?.id,
       };
       if (params.format.name === 'HTML') {
-        this.http.post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'text' }).subscribe(response => {
-          const modalRef = this.modalService.open(PopupWindowHtmlModal, {
-            animation: true,
-            size: 'xl',
+        this.http
+          .post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'text', params: this.params })
+          .subscribe(response => {
+            const modalRef = this.modalService.open(PopupWindowHtmlModal, {
+              animation: true,
+              size: 'xl',
+            });
+            modalRef.componentInstance.param = this;
+            modalRef.componentInstance.reportHtml = response;
           });
-          modalRef.componentInstance.param = this;
-          modalRef.componentInstance.reportHtml = response;
-        });
       } else {
-        this.http.post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'blob' }).subscribe(response => {
-          var a = document.createElement('a');
-          a.href = URL.createObjectURL(response);
-          // @ts-ignore
-          a.download = this.report?.reportName;
-          a.click();
-        });
+        this.http
+          .post('api/reports/generate/' + this.report?.acronym, body, { responseType: 'blob', params: this.params })
+          .subscribe(response => {
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(response);
+            // @ts-ignore
+            a.download = this.report?.reportName;
+            a.click();
+          });
       }
     });
   }

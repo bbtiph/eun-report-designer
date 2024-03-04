@@ -29,14 +29,15 @@ import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocume
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.xmlbeans.XmlException;
+import org.apache.xmlbeans.XmlOptions;
 import org.eclipse.birt.core.exception.BirtException;
 import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.engine.api.*;
 import org.eun.back.security.SecurityUtils;
 import org.eun.back.service.dto.*;
 import org.eun.back.util.Utils;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -173,6 +174,22 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         }
     }
 
+    private Pair<ReportDTO, IReportRunnable> getReport(String reportName) {
+        ReportDTO report = this.reportService.findOne(reportName).get();
+        try {
+            Pair<ReportDTO, IReportRunnable> response = ImmutablePair.of(
+                report,
+                birtEngine.openReportDesign(convertByteArrayToInputStream(report.getReportTemplate().getFile()))
+            );
+
+            return response;
+        } catch (EngineException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public InputStream convertByteArrayToInputStream(byte[] byteArray) throws IOException {
         return new InputStream() {
             private int index = 0;
@@ -191,8 +208,9 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         String reportName,
         ReportRequest reportRequest,
         HttpServletResponse response,
-        HttpServletRequest request
-    ) {
+        HttpServletRequest request,
+        Map<String, Object> params
+    ) throws IOException {
         String format = reportRequest.getOutput();
         String lang = reportRequest.getLang();
         Long countryId = reportRequest.getCountryId();
@@ -213,20 +231,42 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
                 generateHTMLReport(getReport(reportId).getRight(), data, lang, countryId, response, request);
                 break;
             case PDF:
-                generatePDFReport(getReport(reportId).getRight(), data, lang, countryId, listOfHeaders, response, request);
+                generatePDFReport(getReport(reportId).getRight(), data, lang, countryId, listOfHeaders, response, request, params);
                 break;
             case DOCX:
-                generateDOCXReport(getReport(reportId).getRight(), data, lang, countryId, response, request);
+                generateDOCXReport(getReport(reportId).getRight(), data, lang, countryId, listOfHeaders, response, request, params);
                 break;
             case DOC:
-                generateReport(getReport(reportId).getRight(), output, data, lang, countryId, response, request);
+                generateReport(getReport(reportId).getRight(), output, data, lang, countryId, listOfHeaders, response, request, params);
                 break;
             case XLSX:
                 generateXLSXReport(reports.get(reportName.toLowerCase()), data, lang, countryId, response, request);
                 break;
-            case ODT:
-                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, countryId, response, request);
-                break;
+            //            case ODT:
+            //                generateReport(reports.get(reportName.toLowerCase()), output, data, lang, countryId, response, request);
+            //                break;
+            default:
+                throw new IllegalArgumentException("Output type not recognized:" + output);
+        }
+    }
+
+    public File generateMainReportFile(String outputType, Map<String, Object> params) {
+        OutputType output = OutputType.from(outputType);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String paramsJson;
+        try {
+            paramsJson = objectMapper.writeValueAsString(params);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        switch (output) {
+            case PDF:
+                return generatePDFReportFile(reports.get("main_page"), paramsJson);
+            case DOC:
+                return generateReportFile(reports.get("main_page"), output, paramsJson);
+            case DOCX:
+                return generateDOCXReportFile(reports.get("main_page"), paramsJson);
             default:
                 throw new IllegalArgumentException("Output type not recognized:" + output);
         }
@@ -293,7 +333,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
                 res = mergePDFs(generatedReports);
                 break;
             case DOCX:
-                res = mergeDOCXs(generatedReports);
+                res = mergeDOCXs(null);
                 break;
             default:
                 throw new IllegalArgumentException("Output type not recognized:" + output);
@@ -311,23 +351,6 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public File convertPdfToDocx(File pdfFile) throws IOException {
-        try (PDDocument document = PDDocument.load(pdfFile)) {
-            XWPFDocument docxDocument = new XWPFDocument();
-            PDFTextStripper pdfStripper = new PDFTextStripper();
-            String text = pdfStripper.getText(document);
-            XWPFParagraph paragraph = docxDocument.createParagraph();
-            XWPFRun run = paragraph.createRun();
-            run.setText(text);
-
-            File tempFile = File.createTempFile("converted", ".docx");
-            try (FileOutputStream out = new FileOutputStream(tempFile)) {
-                docxDocument.write(out);
-            }
-            return tempFile;
         }
     }
 
@@ -391,7 +414,9 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         }
     }
 
-    public static File generatePDFTOC(Map<String, Integer> tocContent, File outputFile) throws IOException {
+    public static Pair<List<String>, File> generatePDFTOC(Map<String, Integer> tocContent, File outputFile) throws IOException {
+        List<String> contents = new ArrayList<>();
+        contents.add("Contents:");
         try (PDDocument document = new PDDocument()) {
             PDPageTree pages = document.getPages();
             PDPage tocPage = new PDPage();
@@ -427,15 +452,16 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
                     float dotsStartX = LINE_START_X + keyWidth;
                     float dotsEndX = tocPage.getMediaBox().getWidth() - LINE_START_X - 12;
                     float dotX = dotsStartX;
+                    String dotsLine = "";
                     while (dotX < dotsEndX) {
                         contentStream.beginText();
                         contentStream.newLineAtOffset(dotX, TOP_MARGIN - 2.5f - (20 * pageNumber));
                         contentStream.showText(".");
                         contentStream.endText();
                         dotX += 3;
+                        dotsLine += '.';
                     }
 
-                    // Draw entry key
                     contentStream.beginText();
                     contentStream.newLineAtOffset(LINE_START_X, TOP_MARGIN - (20 * pageNumber));
                     //                    contentStream.setNonStrokingColor(68, 114, 196); // #4472C4 in RGB
@@ -448,15 +474,16 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
                     contentStream.beginText();
                     contentStream.newLineAtOffset(pageNumberXPos, TOP_MARGIN - (20 * pageNumber));
                     contentStream.setNonStrokingColor(0, 0, 0);
-                    contentStream.showText(Integer.toString(entry.getValue()));
+                    contentStream.showText(Integer.toString(entry.getValue() + 1));
                     contentStream.endText();
 
+                    contents.add(entry.getKey() + dotsLine + (entry.getValue() + 1));
                     pageNumber++;
                 }
             }
 
             document.save(outputFile);
-            return outputFile;
+            return ImmutablePair.of(contents, outputFile);
         }
     }
 
@@ -486,6 +513,36 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             birtParams.put("docId", data);
             birtParams.put("country", country);
             birtParams.put("lang", lang);
+
+            runAndRenderTask.setParameterValues(birtParams);
+            runAndRenderTask.setRenderOption(pdfRenderOption);
+
+            try {
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                pdfRenderOption.setOutputStream(byteArrayOutputStream);
+                runAndRenderTask.run();
+                File pdfFile = File.createTempFile("report", ".pdf");
+                FileUtils.writeByteArrayToFile(pdfFile, byteArrayOutputStream.toByteArray());
+                return pdfFile;
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage(), e);
+            } finally {
+                runAndRenderTask.close();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate PDF report", e);
+        }
+    }
+
+    public File generatePDFReportFile(IReportRunnable report, String params) {
+        try {
+            IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report);
+            IRenderOption options = new RenderOption();
+            PDFRenderOption pdfRenderOption = new PDFRenderOption(options);
+            pdfRenderOption.setOutputFormat("pdf");
+
+            Map<String, Object> birtParams = new HashMap<>();
+            birtParams.put("params", params);
 
             runAndRenderTask.setParameterValues(birtParams);
             runAndRenderTask.setRenderOption(pdfRenderOption);
@@ -539,28 +596,80 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         }
     }
 
-    public File mergeDOCXs(List<ReportFile> docxFiles) {
+    public File generateDOCXReportFile(IReportRunnable report, String params) {
         try {
-            File mergedDocxFile = File.createTempFile("merged_report", ".docx");
-            XWPFDocument mergedDocument = new XWPFDocument();
+            IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report);
+            DocxRenderOption docxRenderOption = new DocxRenderOption();
+            docxRenderOption.setOutputFormat("docx");
+            docxRenderOption.setOption(DocxRenderOption.OPTION_EMBED_HTML, Boolean.FALSE);
 
-            for (ReportFile docxFile : docxFiles) {
-                try (XWPFDocument document = new XWPFDocument(new FileInputStream(docxFile.getFile()))) {
-                    for (XWPFParagraph paragraph : document.getParagraphs()) {
-                        XWPFParagraph newParagraph = mergedDocument.createParagraph();
-                        newParagraph.createRun().setText(paragraph.getText());
-                    }
+            Map<String, Object> birtParams = new HashMap<>();
+            birtParams.put("params", params);
+
+            runAndRenderTask.setParameterValues(birtParams);
+            runAndRenderTask.setRenderOption(docxRenderOption);
+
+            try {
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                docxRenderOption.setOutputStream(byteArrayOutputStream);
+                runAndRenderTask.run();
+
+                File docxFile = File.createTempFile("report", ".docx");
+                FileUtils.writeByteArrayToFile(docxFile, byteArrayOutputStream.toByteArray());
+                return docxFile;
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage(), e);
+            } finally {
+                runAndRenderTask.close();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate DOCX report", e);
+        }
+    }
+
+    public File mergeDOCXs(final List<File> files) {
+        File outFile = new File("src/main/resources/out.docx");
+        try (
+            OutputStream os = new FileOutputStream(outFile);
+            InputStream is = new FileInputStream(files.get(0));
+            XWPFDocument doc = new XWPFDocument(is);
+        ) {
+            CTBody ctBody = doc.getDocument().getBody();
+            for (int i = 1; i < files.size(); i++) {
+                try (InputStream isI = new FileInputStream(files.get(i)); XWPFDocument docI = new XWPFDocument(isI);) {
+                    CTBody ctBodyI = docI.getDocument().getBody();
+                    appendBody(ctBody, ctBodyI);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-
-            try (FileOutputStream outputStream = new FileOutputStream(mergedDocxFile)) {
-                mergedDocument.write(outputStream);
-            }
-
-            return mergedDocxFile;
+            doc.write(os);
+            return outFile;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to merge DOCX files", e);
+            e.printStackTrace();
         }
+        return new File("empty.docx");
+    }
+
+    private static void appendBody(CTBody src, CTBody append) throws XmlException {
+        XmlOptions optionsOuter = new XmlOptions();
+        optionsOuter.setSaveOuter();
+        String appendString = append.xmlText(optionsOuter);
+        String srcString = src.xmlText();
+        String prefix = srcString.substring(0, srcString.indexOf(">") + 1);
+        String mainPart = srcString.substring(srcString.indexOf(">") + 1, srcString.lastIndexOf("<"));
+        String suffix = srcString.substring(srcString.lastIndexOf("<"));
+        String addPart = appendString.substring(appendString.indexOf(">") + 1, appendString.lastIndexOf("<"));
+        CTBody makeBody;
+        try {
+            makeBody = CTBody.Factory.parse(prefix + mainPart + addPart + suffix);
+        } catch (XmlException e) {
+            e.printStackTrace();
+            throw new XmlException("", e);
+        }
+        src.set(makeBody);
     }
 
     public File mergePDFs(List<ReportFile> pdfFiles) {
@@ -699,7 +808,8 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         Long country,
         List<String> listOfHeaders,
         HttpServletResponse response,
-        HttpServletRequest request
+        HttpServletRequest request,
+        Map<String, Object> params
     ) {
         IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report);
         response.setContentType(birtEngine.getMIMEType("pdf"));
@@ -722,6 +832,7 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
             pdfRenderOption.setOutputStream(byteArrayOutputStream);
             runAndRenderTask.run();
             List<File> generatedReports = new ArrayList<>();
+            generatedReports.add(generateMainReportFile("pdf", params));
             pdfFile = File.createTempFile("report", ".pdf");
             FileUtils.writeByteArrayToFile(pdfFile, byteArrayOutputStream.toByteArray());
             Map<String, Integer> tocContent = analyzePDFReport(pdfFile, listOfHeaders);
@@ -729,12 +840,8 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
                 .entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
-                .collect(
-                    LinkedHashMap::new, // Maintain the order of insertion
-                    (map, entry) -> map.put(entry.getKey(), entry.getValue()),
-                    LinkedHashMap::putAll
-                );
-            generatedReports.add(generatePDFTOC(sortedTocContent, new File("contents.pdf")));
+                .collect(LinkedHashMap::new, (map, entry) -> map.put(entry.getKey(), entry.getValue()), LinkedHashMap::putAll);
+            generatedReports.add(generatePDFTOC(sortedTocContent, new File("contents.pdf")).getRight());
             generatedReports.add(pdfFile);
             pdfFile = mergePDFsWithTypeFile(generatedReports);
         } catch (Exception e) {
@@ -761,6 +868,41 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         }
     }
 
+    private Map<String, Integer> getTocFromFDF(IReportRunnable report, Object data, String lang, Long country, List<String> listOfHeaders) {
+        IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report);
+        IRenderOption options = new RenderOption();
+        PDFRenderOption pdfRenderOption = new PDFRenderOption(options);
+        pdfRenderOption.setOutputFormat("pdf");
+
+        Map<String, Object> birtParams = new HashMap<>();
+        birtParams.put("docId", data);
+        birtParams.put("country", country);
+        birtParams.put("lang", lang);
+
+        runAndRenderTask.setParameterValues(birtParams);
+        runAndRenderTask.setRenderOption(pdfRenderOption);
+
+        File pdfFile;
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            pdfRenderOption.setOutputStream(byteArrayOutputStream);
+            runAndRenderTask.run();
+            pdfFile = File.createTempFile("report", ".pdf");
+            FileUtils.writeByteArrayToFile(pdfFile, byteArrayOutputStream.toByteArray());
+            Map<String, Integer> tocContent = analyzePDFReport(pdfFile, listOfHeaders);
+            Map<String, Integer> sortedTocContent = tocContent
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(LinkedHashMap::new, (map, entry) -> map.put(entry.getKey(), entry.getValue()), LinkedHashMap::putAll);
+            return sortedTocContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            runAndRenderTask.close();
+        }
+    }
+
     /**
      * Generate a report as DOCX
      */
@@ -770,30 +912,70 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         Object id,
         String lang,
         Long country,
+        List<String> listOfHeaders,
         HttpServletResponse response,
-        HttpServletRequest request
-    ) {
+        HttpServletRequest request,
+        Map<String, Object> params
+    ) throws IOException {
         IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report);
         response.setContentType(birtEngine.getMIMEType("docx"));
         DocxRenderOption docxRenderOption = new DocxRenderOption();
         docxRenderOption.setOutputFormat("docx");
+        docxRenderOption.setOption(DocxRenderOption.OPTION_EMBED_HTML, Boolean.FALSE);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String paramsJson;
+        String tocJson;
+        Pair<List<String>, File> res = generatePDFTOC(getTocFromFDF(report, id, lang, country, listOfHeaders), new File("contents.pdf"));
+        try {
+            tocJson = objectMapper.writeValueAsString(res.getLeft());
+            params.put("toc", tocJson);
+            paramsJson = objectMapper.writeValueAsString(params);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
         Map<String, Object> birtParams = new HashMap<>();
         birtParams.put("docId", id);
         birtParams.put("country", country);
         birtParams.put("lang", lang);
+        birtParams.put("params", paramsJson);
 
         runAndRenderTask.setParameterValues(birtParams);
         runAndRenderTask.setRenderOption(docxRenderOption);
         runAndRenderTask.getAppContext().put(EngineConstants.APPCONTEXT_URL_PARAM_FORMAT_KEY, request);
 
+        File docxFile = null;
         try {
-            docxRenderOption.setOutputStream(response.getOutputStream());
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            docxRenderOption.setOutputStream(byteArrayOutputStream);
             runAndRenderTask.run();
+            List<File> generatedReports = new ArrayList<>();
+            generatedReports.add(generateMainReportFile("docx", params));
+            docxFile = File.createTempFile("reportContent", ".docx");
+            FileUtils.writeByteArrayToFile(docxFile, byteArrayOutputStream.toByteArray());
+            generatedReports.add(docxFile);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         } finally {
             runAndRenderTask.close();
+            if (docxFile != null) {
+                try (FileInputStream fis = new FileInputStream(docxFile)) {
+                    response.setHeader("Content-Disposition", "attachment; filename=report.docx");
+                    response.setContentLength((int) docxFile.length());
+                    ServletOutputStream os = response.getOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = fis.read(buffer)) != -1) {
+                        os.write(buffer, 0, bytesRead);
+                    }
+                    os.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                } finally {
+                    docxFile.delete();
+                }
+            }
         }
     }
 
@@ -843,26 +1025,90 @@ public class BirtReportService implements ApplicationContextAware, DisposableBea
         Object id,
         String lang,
         Long country,
+        List<String> listOfHeaders,
         HttpServletResponse response,
-        HttpServletRequest request
-    ) {
+        HttpServletRequest request,
+        Map<String, Object> params
+    ) throws IOException {
         IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report);
         response.setContentType(birtEngine.getMIMEType(output.name()));
         IRenderOption options = new RenderOption();
         options.setOutputFormat(output.name());
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        String paramsJson;
+        String tocJson;
+        Pair<List<String>, File> res = generatePDFTOC(getTocFromFDF(report, id, lang, country, listOfHeaders), new File("contents.pdf"));
+        try {
+            tocJson = objectMapper.writeValueAsString(res.getLeft());
+            params.put("toc", res.getLeft());
+            paramsJson = objectMapper.writeValueAsString(params);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
         Map<String, Object> birtParams = new HashMap<>();
         birtParams.put("docId", id);
         birtParams.put("country", country);
         birtParams.put("lang", lang);
+        birtParams.put("params", paramsJson);
 
         runAndRenderTask.setParameterValues(birtParams);
         runAndRenderTask.setRenderOption(options);
         runAndRenderTask.getAppContext().put(EngineConstants.APPCONTEXT_URL_PARAM_FORMAT_KEY, request);
 
+        File docFile = null;
         try {
-            options.setOutputStream(response.getOutputStream());
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            options.setOutputStream(byteArrayOutputStream);
             runAndRenderTask.run();
+            List<File> generatedReports = new ArrayList<>();
+            generatedReports.add(generateMainReportFile("doc", params));
+            docFile = File.createTempFile("reportContent", ".doc");
+            FileUtils.writeByteArrayToFile(docFile, byteArrayOutputStream.toByteArray());
+            generatedReports.add(docFile);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            runAndRenderTask.close();
+            if (docFile != null) {
+                try (FileInputStream fis = new FileInputStream(docFile)) {
+                    response.setHeader("Content-Disposition", "attachment; filename=report.doc");
+                    response.setContentLength((int) docFile.length());
+                    ServletOutputStream os = response.getOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = fis.read(buffer)) != -1) {
+                        os.write(buffer, 0, bytesRead);
+                    }
+                    os.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                } finally {
+                    docFile.delete();
+                }
+            }
+        }
+    }
+
+    private File generateReportFile(IReportRunnable report, OutputType output, String params) {
+        IRunAndRenderTask runAndRenderTask = birtEngine.createRunAndRenderTask(report);
+        IRenderOption options = new RenderOption();
+        options.setOutputFormat(output.name());
+
+        Map<String, Object> birtParams = new HashMap<>();
+        birtParams.put("params", params);
+
+        runAndRenderTask.setParameterValues(birtParams);
+        runAndRenderTask.setRenderOption(options);
+
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            options.setOutputStream(byteArrayOutputStream);
+            runAndRenderTask.run();
+            File file = File.createTempFile("report", "." + output.name());
+            FileUtils.writeByteArrayToFile(file, byteArrayOutputStream.toByteArray());
+            return file;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         } finally {

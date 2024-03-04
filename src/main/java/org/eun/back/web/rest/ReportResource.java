@@ -1,5 +1,6 @@
 package org.eun.back.web.rest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
@@ -281,12 +282,13 @@ public class ReportResource {
     @CrossOrigin
     public void generateFullReport(
         @PathVariable("name") String name,
+        @RequestParam Map<String, Object> params,
         @RequestBody ReportRequest reportRequest,
         HttpServletResponse response,
         HttpServletRequest request
-    ) {
+    ) throws IOException {
         log.info("Generating full report: " + reportRequest.toString() + ";");
-        birtReportService.generateMainReport(name, reportRequest, response, request);
+        birtReportService.generateMainReport(name, reportRequest, response, request, params);
     }
 
     @PostMapping("/reports/generate/with/toc/{name}")
