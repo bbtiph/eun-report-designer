@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CountryService } from '../../entities/country/service/country.service';
 import { ICountry } from '../../entities/country/country.model';
 import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'popup-window-html-modal',
@@ -23,7 +24,14 @@ import { Observable } from 'rxjs';
 export class PopupWindowHtmlModal implements OnInit {
   @Input() public reportHtml?: string;
 
-  constructor(public modal: NgbActiveModal) {}
+  constructor(public modal: NgbActiveModal, private sanitizer: DomSanitizer) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // @ts-ignore
+    this.reportHtml = this.safeHTML(this.reportHtml);
+  }
+
+  safeHTML(content: any) {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
+  }
 }
