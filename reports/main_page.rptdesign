@@ -3673,7 +3673,7 @@ onconsole += '&lt;img style="width:280px;height:4px;" src="https://reports-test.
                     </text-data>
                     <text-data id="452">
                         <expression name="valueExpr">var content = '';&#13;
-content += '&lt;p>&lt;span style="color:#044c74; font-family:courier new,courier,monospace; font-size : 28px;">Situation of ' + json.country + ' - ' + json.from + ':' + json.to + '&lt;/span>&lt;/p>';</expression>
+content += '&lt;p>&lt;span style="color:#044c74; font-family:courier new,courier,monospace; font-size : 28px;">Situation of ' + json.country + ' - ' + json.currentDate + '&lt;/span>&lt;br>&lt;span style="color:#044c74; font-family:courier new,courier,monospace; font-size : 18px;">Period ' + json.from + ' - ' + json.to + '&lt;/span>&lt;/p>';</expression>
                         <property name="contentType">html</property>
                     </text-data>
                 </cell>

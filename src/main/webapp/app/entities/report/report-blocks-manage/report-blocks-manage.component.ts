@@ -59,6 +59,8 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
         ...this.params,
         reportName: this.report?.reportName,
         country: this.selectedCountry.countryName,
+        period: this.selectedPeriod?.displayName,
+        currentDate: this.periodService.getCurrentMonthYear(),
       };
       // @ts-ignore
       this.reportBlocksService.findAllByReport(this.report?.id, this.selectedCountry?.id).subscribe(blocks => {
@@ -107,17 +109,8 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.countryName = this.selectedCountry?.countryName;
 
     modalRef.result.then(params => {
-      let queryParams = new HttpParams();
-      if (this.periodDateFromAndTo) {
-        queryParams = queryParams.set('fromDate', this.params.from);
-        queryParams = queryParams.set('toDate', this.params.to);
-        queryParams = queryParams.set('country', this.params.country);
-      }
-
       const body = {
-        // data: JSON.stringify(this.reportBlocks),
         output: params.format.name,
-        // lang: 'ru',
         countryId: this.selectedCountry?.id,
         reportId: this.report?.id,
       };
@@ -127,7 +120,7 @@ export class ReportBlocksManageComponent implements OnInit, OnDestroy {
           .subscribe(response => {
             const modalRef = this.modalService.open(PopupWindowHtmlModal, {
               animation: true,
-              size: 'xl',
+              size: 'lg',
             });
             modalRef.componentInstance.param = this;
             modalRef.componentInstance.reportHtml = response;

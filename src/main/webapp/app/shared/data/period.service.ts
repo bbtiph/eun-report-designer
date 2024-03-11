@@ -65,15 +65,15 @@ export class PeriodService {
         break;
       case 'lastYear':
         from = new Date(currentDate.getFullYear() - 1, 0, 1);
-        to = new Date(currentDate.getFullYear() - 1, 11, 31);
+        to = new Date(currentDate.getFullYear(), 11, 31);
         break;
       case 'lastTwoYears':
         from = new Date(currentDate.getFullYear() - 2, 0, 1);
-        to = new Date(currentDate.getFullYear() - 1, 11, 31);
+        to = new Date(currentDate.getFullYear(), 11, 31);
         break;
       case 'lastFiveYears':
         from = new Date(currentDate.getFullYear() - 5, 0, 1);
-        to = new Date(currentDate.getFullYear() - 1, 11, 31);
+        to = new Date(currentDate.getFullYear(), 11, 31);
         break;
       default:
         return undefined;
@@ -103,5 +103,27 @@ export class PeriodService {
     const year = date.getFullYear();
 
     return `${year}`;
+  }
+
+  getCurrentMonthYear(): string {
+    const currentDate = new Date();
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    const currentMonth = monthNames[currentDate.getMonth()];
+    const currentYear = currentDate.getFullYear();
+
+    return `${currentMonth} ${currentYear}`;
   }
 }

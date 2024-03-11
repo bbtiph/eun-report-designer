@@ -3676,6 +3676,7 @@ FROM public.participants_eun_indicator t LIMIT 14 OFFSET 1]]></xml-property>
             <property name="topMargin">0.05in</property>
             <property name="bottomMargin">0.05in</property>
             <property name="rightMargin">0.3611111111111111in</property>
+            <property name="footerHeight">0.25in</property>
             <page-header>
                 <text-data id="317">
                     <expression name="valueExpr">var onconsole = '';&#13;
@@ -3683,6 +3684,15 @@ onconsole += '&lt;img style="width:760px;height:50px;" src="https://reports-test
                     <property name="contentType">html</property>
                 </text-data>
             </page-header>
+            <page-footer>
+                <auto-text id="469">
+                    <property name="fontSize">10pt</property>
+                    <property name="color">#C0C0C0</property>
+                    <property name="textAlign">right</property>
+                    <property name="height">0.3in</property>
+                    <property name="type">page-number</property>
+                </auto-text>
+            </page-footer>
         </simple-master-page>
         <simple-master-page name="Main Page" id="271">
             <property name="topMargin">0.07in</property>
@@ -3722,6 +3732,7 @@ onconsole += '&lt;img style="width:800px;height:400px;" src="https://reports-tes
                     <expression name="valueExpr" type="javascript">true</expression>
                 </structure>
             </list-property>
+            <structure name="toc"/>
             <column id="437">
                 <property name="width">0.04861111111111111in</property>
             </column>
@@ -3758,7 +3769,7 @@ onconsole += '&lt;img style="width:280px;height:4px;" src="https://reports-test.
                     </text-data>
                     <text-data id="452">
                         <expression name="valueExpr">var content = '';&#13;
-content += '&lt;p>&lt;span style="color:#044c74; font-family:courier new,courier,monospace; font-size : 28px;">Situation of ' + configs.country + ' - ' + configs.from + ':' + configs.to + '&lt;/span>&lt;/p>';</expression>
+content += '&lt;p>&lt;span style="color:#044c74; font-family:courier new,courier,monospace; font-size : 28px;">Situation of ' + configs.country + ' - ' + configs.currentDate + '&lt;/span>&lt;br>&lt;span style="color:#044c74; font-family:courier new,courier,monospace; font-size : 18px;">Period ' + configs.from + ' - ' + configs.to + '&lt;/span>&lt;/p>';</expression>
                         <property name="contentType">html</property>
                     </text-data>
                 </cell>
@@ -4147,7 +4158,7 @@ for (var i = 0; i &lt; json.length; i++) {&#13;
         var rows = content.reportBlocksContentData;&#13;
 &#13;
 &#13;
-        tableHTML += '&lt;table border="1" bordercolor="#000000" cellspacing="0" cellpadding="10" width="100%" style="font-size : 10px; font-family : Times New Roman;">';&#13;
+        tableHTML += '&lt;table border="1" bordercolor="#000000" cellspacing="0" cellpadding="10" width="99%" style="font-size : 10px; font-family : Times New Roman;">';&#13;
         tableHTML += '&lt;thead>';&#13;
         tableHTML += '&lt;tr>&lt;th  colspan="' + columns.length + '" style="text-align: center;">&lt;b>' + contentTemplate.name + '&lt;/b>&lt;/th>&lt;/tr>';&#13;
         tableHTML += '&lt;tr>';&#13;
@@ -4186,7 +4197,7 @@ for (var i = 0; i &lt; json.length; i++) {&#13;
       } else if (contentType === 'reference') {&#13;
         var contentTemplate = JSON.parse(content.template);&#13;
         tableHTML += '&lt;h2>&lt;span>' + contentTemplate.name + '&lt;/span>&lt;/h2>'&#13;
-        tableHTML += '&lt;table border="1" bordercolor="#000000" cellspacing="0" cellpadding="10" width="100%" style="font-size : 10px; font-family : Times New Roman;">';&#13;
+        tableHTML += '&lt;table border="1" bordercolor="#000000" cellspacing="0" cellpadding="10" width="99%" style="font-size : 10px; font-family : Times New Roman;">';&#13;
         tableHTML += '&lt;tr>';&#13;
         for (var c = 0; c &lt; contentTemplate.columns.length; c++) {&#13;
           tableHTML += '&lt;th>&lt;b>' + contentTemplate.columns[c].name + '&lt;/b>&lt;/th>';&#13;
