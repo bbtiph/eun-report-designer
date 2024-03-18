@@ -34,28 +34,28 @@ os:
 
 eun:
   user:
-    login: admin
+    login: ${eun_user_login}
   dwh:
-    url: http://eundb-test.eun.org:11005/eundwh/
+    url: ${eun_user_dwh_url}
   reports-etl:
-    url: https://reports-etl-test.eun.org/
+    url: ${eun_user_reports_etl_url}
   report-designer:
-    url: https://reports-test.eun.org/
+    url: ${eun_user_report_designer_url}
   erp:
-    url: https://api.businesscentral.dynamics.com/v2.0/e21d18f1-2112-4ecf-a67c-d20aedbd18b3/EUN_Sandbox_ACCEPT_14122021/api/Scapta/Scapta/v1.0/companies(517d45f8-761f-ec11-8f45-00224882409b)
+    url: ${eun_user_erp_url}
     login:
-      url: https://login.microsoftonline.com/e21d18f1-2112-4ecf-a67c-d20aedbd18b3/oauth2/v2.0/token
+      url: ${eun_user_erp_login_url}
       grant-type: client_credentials
       scope: https://api.businesscentral.dynamics.com/.default
-      client-id: d3ffeddc-0c54-444d-9055-13306c4e012b
-      client-secret: q5A8Q~D6CFrq~kydtkCPEP8645DaPZIiEqD.5bzt
+      client-id: ${eun_user_erp_login_client_id}
+      client-secret: ${eun_user_erp_login_client_secret}
 
 spring:
   ldap:
-    url: ldap://static.eun.org:389
+    url: ${spring_ldap_url}
     base: OU=Users,OU=Brussels,OU=EUN,DC=eun,DC=local
-    user-dn: visitor
-    password: Sch00l@EUN
+    user-dn: ${spring_ldap_user_dn}
+    password: ${spring_ldap_password}
     pooled: true
   devtools:
     restart:
@@ -68,9 +68,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/eunReportDesigner
-    username: eunReportDesigner
-    password: eunPwd
+    url: ${spring_database_url}
+    username: ${spring_database_username}
+    password: ${spring_database_password}
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -102,7 +102,7 @@ jhipster:
   cache: # Cache configuration
     redis: # Redis configuration
       expiration: 3600 # By default objects stay 1 hour (in seconds) in the cache
-      server: redis://cache.eun.org:6380
+      server: ${jhipster_cache_redis_server}
       cluster: false
       # server: redis://localhost:6379,redis://localhost:16379,redis://localhost:26379
       # cluster: true
