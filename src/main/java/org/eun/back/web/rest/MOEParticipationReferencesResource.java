@@ -140,10 +140,13 @@ public class MOEParticipationReferencesResource {
     /**
      * {@code GET  /moe-participation-references} : get all the mOEParticipationReferences.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of mOEParticipationReferences in body.
      */
     @GetMapping("/moe-participation-references")
-    public List<MOEParticipationReferencesDTO> getAllMOEParticipationReferences() {
+    public List<MOEParticipationReferencesDTO> getAllMOEParticipationReferences(
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
         log.debug("REST request to get all MOEParticipationReferences");
         return mOEParticipationReferencesService.findAll();
     }

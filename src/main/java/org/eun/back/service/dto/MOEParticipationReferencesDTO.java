@@ -2,7 +2,9 @@ package org.eun.back.service.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link org.eun.back.domain.MOEParticipationReferences} entity.
@@ -29,6 +31,8 @@ public class MOEParticipationReferencesDTO implements Serializable {
     private LocalDate createdDate;
 
     private LocalDate lastModifiedDate;
+
+    private Set<CountriesDTO> countries = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -110,6 +114,14 @@ public class MOEParticipationReferencesDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public Set<CountriesDTO> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(Set<CountriesDTO> countries) {
+        this.countries = countries;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -145,6 +157,7 @@ public class MOEParticipationReferencesDTO implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
+            ", countries=" + getCountries() +
             "}";
     }
 }

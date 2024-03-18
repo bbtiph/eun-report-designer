@@ -50,6 +50,13 @@
         <dd>
           <span>{{ mOEParticipationReferences.lastModifiedDate | formatMediumDate }}</span>
         </dd>
+        <dt><span>Countries</span></dt>
+        <dd>
+          <span *ngFor="let countries of mOEParticipationReferences.countries; let last = last">
+            <a [routerLink]="['/countries', countries.id, 'view']">{{ countries.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type MOEParticipationReferencesFormGroupInput = IMOEParticipationReferences | PartialWithRequiredKeyOf<NewMOEParticipationReferences>;
 
-type MOEParticipationReferencesFormDefaults = Pick<NewMOEParticipationReferences, 'id' | 'isActive'>;
+type MOEParticipationReferencesFormDefaults = Pick<NewMOEParticipationReferences, 'id' | 'isActive' | 'countries'>;
 
 type MOEParticipationReferencesFormGroupContent = {
   id: FormControl<IMOEParticipationReferences['id'] | NewMOEParticipationReferences['id']>;
@@ -27,6 +27,7 @@ type MOEParticipationReferencesFormGroupContent = {
   lastModifiedBy: FormControl<IMOEParticipationReferences['lastModifiedBy']>;
   createdDate: FormControl<IMOEParticipationReferences['createdDate']>;
   lastModifiedDate: FormControl<IMOEParticipationReferences['lastModifiedDate']>;
+  countries: FormControl<IMOEParticipationReferences['countries']>;
 };
 
 export type MOEParticipationReferencesFormGroup = FormGroup<MOEParticipationReferencesFormGroupContent>;
@@ -57,6 +58,7 @@ export class MOEParticipationReferencesFormService {
       lastModifiedBy: new FormControl(mOEParticipationReferencesRawValue.lastModifiedBy),
       createdDate: new FormControl(mOEParticipationReferencesRawValue.createdDate),
       lastModifiedDate: new FormControl(mOEParticipationReferencesRawValue.lastModifiedDate),
+      countries: new FormControl(mOEParticipationReferencesRawValue.countries ?? []),
     });
   }
 
@@ -78,6 +80,7 @@ export class MOEParticipationReferencesFormService {
     return {
       id: null,
       isActive: false,
+      countries: [],
     };
   }
 }

@@ -92,6 +92,7 @@ export class MOEParticipationReferencesComponent implements OnInit {
   protected queryBackend(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject = {
+      eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
     };
     return this.mOEParticipationReferencesService.query(queryObject).pipe(tap(() => (this.isLoading = false)));

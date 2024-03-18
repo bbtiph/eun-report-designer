@@ -45,6 +45,29 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="20240318072451-1-relations" author="jhipster">
+
+        <createTable tableName="rel_moe_participation_references_countries">
+            <column name="countries_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="moe_participation_references_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="moe_representatives" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_active" type="boolean">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="moe_participation_references_id, countries_id" tableName="rel_moe_participation_references_countries"/>
+    </changeSet>
+
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

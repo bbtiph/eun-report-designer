@@ -3,6 +3,8 @@ package org.eun.back.service;
 import java.util.List;
 import java.util.Optional;
 import org.eun.back.service.dto.MOEParticipationReferencesDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Service Interface for managing {@link org.eun.back.domain.MOEParticipationReferences}.
@@ -38,6 +40,14 @@ public interface MOEParticipationReferencesService {
      * @return the list of entities.
      */
     List<MOEParticipationReferencesDTO> findAll();
+
+    /**
+     * Get all the mOEParticipationReferences with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<MOEParticipationReferencesDTO> findAllWithEagerRelationships(Pageable pageable);
 
     /**
      * Get the "id" mOEParticipationReferences.

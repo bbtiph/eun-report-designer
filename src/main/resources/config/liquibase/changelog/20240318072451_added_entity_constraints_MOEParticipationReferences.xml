@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity MOEParticipationReferences.
+    -->
+    <changeSet id="20240318072451-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="moe_participation_references_id"
+                                 baseTableName="rel_moe_participation_references_countries"
+                                 constraintName="fk_rel_moe_participation_refere__moe_participation_refere_e2_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="moe_participation_references"/>
+
+        <addForeignKeyConstraint baseColumnNames="countries_id"
+                                 baseTableName="rel_moe_participation_references_countries"
+                                 constraintName="fk_rel_moe_participation_references_countries__countries_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="countries"/>
+    </changeSet>
+</databaseChangeLog>

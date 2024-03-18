@@ -74,6 +74,7 @@
     <include file="config/liquibase/changelog/20231225101053_added_entity_constraints_EventReferencesParticipantsCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20231225101052_added_entity_constraints_EventReferences.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240131075950_added_entity_constraints_ProjectPartner.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240318072451_added_entity_constraints_MOEParticipationReferences.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

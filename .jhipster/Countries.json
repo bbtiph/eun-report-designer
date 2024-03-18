@@ -33,6 +33,13 @@
       "ownerSide": false,
       "relationshipName": "eventReferences",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "MOEParticipationReferences",
+      "otherEntityRelationshipName": "countries",
+      "ownerSide": false,
+      "relationshipName": "MOEParticipationReferences",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

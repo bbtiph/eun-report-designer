@@ -1,4 +1,5 @@
 import dayjs from 'dayjs/esm';
+import { ICountries } from 'app/entities/countries/countries.model';
 
 export interface IMOEParticipationReferences {
   id: number;
@@ -11,6 +12,7 @@ export interface IMOEParticipationReferences {
   lastModifiedBy?: string | null;
   createdDate?: dayjs.Dayjs | null;
   lastModifiedDate?: dayjs.Dayjs | null;
+  countries?: Pick<ICountries, 'id'>[] | null;
 }
 
 export type NewMOEParticipationReferences = Omit<IMOEParticipationReferences, 'id'> & { id: null };

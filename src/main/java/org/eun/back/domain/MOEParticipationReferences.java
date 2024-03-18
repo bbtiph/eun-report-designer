@@ -1,10 +1,11 @@
 package org.eun.back.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A MOEParticipationReferences.
@@ -48,6 +49,15 @@ public class MOEParticipationReferences implements Serializable {
 
     @Column(name = "last_modified_date")
     private LocalDate lastModifiedDate;
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_moe_participation_references_countries",
+        joinColumns = @JoinColumn(name = "moe_participation_references_id"),
+        inverseJoinColumns = @JoinColumn(name = "countries_id")
+    )
+    @JsonIgnoreProperties(value = { "reportBlockIds", "eventReferences", "mOEParticipationReferences" }, allowSetters = true)
+    private Set<Countries> countries = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -180,6 +190,31 @@ public class MOEParticipationReferences implements Serializable {
     public void setLastModifiedDate(LocalDate lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
+
+    public Set<Countries> getCountries() {
+        return this.countries;
+    }
+
+    public void setCountries(Set<Countries> countries) {
+        this.countries = countries;
+    }
+
+    public MOEParticipationReferences countries(Set<Countries> countries) {
+        this.setCountries(countries);
+        return this;
+    }
+
+    //    public MOEParticipationReferences addCountries(Countries countries) {
+    //        this.countries.add(countries);
+    //        countries.getMOEParticipationReferences().add(this);
+    //        return this;
+    //    }
+    //
+    //    public MOEParticipationReferences removeCountries(Countries countries) {
+    //        this.countries.remove(countries);
+    //        countries.getMOEParticipationReferences().remove(this);
+    //        return this;
+    //    }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

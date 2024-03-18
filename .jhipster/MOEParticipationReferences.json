@@ -47,6 +47,14 @@
   "name": "MOEParticipationReferences",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "countries",
+      "otherEntityRelationshipName": "MOEParticipationReferences",
+      "ownerSide": true,
+      "relationshipName": "countries",
+      "relationshipType": "many-to-many"
+    }
+  ],
   "service": "serviceImpl"
 }

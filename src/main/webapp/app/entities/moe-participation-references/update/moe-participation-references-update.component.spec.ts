@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { MOEParticipationReferencesFormService } from './moe-participation-references-form.service';
 import { MOEParticipationReferencesService } from '../service/moe-participation-references.service';
 import { IMOEParticipationReferences } from '../moe-participation-references.model';
+import { ICountries } from 'app/entities/countries/countries.model';
+import { CountriesService } from 'app/entities/countries/service/countries.service';
 
 import { MOEParticipationReferencesUpdateComponent } from './moe-participation-references-update.component';
 
@@ -18,6 +20,7 @@ describe('MOEParticipationReferences Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let mOEParticipationReferencesFormService: MOEParticipationReferencesFormService;
   let mOEParticipationReferencesService: MOEParticipationReferencesService;
+  let countriesService: CountriesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +43,43 @@ describe('MOEParticipationReferences Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     mOEParticipationReferencesFormService = TestBed.inject(MOEParticipationReferencesFormService);
     mOEParticipationReferencesService = TestBed.inject(MOEParticipationReferencesService);
+    countriesService = TestBed.inject(CountriesService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call Countries query and add missing value', () => {
       const mOEParticipationReferences: IMOEParticipationReferences = { id: 456 };
+      const countries: ICountries[] = [{ id: 24651 }];
+      mOEParticipationReferences.countries = countries;
+
+      const countriesCollection: ICountries[] = [{ id: 92409 }];
+      jest.spyOn(countriesService, 'query').mockReturnValue(of(new HttpResponse({ body: countriesCollection })));
+      const additionalCountries = [...countries];
+      const expectedCollection: ICountries[] = [...additionalCountries, ...countriesCollection];
+      jest.spyOn(countriesService, 'addCountriesToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ mOEParticipationReferences });
       comp.ngOnInit();
 
+      expect(countriesService.query).toHaveBeenCalled();
+      expect(countriesService.addCountriesToCollectionIfMissing).toHaveBeenCalledWith(
+        countriesCollection,
+        ...additionalCountries.map(expect.objectContaining)
+      );
+      expect(comp.countriesSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const mOEParticipationReferences: IMOEParticipationReferences = { id: 456 };
+      const countries: ICountries = { id: 68307 };
+      mOEParticipationReferences.countries = [countries];
+
+      activatedRoute.data = of({ mOEParticipationReferences });
+      comp.ngOnInit();
+
+      expect(comp.countriesSharedCollection).toContain(countries);
       expect(comp.mOEParticipationReferences).toEqual(mOEParticipationReferences);
     });
   });
@@ -120,6 +149,18 @@ describe('MOEParticipationReferences Management Update Component', () => {
       expect(mOEParticipationReferencesService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareCountries', () => {
+      it('Should forward to countriesService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(countriesService, 'compareCountries');
+        comp.compareCountries(entity, entity2);
+        expect(countriesService.compareCountries).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });
