@@ -1,12 +1,10 @@
-entity ProjectPartner {
-    odataEtag String,
-    no Long,
-    jobNo String,
-    vendorCode String,
-    vendorName String,
-    countryCode String,
-    countryName String,
-    partnerAmount Double,
+entity MOEParticipationReferences{
+    name String,
+    type String,
+    startDate LocalDate,
+    endDate LocalDate,
+
+    //TODO: Required columns
     isActive Boolean,
     createdBy String,
     lastModifiedBy String,
@@ -14,5 +12,7 @@ entity ProjectPartner {
     lastModifiedDate LocalDate,
 }
 
-dto ProjectPartner with mapstruct
-service ProjectPartner with serviceImpl
+
+
+dto MOEParticipationReferences with mapstruct
+service MOEParticipationReferences with serviceImpl

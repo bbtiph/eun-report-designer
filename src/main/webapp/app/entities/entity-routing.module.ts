@@ -191,6 +191,12 @@ import { JobInfoModule } from './job-info/job-info.module';
             m => m.EventReferencesParticipantsCategoryModule
           ),
       },
+      {
+        path: 'moe-participation-references',
+        data: { pageTitle: 'MOEParticipationReferences' },
+        loadChildren: () =>
+          import('./moe-participation-references/moe-participation-references.module').then(m => m.MOEParticipationReferencesModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

@@ -47,6 +47,7 @@
     <include file="config/liquibase/changelog/20231225101053_added_entity_EventReferencesParticipantsCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240118092500_added_entity_JobInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240131075950_added_entity_ProjectPartner.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240318072451_added_entity_MOEParticipationReferences.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 <!--    <include file="config/liquibase/changelog/20230427100940_added_entity_constraints_Project.xml" relativeToChangelogFile="false"/>-->
 <!--    <include file="config/liquibase/changelog/20230427114022_added_entity_constraints_EunTeam.xml" relativeToChangelogFile="false"/>-->

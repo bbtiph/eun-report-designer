@@ -523,6 +523,18 @@
                 <span>Project Partner</span>
               </a>
             </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="moe-participation-references"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span>MOE Participation References</span>
+              </a>
+            </li>
             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
           </ul>
         </li>
