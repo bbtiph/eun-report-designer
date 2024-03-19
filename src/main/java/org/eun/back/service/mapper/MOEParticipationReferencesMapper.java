@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.eun.back.domain.Countries;
 import org.eun.back.domain.MOEParticipationReferences;
-import org.eun.back.service.dto.CountriesDTO;
+import org.eun.back.service.dto.CountriesWithMoeRepresentativesDTO;
 import org.eun.back.service.dto.MOEParticipationReferencesDTO;
 import org.mapstruct.*;
 
@@ -22,10 +22,12 @@ public interface MOEParticipationReferencesMapper extends EntityMapper<MOEPartic
     @Named("countriesId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    CountriesDTO toDtoCountriesId(Countries countries);
+    @Mapping(target = "countryCode", source = "countryCode")
+    @Mapping(target = "countryName", source = "countryName")
+    CountriesWithMoeRepresentativesDTO toDtoCountriesId(Countries countries);
 
     @Named("countriesIdSet")
-    default Set<CountriesDTO> toDtoCountriesIdSet(Set<Countries> countries) {
+    default Set<CountriesWithMoeRepresentativesDTO> toDtoCountriesIdSet(Set<Countries> countries) {
         return countries.stream().map(this::toDtoCountriesId).collect(Collectors.toSet());
     }
 }

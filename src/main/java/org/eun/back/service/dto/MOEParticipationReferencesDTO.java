@@ -32,7 +32,9 @@ public class MOEParticipationReferencesDTO implements Serializable {
 
     private LocalDate lastModifiedDate;
 
-    private Set<CountriesDTO> countries = new HashSet<>();
+    private Set<CountriesWithMoeRepresentativesDTO> countries = new HashSet<>();
+
+    private Long totalMoeRepresentativesCount;
 
     public Long getId() {
         return id;
@@ -114,11 +116,27 @@ public class MOEParticipationReferencesDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public Set<CountriesDTO> getCountries() {
+    public Set<CountriesWithMoeRepresentativesDTO> getCountries() {
         return countries;
     }
 
-    public void setCountries(Set<CountriesDTO> countries) {
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Long getTotalMoeRepresentativesCount() {
+        return totalMoeRepresentativesCount;
+    }
+
+    public void setTotalMoeRepresentativesCount(Long totalMoeRepresentativesCount) {
+        this.totalMoeRepresentativesCount = totalMoeRepresentativesCount;
+    }
+
+    public void setCountries(Set<CountriesWithMoeRepresentativesDTO> countries) {
         this.countries = countries;
     }
 

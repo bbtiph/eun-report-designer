@@ -19,6 +19,7 @@ import org.eun.back.security.SecurityUtils;
 import org.eun.back.service.*;
 import org.eun.back.service.dto.*;
 import org.eun.back.service.mapper.EventReferencesMapper;
+import org.eun.back.service.mapper.MOEParticipationReferencesMapper;
 import org.eun.back.service.mapper.ReferenceTableSettingsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,9 +50,17 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
 
     private final EventReferencesService eventReferencesService;
 
+    private final MOEParticipationReferencesService moeParticipationReferencesService;
+
     private final EventReferencesMapper eventReferencesMapper;
 
     private final RelEventReferencesCountriesRepository relEventReferencesCountriesRepository;
+
+    private final RelMOEParticipantionReferencesCountriesRepository relMOEParticipantionReferencesCountriesRepository;
+
+    private final MOEParticipationReferencesMapper mOEParticipationReferencesMapper;
+
+    private final MOEParticipationReferencesRepository mOEParticipationReferencesRepository;
 
     private final EventReferencesParticipantsCategoryRepository eventReferencesParticipantsCategoryRepository;
 
@@ -73,8 +82,12 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         CountriesRepository countriesRepository,
         EventReferencesRepository eventReferencesRepository,
         EventReferencesService eventReferencesService,
+        MOEParticipationReferencesService moeParticipationReferencesService,
         EventReferencesMapper eventReferencesMapper,
         RelEventReferencesCountriesRepository relEventReferencesCountriesRepository,
+        RelMOEParticipantionReferencesCountriesRepository relMOEParticipantionReferencesCountriesRepository,
+        MOEParticipationReferencesMapper mOEParticipationReferencesMapper,
+        MOEParticipationReferencesRepository mOEParticipationReferencesRepository,
         EventReferencesParticipantsCategoryRepository eventReferencesParticipantsCategoryRepository,
         JobInfoService jobInfoService,
         ParticipantsEunIndicatorService participantsEunIndicatorService,
@@ -89,8 +102,12 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
         this.countriesRepository = countriesRepository;
         this.eventReferencesRepository = eventReferencesRepository;
         this.eventReferencesService = eventReferencesService;
+        this.moeParticipationReferencesService = moeParticipationReferencesService;
         this.eventReferencesMapper = eventReferencesMapper;
         this.relEventReferencesCountriesRepository = relEventReferencesCountriesRepository;
+        this.relMOEParticipantionReferencesCountriesRepository = relMOEParticipantionReferencesCountriesRepository;
+        this.mOEParticipationReferencesMapper = mOEParticipationReferencesMapper;
+        this.mOEParticipationReferencesRepository = mOEParticipationReferencesRepository;
         this.eventReferencesParticipantsCategoryRepository = eventReferencesParticipantsCategoryRepository;
         this.jobInfoService = jobInfoService;
         this.participantsEunIndicatorService = participantsEunIndicatorService;
@@ -168,6 +185,8 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 return participantsEunIndicatorService.findAll();
             case "organization_eun_indicator":
                 return organizationEunIndicatorService.findAll();
+            case "moe_participation":
+                return moeParticipationReferencesService.findAllByIsActive(true);
         }
         return null;
     }
@@ -199,6 +218,10 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 return organizationEunIndicatorService.findAllByCountryName(
                     countriesRepository.findFirstByCountryCodeIgnoreCase(countryCode).getCountryName(),
                     params
+                );
+            case "moe_participation":
+                return moeParticipationReferencesService.findAllByCountryId(
+                    countriesRepository.findFirstByCountryCodeIgnoreCase(countryCode).getId()
                 );
         }
         return null;
@@ -564,6 +587,8 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
             case "organization_eun_indicator":
                 organizationEunIndicatorService.delete(id);
                 break;
+            case "moe_participation":
+                moeParticipationReferencesService.delete(id);
         }
     }
 
@@ -608,9 +633,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                         relEventReferencesCountries.setEventReferencesId(eventReferencesDTO.getId());
                         return relEventReferencesCountries;
                     })
-                    .forEach(relEventReferencesCountries -> {
-                        relEventReferencesCountriesRepository.save(relEventReferencesCountries);
-                    });
+                    .forEach(relEventReferencesCountriesRepository::save);
 
                 return eventReferencesRepository.save(eventReferencesMapper.toEntity(eventReferencesDTO));
             case "job_info_reference":
@@ -629,6 +652,34 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                     OrganizationEunIndicatorDTO.class
                 );
                 return organizationEunIndicatorService.save(organizationEunIndicatorDTO);
+            case "moe_participation":
+                MOEParticipationReferencesDTO moeParticipationReferencesDTO = objectMapper.readValue(
+                    jsonRow,
+                    MOEParticipationReferencesDTO.class
+                );
+                if (moeParticipationReferencesDTO.getId() == null) {
+                    moeParticipationReferencesDTO.setIsActive(true);
+                }
+                moeParticipationReferencesDTO
+                    .getCountries()
+                    .stream()
+                    .map(countriesWithMoeRepresentativesDTO -> {
+                        RelMOEParticipationReferencesCountries relMOEParticipationReferencesCountries = new RelMOEParticipationReferencesCountries();
+                        relMOEParticipationReferencesCountries.setMoeRepresentatives(
+                            countriesWithMoeRepresentativesDTO.getMoeRepresentatives()
+                        );
+                        relMOEParticipationReferencesCountries.setCountriesId(
+                            countriesRepository
+                                .findFirstByCountryCodeIgnoreCase(countriesWithMoeRepresentativesDTO.getCountryCode())
+                                .getId()
+                        );
+                        relMOEParticipationReferencesCountries.setMoeParticipationReferencesId(moeParticipationReferencesDTO.getId());
+                        relMOEParticipationReferencesCountries.setType(countriesWithMoeRepresentativesDTO.getType());
+                        return relMOEParticipationReferencesCountries;
+                    })
+                    .forEach(relMOEParticipantionReferencesCountriesRepository::save);
+
+                return mOEParticipationReferencesRepository.save(mOEParticipationReferencesMapper.toEntity(moeParticipationReferencesDTO));
         }
         return null;
     }

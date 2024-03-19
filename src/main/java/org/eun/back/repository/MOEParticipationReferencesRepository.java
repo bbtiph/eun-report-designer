@@ -2,6 +2,7 @@ package org.eun.back.repository;
 
 import java.util.List;
 import java.util.Optional;
+import org.eun.back.domain.EventReferences;
 import org.eun.back.domain.MOEParticipationReferences;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MOEParticipationReferencesRepository
     extends MOEParticipationReferencesRepositoryWithBagRelationships, JpaRepository<MOEParticipationReferences, Long> {
+    List<MOEParticipationReferences> findAllByIsActive(Boolean isActive);
+
+    List<MOEParticipationReferences> findAllByIdIn(List<Long> ids);
+
     default Optional<MOEParticipationReferences> findOneWithEagerRelationships(Long id) {
         return this.fetchBagRelationships(this.findById(id));
     }

@@ -5,8 +5,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.eun.back.domain.MOEParticipationReferences;
+import org.eun.back.domain.RelEventReferencesCountries;
+import org.eun.back.domain.RelMOEParticipationReferencesCountries;
 import org.eun.back.repository.MOEParticipationReferencesRepository;
+import org.eun.back.repository.RelMOEParticipantionReferencesCountriesRepository;
 import org.eun.back.service.MOEParticipationReferencesService;
+import org.eun.back.service.dto.CountriesWithMoeRepresentativesDTO;
+import org.eun.back.service.dto.CountriesWithParticipantsDTO;
+import org.eun.back.service.dto.EventReferencesDTO;
 import org.eun.back.service.dto.MOEParticipationReferencesDTO;
 import org.eun.back.service.mapper.MOEParticipationReferencesMapper;
 import org.slf4j.Logger;
@@ -28,13 +34,16 @@ public class MOEParticipationReferencesServiceImpl implements MOEParticipationRe
     private final MOEParticipationReferencesRepository mOEParticipationReferencesRepository;
 
     private final MOEParticipationReferencesMapper mOEParticipationReferencesMapper;
+    private final RelMOEParticipantionReferencesCountriesRepository relMOEParticipantionReferencesCountriesRepository;
 
     public MOEParticipationReferencesServiceImpl(
         MOEParticipationReferencesRepository mOEParticipationReferencesRepository,
-        MOEParticipationReferencesMapper mOEParticipationReferencesMapper
+        MOEParticipationReferencesMapper mOEParticipationReferencesMapper,
+        RelMOEParticipantionReferencesCountriesRepository relMOEParticipantionReferencesCountriesRepository
     ) {
         this.mOEParticipationReferencesRepository = mOEParticipationReferencesRepository;
         this.mOEParticipationReferencesMapper = mOEParticipationReferencesMapper;
+        this.relMOEParticipantionReferencesCountriesRepository = relMOEParticipantionReferencesCountriesRepository;
     }
 
     @Override
@@ -94,5 +103,62 @@ public class MOEParticipationReferencesServiceImpl implements MOEParticipationRe
     public void delete(Long id) {
         log.debug("Request to delete MOEParticipationReferences : {}", id);
         mOEParticipationReferencesRepository.deleteById(id);
+    }
+
+    @Override
+    public List<MOEParticipationReferencesDTO> findAllByIsActive(Boolean isActive) {
+        List<MOEParticipationReferencesDTO> res = mOEParticipationReferencesRepository
+            .findAllByIsActive(isActive)
+            .stream()
+            .map(mOEParticipationReferencesMapper::toDto)
+            .collect(Collectors.toList());
+
+        for (MOEParticipationReferencesDTO moeParticipationReferencesDTO : res) {
+            Long totalMoeRepresentativesCount = 0L;
+            for (CountriesWithMoeRepresentativesDTO countries : moeParticipationReferencesDTO.getCountries()) {
+                RelMOEParticipationReferencesCountries relMOEParticipationReferencesCountries = relMOEParticipantionReferencesCountriesRepository
+                    .findFirstByCountriesIdAndMoeParticipationReferencesId(countries.getId(), moeParticipationReferencesDTO.getId())
+                    .get();
+                countries.setMoeRepresentatives(relMOEParticipationReferencesCountries.getMoeRepresentatives());
+                countries.setType(relMOEParticipationReferencesCountries.getType());
+                totalMoeRepresentativesCount += countries.getMoeRepresentatives() != null ? countries.getMoeRepresentatives() : 0L;
+            }
+            moeParticipationReferencesDTO.setTotalMoeRepresentativesCount(totalMoeRepresentativesCount);
+        }
+
+        return res;
+    }
+
+    @Override
+    public List<MOEParticipationReferencesDTO> findAllByCountryId(Long countryId) {
+        List<RelMOEParticipationReferencesCountries> relEventReferencesCountries = relMOEParticipantionReferencesCountriesRepository.findFirstByCountriesId(
+            countryId
+        );
+
+        List<Long> eventReferencesIds = relEventReferencesCountries
+            .stream()
+            .map(RelMOEParticipationReferencesCountries::getMoeParticipationReferencesId)
+            .collect(Collectors.toList());
+
+        List<MOEParticipationReferencesDTO> eventReferencesDTOS = mOEParticipationReferencesRepository
+            .findAllByIdIn(eventReferencesIds)
+            .stream()
+            .map(mOEParticipationReferencesMapper::toDto)
+            .collect(Collectors.toList());
+
+        for (RelMOEParticipationReferencesCountries relMOEParticipationReferencesCountries : relEventReferencesCountries) {
+            Long moeParticipationReferencesId = relMOEParticipationReferencesCountries.getMoeParticipationReferencesId();
+            Long participantsCount = relMOEParticipationReferencesCountries.getMoeRepresentatives() != null
+                ? relMOEParticipationReferencesCountries.getMoeRepresentatives()
+                : 0;
+
+            eventReferencesDTOS
+                .stream()
+                .filter(dto -> dto.getId().equals(moeParticipationReferencesId))
+                .findFirst()
+                .ifPresent(dto -> dto.setTotalMoeRepresentativesCount(participantsCount));
+        }
+
+        return eventReferencesDTOS;
     }
 }

@@ -2,6 +2,7 @@ package org.eun.back.service;
 
 import java.util.List;
 import java.util.Optional;
+import org.eun.back.service.dto.EventReferencesDTO;
 import org.eun.back.service.dto.MOEParticipationReferencesDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,4 +64,8 @@ public interface MOEParticipationReferencesService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<MOEParticipationReferencesDTO> findAllByIsActive(Boolean isActive);
+
+    List<MOEParticipationReferencesDTO> findAllByCountryId(Long countryId);
 }
