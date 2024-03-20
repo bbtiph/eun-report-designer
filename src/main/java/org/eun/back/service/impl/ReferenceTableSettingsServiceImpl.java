@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -441,7 +443,7 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                         int i = 0;
                         for (Row row : sheet) {
                             i++;
-                            if (i > 2 && i < 30) {
+                            if (i > 2 && sheet.getLastRowNum() >= i) {
                                 try {
                                     if (row.getCell(0).toString().length() > 0 || row.getCell(1).toString().length() > 0) {
                                         EventReferences eventReferences = new EventReferences();
@@ -516,17 +518,87 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                                     log.error("Error ", e);
                                 }
                             }
-                            //                          TODO: delete kostil
+                        }
+                    }
+                    break;
+                case "moe_participation":
+                    keywords = Arrays.asList("eTwinning Annual Conference", "Safer_Internet_Forum", "Eminent_2023");
 
-                            //                            if (
-                            //                                row.getCell(0).toString().length() == 0 &&
-                            //                                row.getCell(1).toString().length() == 0 &&
-                            //                                row.getCell(2).toString().length() == 0 &&
-                            //                                row.getCell(3).toString().length() == 0 &&
-                            //                                row.getCell(4).toString().length() == 0 &&
-                            //                                row.getCell(5).toString().length() == 0 &&
-                            //                                row.getCell(6).toString().length() == 0
-                            //                            ) break;
+                    for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+                        Sheet sheet = workbook.getSheetAt(i);
+                        String sheetName = sheet.getSheetName().toLowerCase();
+
+                        for (String keyword : keywords) {
+                            if (sheetName.contains(keyword.toLowerCase())) {
+                                sheetNumbers.add(i);
+                                break;
+                            }
+                        }
+                    }
+
+                    for (int pageNumber : sheetNumbers) {
+                        Sheet sheet = workbook.getSheetAt(pageNumber);
+                        MOEParticipationReferences participationReferences = null;
+                        int i = 0;
+                        System.out.println("@@: " + sheet.getLastRowNum());
+                        for (Row row : sheet) {
+                            i++;
+
+                            if (i > 1 && sheet.getLastRowNum() >= i) {
+                                try {
+                                    if (row.getCell(0) != null) {
+                                        MOEParticipationReferences moeParticipationReferences = new MOEParticipationReferences();
+                                        moeParticipationReferences.setName(row.getCell(0) != null ? row.getCell(0).toString() : "");
+                                        moeParticipationReferences.setStartDate(
+                                            row.getCell(1) != null ? convertStringToDate(row.getCell(1).toString()) : null
+                                        );
+                                        moeParticipationReferences.setEndDate(
+                                            row.getCell(2) != null ? convertStringToDate(row.getCell(2).toString()) : null
+                                        );
+                                        moeParticipationReferences.isActive(true);
+
+                                        if (moeParticipationReferences.getId() == null) {
+                                            MOEParticipationReferences moeParticipationReferencesRes = mOEParticipationReferencesRepository.findFirstByNameIgnoreCase(
+                                                moeParticipationReferences.getName()
+                                            );
+                                            if (moeParticipationReferencesRes != null) {
+                                                moeParticipationReferences.setId(moeParticipationReferencesRes.getId());
+                                            }
+                                        }
+                                        moeParticipationReferences =
+                                            mOEParticipationReferencesRepository.saveAndFlush(moeParticipationReferences);
+                                        participationReferences = moeParticipationReferences;
+                                    }
+                                    if (row.getCell(4) != null) {
+                                        RelMOEParticipationReferencesCountries relMOEParticipationReferencesCountries = new RelMOEParticipationReferencesCountries();
+                                        relMOEParticipationReferencesCountries.setType(
+                                            row.getCell(3) != null ? row.getCell(3).toString() : ""
+                                        );
+
+                                        Countries country = countriesRepository.findFirstByCountryNameIgnoreCase(row.getCell(4).toString());
+                                        if (country != null) {
+                                            relMOEParticipationReferencesCountries.setCountriesId(country.getId());
+                                            relMOEParticipationReferencesCountries.setMoeParticipationReferencesId(
+                                                participationReferences.getId()
+                                            );
+                                            try {
+                                                double cellValue = row.getCell(5).getNumericCellValue();
+                                                DecimalFormat decimalFormat = new DecimalFormat("#");
+                                                Long formattedValue = Long.parseLong(decimalFormat.format(cellValue));
+                                                relMOEParticipationReferencesCountries.setMoeRepresentatives(
+                                                    formattedValue != null ? formattedValue : 0
+                                                );
+                                            } catch (Exception e) {
+                                                log.error(String.valueOf(e));
+                                            }
+
+                                            relMOEParticipantionReferencesCountriesRepository.save(relMOEParticipationReferencesCountries);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    log.error("Error ", e);
+                                }
+                            }
                         }
                     }
                     break;
@@ -682,5 +754,27 @@ public class ReferenceTableSettingsServiceImpl implements ReferenceTableSettings
                 return mOEParticipationReferencesRepository.save(mOEParticipationReferencesMapper.toEntity(moeParticipationReferencesDTO));
         }
         return null;
+    }
+
+    public LocalDate convertStringToDate(String textDate) {
+        DateTimeFormatter[] possibleFormats = {
+            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+            DateTimeFormatter.ofPattern("yyyy.MM.dd"),
+            DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+            DateTimeFormatter.ofPattern("MM/dd/yyyy"),
+            // Add more formats as needed
+        };
+
+        LocalDate localDate = null;
+        for (DateTimeFormatter formatter : possibleFormats) {
+            try {
+                localDate = LocalDate.parse(textDate, formatter);
+                break;
+            } catch (DateTimeParseException e) {
+                log.warn(e.toString());
+            }
+        }
+
+        return localDate;
     }
 }

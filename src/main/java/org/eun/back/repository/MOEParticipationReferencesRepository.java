@@ -23,6 +23,8 @@ public interface MOEParticipationReferencesRepository
 
     List<MOEParticipationReferences> findAllByIdIn(List<Long> ids);
 
+    MOEParticipationReferences findFirstByNameIgnoreCase(String name);
+
     default Optional<MOEParticipationReferences> findOneWithEagerRelationships(Long id) {
         return this.fetchBagRelationships(this.findById(id));
     }
